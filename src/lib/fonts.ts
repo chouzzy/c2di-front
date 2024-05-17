@@ -7,5 +7,5 @@ const montserrat = Montserrat({
 })
 
 export const fonts = {
-    montserrat,
+  montserrat,
 }
