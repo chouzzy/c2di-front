@@ -1,20 +1,23 @@
-import { Box, Flex, Image } from '@chakra-ui/react'
+import { Box, Flex, Image, useBreakpointValue } from '@chakra-ui/react'
 import { Heading } from '../Heading'
 
 export function Header() {
+  const isLg = useBreakpointValue({ lg: true })
   return (
-    <Box>
+    <Box px={{ base: 8, lg: 0 }}>
       <Image src="/assets/icon_logo_light.svg" alt="icon" h="100%" mx="auto" />
       <Flex alignItems="center" justifyContent="space-between" gap={6}>
-        <Box
-          mt={5}
-          h={1}
-          display="inline-block"
-          w="20%"
-          bg="linear-gradient(90deg, hsla(0, 0%, 98%, 1) 0%, hsla(21, 50%, 59%, 1) 50%, hsla(0, 0%, 98%, 1) 100%)"
-        ></Box>
+        {isLg && (
+          <Box
+            mt={5}
+            h={1}
+            display="inline-block"
+            w="20%"
+            bg="linear-gradient(90deg, hsla(0, 0%, 98%, 1) 0%, hsla(21, 50%, 59%, 1) 50%, hsla(0, 0%, 98%, 1) 100%)"
+          ></Box>
+        )}
         <Heading
-          size="lg"
+          size={isLg ? 'lg' : 'sm'}
           text="Programa de Orientação de Carreira"
           isHighlighted
           highlightColor="brass"
@@ -22,13 +25,15 @@ export function Header() {
           flex="1"
           textAlign="center"
         />
-        <Box
-          mt={5}
-          h={1}
-          display="inline-block"
-          w="20%"
-          bg="linear-gradient(90deg, hsla(0, 0%, 98%, 1) 0%, hsla(21, 50%, 59%, 1) 50%, hsla(0, 0%, 98%, 1) 100%)"
-        ></Box>
+        {isLg && (
+          <Box
+            mt={5}
+            h={1}
+            display="inline-block"
+            w="20%"
+            bg="linear-gradient(90deg, hsla(0, 0%, 98%, 1) 0%, hsla(21, 50%, 59%, 1) 50%, hsla(0, 0%, 98%, 1) 100%)"
+          ></Box>
+        )}
       </Flex>
     </Box>
   )

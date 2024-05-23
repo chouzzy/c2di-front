@@ -14,8 +14,8 @@ export function Button({ variant, text, ...rest }: ButtonProps) {
   return (
     <ChakraButton
       bgColor={variant === 'light' ? 'whiskey' : 'bitter'}
-      py={6}
-      px={8}
+      py={{ base: 2, lg: 6 }}
+      px={{ base: 3, lg: 8 }}
       _hover={{ bgColor: variant === 'light' ? 'brass' : 'siam' }}
       display="flex"
       alignItems="center"
@@ -25,7 +25,11 @@ export function Button({ variant, text, ...rest }: ButtonProps) {
       fontWeight="light"
       {...rest}
     >
-      <Text size="lg" color="alabaster" lineHeight="lg">
+      <Text
+        size={{ base: 'sm', lg: 'lg' }}
+        color="alabaster"
+        lineHeight={{ base: 'sm', lg: 'lg' }}
+      >
         {text}
       </Text>
       <CaretRight size={18} color="#fbfbfb" weight="light" />

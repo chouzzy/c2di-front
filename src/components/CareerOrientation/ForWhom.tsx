@@ -1,4 +1,4 @@
-import { Box, Flex, Text } from '@chakra-ui/react'
+import { Box, Flex, Text, useBreakpointValue } from '@chakra-ui/react'
 import { Heading } from '../Heading'
 import {
   ArrowsOutCardinal,
@@ -18,12 +18,17 @@ function Topic({ icon, text }: { icon: ReactNode; text: string }) {
         justifyContent="center"
         bgColor="whiskey"
         borderRadius="full"
-        h={14}
-        w={14}
+        h={{ base: 10, lg: 14 }}
+        w={{ base: 10, lg: 14 }}
+        flexShrink={0}
       >
         {icon}
       </Flex>
-      <Text fontSize="lg" lineHeight="lg" w={96}>
+      <Text
+        fontSize={{ base: 'sm', lg: 'lg' }}
+        lineHeight={{ base: 'sm', lg: 'lg' }}
+        w={{ base: 'inherit', lg: 96 }}
+      >
         {text}
       </Text>
     </Flex>
@@ -31,45 +36,93 @@ function Topic({ icon, text }: { icon: ReactNode; text: string }) {
 }
 
 export function ForWhom() {
+  const isLg = useBreakpointValue({ lg: true })
+
   return (
-    <Box py={20} px={40} bgColor="siam" color="alabaster">
+    <Box
+      py={{ base: 8, lg: 20 }}
+      px={{ base: 8, lg: 40 }}
+      bgColor="siam"
+      color="alabaster"
+    >
       <Heading
         text="Pra quem é este programa?"
-        size="md"
+        size={isLg ? 'md' : 'xs'}
         isHighlighted
         highlightColor="whiskey"
         highlightedText="Pra quem é"
+        mx={{ base: 'auto', lg: 0 }}
+        textAlign={{ base: 'center', lg: 'start' }}
       />
-      <Flex justifyContent="space-between" alignItems="center" mt={12} w="100%">
+      <Flex
+        justifyContent="space-between"
+        alignItems={{ base: 'start', lg: 'center' }}
+        mt={{ base: 6, lg: 12 }}
+        w="100%"
+        direction={{ base: 'column', lg: 'row' }}
+        gap={{ base: 6, lg: 0 }}
+      >
         <Topic
           text="Não sabe se continua onde está ou se muda totalmente de carreira"
-          icon={<Question size={32} color="#fbfbfb" weight="light" />}
+          icon={
+            <Question size={isLg ? 32 : 24} color="#fbfbfb" weight="light" />
+          }
         />
         <Topic
           text="Gosta de muitas coisas ou de nada"
-          icon={<Asterisk size={32} color="#fbfbfb" weight="light" />}
+          icon={
+            <Asterisk size={isLg ? 32 : 24} color="#fbfbfb" weight="light" />
+          }
         />
       </Flex>
-      <Flex justifyContent="space-between" alignItems="center" mt={8} w="100%">
+      <Flex
+        justifyContent="space-between"
+        alignItems={{ base: 'start', lg: 'center' }}
+        mt={{ base: 6, lg: 8 }}
+        w="100%"
+        direction={{ base: 'column', lg: 'row' }}
+        gap={{ base: 6, lg: 0 }}
+      >
         <Topic
           text="Está insatisfeito com a carreira atual"
-          icon={<SmileySad size={32} color="#fbfbfb" weight="light" />}
+          icon={
+            <SmileySad size={isLg ? 32 : 24} color="#fbfbfb" weight="light" />
+          }
         />
         <Topic
           text="Se sente inseguro para fazer uma transição de carreira"
           icon={
-            <ArrowsOutLineHorizontal size={32} color="#fbfbfb" weight="light" />
+            <ArrowsOutLineHorizontal
+              size={isLg ? 32 : 24}
+              color="#fbfbfb"
+              weight="light"
+            />
           }
         />
       </Flex>
-      <Flex justifyContent="space-between" alignItems="center" mt={8} w="100%">
+      <Flex
+        justifyContent="space-between"
+        alignItems={{ base: 'start', lg: 'center' }}
+        mt={{ base: 6, lg: 8 }}
+        w="100%"
+        direction={{ base: 'column', lg: 'row' }}
+        gap={{ base: 6, lg: 0 }}
+      >
         <Topic
           text="Não sabe o que fazer na carreira"
-          icon={<ArrowsOutCardinal size={32} color="#fbfbfb" weight="light" />}
+          icon={
+            <ArrowsOutCardinal
+              size={isLg ? 32 : 24}
+              color="#fbfbfb"
+              weight="light"
+            />
+          }
         />
         <Topic
           text="Tem dificuldades em tomar decisões"
-          icon={<BezierCurve size={32} color="#fbfbfb" weight="light" />}
+          icon={
+            <BezierCurve size={isLg ? 32 : 24} color="#fbfbfb" weight="light" />
+          }
         />
       </Flex>
     </Box>
