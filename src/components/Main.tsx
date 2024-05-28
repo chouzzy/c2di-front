@@ -121,7 +121,7 @@ export function Main() {
     <>
       <Box
         bg="linear-gradient(180deg, hsla(0, 0%, 98%, 1) 20%, hsla(21, 50%, 59%, 1) 60%)"
-        h="67vh"
+        h="37rem"
         mb={4}
         borderBottomRadius="full"
         overflow="hidden"

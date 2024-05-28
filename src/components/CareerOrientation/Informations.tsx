@@ -171,8 +171,9 @@ export function Informations() {
         <Image
           src="/assets/cicle.png"
           alt="cicle"
-          h={{ base: '40vh', lg: '100%' }}
+          h={{ base: 'initial', lg: '100%' }}
           mt={6}
+          w={{ base: 'calc(100vw-4rem)', lg: 'initial' }}
           mx="auto"
         />
       </Box>
