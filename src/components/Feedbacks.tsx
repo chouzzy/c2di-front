@@ -37,7 +37,8 @@ function Feedback({ size, feedback, name, role, type }: FeedbackProps) {
       pt={{ base: 16, lg: 24 }}
       px={{ base: 6, lg: 12 }}
       minW={w}
-      h={{ base: 'calc(100vh - 26rem)', lg: '30rem' }}
+      h={{ base: 'calc(100vh - 12rem)', lg: '30rem' }}
+      maxH={{ base: '460px', lg: 'initial' }}
       position="relative"
       overflow="hidden"
     >
