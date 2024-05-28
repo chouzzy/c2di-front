@@ -168,7 +168,13 @@ export function Informations() {
           textAlign="center"
           maxW="35rem"
         />
-        <Image src="/assets/cicle.png" alt="cicle" h="100%" mt={6} mx="auto" />
+        <Image
+          src="/assets/cicle.png"
+          alt="cicle"
+          h={{ base: '40vh', lg: '100%' }}
+          mt={6}
+          mx="auto"
+        />
       </Box>
     </Flex>
   )
