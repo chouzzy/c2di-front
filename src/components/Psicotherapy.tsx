@@ -47,9 +47,7 @@ export function Psicotherapy() {
         >
           É um processo que leva em consideração e trabalha com foco na história
           de vida e nos comportamentos atuais (pensamentos, sentimentos e
-          atitudes). Precisamos entender o contexto, os acontecimentos e a forma
-          de lidar com o que acontece e o quanto isso incomoda ou ajuda a viver
-          uma vida que faça sentido pra você.
+          atitudes).
         </Text>
         <Text
           mt={{ base: 2, lg: 6 }}

@@ -26,7 +26,7 @@ export function About() {
               fontSize={{ base: 'sm', lg: 'lg' }}
               lineHeight={{ base: 'sm', lg: 'lg' }}
             >
-              É um processo que ajuda a Escolher e Desenvolver uma carreira
+              É um processo que ajuda a Escolher e/ou Desenvolver uma carreira
               rentável e prazerosa mesmo que você esteja confuso (a) ou não
               saiba por onde começar.
             </Text>

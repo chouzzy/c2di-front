@@ -50,8 +50,8 @@ export function WhatCanIHelp() {
             textAlign={{ base: 'center', lg: 'start' }}
           >
             Processo terapêutico que atua em diversas queixas: ansiedade,
-            traumas, depressão, luto. Além dessas demandas pode ter o foco foco
-            em aprofundar o processo de autoconhecimento, trabalhar o equilíbrio
+            traumas, depressão, luto. Além dessas demandas pode ter o foco em
+            aprofundar o processo de autoconhecimento, trabalhar o equilíbrio
             emocional, desenvolver a autoestima e/ou melhorar a qualidade dos
             relacionamentos.
           </Text>
@@ -59,7 +59,7 @@ export function WhatCanIHelp() {
         <Box mt={{ base: 6, lg: 12 }}>
           <Heading
             size={isLg ? 'sm' : 'xs'}
-            text="Programa de Orientação de Carreira individual"
+            text="Programa de Orientação de Carreira"
             color="alabaster"
             textAlign={{ base: 'center', lg: 'start' }}
           />

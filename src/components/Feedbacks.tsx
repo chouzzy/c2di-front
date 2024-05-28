@@ -1,5 +1,6 @@
 import {
   Box,
+  Button,
   Flex,
   FlexProps,
   Image,
@@ -8,25 +9,35 @@ import {
 } from '@chakra-ui/react'
 import { Heading } from './Heading'
 import { CaretLeft, CaretRight } from 'phosphor-react'
+import feedbacks from '../data/feedbacks.json'
+import { useState } from 'react'
 
 interface FeedbackProps extends FlexProps {
-  w: string
+  size: string
   feedback: string
   name: string
   role: string
+  type: string
 }
 
-function Feedback({ w, feedback, name, role }: FeedbackProps) {
+function Feedback({ size, feedback, name, role, type }: FeedbackProps) {
   const isLg = useBreakpointValue({ lg: true })
+  const w =
+    size === 'sm'
+      ? '28rem'
+      : size === 'md'
+        ? '32rem'
+        : size === 'lg'
+          ? '40rem'
+          : size
 
   return (
     <Flex
       direction="column"
       pt={{ base: 16, lg: 24 }}
-      pb={{ base: 6, lg: 12 }}
       px={{ base: 6, lg: 12 }}
       minW={w}
-      h={{ base: 'calc(100vh - 32rem)', lg: '30rem' }}
+      h={{ base: 'calc(100vh - 26rem)', lg: '30rem' }}
       position="relative"
       overflow="hidden"
     >
@@ -35,6 +46,7 @@ function Feedback({ w, feedback, name, role }: FeedbackProps) {
         lineHeight={{ base: 'sm', lg: 'md' }}
         fontWeight="light"
         fontStyle="italic"
+        mb={{ base: 0, lg: 12 }}
       >
         {feedback}
       </Text>
@@ -52,7 +64,7 @@ function Feedback({ w, feedback, name, role }: FeedbackProps) {
         position="absolute"
         left="0"
         top="0"
-        bgColor="bitter"
+        bgColor={type === 'Carreira' ? 'bitter' : 'brass'}
         color="alabaster"
         justifyContent="flex-end"
         align="center"
@@ -63,7 +75,7 @@ function Feedback({ w, feedback, name, role }: FeedbackProps) {
         borderLeftRadius={0}
         zIndex={2}
       >
-        <Heading size={isLg ? 'xs' : '2xs'} text="Carreira" textAlign="end" />
+        <Heading size={isLg ? 'xs' : '2xs'} text={type} textAlign="end" />
       </Flex>
       <Image
         position="absolute"
@@ -80,6 +92,15 @@ function Feedback({ w, feedback, name, role }: FeedbackProps) {
 
 export function Feedbacks() {
   const isLg = useBreakpointValue({ lg: true })
+  const [count, setCount] = useState(0)
+
+  function nextFeedback() {
+    count + 1 > feedbacks.length - 1 ? setCount(0) : setCount(count + 1)
+  }
+
+  function previousFeedback() {
+    count - 1 < 0 ? setCount(0) : setCount(count - 1)
+  }
 
   return isLg ? (
     <Box pl={20} mb={20} borderRadius="lg">
@@ -108,54 +129,26 @@ export function Feedbacks() {
         }}
         borderRadius="lg"
       >
-        <Feedback
-          w="28rem"
-          name="Anne Gabriele Sousa de Oliveira"
-          role="Empreendedora"
-          feedback="Graças ao processo e as ferramentas pude descobrir o meu perfil
-            comportamental, percebendo minha essência, crenças e inseguranças.
-            Percebi o que eu sou e o que quero para meu futuro próximo - hoje
-            tenho um retrato claro do caminho a ser traçado. Estou completamente
-            satisfeita com os resultados em minha vida pessoal e profissional"
-        />
-        <Box
-          borderLeftWidth="1px"
-          alignSelf="stretch"
-          w="auto"
-          h="auto"
-          borderColor="gray.200"
-        />
-        <Feedback
-          w="40rem"
-          name="Estevão Junior"
-          role="Gerente Administrativo e Financeiro"
-          feedback="Acredito que poderia ficar escrevendo os inúmeros benefícios que o
-          processo de carreira me proporcionou. A confiança, liberdade de
-          escolhas, ver no outro a melhor parte do trabalho....Mas tudo isso
-          não teria a menor importância se não tivesse me voltado para dentro
-          de mim buscando o melhor do meu EU que estava escondido e muito
-          desconfiado de tudo e todos. Nossa parceria está sendo um grande
-          processo de aprendizagem onde sou desafiado a pensa e buscar o
-          melhor no trabalho e por consequência reflete na minha vida pessoal."
-        />
-        <Box
-          borderLeftWidth="1px"
-          alignSelf="stretch"
-          w="auto"
-          h="auto"
-          borderColor="gray.200"
-        />
-        <Feedback
-          w="28rem"
-          name="Diogo Kammers"
-          role="Profissional da Área Comercial e Marketing"
-          feedback="A Orientação de Carreira foi um processo desafiador e muito
-          gratificante. Aprender mais sobre mim e como lidar com situações
-          desconfortáveis me ajudou bastante na evolução na empresa e na minha
-          vida particular. O maior ganho com certeza foi me conhecer melhor e
-          trabalhar no plano de ação para ajudar a desenvolver os meus pontos
-          fracos"
-        />
+        {feedbacks.map((feedback, index) => (
+          <>
+            <Feedback
+              size={feedback.size}
+              name={feedback.name}
+              role={feedback.role}
+              feedback={feedback.feedback}
+              type={feedback.type}
+            />
+            {index !== feedbacks.length - 1 && (
+              <Box
+                borderLeftWidth="1px"
+                alignSelf="stretch"
+                w="auto"
+                h="auto"
+                borderColor="gray.200"
+              />
+            )}
+          </>
+        ))}
       </Flex>
     </Box>
   ) : (
@@ -170,35 +163,35 @@ export function Feedbacks() {
         textAlign="center"
       />
       <Feedback
-        w="calc(100vw - 8rem)"
-        name="Anne Gabriele Sousa de Oliveira"
-        role="Empreendedora"
-        feedback="Graças ao processo e as ferramentas pude descobrir o meu perfil
-          comportamental, percebendo minha essência, crenças e inseguranças.
-          Percebi o que eu sou e o que quero para meu futuro próximo - hoje
-          tenho um retrato claro do caminho a ser traçado. Estou completamente
-          satisfeita com os resultados em minha vida pessoal e profissional"
+        size="calc(100vw - 8rem)"
+        name={feedbacks[count].name}
+        role={feedbacks[count].role}
+        feedback={feedbacks[count].feedback}
+        type={feedbacks[count].type}
       />
-      <Flex alignItems="center" justifyContent="center" gap={4}>
-        <Box
-          bgColor="whiskey"
+      <Flex alignItems="center" justifyContent="center" gap={4} mt={6}>
+        <Button
+          bgColor="olive"
           p={2}
           borderRadius="full"
           boxShadow="default"
           transition="all 0.3s ease"
-          _hover={{ bgColor: 'brass' }}
+          _hover={{ bgColor: 'bitter' }}
           cursor="pointer"
+          onClick={previousFeedback}
+          isDisabled={count === 0}
         >
           <CaretLeft size={24} color="#fbfbfb" />
-        </Box>
+        </Button>
         <Box
-          bgColor="whiskey"
+          bgColor="olive"
           p={2}
           borderRadius="full"
           boxShadow="default"
           transition="all 0.3s ease"
-          _hover={{ bgColor: 'brass' }}
+          _hover={{ bgColor: 'bitter' }}
           cursor="pointer"
+          onClick={nextFeedback}
         >
           <CaretRight size={24} color="#fbfbfb" />
         </Box>

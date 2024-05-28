@@ -75,19 +75,17 @@ export function Curriculum() {
             gap={{ base: 0, lg: 20 }}
             rowGap={{ base: 4, lg: 6 }}
           >
-            <Topic title="Psicóloga" text="CRP 12/03015" />
-            <Topic title="Analista" text="PDA e Disc" />
             <Topic title="Psicoterapeuta" text="Adultos" />
-            <Topic title="Psicoterapeuta" text="Orientadora de Carreira" />
+            <Topic title="Avaliação Psicológica" text="Pós-graduação - IPOG" />
             <Topic
-              title="Análise Comportamental Clínica"
-              text="Pós-graduação - IBAC/Brasília"
+              title="Orientadora de Carreira"
+              text="Psicóloga - CRP 12/03015"
               gridColumnStart={1}
               gridColumnEnd={{ base: 1, lg: 3 }}
             />
             <Topic
-              title="Avaliação Psicológica"
-              text="Pós-graduação - IPOG"
+              title="Análise Comportamental Clínica"
+              text="Pós-graduação - IBAC/Brasília"
               gridColumnStart={1}
               gridColumnEnd={{ base: 1, lg: 3 }}
             />
