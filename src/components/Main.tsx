@@ -98,7 +98,7 @@ export function Main() {
             highlightColor="brass"
           />
           <Text fontSize="lg" mt={6}>
-            sou Psicóloga Clínica e Especialista em Desenvolvimento de Carreira,
+            Psicóloga Clínica e Especialista em Desenvolvimento de Carreira,
             formada há 23 anos.
           </Text>
           <Text fontSize="lg" mt={4}>

@@ -45,9 +45,8 @@ export function Psicotherapy() {
           fontSize={{ base: 'sm', lg: 'lg' }}
           lineHeight={{ base: 'sm', lg: 'lg' }}
         >
-          É um processo que leva em consideração e trabalha com foco na história
-          de vida e nos comportamentos atuais (pensamentos, sentimentos e
-          atitudes).
+          É um processo que trabalha com foco na história de vida e nos
+          comportamentos atuais (pensamentos, sentimentos e atitudes).
         </Text>
         <Text
           mt={{ base: 2, lg: 6 }}

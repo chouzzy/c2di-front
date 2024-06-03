@@ -50,10 +50,10 @@ export function WhatCanIHelp() {
             textAlign={{ base: 'center', lg: 'start' }}
           >
             Processo terapêutico que atua em diversas queixas: ansiedade,
-            traumas, depressão, luto. Além dessas demandas pode ter o foco em
-            aprofundar o processo de autoconhecimento, trabalhar o equilíbrio
-            emocional, desenvolver a autoestima e/ou melhorar a qualidade dos
-            relacionamentos.
+            traumas, depressão, luto. Além dessas demandas pode também ter o
+            foco em aprofundar o processo de autoconhecimento, trabalhar o
+            equilíbrio emocional, desenvolver a autoestima e/ou melhorar a
+            qualidade dos relacionamentos.
           </Text>
         </Box>
         <Box mt={{ base: 6, lg: 12 }}>
