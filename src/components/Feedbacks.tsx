@@ -113,7 +113,7 @@ export function Feedbacks() {
         highlightedText="têm a dizer?"
       />
       <Flex
-        w="calc(100vw - 6rem)"
+        w="calc(100vw - 5rem)"
         overflowX="scroll"
         py={12}
         scrollBehavior="smooth"
