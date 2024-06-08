@@ -11,6 +11,7 @@ export function Psicotherapy() {
       direction={{ base: 'column', lg: 'row' }}
       alignItems={{ base: 'start', lg: 'end' }}
       gap={20}
+      id="psicotherapy-anchor"
     >
       {isLg && (
         <Image src="/assets/psicotherapy.png" alt="psicotherapy" h="100%" />

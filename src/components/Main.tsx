@@ -1,5 +1,12 @@
 import { Heading } from '@/components/Heading'
-import { Box, Flex, Image, Text, useBreakpointValue } from '@chakra-ui/react'
+import {
+  Box,
+  Flex,
+  Image,
+  Link,
+  Text,
+  useBreakpointValue,
+} from '@chakra-ui/react'
 import {
   Envelope,
   InstagramLogo,
@@ -20,6 +27,9 @@ export function Main() {
           transition="all 0.3s ease"
           _hover={{ bgColor: 'bitter' }}
           cursor="pointer"
+          as={Link}
+          href="https://www.instagram.com/natashamacedopsi/"
+          target="_blank"
         >
           <InstagramLogo size={isLg ? 32 : 24} color="#fbfbfb" />
         </Box>
@@ -31,6 +41,9 @@ export function Main() {
           transition="all 0.3s ease"
           _hover={{ bgColor: 'bitter' }}
           cursor="pointer"
+          as={Link}
+          href="https://wa.me/4899985535"
+          target="_blank"
         >
           <WhatsappLogo size={isLg ? 32 : 24} color="#fbfbfb" />
         </Box>
@@ -42,6 +55,9 @@ export function Main() {
           transition="all 0.3s ease"
           _hover={{ bgColor: 'bitter' }}
           cursor="pointer"
+          as={Link}
+          href="mailto:contato@natashamacedopsicologia.com.br"
+          target="_blank"
         >
           <Envelope size={isLg ? 32 : 24} color="#fbfbfb" />
         </Box>
@@ -53,6 +69,8 @@ export function Main() {
           transition="all 0.3s ease"
           _hover={{ bgColor: 'bitter' }}
           cursor="pointer"
+          as={Link}
+          href="#address-anchor"
         >
           <MapPinLine size={isLg ? 32 : 24} color="#fbfbfb" />
         </Box>
@@ -70,6 +88,8 @@ export function Main() {
             transition="all .2s ease"
             _hover={{ bgColor: 'brass', color: 'alabaster' }}
             cursor="pointer"
+            as={Link}
+            href="#psicotherapy-anchor"
           >
             PSICOTERAPIA
           </Text>
@@ -83,6 +103,8 @@ export function Main() {
             transition="all .2s ease"
             _hover={{ bgColor: 'brass', color: 'alabaster' }}
             cursor="pointer"
+            as={Link}
+            href="#career-anchor"
           >
             ORIENTAÇÃO DE CARREIRA
           </Text>
@@ -137,6 +159,9 @@ export function Main() {
             transition="all 0.3s ease"
             _hover={{ bgColor: 'bitter' }}
             cursor="pointer"
+            as={Link}
+            href="https://www.instagram.com/natashamacedopsi/"
+            target="_blank"
           >
             <InstagramLogo size={isLg ? 32 : 24} color="#fbfbfb" />
           </Box>
@@ -148,6 +173,9 @@ export function Main() {
             transition="all 0.3s ease"
             _hover={{ bgColor: 'bitter' }}
             cursor="pointer"
+            as={Link}
+            href="https://wa.me/4899985535"
+            target="_blank"
           >
             <WhatsappLogo size={isLg ? 32 : 24} color="#fbfbfb" />
           </Box>
@@ -159,6 +187,9 @@ export function Main() {
             transition="all 0.3s ease"
             _hover={{ bgColor: 'bitter' }}
             cursor="pointer"
+            as={Link}
+            href="mailto:contato@natashamacedopsicologia.com.br"
+            target="_blank"
           >
             <Envelope size={isLg ? 32 : 24} color="#fbfbfb" />
           </Box>
@@ -170,6 +201,8 @@ export function Main() {
             transition="all 0.3s ease"
             _hover={{ bgColor: 'bitter' }}
             cursor="pointer"
+            as={Link}
+            href="#address-anchor"
           >
             <MapPinLine size={isLg ? 32 : 24} color="#fbfbfb" />
           </Box>
@@ -185,6 +218,8 @@ export function Main() {
             transition="all .2s ease"
             _hover={{ bgColor: 'brass', color: 'alabaster' }}
             cursor="pointer"
+            as={Link}
+            href="#psicotherapy-anchor"
           >
             PSICOTERAPIA
           </Text>
@@ -198,6 +233,8 @@ export function Main() {
             transition="all .2s ease"
             _hover={{ bgColor: 'brass', color: 'alabaster' }}
             cursor="pointer"
+            as={Link}
+            href="#career-anchor"
           >
             ORIENTAÇÃO DE CARREIRA
           </Text>

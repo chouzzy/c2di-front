@@ -4,7 +4,7 @@ import { Heading } from '../Heading'
 export function Header() {
   const isLg = useBreakpointValue({ lg: true })
   return (
-    <Box px={{ base: 8, lg: 0 }}>
+    <Box px={{ base: 8, lg: 0 }} id="career-anchor">
       <Image src="/assets/icon_logo_light.svg" alt="icon" h="100%" mx="auto" />
       <Flex alignItems="center" justifyContent="space-between" gap={6}>
         {isLg && (

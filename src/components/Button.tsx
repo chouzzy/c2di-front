@@ -2,6 +2,7 @@ import {
   Button as ChakraButton,
   Text,
   ButtonProps as ChakraButtonProps,
+  Link,
 } from '@chakra-ui/react'
 import { CaretRight } from 'phosphor-react'
 
@@ -23,6 +24,10 @@ export function Button({ variant, text, ...rest }: ButtonProps) {
       borderRadius="lg"
       borderBottomLeftRadius="sm"
       fontWeight="light"
+      as={Link}
+      href="https://wa.me/4899985535"
+      target="_blank"
+      w="fit-content"
       {...rest}
     >
       <Text

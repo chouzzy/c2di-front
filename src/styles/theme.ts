@@ -45,6 +45,7 @@ export const theme = extendBaseTheme({
         bgColor: 'alabaster',
         fontWeight: 'light',
         color: 'eerie',
+        scrollBehavior: 'smooth',
       },
     },
   },

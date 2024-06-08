@@ -106,7 +106,7 @@ export function Curriculum() {
         {isLg && (
           <Button
             mt={12}
-            text="Quero fazer psicoterapia individual"
+            text="Agende uma conversa gratuita"
             variant="dark"
             w="100%"
           />

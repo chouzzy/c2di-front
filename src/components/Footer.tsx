@@ -1,4 +1,4 @@
-import { Box, Flex, Highlight, Image, Text } from '@chakra-ui/react'
+import { Box, Flex, Highlight, Image, Link, Text } from '@chakra-ui/react'
 import {
   Envelope,
   InstagramLogo,
@@ -48,6 +48,9 @@ export function Footer() {
           transition="all 0.3s ease"
           _hover={{ bgColor: 'brass' }}
           cursor="pointer"
+          as={Link}
+          href="https://www.instagram.com/natashamacedopsi/"
+          target="_blank"
         >
           <InstagramLogo size={24} color="#fbfbfb" />
         </Box>
@@ -59,6 +62,9 @@ export function Footer() {
           transition="all 0.3s ease"
           _hover={{ bgColor: 'brass' }}
           cursor="pointer"
+          as={Link}
+          href="https://wa.me/4899985535"
+          target="_blank"
         >
           <WhatsappLogo size={24} color="#fbfbfb" />
         </Box>
@@ -70,6 +76,9 @@ export function Footer() {
           transition="all 0.3s ease"
           _hover={{ bgColor: 'brass' }}
           cursor="pointer"
+          as={Link}
+          href="mailto:contato@natashamacedopsicologia.com.br"
+          target="_blank"
         >
           <Envelope size={24} color="#fbfbfb" />
         </Box>
@@ -81,11 +90,21 @@ export function Footer() {
           transition="all 0.3s ease"
           _hover={{ bgColor: 'brass' }}
           cursor="pointer"
+          as={Link}
+          href="#address-anchor"
         >
           <MapPinLine size={24} color="#fbfbfb" />
         </Box>
       </Flex>
-      <Text fontSize="sm" lineHeight="sm" color="alabaster" mt={8}>
+      <Text
+        fontSize="sm"
+        lineHeight="sm"
+        color="alabaster"
+        mt={8}
+        as={Link}
+        href="https://www.awer.co/"
+        target="_blank"
+      >
         <Highlight
           query="awer.co"
           styles={{ fontWeight: 'bold', color: 'alabaster' }}
