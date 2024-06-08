@@ -26,7 +26,7 @@ export default function Document() {
         />
         <meta
           property="og:image"
-          content="https://natashapsi.vercel.app/assets/logo.png"
+          content="https://natashapsi.vercel.app/assets/og_image.png"
         />
 
         {/* <!-- Twitter Meta Tags --> */}
@@ -45,6 +45,7 @@ export default function Document() {
         /> */}
 
         <link rel="icon" type="image/x-icon" href="/assets/favicon.ico" />
+        <link rel="canonical" href="https://natashapsi.vercel.app/" />
       </Head>
       <body>
         <Main />
