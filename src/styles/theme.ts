@@ -47,7 +47,6 @@ export const theme = extendBaseTheme({
         color: 'eerie',
         scrollBehavior: 'smooth',
         maxWidth: '100%',
-        // overflow: 'hidden',
       },
     },
   },

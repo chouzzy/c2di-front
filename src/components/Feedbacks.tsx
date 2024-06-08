@@ -104,16 +104,17 @@ export function Feedbacks() {
   }
 
   return isLg ? (
-    <Box pl={20} mb={20} borderRadius="lg">
+    <Box mb={20} borderRadius="lg" w="100%">
       <Heading
         size="lg"
         text="O que meus pacientes e clientes têm a dizer?"
         isHighlighted
         highlightColor="brass"
         highlightedText="têm a dizer?"
+        pl={20}
       />
       <Flex
-        w="calc(100vw - 5rem)"
+        w="calc(100vw - (100vw - 100%))"
         overflowX="scroll"
         py={12}
         scrollBehavior="smooth"
