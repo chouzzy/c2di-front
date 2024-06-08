@@ -17,7 +17,7 @@ export default function Home() {
       <Psicotherapy />
       <CareerOrientation />
       <Curriculum />
-      <Feedbacks />
+      {/* <Feedbacks /> */}
       <Where />
       <Footer />
     </>
