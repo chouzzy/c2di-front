@@ -30,22 +30,19 @@ export default function Document() {
         />
 
         {/* <!-- Twitter Meta Tags --> */}
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta
-          property="twitter:domain"
-          content="https://natashapsi.vercel.app/"
-        />
-        <meta property="twitter:url" content="https://natashapsi.vercel.app/" />
-        <meta name="twitter:title" content="Natasha Macedo" />
-        <meta
+        <meta name="twitter:card" content="summary" />
+        <meta name="twitter:domain" content="https://natashapsi.vercel.app/" />
+        {/* <meta name="twitter:url" content="https://natashapsi.vercel.app/" /> */}
+        {/* <meta name="twitter:title" content="Natasha Macedo" /> */}
+        {/* <meta
           name="twitter:description"
           content="Psicóloga Clínica e Especialista em Desenvolvimento de Carreira,
             formada há 23 anos."
-        />
-        <meta
+        /> */}
+        {/* <meta
           name="twitter:image"
           content="https://natashapsi.vercel.app/assets/logo.png"
-        />
+        /> */}
 
         <link rel="icon" type="image/x-icon" href="/assets/favicon.ico" />
       </Head>
