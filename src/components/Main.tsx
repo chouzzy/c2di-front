@@ -2,6 +2,7 @@ import { Heading } from '@/components/Heading'
 import {
   Box,
   Flex,
+  Highlight,
   Image,
   Link,
   Text,
@@ -120,8 +121,13 @@ export function Main() {
             highlightColor="brass"
           />
           <Text fontSize="lg" mt={6}>
-            Psicóloga Clínica e Especialista em Desenvolvimento de Carreira,
-            formada há 23 anos.
+            <Highlight
+              query={['Psicóloga', 'Especialista', 'Carreira']}
+              styles={{ fontWeight: 'semibold', color: 'siam' }}
+            >
+              Psicóloga Clínica e Especialista em Desenvolvimento de Carreira,
+              formada há 23 anos.
+            </Highlight>
           </Text>
           <Text fontSize="lg" mt={4}>
             Minha atuação profissional é focada em aprofundar o autoconhecimento
@@ -259,8 +265,13 @@ export function Main() {
           highlightColor="brass"
         />
         <Text fontSize="sm" mt={3}>
-          sou Psicóloga Clínica e Especialista em Desenvolvimento de Carreira,
-          formada há 23 anos.
+          <Highlight
+            query={['Psicóloga', 'Especialista', 'Carreira']}
+            styles={{ fontWeight: 'semibold', color: 'siam' }}
+          >
+            Psicóloga Clínica e Especialista em Desenvolvimento de Carreira,
+            formada há 23 anos.
+          </Highlight>
         </Text>
         <Text fontSize="sm" mt={2}>
           Minha atuação profissional é focada em aprofundar o autoconhecimento
