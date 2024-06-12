@@ -3,6 +3,7 @@ import {
   Button,
   Flex,
   FlexProps,
+  Highlight,
   Image,
   Text,
   useBreakpointValue,
@@ -18,9 +19,17 @@ interface FeedbackProps extends FlexProps {
   name: string
   role: string
   type: string
+  highlight: string | string[]
 }
 
-function Feedback({ size, feedback, name, role, type }: FeedbackProps) {
+function Feedback({
+  size,
+  feedback,
+  name,
+  role,
+  type,
+  highlight,
+}: FeedbackProps) {
   const isLg = useBreakpointValue({ lg: true })
   const w =
     size === 'sm'
@@ -49,7 +58,12 @@ function Feedback({ size, feedback, name, role, type }: FeedbackProps) {
         fontStyle="italic"
         mb={{ base: 0, lg: 12 }}
       >
-        {feedback}
+        <Highlight
+          query={highlight}
+          styles={{ fontWeight: 'bold', color: 'siam' }}
+        >
+          {feedback}
+        </Highlight>
       </Text>
       <Box mt="auto">
         <Heading size={isLg ? 'xs' : '2xs'} text={name} color="brass" />
@@ -139,6 +153,7 @@ export function Feedbacks() {
               role={feedback.role}
               feedback={feedback.feedback}
               type={feedback.type}
+              highlight={feedback.highlight}
             />
             {index !== feedbacks.length - 1 && (
               <Box
@@ -170,6 +185,7 @@ export function Feedbacks() {
         role={feedbacks[count].role}
         feedback={feedbacks[count].feedback}
         type={feedbacks[count].type}
+        highlight={feedbacks[count].highlight}
       />
       <Flex alignItems="center" justifyContent="center" gap={4} mt={6}>
         <Button
