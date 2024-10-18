@@ -25,9 +25,9 @@ export function Psicotherapy() {
           <Flex flexDir={'column'}>
             <Flex flexDir='column' w='100%' maxW={'52vw'} gap={2} >
 
-              <Image src="/assets/new-images/atendimento-1.jpg" />
-              <Image src="/assets/new-images/atendimento-2.jpg" />
-              <Image src="/assets/new-images/whatsapp-image.jpg" />
+              <Image src="/assets/new-images/atendimento-1.jpg" alt="Imagem ilustrativa" />
+              <Image src="/assets/new-images/atendimento-2.jpg" alt="Imagem ilustrativa"/>
+              <Image src="/assets/new-images/whatsapp-image.jpg" alt="Imagem ilustrativa"/>
 
             </Flex>
           </Flex>
@@ -88,7 +88,7 @@ export function Psicotherapy() {
             <br></br>
             
             {!isLg && (
-              <Image src="/assets/new-images/atendimento-1.jpg" py={4} />
+              <Image src="/assets/new-images/atendimento-1.jpg" alt="Imagem ilustrativa" py={4} />
             )}
 
             <br></br>
@@ -107,7 +107,7 @@ export function Psicotherapy() {
             <br></br>
 
             {!isLg && (
-              <Image src="/assets/new-images/atendimento-2.jpg" py={4} />
+              <Image src="/assets/new-images/atendimento-2.jpg" alt="Imagem ilustrativa" py={4} />
             )}
 
             <br></br>
@@ -119,7 +119,7 @@ export function Psicotherapy() {
             </Text>
 
             {!isLg && (
-              <Image src="/assets/new-images/whatsapp-image.jpg" py={4} />
+              <Image src="/assets/new-images/whatsapp-image.jpg" alt="Imagem ilustrativa" py={4} />
             )}
 
           </Flex>
