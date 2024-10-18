@@ -18,6 +18,7 @@ export const theme = extendBaseTheme({
     olive: '#A29C84',
     bitter: '#89907F',
     siam: '#67705F',
+    siamTranslucent: '#67705Fdd',
     eerie: '#202222',
     alabaster: '#fbfbfb',
   },

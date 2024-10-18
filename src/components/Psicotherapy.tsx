@@ -7,68 +7,132 @@ export function Psicotherapy() {
 
   return (
     <Flex
-      p={{ base: 8, lg: 20 }}
+      p={{ base: 8, lg: 12 }}
       direction={{ base: 'column', lg: 'row' }}
       alignItems={{ base: 'start', lg: 'end' }}
       gap={20}
       id="psicotherapy-anchor"
     >
-      {isLg && (
+      {/* {isLg && (
         <Image src="/assets/psicotherapy.png" alt="psicotherapy" h="100%" />
-      )}
-      <Box>
-        <Flex direction="column" alignItems="center" justifyContent="center">
-          <Image src="/assets/icon_logo_light.svg" alt="icon" h="100%" />
-          <Heading
-            size={isLg ? 'lg' : 'sm'}
-            text="Psicoterapia"
-            color="brass"
+      )} */}
+      <Flex
+        gap={16}
+      >
+
+        {/* Side images */}
+        {isLg && (
+          <Flex flexDir={'column'}>
+            <Flex flexDir='column' w='100%' maxW={'52vw'} gap={2} >
+
+              <Image src="/assets/new-images/atendimento-1.jpg" />
+              <Image src="/assets/new-images/atendimento-2.jpg" />
+              <Image src="/assets/new-images/whatsapp-image.jpg" />
+
+            </Flex>
+          </Flex>
+        )}
+
+        {/* Psicoterapia individual */}
+        <Flex flexDir={'column'} w='100%' justifyContent={'space-between'}>
+
+          <Flex direction="column" alignItems="center" justifyContent="center">
+
+            <Image src="/assets/icon_logo_light.svg" alt="icon" h="100%" />
+            <Heading
+              textAlign={'center'}
+              size={isLg ? 'lg' : 'md'}
+              text={`Psicoterapia individual`}
+              color="brass"
+            />
+            <Heading
+              textAlign={'center'}
+              size={isLg ? 'lg' : 'md'}
+              text={`presencial ou online`}
+              color="brass"
+            />
+
+          </Flex>
+          <Box
+            mt={5}
+            h={1}
+            display="inline-block"
+            width="100%"
+            bg="linear-gradient(90deg, hsla(0, 0%, 98%, 1) 0%, hsla(21, 50%, 59%, 1) 50%, hsla(0, 0%, 98%, 1) 100%)"
+          />
+          {/* 
+          {!isLg && (
+            <Image
+              src="/assets/therapy_mobile.png"
+              alt="curriculum"
+              w="calc(100vw - 4rem)"
+              mt={-7}
+            />
+          )} */}
+
+          {/* Textos sobre psicoterapia */}
+          <Flex
+            mt={{ base: 12, lg: 6 }}
+            textAlign="justify"
+            fontSize={{ base: 'md', lg: 'lg' }}
+            lineHeight={{ base: 'md', lg: 'lg' }}
+            flexDir={'column'}
+          >
+
+            <Text>
+              A Psicoterapia individual é um processo de aprendizagem de si mesmo, de autoconhecimento, no sentido
+              de promover a compreensão do próprio funcionamento de forma profunda e decidir o que é preciso mudar.
+              Neste processo de mudança existe o suporte para o desenvolvimento de novas habilidades.
+              Sempre respeitando a história de vida, o contexto e quem é essa pessoa hoje.
+            </Text>
+            <br></br>
+            
+            {!isLg && (
+              <Image src="/assets/new-images/atendimento-1.jpg" py={4} />
+            )}
+
+            <br></br>
+            <Text>
+              O processo parte da queixa, história de vida e entendimento sobre os comportamentos atuais
+              (sejam pensamentos, sentimentos ou atitudes), ou seja, a forma de lidar com o que acontece na vida
+              e o quanto isso incomoda ou ajuda a viver uma vida que se quer viver.
+            </Text>
+            <br></br>
+
+            <Text>
+              É preciso entender o funcionamento da pessoa em terapia dentro do contexto de vida dela: como foi
+              a construção da sua identidade, como é o conceito que tem de si, como enxerga o mundo em que vive
+              e como ela se comporta em diversos ambientes.
+            </Text>
+            <br></br>
+
+            {!isLg && (
+              <Image src="/assets/new-images/atendimento-2.jpg" py={4} />
+            )}
+
+            <br></br>
+
+            <Text>
+              Psicoterapia pode ter também por objetivo trabalhar qualquer trauma, luto (perdas como divorcio, morte,
+              doença, demissão ou outras), medos extremos, inseguranças, crises de ansiedade, ou para aprofundar
+              o autoconhecimento, com foco no equilíbrio emocional, desenvolvimento de autoestima e melhorar a qualidade dos relacionamentos.
+            </Text>
+
+            {!isLg && (
+              <Image src="/assets/new-images/whatsapp-image.jpg" py={4} />
+            )}
+
+          </Flex>
+
+          {/* Botão whatsapp */}
+          <Button
+            mt={{ base: 0, lg: 12 }}
+            text="Quero fazer psicoterapia individual"
+            variant="dark"
+            w="100%"
           />
         </Flex>
-        <Box
-          mt={5}
-          h={1}
-          display="inline-block"
-          width="100%"
-          bg="linear-gradient(90deg, hsla(0, 0%, 98%, 1) 0%, hsla(21, 50%, 59%, 1) 50%, hsla(0, 0%, 98%, 1) 100%)"
-        ></Box>
-        {!isLg && (
-          <Image
-            src="/assets/therapy_mobile.png"
-            alt="curriculum"
-            w="calc(100vw - 4rem)"
-            mt={-7}
-          />
-        )}
-        <Text
-          mt={{ base: 6, lg: 12 }}
-          textAlign="center"
-          fontSize={{ base: 'sm', lg: 'lg' }}
-          lineHeight={{ base: 'sm', lg: 'lg' }}
-        >
-          É um processo que trabalha com foco na história de vida e nos
-          comportamentos atuais (pensamentos, sentimentos e atitudes).
-        </Text>
-        <Text
-          mt={{ base: 2, lg: 6 }}
-          textAlign="center"
-          fontSize={{ base: 'sm', lg: 'lg' }}
-          lineHeight={{ base: 'sm', lg: 'lg' }}
-        >
-          A psicoterapia pode ainda ter por objetivo trabalhar qualquer forma de
-          luto (em perdas como: divórcio, morte, doença, demissão, tragédias),
-          medos extremos, inseguranças, crises de ansiedade ou mesmo para
-          aprofundar o autoconhecimento com foco no equilíbrio emocional,
-          desenvolvimento da autoestima e para melhorar a qualidade dos
-          relacionamentos.
-        </Text>
-        <Button
-          mt={{ base: 6, lg: 12 }}
-          text="Quero fazer psicoterapia individual"
-          variant="dark"
-          w="100%"
-        />
-      </Box>
+      </Flex>
     </Flex>
   )
 }

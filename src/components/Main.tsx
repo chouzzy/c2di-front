@@ -16,10 +16,14 @@ import {
 } from 'phosphor-react'
 
 export function Main() {
+
   const isLg = useBreakpointValue({ lg: true })
+
   return isLg ? (
-    <Flex position="relative">
-      <Flex gap={12} direction="column" pl={20} pr={16} mt={48}>
+
+    <Flex position="relative" pb={4}>
+
+      <Flex gap={12} direction="column" pl={12} pr={8} mt={48}>
         <Box
           bgColor="olive"
           p={{ base: 4, lg: 5 }}
@@ -76,13 +80,14 @@ export function Main() {
           <MapPinLine size={isLg ? 32 : 24} color="#fbfbfb" />
         </Box>
       </Flex>
-      <Image src="/assets/mainImg.png" alt="mainImg" h="700px" />
-      <Box pr={20} pl={16} pt={20}>
-        <Flex justifyContent="space-between">
+      <Image src="/assets/new-images/bem-vindos-desktop.png" alt="mainImg" h="700px" maxW='560px' objectFit={'cover'} borderBottomRadius={'48%'} />
+      <Box pr={20} pl={24} pt={12}>
+        <Flex justifyContent="space-between" gap={12}>
           <Text
             fontSize={{ base: 'sm', lg: 'md' }}
             py={2}
             px={4}
+            textAlign={'center'}
             borderRadius="full"
             border="1px solid"
             borderColor="brass"
@@ -92,12 +97,13 @@ export function Main() {
             as={Link}
             href="#psicotherapy-anchor"
           >
-            PSICOTERAPIA
+            PSICOTERAPIA INDIVIDUAL
           </Text>
           <Text
             fontSize={{ base: 'sm', lg: 'md' }}
             py={2}
             px={4}
+            textAlign={'center'}
             borderRadius="full"
             border="1px solid"
             borderColor="brass"
@@ -107,14 +113,14 @@ export function Main() {
             as={Link}
             href="#career-anchor"
           >
-            ORIENTAÇÃO DE CARREIRA
+            GRUPOS TERAPÊUTICOS
           </Text>
         </Flex>
         <Box mt={12}>
           <Heading size="xs" text="Olá!" color="siam" />
           <Heading
             size="lg"
-            text="Sou Natasha Macedo,"
+            text="Meu nome é Natasha Macedo,"
             color="siam"
             isHighlighted
             highlightedText="Natasha Macedo,"
@@ -122,18 +128,34 @@ export function Main() {
           />
           <Text fontSize="lg" mt={6}>
             <Highlight
-              query={['Psicóloga', 'Especialista', 'Carreira']}
+              query={['Psicóloga Clínica', 'Pós Graduada em Avaliação Psicológica', 'Análise Comportamental Clinica']}
               styles={{ fontWeight: 'semibold', color: 'siam' }}
             >
-              Psicóloga Clínica e Especialista em Desenvolvimento de Carreira,
-              formada há 23 anos.
+              Sou Psicóloga Clínica e Pós Graduada em Avaliação Psicológica e Análise Comportamental Clinica.
             </Highlight>
           </Text>
-          <Text fontSize="lg" mt={4}>
-            Minha atuação profissional é focada em aprofundar o autoconhecimento
-            para que as pessoas se sintam mais livres para viver uma vida que
-            faça sentido, seja na vida pessoal ou profissional.
+          <Text fontSize="1.125rem" mt={4}>
+            <Highlight
+              query={['FAP']}
+              styles={{ fontWeight: 'medium', color: 'siam' }}
+            >
+              Sou Analista do Comportamento, com foco em trauma e luto, além de atuar com as terapias contextuais:
+
+              FAP (Psicoterapia Análitica Funcional) e
+            </Highlight>
+            <br></br>
+            <Highlight
+              query={['ACT']}
+              styles={{ fontWeight: 'medium', color: 'siam' }}
+            >
+              ACT (Terapia de Aceitação e Compromisso).
+            </Highlight>
+            <br></br>
           </Text>
+          <Text fontSize="1.125rem" mt={4}>
+          Minha atuação profissional é focada em aprofundar o autoconhecimento 
+          para que as pessoas possam se sentir mais livres para viver uma vida com significado.
+          </Text> 
         </Box>
       </Box>
       <Image
@@ -142,14 +164,14 @@ export function Main() {
         h={24}
         position="absolute"
         top={12}
-        left={20}
+        left={12}
       />
     </Flex>
   ) : (
     <>
-      <Box
-        bg="linear-gradient(180deg, hsla(0, 0%, 98%, 1) 20%, hsla(21, 50%, 59%, 1) 60%)"
-        h="37rem"
+      <Flex
+        bg="linear-gradient(180deg, hsla(0, 0%, 98%, 1) 20%, hsla(41, 50%, 79%, 1) 60%)"
+        flexDir={'column'}
         mb={4}
         borderBottomRadius="full"
         overflow="hidden"
@@ -213,11 +235,12 @@ export function Main() {
             <MapPinLine size={isLg ? 32 : 24} color="#fbfbfb" />
           </Box>
         </Flex>
-        <Flex justifyContent="space-between" mt={4} px={8}>
+        <Flex justifyContent="space-between" mt={4} px={8} gap={12}>
           <Text
             fontSize={{ base: 'sm', lg: 'md' }}
             py={2}
             px={2}
+            textAlign={'center'}
             borderRadius="full"
             border="1px solid"
             borderColor="brass"
@@ -227,12 +250,13 @@ export function Main() {
             as={Link}
             href="#psicotherapy-anchor"
           >
-            PSICOTERAPIA
+            PSICOTERAPIA INDIVIDUAL
           </Text>
           <Text
             fontSize={{ base: 'sm', lg: 'md' }}
             py={2}
             px={2}
+            textAlign={'center'}
             borderRadius="full"
             border="1px solid"
             borderColor="brass"
@@ -242,42 +266,61 @@ export function Main() {
             as={Link}
             href="#career-anchor"
           >
-            ORIENTAÇÃO DE CARREIRA
+            GRUPOS TERAPÊUTICOS
           </Text>
         </Flex>
         <Image
-          src="/assets/natasha_main_mobile.png"
+          src="/assets/new-images/bem-vindos-desktop.png"
           alt="mainImg"
-          w="calc(100vw - 4rem)"
-          position="absolute"
+          mx='auto'
+          mt={4}
+          w="calc(100vw - 2rem)"
+          // position="absolute"
           bottom={0}
-          left="2rem"
+          borderTopRadius={'full'}
         />
-      </Box>
-      <Box mx={8} mb={6}>
-        <Heading size="2xs" text="Olá!" color="siam" />
+      </Flex>
+      <Box mx={8} mb={6} pt={4}>
+        <Heading  textAlign={'center'}size="xs" text="Olá!" color="siam" />
         <Heading
+        textAlign={'center'}
           size="sm"
-          text="Sou Natasha Macedo,"
+          text="Meu nome é Natasha Macedo,"
           color="siam"
           isHighlighted
           highlightedText="Natasha Macedo,"
           highlightColor="brass"
         />
-        <Text fontSize="sm" mt={3}>
+        <Text fontSize="md" mt={3} textAlign={'center'} pt={2}>
           <Highlight
-            query={['Psicóloga', 'Especialista', 'Carreira']}
+            query={['Psicóloga Clínica', 'Pós Graduada em Avaliação Psicológica', 'Análise Comportamental Clinica']}
             styles={{ fontWeight: 'semibold', color: 'siam' }}
           >
-            Psicóloga Clínica e Especialista em Desenvolvimento de Carreira,
-            formada há 23 anos.
+            Sou Psicóloga Clínica e Pós Graduada em Avaliação Psicológica e Análise Comportamental Clinica.
           </Highlight>
         </Text>
-        <Text fontSize="sm" mt={2}>
-          Minha atuação profissional é focada em aprofundar o autoconhecimento
-          para que as pessoas se sintam mais livres para viver uma vida que faça
-          sentido, seja na vida pessoal ou profissional.
-        </Text>
+        <Text fontSize="0.875rem" textAlign={'justify'} mt={4}>
+            <Highlight
+              query={['FAP']}
+              styles={{ fontWeight: 'medium', color: 'siam' }}
+            >
+              Sou Analista do Comportamento, com foco em trauma e luto, além de atuar com as terapias contextuais:
+
+              FAP (Psicoterapia Análitica Funcional) e
+            </Highlight>
+            <br></br>
+            <Highlight
+              query={['ACT']}
+              styles={{ fontWeight: 'medium', color: 'siam' }}
+            >
+              ACT (Terapia de Aceitação e Compromisso).
+            </Highlight>
+            <br></br>
+          </Text>
+          <Text fontSize="0.875rem" textAlign={'justify'} mt={4}>
+          Minha atuação profissional é focada em aprofundar o autoconhecimento 
+          para que as pessoas possam se sentir mais livres para viver uma vida com significado.
+          </Text> 
       </Box>
     </>
   )

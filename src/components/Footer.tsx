@@ -8,6 +8,7 @@ import {
 
 export function Footer() {
   return (
+
     <Flex
       direction="column"
       alignItems="center"
