@@ -94,8 +94,7 @@ export function PsicologiaClinica() {
 
                         </Flex>
                         :
-                        ''
-
+                        ""
                     }
 
                 </Flex>
