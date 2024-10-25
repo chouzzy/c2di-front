@@ -49,7 +49,7 @@ export function Curriculum() {
       {isLg && <Image src="/assets/curriculum.png" alt="curriculum" h="100%" />}
       <Box w="100%">
         <Flex direction="column" alignItems="center" justifyContent="center">
-          <Image src="/assets/icon_logo_light.svg" alt="icon" h="100%" />
+          <Image src="/assets/icon_logo_light.svg" alt="icon" h="100%"/>
           <Heading size={isLg ? 'lg' : 'sm'} text="Currículo" color="brass" />
         </Flex>
         <Box

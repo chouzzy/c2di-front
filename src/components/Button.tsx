@@ -9,9 +9,13 @@ import { CaretRight } from 'phosphor-react'
 interface ButtonProps extends ChakraButtonProps {
   variant: 'light' | 'dark'
   text: string
+  prevText?: string
 }
 
-export function Button({ variant, text, ...rest }: ButtonProps) {
+export function Button({ variant, text, prevText, ...rest }: ButtonProps) {
+
+  const href = `https://wa.me/4899985535/${prevText}`
+
   return (
     <ChakraButton
       bgColor={variant === 'light' ? 'whiskey' : 'bitter'}
@@ -25,7 +29,7 @@ export function Button({ variant, text, ...rest }: ButtonProps) {
       borderBottomLeftRadius="sm"
       fontWeight="light"
       as={Link}
-      href="https://wa.me/4899985535"
+      href={href}
       target="_blank"
       w="fit-content"
       {...rest}

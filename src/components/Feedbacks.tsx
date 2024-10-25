@@ -44,9 +44,9 @@ function Feedback({
     <Flex
       direction="column"
       pt={{ base: 16, lg: 24 }}
-      px={{ base: 6, lg: 12 }}
+      px={{ base: 4, lg: 12 }}
       minW={w}
-      h={{ base: 'calc(100vh - 12rem)', lg: '30rem' }}
+      h={{ base: 'calc(100vh - 42rem)', lg: '30rem' }}
       maxH={{ base: '460px', lg: 'initial' }}
       position="relative"
       overflow="hidden"
@@ -90,7 +90,7 @@ function Feedback({
         borderLeftRadius={0}
         zIndex={2}
       >
-        <Heading size={isLg ? 'xs' : '2xs'} text={type} textAlign="end" />
+        <Heading size={isLg ? '2xs' : '2xs'} text={type} textAlign="end" />
       </Flex>
       <Image
         position="absolute"
@@ -118,7 +118,7 @@ export function Feedbacks() {
   }
 
   return isLg ? (
-    <Box mb={20} borderRadius="lg" w="100%">
+    <Box borderRadius="lg" w="100%" py={12}>
       <Heading
         size="lg"
         text="O que meus pacientes e clientes têm a dizer?"

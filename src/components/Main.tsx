@@ -111,7 +111,7 @@ export function Main() {
             _hover={{ bgColor: 'brass', color: 'alabaster' }}
             cursor="pointer"
             as={Link}
-            href="#career-anchor"
+            href="#group-anchor"
           >
             GRUPOS TERAPÊUTICOS
           </Text>

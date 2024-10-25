@@ -10,7 +10,7 @@ export function Liberty() {
   return (
     <Flex
       mt={24}
-      pr={{base:4, lg:0}}
+      pr={{ base: 4, lg: 0 }}
       pl={{ base: 4, lg: 12 }}
       gap={{ base: 8, lg: 0 }}
       alignItems={{ base: 'center', lg: 'start' }}
@@ -149,6 +149,7 @@ export function Liberty() {
           <Button
             variant="light"
             text="Agende uma sessão"
+            prevText="Olá, acessei o site Natasha Macedo e gostaria de agendar uma sessão"
             mt={{ base: 6, lg: 12 }}
             mx={{ base: 'auto', lg: 0 }}
           />
@@ -159,7 +160,7 @@ export function Liberty() {
           bgPos='bottom left'
           bgSize={'cover'}
           w='100%'
-          h={['256px','256px','auto','auto']}
+          h={['256px', '256px', 'auto', 'auto']}
         />
       </Flex>
 

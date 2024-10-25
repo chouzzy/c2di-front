@@ -78,11 +78,13 @@ export function CanIHelp() {
                 inView={inView}
                 animation={animation}
                 title='Psicoterapia Individual'
+                id="#psicotherapy-anchor"
               />
               <AnimatedButton
                 inView={inView}
                 animation={animation}
                 title='Grupos Terapêuticos'
+                id="#group-anchor"
               />
 
             </Flex>
