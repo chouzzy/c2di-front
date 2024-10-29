@@ -7,45 +7,32 @@ export default function Document() {
         {/* <!-- HTML Meta Tags --> */}
         <meta
           name="description"
-          content="Psicóloga Clínica e Especialista em Desenvolvimento de Carreira,
-            formada há 23 anos."
+          content="App C2DI"
         />
         <meta
           name="keywords"
-          content="psicóloga, psicologia, terapia, clínica, especialista, carreira, trabalho, vocacional, desenvolvimento, crescer, médico, médica, psicólogo, coach, natasha, macedo, natashapsi, psicoterapia, autoconhecimento, profissional, orientação, currículo"
+          content="empreendimento, investimento, imoveis, imobiliario"
         />
 
         {/* <!-- Facebook Meta Tags --> */}
-        <meta property="og:url" content="https://natashapsi.vercel.app/" />
+        <meta property="og:url" content="https://c2di.vercel.app/" />
         <meta property="og:type" content="website" />
-        <meta property="og:title" content="Natasha Macedo" />
+        <meta property="og:title" content="C2DI" />
         <meta
           property="og:description"
-          content="Psicóloga Clínica e Especialista em Desenvolvimento de Carreira,
-            formada há 23 anos."
+          content="App C2DI"
         />
         <meta
           property="og:image"
-          content="https://natashapsi.vercel.app/assets/og_image.png"
+          content="https://c2di.vercel.app/assets/og_image.png"
         />
 
         {/* <!-- Twitter Meta Tags --> */}
         <meta name="twitter:card" content="summary" />
-        <meta name="twitter:domain" content="https://natashapsi.vercel.app/" />
-        {/* <meta name="twitter:url" content="https://natashapsi.vercel.app/" /> */}
-        {/* <meta name="twitter:title" content="Natasha Macedo" /> */}
-        {/* <meta
-          name="twitter:description"
-          content="Psicóloga Clínica e Especialista em Desenvolvimento de Carreira,
-            formada há 23 anos."
-        /> */}
-        {/* <meta
-          name="twitter:image"
-          content="https://natashapsi.vercel.app/assets/logo.png"
-        /> */}
+        <meta name="twitter:domain" content="https://c2di.vercel.app/" />
 
-        <link rel="icon" type="image/x-icon" href="/assets/favicon.ico" />
-        <link rel="canonical" href="https://natashapsi.vercel.app/" />
+        <link rel="icon" type="image/x-icon" href="/assets/favicon.png" />
+        <link rel="canonical" href="https://c2di.vercel.app/" />
       </Head>
       <body>
         <Main />

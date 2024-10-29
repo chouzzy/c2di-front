@@ -12,6 +12,13 @@ export const theme = extendBaseTheme({
     Button,
   },
   colors: {
+    darkSide:"#0F172A",
+    lightSide:"#fbfbfb",
+    grayDivisor:"#E5E7EB",
+    inputBorder:"#CBD5E1",
+    graySide:"#64748B",
+    redSide:"#EF3A5D",
+    
     santaFe: '#B16E51',
     brass: '#CB8762',
     whiskey: '#D49671',
@@ -20,7 +27,6 @@ export const theme = extendBaseTheme({
     siam: '#67705F',
     siamTranslucent: '#67705Fdd',
     eerie: '#202222',
-    alabaster: '#fbfbfb',
   },
   radii: {
     none: '0',

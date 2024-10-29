@@ -36,7 +36,7 @@ export default function App({ Component, pageProps }: AppProps) {
       ></Script>
       <ChakraBaseProvider theme={theme}>
         <Head>
-          <title>Natasha Macedo</title>
+          <title>C2DI app</title>
         </Head>
         <Component {...pageProps} />
       </ChakraBaseProvider>

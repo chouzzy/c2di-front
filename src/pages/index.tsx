@@ -18,20 +18,7 @@ export default function Home() {
   return (
     <>
       <Container  maxW={'1366px'} mx='auto'>
-        <Main />
-        {/* <Freedom /> */}
-        <Liberty />
-        {/* <WhatCanIHelp /> */}
-        <CanIHelp />
-        <Psicotherapy />
-        <About/>
-        <Supera/>
-        {/* <CareerOrientation /> */}
-        {/* <Curriculum /> */}
-        <Feedbacks />
-        <PsicologiaClinica/>
-        <Where />
-        <Footer />
+        home
       </Container>
     </>
   )
