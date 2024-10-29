@@ -1,14 +1,16 @@
 import { FormControl, FormLabel, Input } from "@chakra-ui/react";
+import { UseFormRegisterReturn } from "react-hook-form";
 
 interface UsersInputProps {
     label_top: string,
     type: string,
     placeholder: string,
+    register: UseFormRegisterReturn<any>
     maxWidth?: string | number
     label_bottom?: string
 }
 
-export function UsersInput({ label_top, type, placeholder, maxWidth, label_bottom }: UsersInputProps
+export function UsersInput({ label_top, type, placeholder, register, maxWidth, label_bottom }: UsersInputProps
 ) {
 
     return (
@@ -19,7 +21,7 @@ export function UsersInput({ label_top, type, placeholder, maxWidth, label_botto
                 {label_top}
             </FormLabel>
 
-            <Input w='100%' maxW={maxWidth ?? '100%'} px={4} py={2} border='1px solid' borderColor={'inputBorder'} borderRadius={6} type={type} placeholder={placeholder} />
+            <Input {...register} w='100%' maxW={maxWidth ?? '100%'} px={4} py={2} border='1px solid' borderColor={'inputBorder'} borderRadius={6} type={type} placeholder={placeholder} />
 
             {label_bottom ?
                 <FormLabel fontSize={12}>

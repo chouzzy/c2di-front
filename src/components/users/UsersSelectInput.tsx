@@ -1,12 +1,15 @@
 import { Flex, FormControl, FormLabel, Select } from "@chakra-ui/react";
+import { register } from "module";
 import { Dispatch, SetStateAction } from "react";
+import { UseFormRegister, UseFormRegisterReturn } from "react-hook-form";
 
 
 interface UsersSelectInputProps {
     options: string[]
     label_top: string,
     placeholder: string,
-    label_bottom?: string
+    register: UseFormRegisterReturn<any>;
+    label_bottom?: string,
     state?: string,
     setState?: Dispatch<SetStateAction<string>>,
     city?: string,
@@ -17,6 +20,7 @@ export function UsersSelectInput({
     options,
     label_top,
     placeholder,
+    register,
     state,
     setState,
     city,
@@ -32,13 +36,14 @@ export function UsersSelectInput({
             </FormLabel>
 
             <Select
+                {...register}
                 cursor={'pointer'}
                 h={10}
-                onChange={(event) => {
-                    setState ? setState(event.target.value) : ""
-                    setCity ? setCity(event.target.value) : ""
-                }}
                 icon={<></>}
+                onChange={(event) => {
+                    setState ? setState(event.target.value) : "";
+                    setCity ? setCity(event.target.value) : "";
+                }}
                 placeholder={placeholder}
                 border='1px solid'
                 borderColor={'inputBorder'}
