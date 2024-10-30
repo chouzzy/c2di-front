@@ -2,24 +2,49 @@ import {
     Flex,
     Button,
 } from '@chakra-ui/react';
+import axios from 'axios';
 import { UsersInput } from './UsersInput';
 import { UsersSelectInput } from './UsersSelectInput';
 import { useEffect, useState } from 'react';
-import axios from 'axios';
 import { useForm } from 'react-hook-form';
-import { yupResolver } from "@hookform/resolvers/yup"; // Importe o yupResolver
-import { updateUsersSchema } from '@/pages/schemas/usersSchema';
-ya
-function FormUsers() {
+import { updateUsersSchema } from '@/schemas/usersSchema';
+import { ErrorInputComponent } from '../ErrorInputComponent';
+import { ValidationError } from 'yup';
+import { StaticProfile } from './StaticProfile';
+import { genderOptions } from './utils';
+import moment from 'moment';
+import { useRouter } from 'next/router';
 
-    const genderOptions = ["Masculino", "Feminino", "Outro"]
+interface FormUsersProps {
+    userData: User | null
+}
+
+function FormUsers({ userData }: FormUsersProps) {
+
+    const router = useRouter()
+
+    const { register, handleSubmit, formState: { errors } } = useForm({});
 
     const [states, setStates] = useState<string[]>()
     const [cities, setCities] = useState<string[]>()
 
-    const [state, setState] = useState<string>("")
-    const [city, setCity] = useState<string>("")
+    const [state, setState] = useState<string>("SP")
+    const [city, setCity] = useState<string>("São Paulo")
 
+    const [yupError, setYupError] = useState<string>("")
+
+    const [editMode, setEditMode] = useState(false); // Estado para controlar o modo de edição
+
+    const handleEditClick = () => {
+        setEditMode(true); // Ativa o modo de edição
+    };
+
+    const handleSaveClick = () => {
+        router.reload()
+    };
+
+
+    // GET STATE
     useEffect(() => {
         const fetchStates = async () => {
             const response = await axios( // Adicione o await aqui
@@ -39,6 +64,7 @@ function FormUsers() {
         fetchStates(); // Não precisa de await aqui, pois o useEffect não retorna nada
     }, []);
 
+    // GET CITY
     useEffect(() => {
         const fetchCities = async (state: string) => {
             if (state) {
@@ -57,61 +83,117 @@ function FormUsers() {
         fetchCities(state); // Não precisa de await aqui, pois o useEffect não retorna nada
     }, [state]);
 
-    const { register, handleSubmit, formState: { errors } } = useForm({
-        resolver: yupResolver(updateUsersSchema)
-    });
 
-    const onSubmit = (data:any) => console.log(data);
+    if (!userData) {
+        return
+    }
+
+    // SUBMIT FORM
+    const onSubmit = async (data: any) => {
+
+        try {
+            setYupError("")
+            // Valida os dados com o Yup
+            if (!data.address.zipCode || !data.address.street || !data.address.city || !data.address.state) {
+                delete data.address
+            }
+            await updateUsersSchema.validate(data);
+
+            data.birth = new Date(data.birth)
+
+            handleSaveClick()
+
+
+            const response = await axios.put(`http://localhost:8081/users/update/${userData.id}`, data, {
+                headers: {
+                    'Content-Type': 'application/json' // Define o header Content-Type
+                }
+            });
+
+        } catch (error: any) {
+            if (error instanceof ValidationError) {
+                setYupError(error.message)
+            }
+            console.log('error on submit')
+            console.log(error)
+        }
+    };
+
+
 
     return (
         <Flex w='100%' flexDirection="column" gap={2}>
-            <form onSubmit={handleSubmit(onSubmit)}>
+
+            <ErrorInputComponent error={yupError} />
+            <form>
 
                 {/* Nome */}
-                <UsersInput
-                    key={"nome"}
-                    type='text'
-                    placeholder='João da Silva Gomes'
-                    label_top='Nome'
-                    label_bottom='O nome que será exibido no seu perfil e para os gerentes dos seus investimentos.'
-                    register={register("name")}
-                />
+                {editMode ?
+                    <UsersInput
+                        key={"name"}
+                        type='text'
+                        placeholder={'Nome completo'}
+                        label_top='Nome completo'
+                        defaultValue={userData.name}
+                        label_bottom='O nome que será exibido no seu perfil e para os gerentes dos seus investimentos.'
+                        register={register("name")}
+                    />
+                    :
+                    <StaticProfile type='Nome completo' data={userData.name} />
+                }
 
                 {/* E-mail */}
-                <UsersInput
-                    key={"email"}
-                    type='email'
-                    placeholder='joaodasilva@exemplo.com'
-                    label_top='E-mail'
-                    label_bottom='O e-mail cadastrado para você acessar sua conta. Não pode ser alterado.'
-                    register={register("email")}
-                />
+                {editMode ?
+                    <UsersInput
+                        key={"email"}
+                        type='email'
+                        placeholder={'E-mail'}
+                        label_top='E-mail'
+                        defaultValue={userData.email}
+                        label_bottom='O e-mail cadastrado para você acessar sua conta. Não pode ser alterado.'
+                        register={register("email")}
+                    />
+                    :
+
+                    <StaticProfile type='E-mail' data={userData.email} />
+                }
 
                 {/* Telefone e Gênero */}
                 <Flex mt={4} w='100%' gap={8}>
 
                     {/* Telefone */}
                     <Flex>
-                        <UsersInput
-                            key={"telefone"}
-                            type='tel'
-                            placeholder="(11) 99999-9999"
-                            label_top='Número de telefone'
-                            label_bottom='Telefone para que seus gerentes entrem em contato.'
-                            register={register("telefone")}
-                        />
+                        {editMode ?
+                            <UsersInput
+                                key={"phoneNumber"}
+                                type='tel'
+                                placeholder={'Telefone'}
+                                label_top='Número de telefone'
+                                defaultValue={userData.phoneNumber}
+                                label_bottom='Telefone para que seus gerentes entrem em contato.'
+                                register={register("phoneNumber")}
+                            />
+                            :
+
+                            <StaticProfile type='Telefone' data={userData.phoneNumber} />
+                        }
                     </Flex>
 
                     {/* Gênero */}
                     <Flex>
-                        <UsersSelectInput
-                            key={"gender"}
-                            options={genderOptions}
-                            label_top='Gênero'
-                            label_bottom='O gênero com o qual você se identifica.'
-                            placeholder='Selecione'
-                            register={register("gender")}
-                        />
+                        {editMode ?
+                            <UsersSelectInput
+                                key={"gender"}
+                                options={genderOptions}
+                                defaultValue={userData.gender}
+                                label_top='Gênero'
+                                label_bottom='O gênero com o qual você se identifica.'
+                                placeholder='Selecione'
+                                register={register("gender")}
+                            />
+                            :
+                            <StaticProfile type='Gênero' data={userData.gender} />
+                        }
                     </Flex>
 
 
@@ -122,88 +204,132 @@ function FormUsers() {
                 <Flex mt={4} alignItems={'center'} gap={6}>
 
                     {/* Profissão */}
-                    <UsersInput
-                        key={"profession"}
-                        type='text'
-                        placeholder='Engenheiro mecânico'
-                        label_top='Sua profissão'
-                        register={register("profession")}
-                    />
-                    {/* Data de nascimento */}
-                    <UsersInput
-                        key={"birth"}
-                        type='date'
-                        placeholder=''
-                        label_top='Data de Nascimento'
-                        register={register("birth")}
-                    />
+                    {editMode ?
+                        <UsersInput
+                            key={"profession"}
+                            type='text'
+                            placeholder={'userData.profession'}
+                            label_top='Sua profissão'
+                            defaultValue={userData.profession}
+                            register={register("profession")}
+                        />
+                        :
 
-                    {/* CPF */}
-                    <UsersInput
-                        key={"cpf"}
-                        type='text'
-                        placeholder='111.111.111-11'
-                        label_top='CPF'
-                        register={register("cpf")}
-                    />
+                        <StaticProfile type='Profissão' data={userData.profession} />
+                    }
+                    {/* Data de nascimento */}
+                    {editMode ?
+                        <UsersInput
+                            key={"birth"}
+                            type='date'
+                            placeholder={""}
+                            label_top='Data de Nascimento'
+                            defaultValue={moment(new Date(userData.birth).toLocaleDateString("pt-br"), 'DD/MM/YYYY').format('YYYY-MM-DD')}
+                            register={register("birth")}
+                        />
+                        :
+                        <StaticProfile type='Data de nascimento' data={new Date(userData.birth).toLocaleDateString("pt-br")} />
+                    }
+
+                    {/* Nome de usuário */}
+                    {editMode ?
+                        <UsersInput
+                            key={"username"}
+                            type='text'
+                            placeholder={'Ex: joaopedro98'}
+                            label_top='Nome de usuário'
+                            defaultValue={userData.username}
+                            register={register("username")}
+                        />
+                        :
+                        <StaticProfile type='Nome de usuário' data={userData.username} />
+                    }
                 </Flex>
 
                 {/* CEP, Estado e Cidade */}
                 <Flex mt={4} alignItems={'center'} gap={8}>
 
-                    <Flex maxW={64} gap={8}>
-                        <UsersInput
-                            key={"cep"}
-                            type='text'
-                            placeholder='111-1111'
-                            label_top='CEP'
-                            register={register("cep")}
-                        />
+                    <Flex maxW={72} gap={8}>
+                        {editMode ?
+                            <UsersInput
+                                key={"zipCode"}
+                                type='text'
+                                placeholder={'XXXXX-XXX'}
+                                label_top='CEP'
+                                defaultValue={(userData.address && userData.address.zipCode)?? ""}
+                                register={register("address.zipCode")}
+                            />
+                            :
+                            <StaticProfile type='CEP' data={(userData.address && userData.address.zipCode) ?? "Não informado"} />
+                        }
 
-                        <UsersSelectInput
-                            key={"state"}
-                            state={state}
-                            setState={setState}
-                            options={states ?? []}
-                            label_top='Estado'
-                            placeholder='Selecione'
-                            register={register("state")}
-                        />
+                        {editMode ?
+                            <UsersSelectInput
+                                key={"state"}
+                                state={state}
+                                setState={setState}
+                                options={states ?? []}
+                                label_top='Estado'
+                                placeholder='Selecione'
+                                defaultValue={(userData.address && userData.address.state) ?? ""}
+                                register={register("address.state")}
+                            />
+                            :
+                            <StaticProfile type='Estado' data={(userData.address && userData.address.state) ?? "Não informado"} />
+                        }
                     </Flex>
 
                     <Flex >
-                        <UsersSelectInput
-                            key={"city"}
-                            state={city}
-                            setState={setCity}
-                            options={cities ?? []}
-                            label_top='Cidade'
-                            placeholder='Selecione'
-                            register={register("city")}
+                        {editMode ?
+                            <UsersSelectInput
+                                key={"city"}
+                                state={city}
+                                setState={setCity}
+                                options={cities ?? []}
+                                label_top='Cidade'
+                                placeholder='Selecione'
+                                defaultValue={(userData.address && userData.address.city) ?? ""}
+                                register={register("address.city")}
                             />
+                            :
+                            <StaticProfile type='Cidade' data={(userData.address && userData.address.city) ?? "Não informado"} />
+                        }
                     </Flex>
 
                 </Flex>
 
                 {/* Endereço */}
                 <Flex w='100%'>
-                    <UsersInput
-                        key={"address"}
-                        type='text'
-                        placeholder='Av. Exemplo dos santos, 456'
-                        label_top='Endereço'
-                        register={register("address")}
-                    />
+                    {editMode ?
+                        <UsersInput
+                            key={"address"}
+                            type='text'
+                            placeholder={"Av. Exemplo dos Santos, 456"}
+                            label_top='Endereço'
+                            defaultValue={(userData.address && userData.address.street) ?? ""}
+                            register={register("address.street")}
+                        />
+                        :
+
+                        <StaticProfile type='Endereço' data={(userData.address && userData.address.street) ?? "Não informado"} />
+                    }
                 </Flex>
 
-                <Button type='submit' color={'lightSide'} fontWeight={'light'} bgColor={'darkSide'} mt={4} maxW={40}>
-                    Atualizar perfil
-                </Button>
 
+                {editMode ?
+                    <Button onClick={handleSubmit(onSubmit)} color={'lightSide'} fontWeight={'light'} bgColor={'darkSide'} mt={4} maxW={40}>
+                        Salvar dados
+                    </Button>
+                    :
+                    <Button color='lightSide' bgColor="redSide" onClick={handleEditClick} mt={4} maxW={40}>
+                        Editar
+                    </Button>
+                }
 
             </form>
+
         </Flex>
     );
 }
 
-export default FormUsers;
+export default FormUsers

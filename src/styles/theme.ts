@@ -12,13 +12,22 @@ export const theme = extendBaseTheme({
     Button,
   },
   colors: {
-    darkSide:"#0F172A",
-    lightSide:"#fbfbfb",
-    grayDivisor:"#E5E7EB",
-    inputBorder:"#CBD5E1",
-    graySide:"#64748B",
-    redSide:"#EF3A5D",
-    
+    darkSide: "#0F172A",
+    lightSide: "#fbfbfb",
+    grayDivisor: "#E5E7EB",
+    inputBorder: "#CBD5E1",
+    graySide: "#64748B",
+    grayHoverSide: "#e4e4e7",
+    redSide: "#EF3A5D",
+    beigeSide: "#f6f6f6",
+    borderMediaSide:"#E2E8F0cc",
+
+    facebook: "#3B5998",
+    whatsapp: "#25D366",
+    appleBlack: "#000000",
+
+
+
     santaFe: '#B16E51',
     brass: '#CB8762',
     whiskey: '#D49671',

@@ -1,37 +1,41 @@
 import { Button, Flex, Text } from "@chakra-ui/react";
 
-
 export function ProfileUserResume() {
 
     return (
-        <Flex w='100%' maxW={'480px'} flexDir={'column'} justifyContent={'space-between'}>
+        <Flex w='100%' maxW={'380px'} flexDir={'column'} justifyContent={'space-between'}>
 
             <Flex flexDir={'column'} gap={4}>
                 <Flex flexDir={'column'} gap={1}>
                     <Flex>
+
+
+                        {/* Título */}
                         <Text fontWeight={'medium'} color='graySide'>
                             Seu perfil de investidor
                         </Text>
                     </Flex>
                     <Flex>
+
+                        {/* Perfil de investidor (conservador, moderado, ousado) */}
                         <Text fontSize={32} fontWeight={'medium'}>
-                            Nome do perfil
+                            Conservador
                         </Text>
+
                     </Flex>
                 </Flex>
                 <Flex>
-                    Aqui uma descrição sobre este perfil de investidor. Lorem ipsum dolor sit amet consectetur.
-                    Non aliquam a odio et. Nisl quis tellus odio netus arcu aliquam. Risus leo at mattis quis.
-                    Nec pharetra ullamcorper quis faucibus enim aenean eget leo. Enim eros consectetur rhoncus
-                    et velit. Neque eget lacus cursus purus tellus morbi arcu. Aliquam ullamcorper ut suscipit
-                    amet fermentum purus mattis id. Accumsan eget ornare leo neque. Volutpat eu malesuada arcu
-                    elementum magna neque. Nulla viverra sapien nisl ipsum pharetra purus pellentesque.
-                    Dolor eu tempor dictumst fames blandit etiam sed cras duis. Id facilisis fringilla at in.
-                    Lacinia eget vel placerat ornare viverra.
+                    O investidor conservador prioriza a segurança e a preservação
+                    do capital acima de tudo. Busca investimentos com baixo risco
+                    e retornos previsíveis, mesmo que isso signifique abrir mão
+                    de ganhos mais expressivos. A tranquilidade de saber que seu dinheiro
+                    está protegido é o principal objetivo.
                 </Flex>
             </Flex>
 
             <Flex>
+
+                {/* Refazer teste */}
                 <Button fontWeight={'normal'} bgColor={'redSide'} color={'lightSide'} mt={4}>
                     Refazer teste de perfil
                 </Button>
