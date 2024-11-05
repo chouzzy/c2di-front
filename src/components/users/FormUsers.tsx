@@ -3,17 +3,17 @@ import {
     Button,
 } from '@chakra-ui/react';
 import axios from 'axios';
-import { UsersInput } from './UsersInput';
-import { UsersSelectInput } from './UsersSelectInput';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { updateUsersSchema } from '@/schemas/usersSchema';
 import { ErrorInputComponent } from '../ErrorInputComponent';
 import { ValidationError } from 'yup';
-import { StaticProfile } from './StaticProfile';
-import { genderOptions } from './utils';
 import moment from 'moment';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
+import { StaticProfile } from './StaticProfile';
+import { UsersInput } from './UsersInput';
+import { UsersSelectInput } from './UsersSelectInput';
+import { genderOptions } from './utils';
 
 interface FormUsersProps {
     userData: User | null
@@ -40,7 +40,7 @@ function FormUsers({ userData }: FormUsersProps) {
     };
 
     const handleSaveClick = () => {
-        router.reload()
+        router.refresh()
     };
 
 

@@ -1,9 +1,31 @@
 /* theme.ts */
-import { extendBaseTheme, theme as chakraTheme } from '@chakra-ui/react'
+
+
+
+// Com isso, temos o email, nickname e vários outros atributos do user, que está logado pelo auth0. também podemos pegar o Token fornecido pelo auth0 e seguir para a página de criação de usuario, ou, autenticação no banco de dados
+
+// Logar o usuario
+// Receber o user do auth0
+// Fazer um UseEffect do usuário para o backend e checar se o puto existe (user.sub é o id) PASSANDO O TOKEN, algo assim:
+// const response = await fetch('/backend/users/list', {
+//   headers: {
+//     Authorization: `Bearer ${token}`, passando o accessToken pego em: const { accessToken } = await getAccessToken(req, res), em: import { getAccessToken } from '@auth0/nextjs-auth0'; não pode ser 'use client'
+//   },
+// });
+// 
+// Redirecionar pra criação do usuário (se for necessário)
+// Criar o usuario no banco (sempre passando token)
+// Redirecionar para "seu perfil" por enquanto
+
+// Refresh token é lidado sozinho com o proprio auth0
+
+
+
+import { extendTheme, theme as chakraTheme } from '@chakra-ui/react'
 
 const { Button } = chakraTheme.components
 
-export const theme = extendBaseTheme({
+export const theme = extendTheme({
   fonts: {
     heading: 'var(--font-montserrat)',
     body: 'var(--font-montserrat)',
@@ -20,7 +42,7 @@ export const theme = extendBaseTheme({
     grayHoverSide: "#e4e4e7",
     redSide: "#EF3A5D",
     beigeSide: "#f6f6f6",
-    borderMediaSide:"#E2E8F0cc",
+    borderMediaSide: "#E2E8F0cc",
 
     facebook: "#3B5998",
     whatsapp: "#25D366",
