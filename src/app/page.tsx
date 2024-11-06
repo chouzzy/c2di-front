@@ -1,82 +1,78 @@
 'use client'
-import { Button, Container, Flex, Link } from "@chakra-ui/react";
+import { Button, Container, Flex, Link, Spinner, Text } from "@chakra-ui/react";
 import { useUser } from "@auth0/nextjs-auth0/client";
 import { useEffect, useState } from "react";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { useRouter } from "next/navigation";
-import { handleLogout } from '@auth0/nextjs-auth0';
-
-// Função para fazer logout
-
 
 // app/page.tsx
 export default function Home() {
 
   const { user, error, isLoading } = useUser()
 
-  console.log('user')
-  console.log(user)
+  const [loginStatus, setLoginStatus] = useState('Aguarde, estamos te redirecionando...')
 
-  const [userData, setUserData] = useState<User>()
+  const router = useRouter()
 
-
+  // MANAGE LOGIN
   useEffect(() => {
-    const setCookie = async () => {
+    const manageLogin = async () => {
       try {
 
         await axios.post('/api/setAccessTokenCookie');
 
         if (user) {
 
-          const response = await axios.get(`http://localhost:8081/users/?email=joao.silva@example.com`, { withCredentials: true });
+          try {
 
-          const userResponse: User = response.data.users[0]
+            const response = await axios.get(`http://localhost:8081/users/findUnique/?email=${user.email}`, { withCredentials: true })
 
-          setUserData(userResponse)
+            if (response.status == 200) {
+              const userResponse: User = response.data.user
+              router.push(`/users/update/${userResponse.id}`)
+            }
+
+
+          } catch (error) {
+
+            if (error instanceof AxiosError) {
+
+              if (error.status == 404) {
+                router.push(`/authentication/create/investor`)
+              } else {
+                console.error('Erro ao buscar dados do usuário:', error);
+                setLoginStatus("Ocorreu um erro ao buscar seus dados. Por favor, tente novamente mais tarde.");
+
+              }
+
+            } else {
+              console.error('Erro inesperado:', error);
+              setLoginStatus("Ocorreu um erro inesperado. Por favor, tente novamente mais tarde.");
+            }
+            throw error
+          }
         }
-
-
       } catch (error) {
-        console.error('Erro ao definir o cookie:', error);
+        console.error('Erro ao definir o gerenciar o login:', error);
+        setLoginStatus("Ocorreu um erro ao configurar sua sessão. Por favor, tente novamente mais tarde.");
+
       }
     };
 
     if (user) {
-      setCookie();
+      manageLogin();
     }
   }, [user]);
 
   return (
     <Container maxW={'1366px'} mx='auto'>
       <Flex flexDir={'column'}>
-        
-        home!
-        {userData ?
-          <Flex flexDir={'column'} gap={4}>
-
-            <Flex>
-              Bem vindo querido {userData.name},
-            </Flex>
-            <Flex>
-              do email {userData.email},
-            </Flex>
-            <Flex>
-              do cpf {userData.cpf}
-            </Flex>
-
-            <Link href='/api/auth/logout'>
-              <Button
-                colorScheme="red"
-                maxW={32}
-              >
-                Logout
-              </Button>
-            </Link>
-
-          </Flex>
-          :
-          <>ninguém logado </>
-        }
+        <Flex gap={2} p={4} alignItems={'center'}>
+          <Text>
+            {loginStatus}
+          </Text>
+          <Spinner boxSize={4} />
+        </Flex>
       </Flex>
     </Container>
   );

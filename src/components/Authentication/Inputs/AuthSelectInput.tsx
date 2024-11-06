@@ -8,6 +8,7 @@ interface UsersSelectInputProps {
     label_top: string,
     placeholder: string,
     register: UseFormRegisterReturn<any>;
+    isRequired?:boolean
     // errors: any,
     // fieldName: string,
     label_bottom?: string,
@@ -22,6 +23,7 @@ export function AuthSelectInput({
     label_top,
     placeholder,
     register,
+    isRequired,
     state,
     setState,
     city,
@@ -39,8 +41,9 @@ export function AuthSelectInput({
 
             <Select
                 {...register}
-                cursor={'pointer'}
                 h={10}
+                isRequired={true}
+                cursor={'pointer'}
                 icon={<></>}
                 onChange={(event) => {
                     setState ? setState(event.target.value) : "";

@@ -5,6 +5,7 @@ import { getAccessToken } from "@auth0/nextjs-auth0";
 import { UserProfile, useUser } from "@auth0/nextjs-auth0/client";
 import { Container, Flex } from "@chakra-ui/react";
 import axios from "axios";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 
@@ -15,6 +16,19 @@ export default function WelcomeBack() {
     const { register, handleSubmit, formState: { errors } } = useForm();
 
     const { user, error, isLoading } = useUser()
+
+    const router = useRouter()
+
+    useEffect(() => {
+
+        const redirectSession = async () => {
+
+            router.push('/')
+        }
+        if (user) {
+            redirectSession()
+        }
+    }, [user])
 
     return (
 

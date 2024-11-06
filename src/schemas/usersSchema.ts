@@ -33,7 +33,13 @@ const updateUsersSchema = yup.object({
   investorProfileDescription: yup.string().optional(),
 }).noUnknown(true, "Campos desconhecidos no corpo da requisição.").strict();
 
+
+
+
+
+
 const createUsersSchema = yup.object({
+
   name: yup.string().required("O nome é obrigatório").min(2, "O nome precisa ter no mínimo dois caracteres"),
   email: yup.string().email("Formato de email inválido").required("O e-mail é obrigatório").min(3, "O email precisa ter no mínimo três caracteres"),
   phoneNumber: yup.string().required("O número de telefone é obrigatório"), 
@@ -59,6 +65,7 @@ const createUsersSchema = yup.object({
   investorProfileDescription: yup.string().optional(),
   
   role: yup.mixed().oneOf(["INVESTOR", "PROJECT_MANAGER", "ADMINISTRATOR"]).required("A role é obrigatória")
+  
 }).noUnknown(true, "Campos desconhecidos no corpo da requisição.").strict();
 
 

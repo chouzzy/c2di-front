@@ -4,6 +4,7 @@ import { SideBar } from '@/components/SideBar'
 import FormUsers from '@/components/users/FormUsers'
 import { UsersHeader } from '@/components/users/Header'
 import { ProfileUserResume } from '@/components/users/ProfileUserResume'
+import { useUser } from '@auth0/nextjs-auth0/client'
 import { Container, Flex, Spinner } from '@chakra-ui/react'
 import axios from 'axios'
 import { useParams, useRouter } from 'next/navigation'
@@ -30,12 +31,11 @@ export default function Users() {
     const fetchUserData = async (userId: string) => {
       try {
 
-        const response = await axios.get(`http://localhost:8081/users?id=${userId}`);
+        const response = await axios.get(`http://localhost:8081/users?id=${userId}`, { withCredentials: true });
 
-        const user: User = response.data.users[0]
+        const userResponse: User = response.data.users[0]
 
-        setUserData(user)
-
+        setUserData(userResponse)
 
       } catch (error) {
 
@@ -48,6 +48,7 @@ export default function Users() {
       }
     };
 
+
     if (userId && typeof (userId) == 'string') {
       fetchUserData(userId);
     }
@@ -57,46 +58,45 @@ export default function Users() {
     <>
       <Container maxW={'1366px'} mx='auto' h='100vh'>
 
-        <Flex h='100%'>
-          <Flex>
-            <SideBar />
-          </Flex>
-
-          <Flex h='100%' flexDir={'column'} w='100%' px={12} py={12} gap={6}>
-
-            {/* HEADER */}
-            <Flex
-              justifyContent={'space-between'}
-              alignItems={'center'}
-              borderBottom={'1px solid #E5E7EB'}
-              pb={8}
-            >
-              <UsersHeader />
+          <Flex h='100%'>
+            <Flex>
+              <SideBar userData={userData} />
             </Flex>
 
-            {loading && (userData) ?
-              <Flex boxSize={42} mx='auto'>
-                <Spinner
-                  boxSize={42}
-                  color='redSide'
-                />
+            <Flex h='100%' flexDir={'column'} w='100%' px={12} py={12} gap={6}>
+
+              {/* HEADER */}
+              <Flex
+                justifyContent={'space-between'}
+                alignItems={'center'}
+                borderBottom={'1px solid #E5E7EB'}
+                pb={8}
+              >
+                <UsersHeader />
               </Flex>
-              :
 
-              // {/* BODY FORMS */}
-              < Flex flexDir={'column'}>
-
-                <Flex gap={12}>
-                  <FormUsers userData={userData} />
-                  <ProfileUserResume />
+              {!userData ?
+                <Flex boxSize={42} mx='auto'>
+                  <Spinner
+                    boxSize={42}
+                    color='redSide'
+                  />
                 </Flex>
+                :
 
-              </Flex>
-            }
+                // {/* BODY FORMS */}
+                < Flex flexDir={'column'}>
 
+                  <Flex gap={12}>
+                    <FormUsers userData={userData} />
+                    <ProfileUserResume userData={userData} />
+                  </Flex>
+
+                </Flex>
+              }
+
+            </Flex>
           </Flex>
-        </Flex>
-
       </Container >
     </>
   )

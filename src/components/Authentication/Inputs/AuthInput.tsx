@@ -4,6 +4,8 @@ interface UsersInputProps {
     label_top: string,
     type: string,
     placeholder: string,
+    value?: string | number
+    isRequired?: boolean,
     disabled?: boolean,
     defaultValue?: string,
     // errors: any
@@ -13,7 +15,7 @@ interface UsersInputProps {
     label_bottom?: string
 }
 
-export function AuthInput({ label_top, type, placeholder, disabled = false, defaultValue, register, maxWidth, label_bottom }: UsersInputProps
+export function AuthInput({ label_top, type, placeholder, value, isRequired, disabled = false, defaultValue, register, maxWidth, label_bottom }: UsersInputProps
 ) {
 
     return (
@@ -26,6 +28,8 @@ export function AuthInput({ label_top, type, placeholder, disabled = false, defa
             </FormLabel>
 
             <Input {...register}
+                value={value?? undefined}
+                isRequired={isRequired}
                 disabled={disabled}
                 w='100%'
                 maxW={maxWidth ?? '100%'}

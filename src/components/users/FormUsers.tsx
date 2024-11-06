@@ -9,11 +9,12 @@ import { updateUsersSchema } from '@/schemas/usersSchema';
 import { ErrorInputComponent } from '../ErrorInputComponent';
 import { ValidationError } from 'yup';
 import moment from 'moment';
-import { useRouter } from 'next/navigation';
 import { StaticProfile } from './StaticProfile';
 import { UsersInput } from './UsersInput';
 import { UsersSelectInput } from './UsersSelectInput';
 import { genderOptions } from './utils';
+import { useRouter } from 'next/navigation';
+import { fetchCities, fetchStates } from '@/app/api/ibge/route';
 
 interface FormUsersProps {
     userData: User | null
@@ -40,47 +41,30 @@ function FormUsers({ userData }: FormUsersProps) {
     };
 
     const handleSaveClick = () => {
-        router.refresh()
+        window.location.reload();
     };
 
 
     // GET STATE
     useEffect(() => {
-        const fetchStates = async () => {
-            const response = await axios( // Adicione o await aqui
-                'https://servicodados.ibge.gov.br/api/v1/localidades/estados'
-            );
-
-            let states: string[] = response.data.map((state: any) => {
-                return state.sigla
-            })
-
-            states.sort()
-            // const states = response.data; // Acesse os dados da resposta
-            setStates(states)
-
+        const setFetchedStates = async () => {
+            const statesFetched = await fetchStates()
+            setStates(statesFetched)
         };
 
-        fetchStates(); // Não precisa de await aqui, pois o useEffect não retorna nada
+        setFetchedStates();
     }, []);
 
     // GET CITY
     useEffect(() => {
-        const fetchCities = async (state: string) => {
+        const setfetchedCities = async (state: string) => {
             if (state) {
-                const response = await axios(
-                    `https://servicodados.ibge.gov.br/api/v1/localidades/estados/${state}/municipios`,
-                );
-
-
-                let cities: string[] = response.data.map((city: any) => {
-                    return city.nome
-                })
-                setCities(cities.sort());
+                const citiesFetched = await fetchCities(state)
+                setCities(citiesFetched.sort());
             };
         }
 
-        fetchCities(state); // Não precisa de await aqui, pois o useEffect não retorna nada
+        setfetchedCities(state);
     }, [state]);
 
 
@@ -92,7 +76,6 @@ function FormUsers({ userData }: FormUsersProps) {
     const onSubmit = async (data: any) => {
 
         try {
-            setYupError("")
             // Valida os dados com o Yup
             if (!data.address.zipCode || !data.address.street || !data.address.city || !data.address.state) {
                 delete data.address
@@ -110,12 +93,11 @@ function FormUsers({ userData }: FormUsersProps) {
                 }
             });
 
+
         } catch (error: any) {
             if (error instanceof ValidationError) {
                 setYupError(error.message)
             }
-            console.log('error on submit')
-            console.log(error)
         }
     };
 

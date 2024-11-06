@@ -1,4 +1,4 @@
-import { Flex, Box, Text, Icon, Link, Image } from '@chakra-ui/react';
+import { Flex, Box, Text, Icon, Link, Image, Button, Spinner } from '@chakra-ui/react';
 import {
     CaretDown,
     SquaresFour,
@@ -10,7 +10,11 @@ import {
 import { MenuItem } from './MenuItem';
 import { Header } from './Header';
 
-export function SideBar() {
+interface SideBarProps {
+    userData: User | null
+}
+
+export function SideBar({ userData }: SideBarProps) {
 
 
     return (
@@ -24,26 +28,40 @@ export function SideBar() {
             py={8}
             bg="beigeSide"
             color="darkSide"
-            
+
         >
             <Flex flexDir={'column'} w='100%' gap={12}>
 
 
                 {/* Cabeçalho */}
-                <Header name='João da Silva Gomes' />
+
+                {userData ?
+
+                    <Header name={userData.name} />
+                    :
+                    <Flex boxSize={16} mx='auto'>
+                        <Spinner
+                            boxSize={8}
+                            color='darkSide'
+                        />
+                    </Flex>
+                }
 
                 {/* Itens do menu */}
                 <Flex flexDirection="column" alignItems="flex-start" w="100%">
                     <MenuItem href={`dashboard`} icon={SquaresFour} title='Dashboard' />
                     <MenuItem href={`investimentos`} icon={BookOpen} title='Meus investimentos' />
-                    <MenuItem href={`investir`}  icon={ChartLineUp} title='Investir' />
+                    <MenuItem href={`investir`} icon={ChartLineUp} title='Investir' />
                     <MenuItem href={`users/update`} isActive icon={User} title='Meu perfil' />
-                    <MenuItem href={`logout`} icon={SignOut} title='Logout' />
+                    <MenuItem href={`api/auth/logout`} icon={SignOut} title='Logout' />
+
                 </Flex>
+
             </Flex>
 
+
             {/* Rodapé */}
-            <Flex>
+            <Flex flexDir={'column'} gap={8}>
                 <Image src="/assets/logo_c2di.svg" alt="logo" />
             </Flex>
         </Flex>

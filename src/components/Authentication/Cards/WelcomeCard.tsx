@@ -34,7 +34,7 @@ export function WelcomeCard({ user, isLoading, register }: WelcomeCardProps) {
                         {/* BEM VINDO E INSTRUÇÃO */}
                         <Flex flexDir={'column'} alignItems={'center'} justifyContent={'center'}>
                             <Flex fontSize={28} fontWeight={'semibold'}>
-                                Bem-vindo de volta!
+                                Bem-vindo
                             </Flex>
                             <Flex>Insira seu e-mail e senha para entrar no portal</Flex>
                         </Flex>
@@ -43,7 +43,7 @@ export function WelcomeCard({ user, isLoading, register }: WelcomeCardProps) {
                         <Flex flexDir={'column'} gap={4}>
 
 
-                            <AuthInput
+                            {/* <AuthInput
                                 key={"email"}
                                 type='email'
                                 placeholder={'nome@exemplo.com'}
@@ -56,7 +56,7 @@ export function WelcomeCard({ user, isLoading, register }: WelcomeCardProps) {
                                 placeholder={'*************'}
                                 label_top='Senha'
                                 register={register("password")}
-                            />
+                            /> */}
 
                             {/* <Link href='/api/auth/login'> */}
                             <Flex
@@ -71,11 +71,11 @@ export function WelcomeCard({ user, isLoading, register }: WelcomeCardProps) {
                                 justifyContent={'center'}
                             >
 
-                                Entrar com e-mail
+                                Entrar / Cadastrar
                             </Flex>
                             {/* </Link> */}
 
-                            <Flex justifyContent={'space-between'} fontWeight={'medium'} fontSize={'sm'}>
+                            {/* <Flex justifyContent={'space-between'} fontWeight={'medium'} fontSize={'sm'}>
 
                                 <Flex borderBottom='2px' borderColor={'graySide'}>
                                     Esqueci minha senha
@@ -84,7 +84,7 @@ export function WelcomeCard({ user, isLoading, register }: WelcomeCardProps) {
                                     Criar uma conta
                                 </Flex>
 
-                            </Flex>
+                            </Flex> */}
                         </Flex>
 
                         {/* CRIAR CONTA - ESQUECI MINHA SENHA LINKS */}
@@ -100,19 +100,19 @@ export function WelcomeCard({ user, isLoading, register }: WelcomeCardProps) {
                         <Flex gap={8} px={8}>
 
                             <Flex boxSize={24} bgColor='white'>
-                                <Flex alignItems={'center'} justifyContent={'center'} w='100%' border='1px' borderColor={'borderMediaSide'}>
+                                <Flex alignItems={'center'} justifyContent={'center'} w='100%' border='1px' borderColor={'borderMediaSide'} onClick={() => { LoginCallback() }} cursor={'pointer'}>
                                     <Image src="/media-icons/google.svg" boxSize={12} />
                                 </Flex>
                             </Flex>
 
                             <Flex boxSize={24} bgColor='white'>
-                                <Flex alignItems={'center'} justifyContent={'center'} w='100%' color={"facebook"} border='1px' borderColor={'borderMediaSide'}>
+                                <Flex alignItems={'center'} justifyContent={'center'} w='100%' color={"facebook"} border='1px' borderColor={'borderMediaSide'} onClick={() => { LoginCallback() }} cursor={'pointer'}>
                                     <FaFacebook size={32} />
                                 </Flex>
                             </Flex>
 
                             <Flex boxSize={24} bgColor='white'>
-                                <Flex alignItems={'center'} justifyContent={'center'} w='100%' color={"appleBlack"} border='1px' borderColor={'borderMediaSide'}>
+                                <Flex alignItems={'center'} justifyContent={'center'} w='100%' color={"appleBlack"} border='1px' borderColor={'borderMediaSide'} onClick={() => { LoginCallback() }} cursor={'pointer'}>
                                     <FaApple size={32} />
                                 </Flex>
                             </Flex>

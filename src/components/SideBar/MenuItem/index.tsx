@@ -12,7 +12,7 @@ interface MenuItemProps {
 export function MenuItem({ href, icon, title, isActive }: MenuItemProps) {
 
     return (
-        <Link w='100%' href={`/${href}`} _hover={{ textDecoration: 'none' }}>
+        <Link w='100%' href={`/${href}`}   _hover={{ textDecor:'none'}}> 
             <Flex
                 w='100%'
                 alignItems="center"

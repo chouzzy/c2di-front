@@ -1,7 +1,8 @@
-import { Flex, Text } from "@chakra-ui/react";
+import { Button, Flex, Link, Text } from "@chakra-ui/react";
 import { Bell, BellRinging, Moon, Sun } from "phosphor-react";
 import { useState } from "react";
-import { boolean } from "yup";
+import { IoIosLogOut } from "react-icons/io";
+
 
 interface HeaderProps {
     name: string
@@ -14,14 +15,17 @@ export function Header({ name }: HeaderProps) {
     return (
         <Flex flexDirection="column" gap={2}>
 
-            <Flex flexDir={'column'}>
+            <Flex alignItems={'end'} justifyContent={'space-between'}>
 
+                <Flex flexDir={'column'}>
 
-                <Text fontSize="xl" fontWeight="bold">
-                    Bem vindo(a),
-                </Text>
+                    <Text fontSize="xl" fontWeight="bold">
+                        Bem vindo(a),
+                    </Text>
 
-                <Text>{name}</Text> {/* Nome do usuário */}
+                    <Text>{name}</Text> {/* Nome do usuário */}
+                </Flex>
+
 
             </Flex>
             {/* Botões no cabeçalho */}
@@ -49,6 +53,9 @@ export function Header({ name }: HeaderProps) {
                 <Flex as="button" borderRadius="md" py={2} _hover={{ color: "redSide", transition: "200ms" }}>
                     <Bell size={20} />
                 </Flex>
+
+
+
             </Flex>
 
         </Flex>

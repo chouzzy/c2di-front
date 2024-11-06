@@ -1,9 +1,7 @@
+'use client'
 import { BlackCard } from "@/components/Authentication/Cards/BlackCard";
-import { CreateUserCard } from "@/components/Authentication/Cards/CreateUserCard";
 import { CreateInvestorAccountCard } from "@/components/Authentication/Cards/Investor/CreateInvestorAccount";
 import { Container, Flex } from "@chakra-ui/react";
-import { useState } from "react";
-import { useForm } from "react-hook-form";
 
 
 export default function CreateInvestorAccount() {

@@ -1,6 +1,10 @@
-import { Button, Flex, Text } from "@chakra-ui/react";
+import { Button, Flex, Spinner, Text } from "@chakra-ui/react";
 
-export function ProfileUserResume() {
+interface ProfileUsersProps {
+    userData: User | null
+}
+
+export function ProfileUserResume({ userData }: ProfileUsersProps) {
 
     return (
         <Flex w='100%' maxW={'380px'} flexDir={'column'} justifyContent={'space-between'}>
@@ -9,27 +13,46 @@ export function ProfileUserResume() {
                 <Flex flexDir={'column'} gap={1}>
                     <Flex>
 
-
                         {/* Título */}
                         <Text fontWeight={'medium'} color='graySide'>
                             Seu perfil de investidor
                         </Text>
+
                     </Flex>
                     <Flex>
 
                         {/* Perfil de investidor (conservador, moderado, ousado) */}
-                        <Text fontSize={32} fontWeight={'medium'}>
-                            Conservador
-                        </Text>
+                        {userData ?
+
+                            <Text fontSize={32} fontWeight={'medium'}>
+                                {userData.investorProfileName}
+                            </Text>
+                            :
+                            <Flex boxSize={16} mx='auto'>
+                                <Spinner
+                                    boxSize={6}
+                                    color='darkSide'
+                                />
+                            </Flex>
+                        }
 
                     </Flex>
                 </Flex>
                 <Flex>
-                    O investidor conservador prioriza a segurança e a preservação
-                    do capital acima de tudo. Busca investimentos com baixo risco
-                    e retornos previsíveis, mesmo que isso signifique abrir mão
-                    de ganhos mais expressivos. A tranquilidade de saber que seu dinheiro
-                    está protegido é o principal objetivo.
+
+                    {userData ?
+
+                        <Text>
+                            {userData.investorProfileDescription}
+                        </Text>
+                        :
+                        <Flex boxSize={16} mx='auto'>
+                            <Spinner
+                                boxSize={6}
+                                color='darkSide'
+                            />
+                        </Flex>
+                    }
                 </Flex>
             </Flex>
 

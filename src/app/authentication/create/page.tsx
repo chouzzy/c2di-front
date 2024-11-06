@@ -1,3 +1,4 @@
+'use client'
 import { BlackCard } from "@/components/Authentication/Cards/BlackCard";
 import { CreateUserCard } from "@/components/Authentication/Cards/CreateUserCard";
 import { WelcomeCard } from "@/components/Authentication/Cards/WelcomeCard";
