@@ -1,9 +1,11 @@
 "use client"
 
 import { checkUserByEmail } from '@/app/api/checkUserByEmail/route'
+import { SpinnerFullScreen } from '@/components/Loading/SpinnerFullScreen'
 import { SideBar } from '@/components/SideBar'
 import FormUsers from '@/components/users/FormUsers'
 import { UsersHeader } from '@/components/users/Header'
+import { HeaderSelf } from '@/components/users/HeaderSelf'
 import { UserProfile, useUser } from '@auth0/nextjs-auth0/client'
 import { Container, Flex, Spinner } from '@chakra-ui/react'
 import { useParams, useRouter } from 'next/navigation'
@@ -76,6 +78,13 @@ export default function Users() {
 
   }, [user])
 
+  if (!user) {
+    return (
+      <SpinnerFullScreen />
+    )
+  }
+
+
   return (
     <>
       <Container maxW={'1366px'} mx='auto' h='100vh'>
@@ -101,7 +110,7 @@ export default function Users() {
                 borderBottom={'1px solid #E5E7EB'}
                 pb={8}
               >
-                <UsersHeader />
+                <HeaderSelf userData={userData} user={user}/>
               </Flex>
 
               {!userData ?

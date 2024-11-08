@@ -1,14 +1,13 @@
 "use client"
 
 import { checkUserByEmail } from '@/app/api/checkUserByEmail/route'
+import { SpinnerFullScreen } from '@/components/Loading/SpinnerFullScreen'
 import { SideBar } from '@/components/SideBar'
 import FormUsers from '@/components/users/FormUsers'
-import { UsersHeader } from '@/components/users/Header'
+import { HeaderSelf } from '@/components/users/HeaderSelf'
 import { ProfileUserResume } from '@/components/users/ProfileUserResume'
-import { getSession } from '@auth0/nextjs-auth0'
 import { UserProfile, useUser } from '@auth0/nextjs-auth0/client'
 import { Container, Flex, Spinner } from '@chakra-ui/react'
-import axios from 'axios'
 import { useParams, useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 
@@ -52,7 +51,6 @@ export default function Users() {
       try {
 
         const userResponse = await checkUserByEmail(user)
-
         setUserData(userResponse)
 
       } catch (error) {
@@ -74,6 +72,13 @@ export default function Users() {
     }
 
   }, [user])
+
+  if (!user) {
+    return (
+      <SpinnerFullScreen />
+    )
+  }
+
 
   return (
     <>
@@ -101,7 +106,7 @@ export default function Users() {
                 borderBottom={'1px solid #E5E7EB'}
                 pb={8}
               >
-                <UsersHeader />
+                <HeaderSelf userData={userData} user={user}/>
               </Flex>
 
               {!userData ?

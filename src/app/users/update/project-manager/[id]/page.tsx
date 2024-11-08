@@ -2,6 +2,7 @@
 
 import { checkUserByEmail } from '@/app/api/checkUserByEmail/route'
 import { getUserByID } from '@/app/api/getUserByID/route'
+import { SpinnerFullScreen } from '@/components/Loading/SpinnerFullScreen'
 import { SideBar } from '@/components/SideBar'
 import FormUsers from '@/components/users/FormUsers'
 import { UsersHeader } from '@/components/users/Header'
@@ -79,6 +80,13 @@ export default function Users() {
 
     }, [user])
 
+    if (!user) {
+        return (
+          <SpinnerFullScreen />
+        )
+      }
+    
+
     return (
         <>
             <Container maxW={'1366px'} mx='auto' h='100vh'>
@@ -105,7 +113,7 @@ export default function Users() {
                                 borderBottom={'1px solid #E5E7EB'}
                                 pb={8}
                             >
-                                <AdminHeader />
+                                <AdminHeader userData={userData} user={user} />
                             </Flex>
 
                             {!userData ?

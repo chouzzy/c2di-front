@@ -1,26 +1,34 @@
 import { resetPassword } from "@/app/api/changePassword/route";
+import { deletePrismaAndAuth0User } from "@/app/api/deletePrismaAndAuth0User/route";
+import { UserProfile } from "@auth0/nextjs-auth0/client";
 import { Button, Flex, Spinner, Text, useDisclosure, Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, ModalFooter } from "@chakra-ui/react";
 import { Envelope, Key } from "phosphor-react";
 import { useEffect, useState } from "react";
 
-interface UserHeaderProps {
+interface HeaderSelfProps {
     userData: User | null
+    user:UserProfile
 }
 
-export function UsersHeader({ userData }: UserHeaderProps) {
+export function HeaderSelf({ userData, user }: HeaderSelfProps) {
 
     const { isOpen, onOpen, onClose } = useDisclosure() // Adiciona o hook useDisclosure
     const [changingPassword, setChangingPassword] = useState(false)
+    const [deletingUser, setDeletingUser] = useState(false)
     const [modalMessage, setModalMessage] = useState(''); // Estado para a mensagem do modal
 
     const changePassword = () => {
         setChangingPassword(true)
     }
 
+    const deleteUser = () => {
+        setDeletingUser(true)
+    }
+
     useEffect(() => {
         const updatePassword = async (email: User["email"]) => {
             const resetPasswordMessage = await resetPassword(email)
-            setModalMessage('resetPasswordMessage'); // Define a mensagem do modal
+            setModalMessage(resetPasswordMessage); // Define a mensagem do modal
             onOpen();
         }
 
@@ -33,6 +41,23 @@ export function UsersHeader({ userData }: UserHeaderProps) {
         }
 
     }, [changingPassword])
+
+    useEffect(() => {
+        const deleteUser = async (id:User["id"], auth0UserID:UserProfile["sub"]) => {
+            const resetPasswordMessage = await deletePrismaAndAuth0User(id, auth0UserID)
+            setModalMessage(resetPasswordMessage); // Define a mensagem do modal
+            onOpen();
+        }
+
+        if (changingPassword) {
+
+            if (userData && user) {
+                deleteUser(userData.id, user.sub)
+                setChangingPassword(false)
+            }
+        }
+
+    }, [deletingUser])
 
     return (
         <>
@@ -49,7 +74,7 @@ export function UsersHeader({ userData }: UserHeaderProps) {
                 </Flex>
             </Flex>
 
-            <Flex>
+            <Flex gap={8} alignItems={'center'}>
                 <Button onClick={changePassword} _hover={{ bgColor: 'redSide' }} color={'lightSide'} bgColor={'darkSide'} mt={4}>
                     <Flex minW={32} alignItems={'center'} justifyContent={'center'}>
 
@@ -60,8 +85,17 @@ export function UsersHeader({ userData }: UserHeaderProps) {
                         }
                     </Flex>
                 </Button>
-            </Flex>
+                <Button onClick={deleteUser} _hover={{ bgColor: 'red' }} color={'lightSide'} bgColor={'redSide'} mt={4}>
+                    <Flex minW={32} alignItems={'center'} justifyContent={'center'}>
 
+                        {deletingUser ?
+                            <Spinner boxSize={4} />
+                            :
+                            <Text>Apagar usuário</Text>
+                        }
+                    </Flex>
+                </Button>
+            </Flex>
 
             {/* Modal */}
             <Modal isOpen={isOpen} onClose={onClose} >

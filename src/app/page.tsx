@@ -10,7 +10,8 @@ import { checkUserByEmail } from "./api/checkUserByEmail/route";
 export default function Home() {
 
   const { user, error, isLoading } = useUser()
-
+  console.log('user')
+  console.log(user)
   const [loginStatus, setLoginStatus] = useState('Aguarde, estamos te redirecionando...')
 
   const router = useRouter()
@@ -23,7 +24,6 @@ export default function Home() {
         const userResponse = await checkUserByEmail(user)
 
         if (userResponse) {
-          console.log("Usuário já cadastrado no banco de dados")
 
           switch (userResponse.role) {
             case "INVESTOR":
@@ -57,11 +57,11 @@ export default function Home() {
       }
     };
 
-    if (!isLoading) {
       if (user) {
         manageLogin(user);
+      } else {
+        router.push('/authentication')
       }
-    }
   }, [user]);
 
   return (

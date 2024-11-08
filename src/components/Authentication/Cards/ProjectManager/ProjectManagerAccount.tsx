@@ -13,6 +13,7 @@ import { fetchCities, fetchStates } from "@/app/api/ibge/route";
 import { UserProfile, useUser } from "@auth0/nextjs-auth0/client";
 import { checkUserByEmail } from "@/app/api/checkUserByEmail/route";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
+import { createPrismaUser } from "@/app/api/createUser/route";
 
 
 interface ProjectManagerAccountCardProps {
@@ -51,7 +52,7 @@ export function ProjectManagerAccountCard({user, router}: ProjectManagerAccountC
                             router.push(`/users/update/project-manager/`)
                             break
                         case 'ADMINISTRATOR':
-                            router.push(`/users/update/administrator/`)
+                            // router.push(`/users/update/administrator/`)
                             break
                     }
                 }
@@ -119,11 +120,7 @@ export function ProjectManagerAccountCard({user, router}: ProjectManagerAccountC
 
             data.birth = new Date(data.birth)
 
-            const response = await axios.post(`http://localhost:8081/users/create`, data, {
-                headers: {
-                    'Content-Type': 'application/json' // Define o header Content-Type
-                }
-            });
+            const response = await createPrismaUser(data)
 
             handleSaveClick()
 

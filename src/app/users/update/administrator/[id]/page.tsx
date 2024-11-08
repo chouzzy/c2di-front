@@ -2,6 +2,7 @@
 
 import { checkUserByEmail } from '@/app/api/checkUserByEmail/route'
 import { getUserByID } from '@/app/api/getUserByID/route'
+import { SpinnerFullScreen } from '@/components/Loading/SpinnerFullScreen'
 import { SideBar } from '@/components/SideBar'
 import FormUsers from '@/components/users/FormUsers'
 import { UsersHeader } from '@/components/users/Header'
@@ -30,27 +31,6 @@ export default function Users() {
     // GET USER
     useEffect(() => {
 
-        const checkAndRedirectRole = async (user: UserProfile) => {
-
-            const userResponse = await checkUserByEmail(user)
-            if (userResponse) {
-
-                switch (userResponse.role) {
-
-                    case 'INVESTOR':
-                        router.push(`/users/update/investor/`)
-                        break
-                    case 'PROJECT_MANAGER':
-                        router.push(`/users/update/project-manager/`)
-                        break
-                    case 'ADMINISTRATOR':
-                        setUserAdminData(userResponse)
-                        setPageLoaded(true);
-                        break
-                }
-            }
-        }
-
         const fetchUserData = async (id: User["id"]) => {
             try {
 
@@ -66,22 +46,52 @@ export default function Users() {
             }
         }
 
-        if (!isLoading) {
+        const checkAndRedirectRole = async (idParams: string, user: UserProfile) => {
 
-            if (user) {
-                checkAndRedirectRole(user);
-                if (params.id && typeof (params.id) == 'string') {
-                    fetchUserData(params.id);
-                    if (params.id === userAdminData?.id) {
-                        router.push(`/users/update/administrator/`)
-                    }
+            const userResponse = await checkUserByEmail(user)
+            if (userResponse) {
+
+                switch (userResponse.role) {
+
+                    case 'INVESTOR':
+                        router.push(`/users/update/investor/`)
+                        break
+                    case 'PROJECT_MANAGER':
+                        router.push(`/users/update/project-manager/`)
+                        break
+                    case 'ADMINISTRATOR':
+
+                        if (idParams === userResponse.id) {
+                            router.push(`/users/update/administrator/`)
+                        }
+                        setUserAdminData(userResponse)
+                        setPageLoaded(true)
+                        break
                 }
-            } else {
-                // router.push('/authentication')
+            }
+        }
+
+        if (user) {
+            if (params.id && typeof (params.id) == 'string') {
+                checkAndRedirectRole(params.id, user);
+                fetchUserData(params.id);
             }
         }
 
     }, [user])
+
+    if (!user) {
+        return (
+            <SpinnerFullScreen />
+        )
+    }
+    
+    if (!pageLoaded) {
+        return (
+            <SpinnerFullScreen />
+        )    
+    }
+
 
     return (
         <>
@@ -109,7 +119,7 @@ export default function Users() {
                                 borderBottom={'1px solid #E5E7EB'}
                                 pb={8}
                             >
-                                <AdminHeader />
+                                <AdminHeader userData={userData} user={user} />
                             </Flex>
 
                             {!userData ?

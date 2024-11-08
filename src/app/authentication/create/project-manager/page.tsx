@@ -36,7 +36,7 @@ export default function ProjectManagerAccount() {
                             router.push(`/users/update/project-manager/`)
                             break
                         case 'ADMINISTRATOR':
-                            router.push(`/users/update/administrator/`)
+                            // router.push(`/users/update/administrator/`)
                             break
                     }
                 }

@@ -13,6 +13,7 @@ import { fetchCities, fetchStates } from "@/app/api/ibge/route";
 import { UserProfile, useUser } from "@auth0/nextjs-auth0/client";
 import { checkUserByEmail } from "@/app/api/checkUserByEmail/route";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
+import { createPrismaUser } from "@/app/api/createUser/route";
 
 interface CreateInvestorAccountCardProps {
     user: UserProfile
@@ -83,11 +84,7 @@ export function CreateInvestorAccountCard({ user, router }: CreateInvestorAccoun
 
             data.birth = new Date(data.birth)
 
-            const response = await axios.post(`http://localhost:8081/users/create`, data, {
-                headers: {
-                    'Content-Type': 'application/json' // Define o header Content-Type
-                }
-            });
+            const response = await createPrismaUser(data)
 
 
             if (response.status === 200 || response.status === 202) {
@@ -104,7 +101,7 @@ export function CreateInvestorAccountCard({ user, router }: CreateInvestorAccoun
         } catch (error: any) {
             if (error instanceof AxiosError) {
                 if (error.response) {
-                    setYupError(error.response?.data.error.message)
+                    console.log(error)
                 } else {
                     console.log(error)
                 }
