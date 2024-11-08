@@ -3,9 +3,13 @@ import { register } from "module";
 import { FaFacebook, FaApple } from "react-icons/fa";
 import { AuthInput } from "../Inputs/AuthInput";
 import { useForm } from "react-hook-form";
+import { UserProfile } from "@auth0/nextjs-auth0/client";
 
+interface createUserCardProps {
+    user: UserProfile
+}
 
-export function CreateUserCard() {
+export function CreateUserCard({ user }: createUserCardProps) {
 
     const { register, handleSubmit, formState: { errors } } = useForm({});
 

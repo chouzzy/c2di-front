@@ -8,7 +8,7 @@ export function BlackCard() {
 
             <Flex flexDir={'column'} alignItems={'start'} justifyContent={'space-between'} px={20} py={24}>
                 <Flex>
-                    <Image src="/assets/logo_c2di_white.svg" alt="logo" boxSize={40} />
+                    <Image src="/assets/logo_c2di_white.svg" alt="logo" h={12}/>
                 </Flex>
                 <Flex flexDir={'column'} gap={2}>
                     <Text>

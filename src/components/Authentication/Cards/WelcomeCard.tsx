@@ -5,7 +5,7 @@ import { AuthInput } from "../Inputs/AuthInput";
 import { FieldValues, UseFormRegister } from "react-hook-form";
 import { UserProfile } from "@auth0/nextjs-auth0/client";
 import axios from "axios";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
 
@@ -18,8 +18,10 @@ interface WelcomeCardProps {
 export function WelcomeCard({ user, isLoading, register }: WelcomeCardProps) {
 
     const router = useRouter()
+    const [loading, setLoading] = useState(false)
 
     const LoginCallback = () => {
+        setLoading(true)
         router.push("api/auth/login")
     }
 
@@ -69,9 +71,13 @@ export function WelcomeCard({ user, isLoading, register }: WelcomeCardProps) {
                                 fontWeight={'normal'}
                                 alignItems={'center'}
                                 justifyContent={'center'}
+                                _hover={{ bgColor: "redSide", transition: '300ms' }}
                             >
-
-                                Entrar / Cadastrar
+                                {loading ?
+                                    <Spinner boxSize={6} />
+                                    :
+                                    'Entrar / Cadastrar'
+                                }
                             </Flex>
                             {/* </Link> */}
 
@@ -90,14 +96,14 @@ export function WelcomeCard({ user, isLoading, register }: WelcomeCardProps) {
                         {/* CRIAR CONTA - ESQUECI MINHA SENHA LINKS */}
 
                         {/* SOCIAL MEDIA DIVISOR */}
-                        <Flex alignItems={'center'} gap={2}>
+                        {/* <Flex alignItems={'center'} gap={2}>
                             <Flex h={'0.5px'} bgColor={'graySide'} w='100%' />
                             <Flex w='100%'> OU ENTRE COM </Flex>
                             <Flex h={'0.5px'} bgColor={'graySide'} w='100%' />
-                        </Flex>
+                        </Flex> */}
 
                         {/* SOCIAL MEDIA ICONS LOGIN GOOGLE, FACEBOOK E APPLE */}
-                        <Flex gap={8} px={8}>
+                        {/* <Flex gap={8} px={8}>
 
                             <Flex boxSize={24} bgColor='white'>
                                 <Flex alignItems={'center'} justifyContent={'center'} w='100%' border='1px' borderColor={'borderMediaSide'} onClick={() => { LoginCallback() }} cursor={'pointer'}>
@@ -117,6 +123,7 @@ export function WelcomeCard({ user, isLoading, register }: WelcomeCardProps) {
                                 </Flex>
                             </Flex>
                         </Flex>
+                         */}
                     </Flex>
                 }
             </Flex>

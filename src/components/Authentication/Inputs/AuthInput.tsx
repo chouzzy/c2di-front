@@ -28,6 +28,7 @@ export function AuthInput({ label_top, type, placeholder, value, isRequired, dis
             </FormLabel>
 
             <Input {...register}
+                bgColor={'white'}
                 value={value?? undefined}
                 isRequired={isRequired}
                 disabled={disabled}

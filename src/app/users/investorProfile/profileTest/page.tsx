@@ -1,7 +1,8 @@
 'use client'
 import { checkUserByEmail } from "@/app/api/checkUserByEmail/route";
 import { BlackCard } from "@/components/Authentication/Cards/BlackCard";
-import { ProjectManagerAccountCard } from "@/components/Authentication/Cards/ProjectManager/ProjectManagerAccount";
+import { CreateInvestorAccountCard } from "@/components/Authentication/Cards/Investor/CreateInvestorAccount";
+import { ProfileTestForm } from "@/components/InvestorProfile/ProfileTest/ProfileTestForm";
 import { SpinnerFullScreen } from "@/components/Loading/SpinnerFullScreen";
 import { UserProfile, useUser } from "@auth0/nextjs-auth0/client";
 import { Container, Flex, Spinner } from "@chakra-ui/react";
@@ -10,35 +11,25 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 
-
-export default function ProjectManagerAccount() {
+export default function ProfileTest() {
 
     const [loadingDBUser, setLoadingDBUser] = useState(true)
     const { user, isLoading } = useUser()
     const router = useRouter()
 
+    const [userData, setUserData] = useState<User | undefined>()
+
     useEffect(() => {
 
-        const manageLogin = async (user: UserProfile) => {
+        const checkUserDB = async (user: UserProfile) => {
 
             try {
 
                 const userResponse = await checkUserByEmail(user)
 
                 if (userResponse) {
-                    console.log("Usuário já cadastrado no banco de dados")
-
-                    switch (userResponse.role) {
-                        case 'INVESTOR':
-                            router.push(`/users/update/investor/`)
-                            break
-                        case 'PROJECT_MANAGER':
-                            router.push(`/users/update/project-manager/`)
-                            break
-                        case 'ADMINISTRATOR':
-                            router.push(`/users/update/administrator/`)
-                            break
-                    }
+                    setLoadingDBUser(false)
+                    setUserData(userResponse)
                 }
 
             } catch (error) {
@@ -48,25 +39,29 @@ export default function ProjectManagerAccount() {
                     if (error.status == 404) {
                         console.log('Usuário ainda não cadastrado no banco de dados.');
                         setLoadingDBUser(false)
+                        router.push('/authentication')
                     }
 
                 } else {
                     console.error('Erro inesperado:', error);
-                    throw error
+                    router.push('/authentication')
                 }
             }
         };
 
         if (user) {
-            manageLogin(user);
-        } else {
-            router.push('/authentication')
+            checkUserDB(user);
         }
 
     }, [user]);
 
 
     if (!user) {
+        return (
+            <SpinnerFullScreen />
+        )
+    }
+    if (!userData) {
         return (
             <SpinnerFullScreen />
         )
@@ -78,25 +73,23 @@ export default function ProjectManagerAccount() {
     }
 
     return (
-        <Container maxW={'1366px'} mx='auto' h='100vh' color='darkSide'>
+        <Container maxW={'1366px'} mx='auto' color='darkSide'>
 
-            <Flex h='100%'>
+            {loadingDBUser ?
+                <Flex alignItems={'center'} justifyContent={'center'} h='100%' w='100%'>
+                    <Spinner boxSize={32} />
+                </Flex>
+                :
 
-                {loadingDBUser ?
-                    <Flex alignItems={'center'} justifyContent={'center'} h='100%' w='100%'>
-                        <Spinner boxSize={32} />
-                    </Flex>
-                    :
-
+                <Flex h='100%'>
                     <>
                         {/* BEM VINDO DE VOLTA CARD */}
-                        <ProjectManagerAccountCard user={user} router={router} />
+                        < ProfileTestForm user={user} router={router} userData={userData} />
                         {/* DARK CARD */}
                         <BlackCard />
                     </>
-                }
-
-            </Flex>
+                </Flex>
+            }
         </Container>
     )
 }

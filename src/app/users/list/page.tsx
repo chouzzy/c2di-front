@@ -1,25 +1,28 @@
 "use client"
 
+import { checkUserByEmail } from '@/app/api/checkUserByEmail/route'
 import { SideBar } from '@/components/SideBar'
 import FormUsers from '@/components/users/FormUsers'
 import { UsersHeader } from '@/components/users/Header'
 import { ProfileUserResume } from '@/components/users/ProfileUserResume'
-import { useUser } from '@auth0/nextjs-auth0/client'
+import UsersList from '@/components/users/UsersList'
+import { UsersListHeader } from '@/components/users/UsersListHeader'
+import { getSession } from '@auth0/nextjs-auth0'
+import { UserProfile, useUser } from '@auth0/nextjs-auth0/client'
 import { Container, Flex, Spinner } from '@chakra-ui/react'
 import axios from 'axios'
 import { useParams, useRouter } from 'next/navigation'
-// import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 
 export default function Users() {
 
   const router = useRouter();
   const params = useParams();
-  const userId = params.id;
+  const { user, isLoading } = useUser()
 
   const [userData, setUserData] = useState<User | null>(null);
 
-  const [loading, setLoading] = useState(true);
+  const [pageLoaded, setPageLoaded] = useState(false);
 
   const redirectNotFound = async () => {
     router.push("/404")
@@ -28,35 +31,44 @@ export default function Users() {
   // GET USER
   useEffect(() => {
 
-    const fetchUserData = async (userId: string) => {
+    const fetchUserData = async (user: UserProfile) => {
       try {
 
-        const response = await axios.get(`http://localhost:8081/users?id=${userId}`, { withCredentials: true });
-
-        const userResponse: User = response.data.users[0]
-
+        const userResponse = await checkUserByEmail(user)
+        
         setUserData(userResponse)
+        setPageLoaded(true)
 
       } catch (error) {
 
         console.error('Erro ao buscar dados do usuário:', error);
         await redirectNotFound()
 
-      } finally {
-        setTimeout(() => { setLoading(false) }, 1000)
-        // Finaliza o loading
       }
-    };
-
-
-    if (userId && typeof (userId) == 'string') {
-      fetchUserData(userId);
     }
-  }, [userId])
+
+    if (!isLoading) {
+
+      if (user) {
+        fetchUserData(user);
+      } else {
+        router.push('/authentication')
+      }
+    }
+
+  }, [user])
 
   return (
     <>
       <Container maxW={'1366px'} mx='auto' h='100vh'>
+        {!pageLoaded ?
+          <Flex h='100%' w='100%' alignItems={'center'} justifyContent={'center'}>
+            <Spinner
+              boxSize={40}
+              color='redSide'
+            />
+          </Flex>
+          :
 
           <Flex h='100%'>
             <Flex>
@@ -72,7 +84,7 @@ export default function Users() {
                 borderBottom={'1px solid #E5E7EB'}
                 pb={8}
               >
-                <UsersHeader />
+                <UsersListHeader />
               </Flex>
 
               {!userData ?
@@ -88,8 +100,7 @@ export default function Users() {
                 < Flex flexDir={'column'}>
 
                   <Flex gap={12}>
-                    <FormUsers userData={userData} />
-                    <ProfileUserResume userData={userData} />
+                    <UsersList userData={userData} user={user} />
                   </Flex>
 
                 </Flex>
@@ -97,6 +108,7 @@ export default function Users() {
 
             </Flex>
           </Flex>
+        }
       </Container >
     </>
   )

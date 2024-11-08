@@ -1,19 +1,28 @@
 import { ErrorInputComponent } from "@/components/ErrorInputComponent";
-import { genderOptions } from "@/components/Users/utils";
-import { Flex, Button } from "@chakra-ui/react";
+import { Flex, Button, Spinner } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { AuthInput } from "../../Inputs/AuthInput";
 import { AuthSelectInput } from "../../Inputs/AuthSelectInput";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { ValidationError } from "yup";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { createUsersSchema } from "@/schemas/usersSchema";
+import { genderOptions } from "@/components/users/utils";
+import { fetchCities, fetchStates } from "@/app/api/ibge/route";
+import { UserProfile, useUser } from "@auth0/nextjs-auth0/client";
+import { checkUserByEmail } from "@/app/api/checkUserByEmail/route";
+import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 
 
-export function ProjectManagerAccountCard() {
+interface ProjectManagerAccountCardProps {
+    user: UserProfile
+    router: AppRouterInstance
+}
 
-    const router = useRouter()
+
+
+export function ProjectManagerAccountCard({user, router}: ProjectManagerAccountCardProps) {
 
     const { register, handleSubmit, formState: { errors } } = useForm({});
     const [yupError, setYupError] = useState<string>("")
@@ -24,47 +33,73 @@ export function ProjectManagerAccountCard() {
     const [state, setState] = useState<string>("SP")
     const [city, setCity] = useState<string>("São Paulo")
 
-    // GET STATE
+
     useEffect(() => {
-        const fetchStates = async () => {
-            const response = await axios( // Adicione o await aqui
-                'https://servicodados.ibge.gov.br/api/v1/localidades/estados'
-            );
+        const manageLogin = async (user: UserProfile) => {
+            try {
 
-            let states: string[] = response.data.map((state: any) => {
-                return state.sigla
-            })
+                const userResponse = await checkUserByEmail(user)
 
-            states.sort()
-            // const states = response.data; // Acesse os dados da resposta
-            setStates(states)
+                if (userResponse) {
+                    console.log("Usuário já cadastrado no banco de dados")
 
+                    switch (userResponse.role) {
+                        case 'INVESTOR':
+                            router.push(`/users/update/investor/`)
+                            break
+                        case 'PROJECT_MANAGER':
+                            router.push(`/users/update/project-manager/`)
+                            break
+                        case 'ADMINISTRATOR':
+                            router.push(`/users/update/administrator/`)
+                            break
+                    }
+                }
+
+            } catch (error) {
+
+                if (error instanceof AxiosError) {
+
+                    if (error.status == 404) {
+                        console.log('Usuário ainda não cadastrado no banco de dados.');
+                    }
+
+                } else {
+                    console.error('Erro inesperado:', error);
+                }
+            }
         };
 
-        fetchStates(); // Não precisa de await aqui, pois o useEffect não retorna nada
+        if (user) {
+            manageLogin(user);
+        }
+    }, [user]);
+
+
+    // GET STATE
+    useEffect(() => {
+        const setFetchedStates = async () => {
+            const statesFetched = await fetchStates()
+            setStates(statesFetched)
+        };
+
+        setFetchedStates();
     }, []);
 
     // GET CITY
     useEffect(() => {
-        const fetchCities = async (state: string) => {
+        const setfetchedCities = async (state: string) => {
             if (state) {
-                const response = await axios(
-                    `https://servicodados.ibge.gov.br/api/v1/localidades/estados/${state}/municipios`,
-                );
-
-
-                let cities: string[] = response.data.map((city: any) => {
-                    return city.nome
-                })
-                setCities(cities.sort());
+                const citiesFetched = await fetchCities(state)
+                setCities(citiesFetched.sort());
             };
         }
 
-        fetchCities(state); // Não precisa de await aqui, pois o useEffect não retorna nada
+        setfetchedCities(state);
     }, [state]);
 
     const handleSaveClick = () => {
-        router.push("/dashboard")
+        router.push(`/users/update/project-manager`)
     };
 
     // SUBMIT FORM
@@ -76,18 +111,23 @@ export function ProjectManagerAccountCard() {
             if (!data.address.zipCode || !data.address.street || !data.address.city || !data.address.state) {
                 delete data.address
             }
+
+            data.role = "PROJECT_MANAGER"
+            data.email = user?.email
+
             await createUsersSchema.validate(data);
 
             data.birth = new Date(data.birth)
 
-            handleSaveClick()
-
-
-            const response = await axios.put(`http://localhost:8081/users/create`, data, {
+            const response = await axios.post(`http://localhost:8081/users/create`, data, {
                 headers: {
                     'Content-Type': 'application/json' // Define o header Content-Type
                 }
             });
+
+            handleSaveClick()
+
+
 
         } catch (error: any) {
             if (error instanceof ValidationError) {
@@ -98,9 +138,25 @@ export function ProjectManagerAccountCard() {
         }
     };
 
+    if (!user) {
+        return (
+            <Flex h='100%' w='100%' alignItems={'center'} justifyContent={'center'}>
+                <Spinner boxSize={32} />
+            </Flex>
+        )
+    }
+    if (!user.email) {
+        return (
+            <Flex h='100%' w='100%' alignItems={'center'} justifyContent={'center'}>
+                <Spinner boxSize={32} />
+            </Flex>
+        )
+    }
+
     return (
         <Flex w='100%'>
             <Flex w='100%' bgColor={'lightSide'} alignItems={'center'} justifyContent={'center'}>
+
                 <Flex flexDir={'column'} gap={8} px={8}>
                     {/* BEM VINDO E INSTRUÇÃO */}
                     <Flex flexDir={'column'} alignItems={'center'} justifyContent={'center'}>
@@ -119,6 +175,7 @@ export function ProjectManagerAccountCard() {
                             {/* Nome */}
                             <AuthInput
                                 key={"name"}
+                                isRequired={true}
                                 type='text'
                                 placeholder={'Nome completo'}
                                 label_top='Nome completo'
@@ -128,6 +185,9 @@ export function ProjectManagerAccountCard() {
                             {/* E-mail */}
                             <AuthInput
                                 key={"email"}
+                                value={user.email}
+                                disabled={true}
+                                isRequired={true}
                                 type='email'
                                 placeholder={'E-mail'}
                                 label_top='E-mail'
@@ -141,6 +201,7 @@ export function ProjectManagerAccountCard() {
                                 <Flex>
                                     <AuthInput
                                         key={"phoneNumber"}
+                                        isRequired={true}
                                         type='tel'
                                         placeholder={'Telefone'}
                                         label_top='Número de telefone'
@@ -153,6 +214,7 @@ export function ProjectManagerAccountCard() {
                                 <Flex>
                                     <AuthSelectInput
                                         key={"gender"}
+                                        isRequired={true}
                                         options={genderOptions}
                                         label_top='Gênero'
                                         placeholder='Selecione'
@@ -164,6 +226,7 @@ export function ProjectManagerAccountCard() {
                                 <Flex>
                                     <AuthInput
                                         key={"phoneNumber"}
+                                        isRequired={true}
                                         type='number'
                                         placeholder={'CPF'}
                                         label_top='CPF'
@@ -181,6 +244,7 @@ export function ProjectManagerAccountCard() {
                                 {/* Profissão */}
                                 <AuthInput
                                     key={"profession"}
+                                    isRequired={true}
                                     type='text'
                                     placeholder={'Ex: Engenheiro Mecânico'}
                                     label_top='Sua profissão'
@@ -189,6 +253,7 @@ export function ProjectManagerAccountCard() {
                                 {/* Data de nascimento */}
                                 <AuthInput
                                     key={"birth"}
+                                    isRequired={true}
                                     type='date'
                                     placeholder={""}
                                     label_top='Data de Nascimento'
@@ -198,11 +263,54 @@ export function ProjectManagerAccountCard() {
                                 {/* Nome de usuário */}
                                 <AuthInput
                                     key={"username"}
+                                    isRequired={true}
                                     type='text'
                                     placeholder={'Ex: joaopedro98'}
                                     label_top='Nome de usuário'
                                     register={register("username")}
                                 />
+                            </Flex>
+
+                            {/* Numero, Complemento e Bairro */}
+                            <Flex mt={4} alignItems={'center'} gap={8}>
+
+                                <Flex maxW={72} gap={8}>
+                                    <AuthInput
+                                        key={"number"}
+                                        isRequired={true}
+                                        type='number'
+                                        placeholder={'Ex: 456'}
+                                        label_top='Número'
+                                        register={register("address.number")}
+                                    />
+
+
+                                </Flex>
+                                <Flex maxW={72} gap={8}>
+                                    <AuthInput
+                                        key={"complement"}
+                                        isRequired={false}
+                                        type='text'
+                                        placeholder={'Ex: Bloco 1'}
+                                        label_top='Complemento'
+                                        register={register("address.zipCode")}
+                                    />
+
+
+                                </Flex>
+                                <Flex maxW={72} gap={8}>
+                                    <AuthInput
+                                        key={"district"}
+                                        isRequired={true}
+                                        type='Bairro'
+                                        placeholder={'Ex: Tatuapé'}
+                                        label_top='Bairro'
+                                        register={register("address.district")}
+                                    />
+
+
+                                </Flex>
+
                             </Flex>
 
                             {/* CEP, Estado e Cidade */}
@@ -211,6 +319,7 @@ export function ProjectManagerAccountCard() {
                                 <Flex maxW={72} gap={8}>
                                     <AuthInput
                                         key={"zipCode"}
+                                        isRequired={true}
                                         type='text'
                                         placeholder={'XXXXX-XXX'}
                                         label_top='CEP'
@@ -219,6 +328,7 @@ export function ProjectManagerAccountCard() {
 
                                     <AuthSelectInput
                                         key={"state"}
+                                        isRequired={true}
                                         state={state}
                                         setState={setState}
                                         options={states ?? []}
@@ -231,6 +341,7 @@ export function ProjectManagerAccountCard() {
                                 <Flex >
                                     <AuthSelectInput
                                         key={"city"}
+                                        isRequired={true}
                                         state={city}
                                         setState={setCity}
                                         options={cities ?? []}
@@ -246,6 +357,7 @@ export function ProjectManagerAccountCard() {
                             <Flex w='100%' pt={2}>
                                 <AuthInput
                                     key={"address"}
+                                    isRequired={true}
                                     type='text'
                                     placeholder={"Av. Exemplo dos Santos, 456"}
                                     label_top='Endereço'
@@ -254,7 +366,7 @@ export function ProjectManagerAccountCard() {
                             </Flex>
 
                             {/* Senha e confirme sua senha */}
-                            <Flex w='100%' pt={2} gap={8}>
+                            {/* <Flex w='100%' pt={2} gap={8}>
                                 <AuthInput
                                     key={"password"}
                                     type='password'
@@ -264,14 +376,14 @@ export function ProjectManagerAccountCard() {
                                 />
 
                                 <AuthInput
-                                    key={"password"}
+                                    key={"password-confirm"}
                                     type='password'
                                     placeholder={'********'}
                                     label_top='Confirmar nova senha'
                                     register={register("conrifmPassword")}
                                 />
 
-                            </Flex>
+                            </Flex> */}
 
 
                             <Flex w='100%' gap={4}>

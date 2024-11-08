@@ -1,9 +1,10 @@
 'use client'
-import { Button, Container, Flex, Link, Spinner, Text } from "@chakra-ui/react";
-import { useUser } from "@auth0/nextjs-auth0/client";
+import { Container, Flex, Spinner, Text } from "@chakra-ui/react";
+import { UserProfile, useUser } from "@auth0/nextjs-auth0/client";
 import { useEffect, useState } from "react";
-import axios, { AxiosError } from "axios";
+import { AxiosError } from "axios";
 import { useRouter } from "next/navigation";
+import { checkUserByEmail } from "./api/checkUserByEmail/route";
 
 // app/page.tsx
 export default function Home() {
@@ -16,51 +17,50 @@ export default function Home() {
 
   // MANAGE LOGIN
   useEffect(() => {
-    const manageLogin = async () => {
+    const manageLogin = async (user: UserProfile) => {
       try {
 
-        await axios.post('/api/setAccessTokenCookie');
+        const userResponse = await checkUserByEmail(user)
 
-        if (user) {
+        if (userResponse) {
+          console.log("Usuário já cadastrado no banco de dados")
 
-          try {
-
-            const response = await axios.get(`http://localhost:8081/users/findUnique/?email=${user.email}`, { withCredentials: true })
-
-            if (response.status == 200) {
-              const userResponse: User = response.data.user
-              router.push(`/users/update/${userResponse.id}`)
-            }
-
-
-          } catch (error) {
-
-            if (error instanceof AxiosError) {
-
-              if (error.status == 404) {
-                router.push(`/authentication/create/investor`)
-              } else {
-                console.error('Erro ao buscar dados do usuário:', error);
-                setLoginStatus("Ocorreu um erro ao buscar seus dados. Por favor, tente novamente mais tarde.");
-
-              }
-
-            } else {
-              console.error('Erro inesperado:', error);
-              setLoginStatus("Ocorreu um erro inesperado. Por favor, tente novamente mais tarde.");
-            }
-            throw error
+          switch (userResponse.role) {
+            case "INVESTOR":
+              router.push(`/users/update/investor/`)
+              break
+            case 'PROJECT_MANAGER':
+              router.push(`/users/update/project-manager/`)
+              break
+            case 'ADMINISTRATOR':
+              router.push(`/users/update/investor/`)
+              break
           }
         }
-      } catch (error) {
-        console.error('Erro ao definir o gerenciar o login:', error);
-        setLoginStatus("Ocorreu um erro ao configurar sua sessão. Por favor, tente novamente mais tarde.");
 
+      } catch (error) {
+
+        if (error instanceof AxiosError) {
+
+          if (error.status == 404) {
+            router.push(`/authentication/create/investor`)
+          } else {
+            console.error('Erro ao buscar dados do usuário:', error);
+            setLoginStatus("Ocorreu um erro ao buscar seus dados. Por favor, tente novamente mais tarde.");
+
+          }
+
+        } else {
+          console.error('Erro inesperado:', error);
+          setLoginStatus("Ocorreu um erro inesperado. Por favor, tente novamente mais tarde.");
+        }
       }
     };
 
-    if (user) {
-      manageLogin();
+    if (!isLoading) {
+      if (user) {
+        manageLogin(user);
+      }
     }
   }, [user]);
 

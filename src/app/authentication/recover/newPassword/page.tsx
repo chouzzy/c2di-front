@@ -1,10 +1,11 @@
+'use client'
 import { BlackCard } from "@/components/Authentication/Cards/BlackCard";
+import { NewPasswordCard } from "@/components/Authentication/Cards/NewPasswordCard";
 import { RecoverUserCard } from "@/components/Authentication/Cards/RecoverUserCard";
-import { WelcomeCard } from "@/components/Authentication/Cards/WelcomeCard";
 import { Container, Flex } from "@chakra-ui/react";
 
 
-export default function RecoverAccount() {
+export default function NewPassword() {
 
     return (
         <Container maxW={'1366px'} mx='auto' h='100vh' color='darkSide'>
@@ -12,7 +13,7 @@ export default function RecoverAccount() {
             <Flex h='100%'>
 
                 {/* BEM VINDO DE VOLTA CARD */}
-                <RecoverUserCard />
+                <NewPasswordCard />
                 {/* DARK CARD */}
                 <BlackCard />
 

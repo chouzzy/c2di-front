@@ -22,8 +22,6 @@ interface FormUsersProps {
 
 function FormUsers({ userData }: FormUsersProps) {
 
-    const router = useRouter()
-
     const { register, handleSubmit, formState: { errors } } = useForm({});
 
     const [states, setStates] = useState<string[]>()

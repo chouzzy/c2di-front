@@ -17,6 +17,7 @@ export function MenuItem({ href, icon, title, isActive }: MenuItemProps) {
                 w='100%'
                 alignItems="center"
                 py={2}
+                pl={2}
                 mb={2}
                 borderRadius="sm"
                 _hover={{ bg: 'grayHoverSide' }}

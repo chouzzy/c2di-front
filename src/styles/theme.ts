@@ -23,7 +23,7 @@
 
 import { extendTheme, theme as chakraTheme } from '@chakra-ui/react'
 
-const { Button } = chakraTheme.components
+const { Button, Radio  } = chakraTheme.components
 
 export const theme = extendTheme({
   fonts: {
