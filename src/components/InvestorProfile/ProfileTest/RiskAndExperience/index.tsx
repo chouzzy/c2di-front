@@ -18,7 +18,7 @@ export function RiskAndExperience({ register, userData }: RiskAndExperienceProps
 
                 <Flex w='100%' textAlign={'center'}>
                     <Text w='100%' fontWeight={600}>
-                        4. Tolerância ao Risco
+                        3. Tolerância ao Risco
                     </Text>
                 </Flex>
 
@@ -34,7 +34,7 @@ export function RiskAndExperience({ register, userData }: RiskAndExperienceProps
 
                 <Flex w='100%' textAlign={'center'}>
                     <Text w='100%' fontWeight={600}>
-                        3. Experiência e Conhecimento
+                        4. Experiência e Conhecimento
                     </Text>
                 </Flex>
 

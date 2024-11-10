@@ -45,6 +45,7 @@ export function NetWorthMultipleSelectInput({ label_top, registerHasOtherInvestm
                 <Flex gap={2}>
                     <Checkbox
                         {...registerHasOtherInvestments}
+                        isRequired={false}
                         type="checkbox"
                         id="possuiInvestimento"
                         colorScheme="red"

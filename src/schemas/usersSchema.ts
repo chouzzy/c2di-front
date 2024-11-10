@@ -68,6 +68,9 @@ const createUsersSchema = yup.object({
   
 }).noUnknown(true, "Campos desconhecidos no corpo da requisição.").strict();
 
+
+
+
 const createUsersByAdminSchema = yup.object({
 
   name: yup.string().required("O nome é obrigatório").min(2, "O nome precisa ter no mínimo dois caracteres"),
@@ -79,4 +82,19 @@ const createUsersByAdminSchema = yup.object({
 }).noUnknown(true, "Campos desconhecidos no corpo da requisição.").strict();
 
 
-export { updateUsersSchema, createUsersSchema, createUsersByAdminSchema };
+
+const createInvestorProfilePage = yup.object({
+
+  name: yup.string().required("O nome é obrigatório").min(2, "O nome precisa ter no mínimo dois caracteres"),
+  age: yup.number().required("A idade é obrigatória"),
+  profession: yup.string().required("A profissão é obrigatória"),
+  monthlyIncome: yup.number().required("A renda mensal é obrigatória"),
+  investmentGoals: yup.string().required("O objetivo do investimento é obrigatório."),
+  investmentGoalsOther: yup.string(),
+  riskTolerance: yup.string().required("A tolerância de risco é obrigatória"),
+  investedBefore: yup.string().required("A tolerância de risco é obrigatória")
+  
+}).noUnknown(true, "Campos desconhecidos no corpo da requisição.").strict();
+
+
+export { updateUsersSchema, createUsersSchema, createUsersByAdminSchema, createInvestorProfilePage };

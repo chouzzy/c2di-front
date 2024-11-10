@@ -36,9 +36,12 @@ export function ProfileTestForm({ user, router, userData }: CreateInvestorAccoun
     const onSubmit = async (data: any) => {
 
         try {
-            setYupError("")
+            if (page < (pages.length -1)) {
+                nextPage()
+            }
             console.log('data')
             console.log(data)
+            // await createUsersSchema.validate(data);
             // Valida os dados com o Yup
             // if (!data.address.zipCode || !data.address.street || !data.address.city || !data.address.state) {
             //     delete data.address
@@ -47,7 +50,6 @@ export function ProfileTestForm({ user, router, userData }: CreateInvestorAccoun
             // data.role = "INVESTOR"
             // data.email = user?.email
 
-            // await createUsersSchema.validate(data);
 
             // data.birth = new Date(data.birth)
 
@@ -98,9 +100,9 @@ export function ProfileTestForm({ user, router, userData }: CreateInvestorAccoun
 
     return (
         <Flex w='100%' minH={'100vh'} bgColor={'lightSide'}>
-            <Flex w='100%' alignItems={'center'} justifyContent={'space-between'} py={24} px={4}  flexDir={'column'}>
+            <Flex w='100%' alignItems={'center'} justifyContent={'space-between'} py={20} px={4} flexDir={'column'}>
 
-                <Flex flexDir={'column'} gap={8} px={8}>
+                <Flex flexDir={'column'} gap={8} px={8} h='100%' w='100%'>
                     {/* BEM VINDO E INSTRUÇÃO */}
                     <Flex flexDir={'column'} alignItems={'center'} justifyContent={'center'}>
                         <Flex fontSize={28} fontWeight={'semibold'} textAlign={'center'}>
@@ -111,85 +113,94 @@ export function ProfileTestForm({ user, router, userData }: CreateInvestorAccoun
                         </Flex>
                     </Flex>
 
-                    <ErrorInputComponent error={yupError} />
-                    <form>
+                    <Flex maxW='50vw'>
+                        <ErrorInputComponent error={yupError} />
+                    </Flex>
+                    <form onSubmit={handleSubmit(onSubmit)} style={{ height: '100%', width: '100%' }}>
+                        <Flex flexDir={'column'} justifyContent={'space-between'} h='100%'>
 
-                        <Flex flexDir={'column'} gap={8}>
+
+                            <Flex flexDir={'column'} gap={8}>
 
 
-                            {/* DADOS PESSOAIS */}
-                            {page === 0 ?
-                                <PersonalDataAndGoals register={register} userData={userData} />
-                                :
-                                ''
-                            }
+                                {/* DADOS PESSOAIS */}
+                                {page === 0 ?
+                                    <PersonalDataAndGoals register={register} userData={userData} />
+                                    :
+                                    ''
+                                }
 
-                            {/* OBJETIVOS E EXPERIENCIA */}
-                            {page === 1 ?
-                                <RiskAndExperience register={register} />
-                                :
-                                ''
-                            }
-                            {/* RISCO, HORIZONTE E PATRIMONIO */}
-                            {page === 2 ?
-                                <HorizonAndNetWorth register={register} />
-                                :
-                                ''
-                            }
+                                {/* OBJETIVOS E EXPERIENCIA */}
+                                {page === 1 ?
+                                    <RiskAndExperience register={register} />
+                                    :
+                                    ''
+                                }
+                                {/* RISCO, HORIZONTE E PATRIMONIO */}
+                                {page === 2 ?
+                                    <HorizonAndNetWorth register={register} />
+                                    :
+                                    ''
+                                }
 
-                            {/* PREFERÊNCIAS E CONSIDERAÇÕES FINAIS */}
+                                {/* PREFERÊNCIAS E CONSIDERAÇÕES FINAIS */}
 
-                            {page === 3 ?
-                                <>
-                                    <PreferencesAndConsiderations register={register} />
-                                    <Button
-                                        onClick={handleSubmit(onSubmit)}
-                                        fontSize={14}
-                                        color={'lightSide'}
-                                        fontWeight={'light'}
-                                        bgColor={'darkSide'}
-                                        mt={4}
-                                        minW={48}
-                                        _hover={{ bgColor: "graySide", transition: '300ms' }}
-                                    >
-                                        Salvar e ir para o painel
-                                    </Button>
-                                </>
-                                :
-                                ''
-                            }
+                                {page === 3 ?
+                                    <>
+                                        <PreferencesAndConsiderations register={register} />
+                                        <Button
+                                            type='submit'
+                                            fontSize={14}
+                                            color={'lightSide'}
+                                            fontWeight={'light'}
+                                            bgColor={'darkSide'}
+                                            mt={4}
+                                            minW={48}
+                                            _hover={{ bgColor: "graySide", transition: '300ms' }}
+                                        >
+                                            Salvar e ir para o painel
+                                        </Button>
+                                    </>
+                                    :
+                                    ''
+                                }
+                            </Flex>
 
+                            <Flex alignItems={'center'} justifyContent={'space-between'} w='100%'>
+
+                                <Button
+                                    colorScheme="blackAlpha"
+                                    fontSize={14}
+                                    color={'lightSide'}
+                                    fontWeight={'light'}
+                                    bgColor={'darkSide'}
+                                    isDisabled={page == 0}
+                                    onClick={previousPage}
+                                >
+                                    Anterior
+                                </Button>
+                                <Button
+                                    type="submit"
+                                    colorScheme="blackAlpha"
+                                    fontSize={14}
+                                    color={'lightSide'}
+                                    fontWeight={'light'}
+                                    bgColor={'darkSide'}
+                                    isDisabled={page >= (pages.length - 1)}
+                                    // onClick={nextPage}
+                                >
+                                    Próxima
+                                </Button>
+
+                            </Flex>
                         </Flex>
                     </form>
+
                 </Flex>
 
 
-                <Flex alignItems={'center'} justifyContent={'space-between'} w='100%'>
 
-                    <Button
-                        colorScheme="blackAlpha"
-                        fontSize={14}
-                        color={'lightSide'}
-                        fontWeight={'light'}
-                        bgColor={'darkSide'}
-                        isDisabled={page == 0}
-                        onClick={previousPage}
-                    >
-                        Anterior
-                    </Button>
-                    <Button
-                        colorScheme="blackAlpha"
-                        fontSize={14}
-                        color={'lightSide'}
-                        fontWeight={'light'}
-                        bgColor={'darkSide'}
-                        isDisabled={page >= (pages.length - 1)}
-                        onClick={nextPage}
-                    >
-                        Próxima
-                    </Button>
-                </Flex>
             </Flex>
-        </Flex>
+        </Flex >
     )
 }

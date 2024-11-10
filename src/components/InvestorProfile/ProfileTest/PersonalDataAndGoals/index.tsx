@@ -78,6 +78,7 @@ export function PersonalDataAndGoals({ register, userData }: PersonalDataAndGoal
                 />
 
             </Flex>
+            
         </>
     )
 

@@ -38,7 +38,7 @@ export function InvestmentExperienceMultipleSelectInput({ label_top, registerInv
     };
 
     return (
-        <FormControl w="100%" isRequired={true}>
+        <FormControl w="100%"  isRequired={true}>
 
             {/* Pergunta que controla a exibição das perguntas condicionais */}
             <Flex mt={4} alignItems="center">
@@ -46,8 +46,10 @@ export function InvestmentExperienceMultipleSelectInput({ label_top, registerInv
                     Você já investiu em imóveis antes?
                 </FormLabel>
                 <Flex gap={2}>
+                    <Text>Sim!</Text>
                     <Checkbox
                         {...registerInvestedBefore}
+                        isRequired={false}
                         type="checkbox"
                         id="investiuAntes"
                         colorScheme="red"
@@ -56,6 +58,7 @@ export function InvestmentExperienceMultipleSelectInput({ label_top, registerInv
                         size={'lg'}
                         bgColor='white'
                         pb={1}
+                        fontSize={0}
                     />
                 </Flex>
             </Flex>
@@ -63,7 +66,7 @@ export function InvestmentExperienceMultipleSelectInput({ label_top, registerInv
             {/* Perguntas condicionais */}
             {investiuAntes && ( // Exibe as perguntas apenas se investiuAntes for true
                 <>
-                    <FormLabel mt={4}>Se sim, qual foi o tipo de investimento?</FormLabel>
+                    <FormLabel mt={4}>Qual foi o tipo de investimento?</FormLabel>
                     <RadioGroup onChange={setValue} value={value} w='100%'>
                         <Flex flexDir="column" gap={2}>
                             <Radio {...registerInvestedBeforeType} colorScheme='blackAlpha' value={"Residencial"}>
