@@ -16,9 +16,10 @@ import { useEffect, useState } from 'react';
 
 interface SideBarProps {
     userData: User | null
+    projectData?: Investment
 }
 
-export function SideBar({ userData }: SideBarProps) {
+export function SideBar({ userData, projectData }: SideBarProps) {
 
     const pathName = usePathname()
 
@@ -116,7 +117,7 @@ export function SideBar({ userData }: SideBarProps) {
                     <MenuItem href={`dashboard`} isActive={pathName == "/dashboard"} icon={SquaresFour} title='Dashboard' />
 
                     {(userData?.role == "ADMINISTRATOR" || userData?.role == 'PROJECT_MANAGER') ?
-                        <MenuItem href={`imoveis`} isActive={pathName == "/imoveis"} icon={House} title='Imóveis' />
+                        <MenuItem href={`projects`} isActive={pathName == `/projects/${projectData?.id}` || pathName == `/projects`} icon={House} title='Imóveis' />
                         :
                         ''
                     }
@@ -127,13 +128,13 @@ export function SideBar({ userData }: SideBarProps) {
                     }
                     {userData?.role == "INVESTOR" ?
                         <>
-                            <MenuItem href={`investimentos`} icon={BookOpen} title='Meus investimentos' />
-                            <MenuItem href={`investir`} icon={ChartLineUp} title='Investir' />
+                            <MenuItem href={`myinvestments`} isActive={pathName == `/myinvestments`} icon={BookOpen} title='Meus investimentos' />
+                            <MenuItem href={`projects`} icon={ChartLineUp} isActive={pathName == `/projects`} title='Investir' />
                         </>
                         :
                         ''
                     }
-                    <MenuItem href={`users/update/${pathRoleState}`} isActive={pathName == "/users/update"} icon={User} title='Meu perfil' />
+                    <MenuItem href={`users/update/${pathRoleState}`} isActive={pathName == `/users/update/${pathRoleState}`} icon={User} title='Meu perfil' />
                     <MenuItem href={`api/auth/logout`} isActive={pathName == "/api/auth/logout"} icon={SignOut} title='Logout' />
 
                 </Flex>

@@ -65,7 +65,7 @@ export default function Home() {
   }, [user]);
 
   return (
-    <Container maxW={'1366px'} mx='auto'>
+    <Container maxW={'1440px'} mx='auto'>
       <Flex flexDir={'column'}>
         <Flex gap={2} p={4} alignItems={'center'}>
           <Text>

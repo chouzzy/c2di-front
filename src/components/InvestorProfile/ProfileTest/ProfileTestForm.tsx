@@ -2,13 +2,14 @@ import { ErrorInputComponent } from "@/components/ErrorInputComponent";
 import { Flex, Button, Spinner } from "@chakra-ui/react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { AxiosError } from "axios";
+import axios, { AxiosError } from "axios";
 import { UserProfile } from "@auth0/nextjs-auth0/client";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import { PersonalDataAndGoals } from "./PersonalDataAndGoals";
 import { RiskAndExperience } from "./RiskAndExperience";
 import { HorizonAndNetWorth } from "./HorizonAndNetWorth";
 import { PreferencesAndConsiderations } from "./PreferencesAndConsiderations";
+import { updateInvestorProfile } from "@/app/api/updateInvestorProfile/route";
 
 interface CreateInvestorAccountCardProps {
     user: UserProfile
@@ -36,40 +37,30 @@ export function ProfileTestForm({ user, router, userData }: CreateInvestorAccoun
     const onSubmit = async (data: any) => {
 
         try {
-            if (page < (pages.length -1)) {
+            if (page < (pages.length - 1)) {
                 nextPage()
+                return
             }
-            console.log('data')
-            console.log(data)
+
+            const postData = { ...data, userId: userData.id }
+
             // await createUsersSchema.validate(data);
-            // Valida os dados com o Yup
-            // if (!data.address.zipCode || !data.address.street || !data.address.city || !data.address.state) {
-            //     delete data.address
-            // }
 
-            // data.role = "INVESTOR"
-            // data.email = user?.email
+            const response = await updateInvestorProfile(postData)
 
 
-            // data.birth = new Date(data.birth)
-
-            // const response = await axios.post(`http://localhost:8081/users/create`, data, {
-            //     headers: {
-            //         'Content-Type': 'application/json' // Define o header Content-Type
-            //     }
-            // });
-
-            // handleSaveClick()
+            handleSaveClick()
 
         } catch (error: any) {
             if (error instanceof AxiosError) {
                 if (error.response) {
                     setYupError(error.response?.data.error.message)
+                    console.error(error)
                 } else {
-                    console.log(error)
+                    console.error(error)
                 }
             } else {
-                console.log(error)
+                console.error(error)
             }
         }
     };
@@ -187,7 +178,7 @@ export function ProfileTestForm({ user, router, userData }: CreateInvestorAccoun
                                     fontWeight={'light'}
                                     bgColor={'darkSide'}
                                     isDisabled={page >= (pages.length - 1)}
-                                    // onClick={nextPage}
+                                // onClick={nextPage}
                                 >
                                     Próxima
                                 </Button>

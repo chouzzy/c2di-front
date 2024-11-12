@@ -35,7 +35,7 @@ export function InvestmentHorizonMultipleSelectInput({ label_top, register }: Us
                         5 a 10 anos
                     </Radio>
                     <Radio {...register} colorScheme='blackAlpha' value={"Mais de 10 anos"}>
-                        5 a 10 anos
+                        Mais 5 a 10 anos
                     </Radio>
 
                 </Flex>

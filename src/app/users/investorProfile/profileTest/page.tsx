@@ -1,7 +1,6 @@
 'use client'
 import { checkUserByEmail } from "@/app/api/checkUserByEmail/route";
 import { BlackCard } from "@/components/Authentication/Cards/BlackCard";
-import { CreateInvestorAccountCard } from "@/components/Authentication/Cards/Investor/CreateInvestorAccount";
 import { ProfileTestForm } from "@/components/InvestorProfile/ProfileTest/ProfileTestForm";
 import { SpinnerFullScreen } from "@/components/Loading/SpinnerFullScreen";
 import { UserProfile, useUser } from "@auth0/nextjs-auth0/client";
@@ -18,6 +17,8 @@ export default function ProfileTest() {
     const router = useRouter()
 
     const [userData, setUserData] = useState<User | undefined>()
+
+    // VALIDAR SÓ INVESTIDOR PODE ACESSAR ESSA ROTA
 
     useEffect(() => {
 
@@ -73,7 +74,7 @@ export default function ProfileTest() {
     }
 
     return (
-        <Container maxW={'1366px'} mx='auto' color='darkSide'>
+        <Container maxW={'1440px'} mx='auto' color='darkSide'>
 
             {loadingDBUser ?
                 <Flex alignItems={'center'} justifyContent={'center'} h='100%' w='100%'>

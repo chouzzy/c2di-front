@@ -23,7 +23,7 @@ export default function CreateAccount() {
     }
 
     return (
-        <Container maxW={'1366px'} mx='auto' h='100vh' color='darkSide'>
+        <Container maxW={'1440px'} mx='auto' h='100vh' color='darkSide'>
 
             <Flex h='100%'>
 

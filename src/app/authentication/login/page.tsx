@@ -14,7 +14,7 @@ export default  function Login() {
     if (user) {
         return (
 
-            <Container maxW={'1366px'} mx='auto' color='darkSide'>
+            <Container maxW={'1440px'} mx='auto' color='darkSide'>
                 <Flex flexDir={'column'}>
 
                     <Flex gap={2}>

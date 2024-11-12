@@ -6,12 +6,12 @@ import { useRouter } from "next/navigation";
 import { Envelope, Key } from "phosphor-react";
 import { useEffect, useState } from "react";
 
-interface AdminHeaderProps {
+interface HeaderAdminProjectProps {
     userData: User | null
     user: UserProfile
 }
 
-export function AdminHeader({ userData, user }: AdminHeaderProps) {
+export function HeaderAdminProjectList({ userData, user }: HeaderAdminProjectProps) {
 
     const router = useRouter()
     const { isOpen, onOpen, onClose } = useDisclosure() // Adiciona o hook useDisclosure
@@ -20,10 +20,6 @@ export function AdminHeader({ userData, user }: AdminHeaderProps) {
     const [deleteUserConfirm, setDeleteUserConfirm] = useState(false)
     const [userDeleted, setUserDeleted] = useState(false)
     const [modalMessage, setModalMessage] = useState(''); // Estado para a mensagem do modal
-
-    const changePassword = () => {
-        setChangingPassword(true)
-    }
 
     const deleteUser = () => {
         setDeletingUser(true)
@@ -44,79 +40,52 @@ export function AdminHeader({ userData, user }: AdminHeaderProps) {
     const refreshPageAfterCloseModal = () => {
         if (userDeleted) {
             onClose()
-            router.push('/users/list')
+            // router.push('/api/auth/logout')
         } else {
             onClose()
         }
     }
 
-    useEffect(() => {
-        const updatePassword = async (email: User["email"]) => {
-            const resetPasswordMessage = await resetPassword(email)
-            setModalMessage(resetPasswordMessage); // Define a mensagem do modal
-            onOpen();
-        }
+    // useEffect(() => {
+    //     const deleteUser = async (id: User["id"], auth0UserID: UserProfile["sub"]) => {
+    //         setDeletingUser(true)
+    //         const deleteUserSuccessMessage = await deletePrismaAndAuth0User(id, auth0UserID)
+    //         setModalMessage(deleteUserSuccessMessage); // Define a mensagem do modal
+    //         setUserDeleted(true)
+    //         onClose()
+    //         router.push('/api/auth/logout')
 
-        if (changingPassword) {
+    //     }
 
-            if (userData) {
-                updatePassword(userData.email)
-                setChangingPassword(false)
-            }
-        }
+    //     if (deletingUser) {
 
-    }, [changingPassword])
+    //         if (userData && user) {
+    //             deleteUser(userData.id, user.sub)
+    //             setChangingPassword(false)
+    //         }
+    //     }
 
-    useEffect(() => {
-        const deleteUser = async (id: User["id"], auth0UserID: UserProfile["sub"]) => {
-            setDeletingUser(true)
-            const deleteUserSuccessMessage = await deletePrismaAndAuth0User(id, auth0UserID)
-            setModalMessage(deleteUserSuccessMessage); // Define a mensagem do modal
-            setUserDeleted(true)
-            onClose()
-            router.push('/users/list')
-
-        }
-
-        if (deletingUser) {
-
-            if (userData && user) {
-                deleteUser(userData.id, user.sub)
-                setChangingPassword(false)
-            }
-        }
-
-    }, [deleteUserConfirm])
+    // }, [deleteUserConfirm])
 
     return (
         <>
             <Flex flexDir={'column'}>
                 <Flex>
                     <Text fontSize={28} fontWeight={'semibold'}>
-                        Perfil do usuário
+                        Projetos
                     </Text>
                 </Flex>
                 <Flex>
                     <Text fontSize={16}>
-                        Aqui você pode visualizar e editar as informações cadastradas no painel
+                        Aqui você pode visualizar a listagem de projetos disponíveis para investir
                     </Text>
                 </Flex>
             </Flex>
 
             <Flex gap={8} alignItems={'center'}>
-                <Button onClick={changePassword} _hover={{ bgColor: 'redSide' }} color={'lightSide'} bgColor={'darkSide'} mt={4}>
+                <Button onClick={deleteUser} _hover={{ bgColor: 'graySide' }} color={'lightSide'} bgColor={'darkSide'} mt={4}>
                     <Flex minW={32} alignItems={'center'} justifyContent={'center'}>
-
-                        {changingPassword ?
-                            <Spinner boxSize={4} />
-                            :
-                            <Text>Alterar senha</Text>
-                        }
-                    </Flex>
-                </Button>
-                <Button onClick={deleteUser} _hover={{ bgColor: 'red' }} color={'lightSide'} bgColor={'redSide'} mt={4}>
-                    <Flex minW={32} alignItems={'center'} justifyContent={'center'}>
-                        <Text>Apagar usuário</Text>
+                        <Text>Criar imóvel</Text>
                     </Flex>
                 </Button>
             </Flex>

@@ -1,10 +1,20 @@
 import { Button, Flex, Spinner, Text } from "@chakra-ui/react";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 interface ProfileUsersProps {
     userData: User | null
 }
 
 export function ProfileUserResume({ userData }: ProfileUsersProps) {
+
+    const router = useRouter()
+    const [isRedirecting, setIsRedirecting] = useState(false)
+
+    const handleUpdateProfileTest = () => {
+        setIsRedirecting(true)
+        router.push("/users/investorProfile/profileTest")
+    }
 
     return (
         <Flex w='100%' maxW={'380px'} flexDir={'column'} justifyContent={'space-between'}>
@@ -59,8 +69,14 @@ export function ProfileUserResume({ userData }: ProfileUsersProps) {
             <Flex>
 
                 {/* Refazer teste */}
-                <Button fontWeight={'normal'} bgColor={'redSide'} color={'lightSide'} mt={4}>
-                    Refazer teste de perfil
+                <Button onClick={handleUpdateProfileTest} w={52} fontWeight={'normal'} bgColor={'redSide'} color={'lightSide'} mt={4}>
+                    <Flex alignItems={'center'} justifyContent={'center'} w='100%'>
+                        {isRedirecting ?
+                            <Spinner boxSize={4} />
+                            :
+                            'Refazer teste de perfil'
+                        }
+                    </Flex>
                 </Button>
             </Flex>
 

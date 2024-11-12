@@ -2,19 +2,23 @@ import { resetPassword } from "@/app/api/changePassword/route";
 import { deletePrismaAndAuth0User } from "@/app/api/deletePrismaAndAuth0User/route";
 import { UserProfile } from "@auth0/nextjs-auth0/client";
 import { Button, Flex, Spinner, Text, useDisclosure, Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, ModalFooter } from "@chakra-ui/react";
+import { useRouter } from "next/navigation";
 import { Envelope, Key } from "phosphor-react";
 import { useEffect, useState } from "react";
 
 interface HeaderSelfProps {
     userData: User | null
-    user:UserProfile
+    user: UserProfile
 }
 
 export function HeaderSelf({ userData, user }: HeaderSelfProps) {
 
+    const router = useRouter()
     const { isOpen, onOpen, onClose } = useDisclosure() // Adiciona o hook useDisclosure
     const [changingPassword, setChangingPassword] = useState(false)
     const [deletingUser, setDeletingUser] = useState(false)
+    const [deleteUserConfirm, setDeleteUserConfirm] = useState(false)
+    const [userDeleted, setUserDeleted] = useState(false)
     const [modalMessage, setModalMessage] = useState(''); // Estado para a mensagem do modal
 
     const changePassword = () => {
@@ -23,6 +27,27 @@ export function HeaderSelf({ userData, user }: HeaderSelfProps) {
 
     const deleteUser = () => {
         setDeletingUser(true)
+        onOpen()
+    }
+
+    const deleteUserConfirmed = () => {
+        setDeleteUserConfirm(true)
+        onOpen()
+    }
+
+    const cancelDeleteUser = () => {
+        setDeletingUser(false)
+        setDeleteUserConfirm(false)
+        onClose()
+    }
+
+    const refreshPageAfterCloseModal = () => {
+        if (userDeleted) {
+            onClose()
+            router.push('/api/auth/logout')
+        } else {
+            onClose()
+        }
     }
 
     useEffect(() => {
@@ -43,13 +68,17 @@ export function HeaderSelf({ userData, user }: HeaderSelfProps) {
     }, [changingPassword])
 
     useEffect(() => {
-        const deleteUser = async (id:User["id"], auth0UserID:UserProfile["sub"]) => {
-            const resetPasswordMessage = await deletePrismaAndAuth0User(id, auth0UserID)
-            setModalMessage(resetPasswordMessage); // Define a mensagem do modal
-            onOpen();
+        const deleteUser = async (id: User["id"], auth0UserID: UserProfile["sub"]) => {
+            setDeletingUser(true)
+            const deleteUserSuccessMessage = await deletePrismaAndAuth0User(id, auth0UserID)
+            setModalMessage(deleteUserSuccessMessage); // Define a mensagem do modal
+            setUserDeleted(true)
+            onClose()
+            router.push('/api/auth/logout')
+
         }
 
-        if (changingPassword) {
+        if (deletingUser) {
 
             if (userData && user) {
                 deleteUser(userData.id, user.sub)
@@ -57,14 +86,14 @@ export function HeaderSelf({ userData, user }: HeaderSelfProps) {
             }
         }
 
-    }, [deletingUser])
+    }, [deleteUserConfirm])
 
     return (
         <>
             <Flex flexDir={'column'}>
                 <Flex>
                     <Text fontSize={28} fontWeight={'semibold'}>
-                        Seu perfil
+                        Perfil do usuário
                     </Text>
                 </Flex>
                 <Flex>
@@ -75,53 +104,78 @@ export function HeaderSelf({ userData, user }: HeaderSelfProps) {
             </Flex>
 
             <Flex gap={8} alignItems={'center'}>
-                <Button onClick={changePassword} _hover={{ bgColor: 'redSide' }} color={'lightSide'} bgColor={'darkSide'} mt={4}>
-                    <Flex minW={32} alignItems={'center'} justifyContent={'center'}>
+                {user.sub?.split('|')[0] === 'auth0' ?
+                    <Button onClick={changePassword} _hover={{ bgColor: 'redSide' }} color={'lightSide'} bgColor={'darkSide'} mt={4}>
+                        <Flex minW={32} alignItems={'center'} justifyContent={'center'}>
 
-                        {changingPassword ?
-                            <Spinner boxSize={4} />
-                            :
-                            <Text>Alterar senha</Text>
-                        }
-                    </Flex>
-                </Button>
+                            {changingPassword ?
+                                <Spinner boxSize={4} />
+                                :
+                                <Text>Alterar senha</Text>
+                            }
+                        </Flex>
+                    </Button>
+                    :
+                    ''
+                }
                 <Button onClick={deleteUser} _hover={{ bgColor: 'red' }} color={'lightSide'} bgColor={'redSide'} mt={4}>
                     <Flex minW={32} alignItems={'center'} justifyContent={'center'}>
-
-                        {deletingUser ?
-                            <Spinner boxSize={4} />
-                            :
-                            <Text>Apagar usuário</Text>
-                        }
+                        <Text>Apagar usuário</Text>
                     </Flex>
                 </Button>
             </Flex>
 
             {/* Modal */}
-            <Modal isOpen={isOpen} onClose={onClose} >
+            <Modal isOpen={isOpen} onClose={refreshPageAfterCloseModal} >
                 <ModalOverlay />
                 <ModalContent>
-                    {/* <ModalHeader>
-                        <Flex gap={4} alignItems={'center'}>
-                            <Key size={24} color={'#EF3A5D'} />
-                            <Text>
-                                Alteração de Senha
-                            </Text>
-                        </Flex>
-                    </ModalHeader> */}
-                    <ModalCloseButton color={'#EF3A5D'} />
-                    <ModalBody>
-                        <Flex p={8} flexDir={'column'} alignItems={'center'} justifyContent={'center'} gap={2}>
-                            <Flex alignItems={'center'}>
-                                <Envelope size={32} color={'#EF3A5D'} />
-                                <Key size={24} color={'#EF3A5D'} />
-                            </Flex>
-                            <Text textAlign={'center'} fontWeight={'normal'}>
-                                {modalMessage} {/* Exibe a mensagem do modal */}
-                            </Text>
-                        </Flex>
-                    </ModalBody>
+                    {deletingUser ?
+                        <>
+                            <ModalHeader>
+                                <Flex gap={2} alignItems={'start'} flexDir={'column'} pt={4}>
+                                    <Text>
+                                        Criar usuário
+                                    </Text>
+                                    <Text fontWeight={'light'} fontSize={14}>
+                                        Esta ação não pode ser desfeita. Você irá deletar este usuário permanentemente do portal.
+                                    </Text>
+                                </Flex>
+                            </ModalHeader>
+                            <ModalCloseButton onClick={cancelDeleteUser} color={'#EF3A5D'} />
+                            <ModalBody>
+                                <Flex flexDir={'column'} alignItems={'center'} justifyContent={'center'} gap={2}>
+                                    <Text textAlign={'center'} fontWeight={'light'}>
+                                        {modalMessage} {/* Exibe a mensagem do modal */}
+                                    </Text>
+                                </Flex>
+                                <Flex alignItems={'center'} justifyContent={'end'} gap={2}>
+                                    <Button onClick={cancelDeleteUser} _hover={{ bgColor: 'graySide' }} color={'lightSide'} bgColor={'darkSide'} mt={4}>
+                                        <Flex minW={16} alignItems={'center'} justifyContent={'center'} fontWeight={'normal'}>
+                                            <Text>Voltar</Text>
+                                        </Flex>
+                                    </Button>
+                                    <Button onClick={deleteUserConfirmed} _hover={{ bgColor: 'red' }} color={'lightSide'} bgColor={'redSide'} mt={4}>
+                                        <Flex minW={16} alignItems={'center'} justifyContent={'center'} fontWeight={'normal'}>
+                                            <Text>Deletar</Text>
+                                        </Flex>
+                                    </Button>
+                                </Flex>
+                            </ModalBody>
+                        </>
+                        :
 
+                        <ModalBody>
+                            <Flex p={8} flexDir={'column'} alignItems={'center'} justifyContent={'center'} gap={2}>
+                                <Flex alignItems={'center'}>
+                                    <Envelope size={32} color={'#EF3A5D'} />
+                                    <Key size={24} color={'#EF3A5D'} />
+                                </Flex>
+                                <Text textAlign={'center'} fontWeight={'normal'}>
+                                    {modalMessage} {/* Exibe a mensagem do modal */}
+                                </Text>
+                            </Flex>
+                        </ModalBody>
+                    }
                     {/* <ModalFooter>
                         <Button colorScheme='red' mr={3} onClick={onClose}>
                             Fechar

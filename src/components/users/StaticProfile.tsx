@@ -10,8 +10,8 @@ export function StaticProfile({ type, data }: StaticProfileProps) {
 
     return (
         <Flex flexDir={'column'}>
-            <Text fontWeight={'bold'} fontSize={'sm'}> {type} </Text>
-            <Flex p={2}>{data}</Flex>
+            <Text fontWeight={'semibold'} fontSize={16}> {type} </Text>
+            <Flex py={2}>{data}</Flex>
         </Flex>
     )
 }

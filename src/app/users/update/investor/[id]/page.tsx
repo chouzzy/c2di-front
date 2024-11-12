@@ -90,7 +90,7 @@ export default function Users() {
 
     return (
         <>
-            <Container maxW={'1366px'} mx='auto' h='100vh'>
+            <Container maxW={'1440px'} mx='auto' h='100vh'>
                 {!pageLoaded ?
                     <Flex h='100%' w='100%' alignItems={'center'} justifyContent={'center'}>
                         <Spinner

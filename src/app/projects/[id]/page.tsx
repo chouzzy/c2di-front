@@ -1,11 +1,12 @@
 "use client"
 
 import { checkUserByEmail } from '@/app/api/checkUserByEmail/route'
+import { getProjectByID } from '@/app/api/getProject/route'
 import { SpinnerFullScreen } from '@/components/Loading/SpinnerFullScreen'
+import ProjectResume from '@/components/projects/resume'
 import { SideBar } from '@/components/SideBar'
-import FormUsers from '@/components/users/FormUsers'
-import { HeaderSelf } from '@/components/users/HeaderSelf'
-import { ProfileUserResume } from '@/components/users/ProfileUserResume'
+import { HeaderAdminProject } from '@/components/users/HeaderAdminProject'
+import { HeaderInvestorProject } from '@/components/users/HeaderInvestorProject'
 import { UserProfile, useUser } from '@auth0/nextjs-auth0/client'
 import { Container, Flex, Spinner } from '@chakra-ui/react'
 import { useParams, useRouter } from 'next/navigation'
@@ -18,11 +19,12 @@ export default function Users() {
   const { user, isLoading } = useUser()
 
   const [userData, setUserData] = useState<User | null>(null);
+  const [projectData, setProjectData] = useState<Investment | null>(null);
 
-  const [pageLoaded, setPageLoaded] = useState(false);
+  const [pageLoaded, setPageLoaded] = useState(true);
 
   const redirectNotFound = async () => {
-    router.push("/404")
+    // router.push("/404")
   }
 
   // GET USER
@@ -33,17 +35,17 @@ export default function Users() {
       const userResponse = await checkUserByEmail(user)
       if (userResponse) {
 
-        switch (userResponse.role) {
-          case 'INVESTOR':
-            setPageLoaded(true);
-            break
-          case 'PROJECT_MANAGER':
-            router.push(`/users/update/project-manager/`)
-            break
-          case 'ADMINISTRATOR':
-            router.push(`/users/update/administrator/`)
-            break
-        }
+        // switch (userResponse.role) {
+        //   case 'INVESTOR':
+        //     setPageLoaded(true);
+        //     break
+        //   case 'PROJECT_MANAGER':
+        //     router.push(`/users/update/project-manager/`)
+        //     break
+        //   case 'ADMINISTRATOR':
+        //     router.push(`/users/update/administrator/`)
+        //     break
+        // }
       }
     }
 
@@ -61,11 +63,31 @@ export default function Users() {
       }
     }
 
+    const fetchProjectData = async (projectID: Investment["id"]) => {
+      try {
+
+        const projectResponse = await getProjectByID(projectID)
+        setProjectData(projectResponse)
+
+      } catch (error) {
+
+        console.error('Erro ao buscar dados do projeto:', error);
+        await redirectNotFound()
+
+      }
+    }
+
     if (!isLoading) {
 
       if (user) {
+
         checkAndRedirectRole(user);
         fetchUserData(user);
+
+        if (params.id && typeof (params.id) == 'string') {
+            fetchProjectData(params.id);
+        }
+
       } else {
         router.push('/authentication')
       }
@@ -74,6 +96,16 @@ export default function Users() {
   }, [user])
 
   if (!user) {
+    return (
+      <SpinnerFullScreen />
+    )
+  }
+  if (!projectData) {
+    return (
+      <SpinnerFullScreen />
+    )
+  }
+  if (!userData) {
     return (
       <SpinnerFullScreen />
     )
@@ -94,7 +126,7 @@ export default function Users() {
 
           <Flex h='100%'>
             <Flex>
-              <SideBar userData={userData} />
+              <SideBar projectData={projectData} userData={userData} />
             </Flex>
 
             <Flex h='100%' flexDir={'column'} w='100%' px={12} py={12} gap={6}>
@@ -106,7 +138,8 @@ export default function Users() {
                 borderBottom={'1px solid #E5E7EB'}
                 pb={8}
               >
-                <HeaderSelf userData={userData} user={user}/>
+                {userData.role == 'INVESTOR'? <HeaderInvestorProject projectData={projectData}/>: ''}
+                {userData.role != 'INVESTOR'? <HeaderAdminProject projectData={projectData} userData={userData} user={user}/>: ''}
               </Flex>
 
               {!userData ?
@@ -122,8 +155,7 @@ export default function Users() {
                 < Flex flexDir={'column'}>
 
                   <Flex gap={12}>
-                    <FormUsers userData={userData} />
-                    <ProfileUserResume userData={userData} />
+                    <ProjectResume user={user} projectData={projectData} />
                   </Flex>
 
                 </Flex>

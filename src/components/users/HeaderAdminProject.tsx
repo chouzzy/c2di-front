@@ -6,12 +6,13 @@ import { useRouter } from "next/navigation";
 import { Envelope, Key } from "phosphor-react";
 import { useEffect, useState } from "react";
 
-interface AdminHeaderProps {
+interface HeaderProjectProps {
     userData: User | null
+    projectData: Investment
     user: UserProfile
 }
 
-export function AdminHeader({ userData, user }: AdminHeaderProps) {
+export function HeaderAdminProject({ projectData, userData, user }: HeaderProjectProps) {
 
     const router = useRouter()
     const { isOpen, onOpen, onClose } = useDisclosure() // Adiciona o hook useDisclosure
@@ -20,10 +21,6 @@ export function AdminHeader({ userData, user }: AdminHeaderProps) {
     const [deleteUserConfirm, setDeleteUserConfirm] = useState(false)
     const [userDeleted, setUserDeleted] = useState(false)
     const [modalMessage, setModalMessage] = useState(''); // Estado para a mensagem do modal
-
-    const changePassword = () => {
-        setChangingPassword(true)
-    }
 
     const deleteUser = () => {
         setDeletingUser(true)
@@ -44,28 +41,11 @@ export function AdminHeader({ userData, user }: AdminHeaderProps) {
     const refreshPageAfterCloseModal = () => {
         if (userDeleted) {
             onClose()
-            router.push('/users/list')
+            // router.push('/api/auth/logout')
         } else {
             onClose()
         }
     }
-
-    useEffect(() => {
-        const updatePassword = async (email: User["email"]) => {
-            const resetPasswordMessage = await resetPassword(email)
-            setModalMessage(resetPasswordMessage); // Define a mensagem do modal
-            onOpen();
-        }
-
-        if (changingPassword) {
-
-            if (userData) {
-                updatePassword(userData.email)
-                setChangingPassword(false)
-            }
-        }
-
-    }, [changingPassword])
 
     useEffect(() => {
         const deleteUser = async (id: User["id"], auth0UserID: UserProfile["sub"]) => {
@@ -74,7 +54,7 @@ export function AdminHeader({ userData, user }: AdminHeaderProps) {
             setModalMessage(deleteUserSuccessMessage); // Define a mensagem do modal
             setUserDeleted(true)
             onClose()
-            router.push('/users/list')
+            router.push('/api/auth/logout')
 
         }
 
@@ -93,7 +73,7 @@ export function AdminHeader({ userData, user }: AdminHeaderProps) {
             <Flex flexDir={'column'}>
                 <Flex>
                     <Text fontSize={28} fontWeight={'semibold'}>
-                        Perfil do usuário
+                        {projectData.title}
                     </Text>
                 </Flex>
                 <Flex>
@@ -104,19 +84,9 @@ export function AdminHeader({ userData, user }: AdminHeaderProps) {
             </Flex>
 
             <Flex gap={8} alignItems={'center'}>
-                <Button onClick={changePassword} _hover={{ bgColor: 'redSide' }} color={'lightSide'} bgColor={'darkSide'} mt={4}>
-                    <Flex minW={32} alignItems={'center'} justifyContent={'center'}>
-
-                        {changingPassword ?
-                            <Spinner boxSize={4} />
-                            :
-                            <Text>Alterar senha</Text>
-                        }
-                    </Flex>
-                </Button>
                 <Button onClick={deleteUser} _hover={{ bgColor: 'red' }} color={'lightSide'} bgColor={'redSide'} mt={4}>
                     <Flex minW={32} alignItems={'center'} justifyContent={'center'}>
-                        <Text>Apagar usuário</Text>
+                        <Text>Desativar projeto</Text>
                     </Flex>
                 </Button>
             </Flex>
