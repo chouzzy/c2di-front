@@ -91,7 +91,7 @@ export function HeaderSelf({ userData, user }: HeaderSelfProps) {
                         {deletingUser ?
                             <Spinner boxSize={4} />
                             :
-                            <Text>Apagar usuário</Text>
+                            <Text>Desativar usuário</Text>
                         }
                     </Flex>
                 </Button>

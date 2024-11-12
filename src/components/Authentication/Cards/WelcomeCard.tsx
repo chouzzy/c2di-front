@@ -38,7 +38,7 @@ export function WelcomeCard({ user, isLoading, register }: WelcomeCardProps) {
                             <Flex fontSize={28} fontWeight={'semibold'}>
                                 Bem-vindo
                             </Flex>
-                            <Flex>Insira seu e-mail e senha para entrar no portal</Flex>
+                            <Flex>Clique no botão abaixo para entrar no portal</Flex>
                         </Flex>
 
                         {/* AUTH INPUTS: LOGIN E SENHA */}

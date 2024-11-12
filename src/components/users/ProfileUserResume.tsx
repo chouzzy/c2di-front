@@ -17,7 +17,7 @@ export function ProfileUserResume({ userData }: ProfileUsersProps) {
     }
 
     return (
-        <Flex w='100%' maxW={'380px'} flexDir={'column'} justifyContent={'space-between'}>
+        <Flex w='100%' maxW={'380px'} flexDir={'column'}>
 
             <Flex flexDir={'column'} gap={4}>
                 <Flex flexDir={'column'} gap={1}>
@@ -35,7 +35,7 @@ export function ProfileUserResume({ userData }: ProfileUsersProps) {
                         {userData ?
 
                             <Text fontSize={32} fontWeight={'medium'}>
-                                {userData.investorProfileName}
+                                {userData.investorProfileName? userData.investorProfileName : 'Não informado.'}
                             </Text>
                             :
                             <Flex boxSize={16} mx='auto'>
@@ -53,7 +53,7 @@ export function ProfileUserResume({ userData }: ProfileUsersProps) {
                     {userData ?
 
                         <Text>
-                            {userData.investorProfileDescription}
+                            {userData.investorProfileDescription? userData.investorProfileDescription : 'Faça agora mesmo o teste de perfil clicando no botão abaixo!'}
                         </Text>
                         :
                         <Flex boxSize={16} mx='auto'>
@@ -69,12 +69,12 @@ export function ProfileUserResume({ userData }: ProfileUsersProps) {
             <Flex>
 
                 {/* Refazer teste */}
-                <Button onClick={handleUpdateProfileTest} w={52} fontWeight={'normal'} bgColor={'redSide'} color={'lightSide'} mt={4}>
+                <Button onClick={handleUpdateProfileTest} w={40} fontWeight={'normal'} bgColor={'redSide'} color={'lightSide'} mt={4}>
                     <Flex alignItems={'center'} justifyContent={'center'} w='100%'>
                         {isRedirecting ?
                             <Spinner boxSize={4} />
                             :
-                            'Refazer teste de perfil'
+                            'Teste de perfil'
                         }
                     </Flex>
                 </Button>

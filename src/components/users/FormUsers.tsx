@@ -15,6 +15,7 @@ import { UsersSelectInput } from './UsersSelectInput';
 import { genderOptions } from './utils';
 import { useRouter } from 'next/navigation';
 import { fetchCities, fetchStates } from '@/app/api/ibge/route';
+import { SpinnerFullScreen } from '../Loading/SpinnerFullScreen';
 
 interface FormUsersProps {
     userData: User | null
@@ -67,7 +68,7 @@ function FormUsers({ userData }: FormUsersProps) {
 
 
     if (!userData) {
-        return
+        return <SpinnerFullScreen/>
     }
 
     // SUBMIT FORM
@@ -86,10 +87,13 @@ function FormUsers({ userData }: FormUsersProps) {
 
 
             const response = await axios.put(`http://localhost:8081/users/update/${userData.id}`, data, {
+                withCredentials:true,
                 headers: {
                     'Content-Type': 'application/json' // Define o header Content-Type
                 }
             });
+
+            console.log(response)
 
 
         } catch (error: any) {

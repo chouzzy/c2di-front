@@ -120,7 +120,7 @@ export function HeaderSelf({ userData, user }: HeaderSelfProps) {
                 }
                 <Button onClick={deleteUser} _hover={{ bgColor: 'red' }} color={'lightSide'} bgColor={'redSide'} mt={4}>
                     <Flex minW={32} alignItems={'center'} justifyContent={'center'}>
-                        <Text>Apagar usuário</Text>
+                        <Text>Desativar usuário</Text>
                     </Flex>
                 </Button>
             </Flex>
@@ -134,7 +134,7 @@ export function HeaderSelf({ userData, user }: HeaderSelfProps) {
                             <ModalHeader>
                                 <Flex gap={2} alignItems={'start'} flexDir={'column'} pt={4}>
                                     <Text>
-                                        Criar usuário
+                                        Desativar usuário
                                     </Text>
                                     <Text fontWeight={'light'} fontSize={14}>
                                         Esta ação não pode ser desfeita. Você irá deletar este usuário permanentemente do portal.
@@ -156,7 +156,7 @@ export function HeaderSelf({ userData, user }: HeaderSelfProps) {
                                     </Button>
                                     <Button onClick={deleteUserConfirmed} _hover={{ bgColor: 'red' }} color={'lightSide'} bgColor={'redSide'} mt={4}>
                                         <Flex minW={16} alignItems={'center'} justifyContent={'center'} fontWeight={'normal'}>
-                                            <Text>Deletar</Text>
+                                            <Text>Desativar</Text>
                                         </Flex>
                                     </Button>
                                 </Flex>

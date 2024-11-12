@@ -37,6 +37,8 @@ export function ProfileTestForm({ user, router, userData }: CreateInvestorAccoun
     const onSubmit = async (data: any) => {
 
         try {
+            console.log('data')
+            console.log(data)
             if (page < (pages.length - 1)) {
                 nextPage()
                 return
