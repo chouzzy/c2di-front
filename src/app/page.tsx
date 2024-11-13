@@ -2,16 +2,23 @@
 import { Container, Flex, Spinner, Text } from "@chakra-ui/react";
 import { UserProfile, useUser } from "@auth0/nextjs-auth0/client";
 import { useEffect, useState } from "react";
-import { AxiosError } from "axios";
+import axios, { AxiosError } from "axios";
 import { useRouter } from "next/navigation";
 import { checkUserByEmail } from "./api/checkUserByEmail/route";
+
+const setAccessTokenCookie = async () => {
+  try {
+    await axios.post('/api/setAccessTokenCookie');
+  } catch (error) {
+    console.error('Error setting access token cookie:', error);
+    // Handle error (e.g., redirect to login)
+  }
+};
 
 // app/page.tsx
 export default function Home() {
 
   const { user, error, isLoading } = useUser()
-  console.log('user')
-  console.log(user)
   const [loginStatus, setLoginStatus] = useState('Aguarde, estamos te redirecionando...')
 
   const router = useRouter()
@@ -21,6 +28,8 @@ export default function Home() {
     const manageLogin = async (user: UserProfile) => {
       try {
 
+        console.log('userresponse')
+        await setAccessTokenCookie()
         const userResponse = await checkUserByEmail(user)
 
         if (userResponse) {
