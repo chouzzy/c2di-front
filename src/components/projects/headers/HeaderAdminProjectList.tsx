@@ -83,7 +83,7 @@ export function HeaderAdminProjectList({ userData, user }: HeaderAdminProjectPro
             </Flex>
 
             <Flex gap={8} alignItems={'center'}>
-                <Button onClick={deleteUser} _hover={{ bgColor: 'graySide' }} color={'lightSide'} bgColor={'darkSide'} mt={4}>
+                <Button onClick={() => {alert("Criar um imóvel")}} _hover={{ bgColor: 'graySide' }} color={'lightSide'} bgColor={'darkSide'} mt={4}>
                     <Flex minW={32} alignItems={'center'} justifyContent={'center'}>
                         <Text>Criar imóvel</Text>
                     </Flex>
@@ -102,7 +102,7 @@ export function HeaderAdminProjectList({ userData, user }: HeaderAdminProjectPro
                                         Criar usuário
                                     </Text>
                                     <Text fontWeight={'light'} fontSize={14}>
-                                        Esta ação não pode ser desfeita. Você irá deletar este usuário permanentemente do portal.
+                                        Esta ação não pode ser desfeita. Você irá deletar os dados desse usuário permanentemente do nosso banco de dados.
                                     </Text>
                                 </Flex>
                             </ModalHeader>

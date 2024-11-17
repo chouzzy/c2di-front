@@ -28,57 +28,48 @@ export default function Users() {
         router.push("/404")
     }
 
-    // GET USER
-    useEffect(() => {
+  // GET USER
+  useEffect(() => {
 
-        const fetchUserData = async (id: User["id"]) => {
-            try {
+    const fetchAdminData = async (user: UserProfile) => {
 
-                const userResponse = await getUserByID(id)
-
-                setUserData(userResponse)
-
-            } catch (error) {
-
-                console.error('Erro ao buscar dados do usuário:', error);
-                await redirectNotFound()
-
-            }
+        const userResponse = await checkUserByEmail(user)
+        if (userResponse) {
+            setUserAdminData(userResponse)
+            setPageLoaded(true);
         }
+    }
 
-        const checkAndRedirectRole = async (idParams: string, user: UserProfile) => {
+    const fetchUserData = async (id: User["id"]) => {
+        try {
 
-            const userResponse = await checkUserByEmail(user)
+            const userResponse = await getUserByID(id)
             if (userResponse) {
-
-                switch (userResponse.role) {
-
-                    case 'INVESTOR':
-                        router.push(`/users/update/investor/`)
-                        break
-                    case 'PROJECT_MANAGER':
-                        router.push(`/users/update/project-manager/`)
-                        break
-                    case 'ADMINISTRATOR':
-
-                        if (idParams === userResponse.id) {
-                            router.push(`/users/update/administrator/`)
-                        }
-                        setUserAdminData(userResponse)
-                        setPageLoaded(true)
-                        break
-                }
+                setUserData(userResponse)
+                setPageLoaded(true);
             }
+
+        } catch (error) {
+
+            console.error('Erro ao buscar dados do usuário:', error);
+            await redirectNotFound()
+
         }
+    }
+
+    if (!isLoading) {
 
         if (user) {
+            fetchAdminData(user);
             if (params.id && typeof (params.id) == 'string') {
-                checkAndRedirectRole(params.id, user);
                 fetchUserData(params.id);
             }
+        } else {
+            // router.push('/authentication')
         }
+    }
 
-    }, [user])
+}, [user])
 
     if (!user) {
         return (

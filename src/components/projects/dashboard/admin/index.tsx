@@ -4,7 +4,7 @@ interface ProjectDashboardInvestorProps {
     projectsData: Investment[]
 }
 
-export function ProjectDashboardInvestor({ projectsData }: ProjectDashboardInvestorProps) {
+export function ProjectDashboardAdmin({ projectsData }: ProjectDashboardInvestorProps) {
     return (
         <Flex flexDir={'column'} w='100%' gap={16} >
             <Flex>

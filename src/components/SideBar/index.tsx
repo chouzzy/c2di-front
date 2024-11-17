@@ -116,8 +116,13 @@ export function SideBar({ userData, projectData }: SideBarProps) {
 
                     <MenuItem href={`dashboard`} isActive={pathName == "/dashboard"} icon={SquaresFour} title='Dashboard' />
 
-                    {(userData?.role == "ADMINISTRATOR" || userData?.role == 'PROJECT_MANAGER') ?
+                    {(userData?.role == "ADMINISTRATOR") ?
                         <MenuItem href={`projects`} isActive={pathName == `/projects/${projectData?.id}` || pathName == `/projects`} icon={House} title='Imóveis' />
+                        :
+                        ''
+                    }
+                    {(userData?.role == 'PROJECT_MANAGER') ?
+                        <MenuItem href={`projects`} isActive={pathName == `/project-manager/projects/${projectData?.id}` || pathName == `/project-manager/projects`} icon={House} title='Imóveis' />
                         :
                         ''
                     }

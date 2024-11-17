@@ -3,7 +3,9 @@
 import { checkUserByEmail } from '@/app/api/checkUserByEmail/route'
 import { getProjectByID } from '@/app/api/getProject/route'
 import { SpinnerFullScreen } from '@/components/Loading/SpinnerFullScreen'
-import ProjectResume from '@/components/projects/resume'
+import ProjectResumeAdmin from '@/components/projects/resume/role/admin'
+import ProjectResumeInvestor from '@/components/projects/resume/role/investor'
+import ProjectResume from '@/components/projects/resume/role/investor'
 import { SideBar } from '@/components/SideBar'
 import { HeaderAdminProject } from '@/components/users/HeaderAdminProject'
 import { HeaderInvestorProject } from '@/components/users/HeaderInvestorProject'
@@ -29,25 +31,6 @@ export default function Users() {
 
   // GET USER
   useEffect(() => {
-
-    const checkAndRedirectRole = async (user: UserProfile) => {
-
-      const userResponse = await checkUserByEmail(user)
-      if (userResponse) {
-
-        // switch (userResponse.role) {
-        //   case 'INVESTOR':
-        //     setPageLoaded(true);
-        //     break
-        //   case 'PROJECT_MANAGER':
-        //     router.push(`/users/update/project-manager/`)
-        //     break
-        //   case 'ADMINISTRATOR':
-        //     router.push(`/users/update/administrator/`)
-        //     break
-        // }
-      }
-    }
 
     const fetchUserData = async (user: UserProfile) => {
       try {
@@ -80,8 +63,7 @@ export default function Users() {
     if (!isLoading) {
 
       if (user) {
-
-        checkAndRedirectRole(user);
+        
         fetchUserData(user);
 
         if (params.id && typeof (params.id) == 'string') {
@@ -155,7 +137,9 @@ export default function Users() {
                 < Flex flexDir={'column'}>
 
                   <Flex gap={12}>
-                    <ProjectResume user={user} projectData={projectData} />
+                    
+                    {userData.role == 'INVESTOR'? <ProjectResumeInvestor user={user} projectData={projectData} />: ''}
+                    {userData.role != 'INVESTOR'? <ProjectResumeAdmin user={user} projectData={projectData} />: ''}
                   </Flex>
 
                 </Flex>

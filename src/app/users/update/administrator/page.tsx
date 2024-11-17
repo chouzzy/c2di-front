@@ -13,7 +13,6 @@ import { useEffect, useState } from 'react'
 export default function Users() {
 
   const router = useRouter();
-  const params = useParams();
   const { user, isLoading } = useUser()
   const [userData, setUserData] = useState<User | null>(null);
 
@@ -26,33 +25,13 @@ export default function Users() {
   // GET USER
   useEffect(() => {
 
-    const checkAndRedirectRole = async (user: UserProfile) => {
-
-      const userResponse = await checkUserByEmail(user)
-
-      if (userResponse) {
-
-        switch (userResponse.role) {
-          case 'INVESTOR':
-            router.push(`/users/update/investor/`)
-            break
-          case 'PROJECT_MANAGER':
-            router.push(`/users/update/project-manager/`)
-            break
-          case 'ADMINISTRATOR':
-            setPageLoaded(true);
-            break
-        }
-      }
-    }
-
     const fetchUserData = async (user: UserProfile) => {
       try {
 
         const userResponse = await checkUserByEmail(user)
-        await checkAndRedirectRole(user)
 
         setUserData(userResponse)
+        setPageLoaded(true)
 
       } catch (error) {
 
@@ -65,7 +44,6 @@ export default function Users() {
     if (!isLoading) {
 
       if (user) {
-        checkAndRedirectRole(user);
         fetchUserData(user);
       } else {
         router.push('/authentication')

@@ -4,7 +4,7 @@ interface ProjectDashboardInvestorProps {
     projectsData: Investment[]
 }
 
-export function ProjectDashboardInvestor({ projectsData }: ProjectDashboardInvestorProps) {
+export function ProjectDashboardProjectManager({ projectsData }: ProjectDashboardInvestorProps) {
     return (
         <Flex flexDir={'column'} w='100%' gap={16} >
             <Flex>
@@ -28,7 +28,7 @@ export function ProjectDashboardInvestor({ projectsData }: ProjectDashboardInves
                                 <Flex>
                                 </Flex>
                                 <Flex justifyContent={'start'} gap={8}>
-                                    <Link href={`/projects/${project.id}`}>
+                                    <Link href={`/project-manager/projects/${project.id}`}>
                                         <Button _hover={{ bgColor: 'graySide' }} color={'lightSide'} bgColor={'darkSide'} fontSize={14}>
                                             <Flex minW={24} alignItems={'center'} justifyContent={'center'}>
                                                 <Text>Ver projeto</Text>

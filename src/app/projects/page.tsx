@@ -30,25 +30,6 @@ export default function Projects() {
     // GET USER
     useEffect(() => {
 
-        const checkAndRedirectRole = async (user: UserProfile) => {
-
-            const userResponse = await checkUserByEmail(user)
-            if (userResponse) {
-
-                // switch (userResponse.role) {
-                //   case 'INVESTOR':
-                //     setPageLoaded(true);
-                //     break
-                //   case 'PROJECT_MANAGER':
-                //     router.push(`/users/update/project-manager/`)
-                //     break
-                //   case 'ADMINISTRATOR':
-                //     router.push(`/users/update/administrator/`)
-                //     break
-                // }
-            }
-        }
-
         const fetchUserData = async (user: UserProfile) => {
             try {
 
@@ -80,8 +61,6 @@ export default function Projects() {
         if (!isLoading) {
 
             if (user) {
-
-                checkAndRedirectRole(user);
                 fetchUserData(user);
                 fetchProjectData();
 

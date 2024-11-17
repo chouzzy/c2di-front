@@ -30,24 +30,12 @@ export default function Users() {
     // GET USER
     useEffect(() => {
 
-        const checkAndRedirectRole = async (user: UserProfile) => {
+        const fetchAdminData = async (user: UserProfile) => {
 
             const userResponse = await checkUserByEmail(user)
             if (userResponse) {
-
-                switch (userResponse.role) {
-
-                    case 'INVESTOR':
-                        router.push(`/users/update/investor/`)
-                        break
-                    case 'PROJECT_MANAGER':
-                        router.push(`/users/update/project-manager/`)
-                        break
-                    case 'ADMINISTRATOR':
-                        setUserAdminData(userResponse)
-                        setPageLoaded(true);
-                        break
-                }
+                setUserAdminData(userResponse)
+                setPageLoaded(true);
             }
         }
 
@@ -55,8 +43,10 @@ export default function Users() {
             try {
 
                 const userResponse = await getUserByID(id)
-
-                setUserData(userResponse)
+                if (userResponse) {
+                    setUserData(userResponse)
+                    setPageLoaded(true);
+                }
 
             } catch (error) {
 
@@ -69,7 +59,7 @@ export default function Users() {
         if (!isLoading) {
 
             if (user) {
-                checkAndRedirectRole(user);
+                fetchAdminData(user);
                 if (params.id && typeof (params.id) == 'string') {
                     fetchUserData(params.id);
                 }
@@ -82,10 +72,10 @@ export default function Users() {
 
     if (!user) {
         return (
-          <SpinnerFullScreen />
+            <SpinnerFullScreen />
         )
-      }
-    
+    }
+
 
     return (
         <>

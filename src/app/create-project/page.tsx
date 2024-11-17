@@ -1,26 +1,23 @@
 "use client"
 
 import { checkUserByEmail } from '@/app/api/checkUserByEmail/route'
-import { getUserByID } from '@/app/api/getUserByID/route'
 import { SpinnerFullScreen } from '@/components/Loading/SpinnerFullScreen'
 import { SideBar } from '@/components/SideBar'
-import FormUsers from '@/components/users/FormUsers'
-import { UsersHeader } from '@/components/users/Header'
-import { AdminHeader } from '@/components/users/HeaderAdmin'
-import { ProfileUserResume } from '@/components/users/ProfileUserResume'
 import { UserProfile, useUser } from '@auth0/nextjs-auth0/client'
 import { Container, Flex, Spinner } from '@chakra-ui/react'
-import { useParams, useRouter } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
+import { getProjectManagerProjectsList } from '@/app/api/getProjectList/route'
+import { CreateProjectHeader } from '@/components/CreateProjects/Header'
+import { CreateProjectForm } from '@/components/CreateProjects/CreateProjectForm.'
 
-export default function Users() {
+export default function CreateProject() {
 
     const router = useRouter();
-    const params = useParams();
     const { user, isLoading } = useUser()
 
     const [userData, setUserData] = useState<User | null>(null);
-    const [userAdminData, setUserAdminData] = useState<User | null>(null);
+    const [projectsData, setProjectsData] = useState<Investment[] | null>(null);
 
     const [pageLoaded, setPageLoaded] = useState(false);
 
@@ -28,55 +25,69 @@ export default function Users() {
         router.push("/404")
     }
 
- // GET USER
- useEffect(() => {
+    // GET USER
+    useEffect(() => {
 
-    const fetchAdminData = async (user: UserProfile) => {
+        const fetchUserData = async (user: UserProfile) => {
+            try {
 
-        const userResponse = await checkUserByEmail(user)
-        if (userResponse) {
-            setUserAdminData(userResponse)
-            setPageLoaded(true);
-        }
-    }
-
-    const fetchUserData = async (id: User["id"]) => {
-        try {
-
-            const userResponse = await getUserByID(id)
-            if (userResponse) {
+                const userResponse = await checkUserByEmail(user)
                 setUserData(userResponse)
-                setPageLoaded(true);
+
+            } catch (error) {
+
+                console.error('Erro ao buscar dados do usuário:', error);
+                await redirectNotFound()
+
             }
-
-        } catch (error) {
-
-            console.error('Erro ao buscar dados do usuário:', error);
-            await redirectNotFound()
-
         }
-    }
 
-    if (!isLoading) {
+        const fetchProjectData = async (id: User["id"]) => {
+            try {
 
-        if (user) {
-            fetchAdminData(user);
-            if (params.id && typeof (params.id) == 'string') {
-                fetchUserData(params.id);
+                const projectResponse = await getProjectManagerProjectsList({ projectManagerID: id })
+                setProjectsData(projectResponse)
+                setPageLoaded(true)
+
+            } catch (error) {
+
+                console.error('Erro ao buscar dados do projeto:', error);
+                await redirectNotFound()
+
             }
-        } else {
-            // router.push('/authentication')
         }
-    }
 
-}, [user])
+        if (!isLoading) {
+
+            if (user) {
+                fetchUserData(user);
+                if (userData) {
+                    fetchProjectData(userData.id);
+                }
+
+            } else {
+                router.push('/authentication')
+            }
+        }
+
+    }, [user])
 
     if (!user) {
         return (
-          <SpinnerFullScreen />
+            <SpinnerFullScreen />
         )
-      }
-    
+    }
+    if (!projectsData) {
+        return (
+            <SpinnerFullScreen />
+        )
+    }
+    if (!userData) {
+        return (
+            <SpinnerFullScreen />
+        )
+    }
+
 
     return (
         <>
@@ -92,7 +103,7 @@ export default function Users() {
 
                     <Flex h='100%'>
                         <Flex>
-                            <SideBar userData={userAdminData} />
+                            <SideBar userData={userData} />
                         </Flex>
 
                         <Flex h='100%' flexDir={'column'} w='100%' px={12} py={12} gap={6}>
@@ -104,7 +115,7 @@ export default function Users() {
                                 borderBottom={'1px solid #E5E7EB'}
                                 pb={8}
                             >
-                                <AdminHeader userData={userData} user={user} />
+                                <CreateProjectHeader />
                             </Flex>
 
                             {!userData ?
@@ -117,11 +128,10 @@ export default function Users() {
                                 :
 
                                 // {/* BODY FORMS */}
-                                < Flex flexDir={'column'}>
+                                <Flex flexDir={'column'}>
 
                                     <Flex gap={12}>
-                                        <FormUsers userData={userData} />
-                                        <ProfileUserResume userData={userData} />
+                                        <CreateProjectForm user={user} userData={userData} router={router} />
                                     </Flex>
 
                                 </Flex>

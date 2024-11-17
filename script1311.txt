@@ -1,0 +1,49 @@
+script
+
+LOGIN PAGE:
+- Pequena mudança para redirecionar à tela de login
+
+TELA DE LOGIN: https://manage.auth0.com/dashboard/us/dev-pzivs8swerlhnydf/universal-login/customizations-new
+
+- Dois tipos: clássico e universal:
+	Clássico: Estilização mais personalizável, mas funcionamento muito inferior (complicado para programar)
+	Universal: Estilização um pouco mais limitada, mas funcionamento muito melhor (fortemente recomendado)
+
+- Criar conta com e-mail matheus@awer.co (apagar do auth0 antes)
+- Recebe e-mail de verificação (que podemos utilizar mais pra frente)
+
+ALTERAR SENHA
+- e-mail de recuperação de senha
+- Tela de alterar a senha (clássica ou universal)
+
+APAGAR USUÁRIO
+- Usuário continua com o e-mail dele cadastrado na api, mas não no banco de dados
+
+TESTE DE PERFIL
+- Formulário em 4 etapas
+- Cada pergunta possui um peso personalizável, o peso final determina o perfil.
+- Atualmente: <=10 conservador, >10 conservador <=15, >15 arrojado
+- Funções src\utils\investorProfileUtils.ts
+- calibrar
+
+USUARIOS
+- Listagem de usuários
+- Deletar matheus@awer.co (esqueceu a senha? só clicar)
+- Criar usuário gerente de projetos
+
+PROJETOS
+- Login com google
+- Investir
+- Projetos já cadastrados no banco de dados
+- Algumas features ainda estáticas
+- Login com gerente de projetos ou admin
+- Algumas informações ainda a preencher e funções a criar
+- Pode desativar projeto e criar imóvel
+
+SIDEBAR:
+investidor: Dashboard, meus invest, investir, meu perfil, logout
+admin: dash, imóveis, usuários, meu perfil e logout
+projmanag: dash, imóveis, meu perfil e logout
+
+DETALHES EXTRAS:
+Ambiente de desenvolvimento não permite personalização de e-mail de recuperação de senha, telefone entre outros

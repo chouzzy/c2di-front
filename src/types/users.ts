@@ -1,7 +1,7 @@
 interface ProjectDocuments {
   id: string;
   title: string;
-  description:string
+  description: string
   url: string;
 }
 
@@ -106,6 +106,7 @@ interface Investment {
   realizedCost: RealizedCost;
   notifications: Notification[];
   userInvestments: UserInvestment[];
+  projectManagerID: string
   createdAt: Date;
   updatedAt: Date;
 }
