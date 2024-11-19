@@ -100,7 +100,7 @@ export function HeaderAdminProject({ projectData, userData, user }: HeaderProjec
                             <ModalHeader>
                                 <Flex gap={2} alignItems={'start'} flexDir={'column'} pt={4}>
                                     <Text>
-                                        Criar usuário
+                                        Desativar usuário
                                     </Text>
                                     <Text fontWeight={'light'} fontSize={14}>
                                         Esta ação não pode ser desfeita. Você irá deletar este usuário permanentemente do portal.

@@ -136,7 +136,7 @@ export default function ProjectManagerProject() {
                 < Flex flexDir={'column'}>
 
                   <Flex gap={12}>
-                    <ProjectResumeProjectManager user={user} projectData={projectData} />
+                    <ProjectResumeProjectManager userData={userData} user={user} projectData={projectData} />
                   </Flex>
 
                 </Flex>

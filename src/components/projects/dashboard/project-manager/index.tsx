@@ -89,7 +89,7 @@ export function ProjectDashboardProjectManager({ projectsData, page, setPage, to
                         _hover={{ bgColor: 'graySide' }}
                         color={'lightSide'}
                         bgColor={'darkSide'}
-                        isDisabled={page >= (totalPages/elementsPerPage)}
+                        isDisabled={page >= Math.ceil(totalPages/elementsPerPage)}
                     >
                         <Flex minW={18} alignItems={'center'} justifyContent={'center'}>
                             <Text>Próximo</Text>

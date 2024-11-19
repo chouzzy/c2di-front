@@ -12,11 +12,12 @@ import DocumentsList from '../../documentsList';
 import { InfosGerais } from '../../infosGerais';
 
 interface ProjectDataProps {
+    userData: User
     projectData: Investment
     user: UserProfile | undefined
 }
 
-function ProjectResumeProjectManager({ user, projectData }: ProjectDataProps) {
+function ProjectResumeProjectManager({ userData, user, projectData }: ProjectDataProps) {
 
     const [page, SetPage] = useState(0)
 
@@ -39,7 +40,7 @@ function ProjectResumeProjectManager({ user, projectData }: ProjectDataProps) {
                 <Flex onClick={() => { SetPage(4) }} minW={'max-content'} borderRadius={4} py={2} px={1} as='button' fontWeight={'medium'} bgColor={page == 4 ? 'white' : 'inherit'} >Mídias</Flex>
             </Flex>
 
-            {page == 0 ? (<InfosGerais projectData={projectData} />) : ('')}
+            {page == 0 ? (<InfosGerais userData={userData} projectData={projectData} />) : ('')}
             {page == 1 ? (<FichaTecnica projectData={projectData} />) : ('')}
             {page == 2 ? (<Partners user={user} projectData={projectData} />) : ('')}
             {page == 3 ? (<DocumentsList user={user} projectData={projectData} />) : ('')}
