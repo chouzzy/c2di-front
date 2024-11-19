@@ -1,6 +1,7 @@
 import { FormControl, FormLabel, Select } from "@chakra-ui/react";
 import { Dispatch, SetStateAction } from "react";
 import { UseFormRegisterReturn } from "react-hook-form";
+import { IoMdArrowDropdown } from "react-icons/io";
 
 
 interface UsersSelectInputProps {
@@ -44,7 +45,7 @@ export function AuthSelectInput({
                 h={10}
                 isRequired={true}
                 cursor={'pointer'}
-                icon={<></>}
+                icon={<IoMdArrowDropdown />}
                 onChange={(event) => {
                     setState ? setState(event.target.value) : "";
                     setCity ? setCity(event.target.value) : "";

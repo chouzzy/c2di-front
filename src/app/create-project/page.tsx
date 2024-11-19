@@ -22,7 +22,7 @@ export default function CreateProject() {
     const [pageLoaded, setPageLoaded] = useState(false);
 
     const redirectNotFound = async () => {
-        router.push("/404")
+        // router.push("/404")
     }
 
     // GET USER

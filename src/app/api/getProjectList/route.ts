@@ -30,11 +30,15 @@ const getProjectList = async () => {
     }
 };
 
-const getProjectManagerProjectsList = async ({ projectManagerID }: ListInvestmentRequestProps) => {
+const getProjectManagerProjectsList = async ({ projectManagerID, page, pageRange }: ListInvestmentRequestProps) => {
     try {
 
         const response = await axios.get(`http://localhost:8081/investments/`, {
-            params: { projectManagerID: projectManagerID },
+            params: {
+                projectManagerID: projectManagerID,
+                page: page,
+                pageRange: pageRange
+            },
             withCredentials: true,
         },
         )

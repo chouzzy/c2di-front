@@ -280,8 +280,6 @@ export function CreateInvestorAccountCard({ user, router }: CreateInvestorAccoun
                                         label_top='Bairro'
                                         register={register("address.district")}
                                     />
-
-
                                 </Flex>
 
                             </Flex>

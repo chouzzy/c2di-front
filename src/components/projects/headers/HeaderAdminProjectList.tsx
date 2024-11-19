@@ -13,9 +13,7 @@ interface HeaderAdminProjectProps {
 
 export function HeaderAdminProjectList({ userData, user }: HeaderAdminProjectProps) {
 
-    const router = useRouter()
     const { isOpen, onOpen, onClose } = useDisclosure() // Adiciona o hook useDisclosure
-    const [changingPassword, setChangingPassword] = useState(false)
     const [deletingUser, setDeletingUser] = useState(false)
     const [deleteUserConfirm, setDeleteUserConfirm] = useState(false)
     const [userDeleted, setUserDeleted] = useState(false)
@@ -46,26 +44,10 @@ export function HeaderAdminProjectList({ userData, user }: HeaderAdminProjectPro
         }
     }
 
-    // useEffect(() => {
-    //     const deleteUser = async (id: User["id"], auth0UserID: UserProfile["sub"]) => {
-    //         setDeletingUser(true)
-    //         const deleteUserSuccessMessage = await deletePrismaAndAuth0User(id, auth0UserID)
-    //         setModalMessage(deleteUserSuccessMessage); // Define a mensagem do modal
-    //         setUserDeleted(true)
-    //         onClose()
-    //         router.push('/api/auth/logout')
+    const handleCreateInvestment = () => {
+        window.location.href = 'http://localhost:3000/create-project'
 
-    //     }
-
-    //     if (deletingUser) {
-
-    //         if (userData && user) {
-    //             deleteUser(userData.id, user.sub)
-    //             setChangingPassword(false)
-    //         }
-    //     }
-
-    // }, [deleteUserConfirm])
+    }
 
     return (
         <>
@@ -83,7 +65,7 @@ export function HeaderAdminProjectList({ userData, user }: HeaderAdminProjectPro
             </Flex>
 
             <Flex gap={8} alignItems={'center'}>
-                <Button onClick={() => {alert("Criar um imóvel")}} _hover={{ bgColor: 'graySide' }} color={'lightSide'} bgColor={'darkSide'} mt={4}>
+                <Button onClick={() => { handleCreateInvestment() }} _hover={{ bgColor: 'graySide' }} color={'lightSide'} bgColor={'darkSide'} mt={4}>
                     <Flex minW={32} alignItems={'center'} justifyContent={'center'}>
                         <Text>Criar imóvel</Text>
                     </Flex>

@@ -43,6 +43,7 @@ export const theme = extendTheme({
     grayHoverSide: "#e4e4e7",
     grayMenuSide: "#e4e4e7",
     redSide: "#EF3A5D",
+    yellowSide: "#efca1d",
     beigeSide: "#f6f6f6",
     borderMediaSide: "#E2E8F0cc",
 

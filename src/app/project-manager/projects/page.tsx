@@ -16,12 +16,18 @@ import { ProjectDashboardProjectManager } from '@/components/projects/dashboard/
 export default function ProjectManagersProjects() {
 
     const router = useRouter();
+
     const { user, isLoading } = useUser()
 
     const [userData, setUserData] = useState<User | null>(null);
     const [projectsData, setProjectsData] = useState<Investment[] | null>(null);
 
     const [pageLoaded, setPageLoaded] = useState(false);
+
+    const [totalPages, setTotalPages] = useState<number | undefined>(undefined)
+    const [elementsPerPage, setElementsPerPage] = useState<number>(2)
+
+    const [page, setPage] = useState(1)
 
     const redirectNotFound = async () => {
         router.push("/404")
@@ -47,7 +53,17 @@ export default function ProjectManagersProjects() {
         const fetchProjectData = async (id: User["id"]) => {
             try {
 
-                const projectResponse = await getProjectManagerProjectsList({ projectManagerID: id })
+                let pageString = String(page)
+                let pageRangeString = String(elementsPerPage)
+
+                if (!totalPages) {
+                    const projectResponseComplete = await getProjectManagerProjectsList({ projectManagerID: id })
+                    if (projectResponseComplete) {
+                        setTotalPages(projectResponseComplete.length)
+                    }
+                }
+
+                const projectResponse = await getProjectManagerProjectsList({ projectManagerID: id, page: pageString, pageRange: pageRangeString })
                 setProjectsData(projectResponse)
                 setPageLoaded(true)
 
@@ -72,7 +88,7 @@ export default function ProjectManagersProjects() {
             }
         }
 
-    }, [user])
+    }, [user, page])
 
     if (!user) {
         return (
@@ -85,6 +101,11 @@ export default function ProjectManagersProjects() {
         )
     }
     if (!userData) {
+        return (
+            <SpinnerFullScreen />
+        )
+    }
+    if (!totalPages) {
         return (
             <SpinnerFullScreen />
         )
@@ -134,7 +155,7 @@ export default function ProjectManagersProjects() {
                                 < Flex flexDir={'column'}>
 
                                     <Flex gap={12}>
-                                        <ProjectDashboardProjectManager projectsData={projectsData} />
+                                        <ProjectDashboardProjectManager elementsPerPage={elementsPerPage} totalPages={totalPages} page={page} setPage={setPage} projectsData={projectsData} />
                                     </Flex>
 
                                 </Flex>

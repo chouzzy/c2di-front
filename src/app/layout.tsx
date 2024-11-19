@@ -2,27 +2,27 @@
 
 import { UserProvider } from '@auth0/nextjs-auth0/client';
 import { fonts } from '../../src/lib/fonts';
-// import { theme } from '@/styles/theme';
 import { Global } from '@emotion/react';
+import { theme } from '@/styles/theme'
 import { Providers } from './providers'
-
+import '../styles/global.css';
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body>
-        <Providers>
-          <UserProvider>
-            <Global
-              styles={`
+        <UserProvider>
+          <Global
+            styles={`
                 :root {
                   --font-montserrat: ${fonts.montserrat.style.fontFamily};
-                }
-              `}
-            />
-            {children}
-          </UserProvider>
-        </Providers>
+                  }
+                  `}
+          />
+            <Providers>
+              {children}
+            </Providers>
+        </UserProvider>
       </body>
     </html>
   );

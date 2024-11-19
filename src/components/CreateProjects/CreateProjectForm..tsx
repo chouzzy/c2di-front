@@ -7,6 +7,11 @@ import { UserProfile } from "@auth0/nextjs-auth0/client";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import { updateInvestorProfile } from "@/app/api/updateInvestorProfile/route";
 import { FirstPage } from "./CreateProjectPages/FirstPage";
+import { SecondPage } from "./CreateProjectPages/SecondPage";
+import { ThirdPage } from "./CreateProjectPages/ThirdPage";
+import { createInvestorUtils, documentsArrayAdapter, floorPlanTypesAdapter, imagesArrayAdapter, projectTypeAdapter } from "@/app/services/utils";
+import { createInvestmentSchema } from "@/schemas/investmentSchema";
+import { createPrismaInvestment } from "@/app/api/createInvestment/route";
 
 interface CreateInvestorAccountCardProps {
     user: UserProfile
@@ -21,10 +26,10 @@ export function CreateProjectForm({ user, router, userData }: CreateInvestorAcco
     const [yupError, setYupError] = useState<string>("")
 
     const handleSaveClick = () => {
-        router.push(`/users/update/investor`)
+        window.location.href = 'http://localhost:3000/projects'
     };
 
-    const pages = [0, 1, 2, 3]
+    const pages = [0, 1, 2]
 
     const [page, setPage] = useState(0)
 
@@ -32,26 +37,26 @@ export function CreateProjectForm({ user, router, userData }: CreateInvestorAcco
     const onSubmit = async (data: any) => {
 
         try {
-            console.log('data')
-            console.log(data)
+            // console.log('data')
+            // console.log(data)
             if (page < (pages.length - 1)) {
                 nextPage()
                 return
             }
 
-            const postData = { ...data, userId: userData.id }
+            data = await createInvestorUtils(data, userData.id)
 
-            // await createUsersSchema.validate(data);
 
-            const response = await updateInvestorProfile(postData)
+            await createInvestmentSchema.validate(data);
 
+            const response = await createPrismaInvestment(data)
 
             handleSaveClick()
 
         } catch (error: any) {
             if (error instanceof AxiosError) {
                 if (error.response) {
-                    setYupError(error.response?.data.error.message)
+                    setYupError('Ocorreu um erro ao criar o projeto, verifique os dados e tente novamente.')
                     console.error(error)
                 } else {
                     console.error(error)
@@ -111,24 +116,42 @@ export function CreateProjectForm({ user, router, userData }: CreateInvestorAcco
 
                                 {/* OBJETIVOS E EXPERIENCIA */}
                                 {page === 1 ?
-                                    // <RiskAndExperience register={register} /> 
-                                    ''
+                                    <SecondPage register={register} userData={userData} />
                                     :
                                     ''
                                 }
                                 {/* RISCO, HORIZONTE E PATRIMONIO */}
                                 {page === 2 ?
-                                    // <HorizonAndNetWorth register={register} /> 
-                                    ''
+                                    <ThirdPage register={register} userData={userData} />
                                     :
                                     ''
                                 }
 
                                 {/* PREFERÊNCIAS E CONSIDERAÇÕES FINAIS */}
 
-                                {page === 3 ?
+
+                            </Flex>
+
+                            <Flex alignItems={'center'} justifyContent={'space-between'} w='100%'>
+
+
+                                <Button
+                                    colorScheme="blackAlpha"
+                                    fontSize={14}
+                                    color={'lightSide'}
+                                    fontWeight={'light'}
+                                    bgColor={'darkSide'}
+                                    isDisabled={page == 0}
+                                    onClick={previousPage}
+                                >
+                                    Anterior
+                                </Button>
+                                <Flex>
+                                    Página {page + 1} de {pages.length}
+                                </Flex>
+
+                                {page === pages.length - 1 ?
                                     <>
-                                        {/* <PreferencesAndConsiderations register={register} /> */}''
                                         <Button
                                             type='submit'
                                             fontSize={14}
@@ -143,37 +166,22 @@ export function CreateProjectForm({ user, router, userData }: CreateInvestorAcco
                                         </Button>
                                     </>
                                     :
-                                    ''
+                                    <Button
+                                        type="submit"
+                                        colorScheme="blackAlpha"
+                                        fontSize={14}
+                                        color={'lightSide'}
+                                        fontWeight={'light'}
+                                        bgColor={'darkSide'}
+                                        isDisabled={page >= (pages.length - 1)}
+                                    // onClick={nextPage}
+                                    >
+                                        Próxima
+                                    </Button>
                                 }
-                            </Flex>
-
-                            <Flex alignItems={'center'} justifyContent={'space-between'} w='100%'>
-
-                                <Button
-                                    colorScheme="blackAlpha"
-                                    fontSize={14}
-                                    color={'lightSide'}
-                                    fontWeight={'light'}
-                                    bgColor={'darkSide'}
-                                    isDisabled={page == 0}
-                                    onClick={previousPage}
-                                >
-                                    Anterior
-                                </Button>
-                                <Button
-                                    type="submit"
-                                    colorScheme="blackAlpha"
-                                    fontSize={14}
-                                    color={'lightSide'}
-                                    fontWeight={'light'}
-                                    bgColor={'darkSide'}
-                                    isDisabled={page >= (pages.length - 1)}
-                                // onClick={nextPage}
-                                >
-                                    Próxima
-                                </Button>
 
                             </Flex>
+
                         </Flex>
                     </form>
 

@@ -1,10 +1,23 @@
 import { Button, Flex, Image, Link, SimpleGrid, Text } from "@chakra-ui/react";
+import { Dispatch, SetStateAction } from "react";
 
 interface ProjectDashboardInvestorProps {
     projectsData: Investment[]
+    setPage: Dispatch<SetStateAction<number>>
+    page: number
+    totalPages:number
+    elementsPerPage:number
 }
 
-export function ProjectDashboardProjectManager({ projectsData }: ProjectDashboardInvestorProps) {
+export function ProjectDashboardProjectManager({ projectsData, page, setPage, totalPages, elementsPerPage }: ProjectDashboardInvestorProps) {
+
+    const nextPage = async () => {
+        setPage(page + 1)
+    }
+    const previousPage = async () => {
+        setPage(page - 1)
+    }
+
     return (
         <Flex flexDir={'column'} w='100%' gap={16} >
             <Flex>
@@ -52,16 +65,32 @@ export function ProjectDashboardProjectManager({ projectsData }: ProjectDashboar
             <Flex w='100%' justifyContent={'space-between'} gap={4} >
                 <Flex>
                     <Text>
-                        Mostrando 4 de 38 projetos
+                        Mostrando {page} de 38 projetos
                     </Text>
                 </Flex>
                 <Flex gap={4}>
-                    <Button _hover={{ bgColor: 'graySide', color: 'lightSide' }} color={'darkSide'} bgColor={'lightSide'} border='1px' borderColor={'grayDivisor'}>
+
+                    <Button
+                        onClick={previousPage}
+                        _hover={{ bgColor: 'graySide', color: 'lightSide' }}
+                        color={'darkSide'}
+                        bgColor={'lightSide'}
+                        border='1px'
+                        borderColor={'grayDivisor'}
+                        isDisabled={page <= 1}
+                    >
                         <Flex minW={18} alignItems={'center'} justifyContent={'center'}>
                             <Text>Anterior</Text>
                         </Flex>
                     </Button>
-                    <Button _hover={{ bgColor: 'graySide' }} color={'lightSide'} bgColor={'darkSide'} >
+
+                    <Button
+                        onClick={nextPage}
+                        _hover={{ bgColor: 'graySide' }}
+                        color={'lightSide'}
+                        bgColor={'darkSide'}
+                        isDisabled={page >= (totalPages/elementsPerPage)}
+                    >
                         <Flex minW={18} alignItems={'center'} justifyContent={'center'}>
                             <Text>Próximo</Text>
                         </Flex>

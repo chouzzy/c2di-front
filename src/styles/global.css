@@ -1,0 +1,18 @@
+body {
+    margin: 0;
+  }
+  
+  input[type="file"]::file-selector-button {
+    background-color: #EF3A5D;
+    color: white;
+    padding: 10px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 16px;
+    margin-right:16px
+}
+
+.my-custom-class {
+  color: red;
+}
