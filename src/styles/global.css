@@ -1,16 +1,29 @@
 body {
-    margin: 0;
-  }
-  
-  input[type="file"]::file-selector-button {
-    background-color: #EF3A5D;
-    color: white;
-    padding: 10px 10px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-top: 16px;
-    margin-right:16px
+  margin: 0;
+}
+
+input[type="file"]::file-selector-button {
+  background-color: #EF3A5D;
+  color: white;
+  padding: 6px 10px;
+  border: none;
+  border-radius: 2px;
+  cursor: pointer;
+  margin-top: 12px;
+  margin-right: 16px
+}
+
+input[type="file"].classer::file-selector-button {
+  background-color: black;
+  color: white;
+  border: none;
+  border-radius: 2px;
+  cursor: pointer;
+  margin-top: 0px;
+  font-size: 12px;
+}
+input[type="file"].classer {
+  border:none;
 }
 
 .my-custom-class {

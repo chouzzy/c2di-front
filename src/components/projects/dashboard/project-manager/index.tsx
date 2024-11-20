@@ -27,7 +27,7 @@ export function ProjectDashboardProjectManager({ projectsData, page, setPage, to
 
                             <Flex key={project.id} flexDir={'column'} gap={4} w={440} mt={6}>
                                 <Flex>
-                                    <Image src={project.images[0].url} h={160} w={440} objectFit={'cover'} objectPosition={'center'} />
+                                    <Image src={`/assets/projects/${project.images[0].url}`} h={160} w={440} objectFit={'cover'} objectPosition={'center'} />
                                 </Flex>
                                 <Flex flexDir={'column'} gap={2} h={16}>
 

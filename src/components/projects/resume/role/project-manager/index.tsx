@@ -10,6 +10,7 @@ import { UserProfile } from '@auth0/nextjs-auth0/client';
 import { SpinnerFullScreen } from '@/components/Loading/SpinnerFullScreen';
 import DocumentsList from '../../documentsList';
 import { InfosGerais } from '../../infosGerais';
+import { ProjectGallery } from '../../gallery';
 
 interface ProjectDataProps {
     userData: User
@@ -22,10 +23,10 @@ function ProjectResumeProjectManager({ userData, user, projectData }: ProjectDat
     const [page, SetPage] = useState(0)
 
     if (!user) {
-        return <SpinnerFullScreen/>
+        return <SpinnerFullScreen />
     }
     if (!projectData) {
-        return <SpinnerFullScreen/>
+        return <SpinnerFullScreen />
     }
 
     return (
@@ -44,7 +45,8 @@ function ProjectResumeProjectManager({ userData, user, projectData }: ProjectDat
             {page == 1 ? (<FichaTecnica projectData={projectData} />) : ('')}
             {page == 2 ? (<Partners user={user} projectData={projectData} />) : ('')}
             {page == 3 ? (<DocumentsList user={user} projectData={projectData} />) : ('')}
-            
+            {page == 4 ? (<ProjectGallery projectData={projectData} />) : ('')}
+
 
         </Flex>
     );

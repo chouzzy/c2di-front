@@ -25,13 +25,24 @@ async function imagesArrayAdapter(data: any) {
         const images: Investment["images"] = []
         data = { ...data, images }
 
-        for (let index = 0; index < data.image.length; index++) {
+        for (const label in data.image) {
+            if (data.image.hasOwnProperty(label)) {
 
-            data.images.push({
-                url: 'https://images.unsplash.com/photo-1605146769289-440113cc3d00?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-                description: data.image[index].name
-            })
+                const files = data.image[label];
+
+                for (let index = 0; index < files.length; index++) {
+                    const foto = files[index];
+
+                    images.push({
+                        label: label,
+                        url: foto.name,
+                        description: foto.name
+                    })
+                    
+                }
+            }
         }
+
         delete data.image
 
         return data

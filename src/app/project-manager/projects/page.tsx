@@ -24,10 +24,12 @@ export default function ProjectManagersProjects() {
 
     const [pageLoaded, setPageLoaded] = useState(false);
 
-    const [totalPages, setTotalPages] = useState<number | undefined>(undefined)
+    const [totalPages, setTotalPages] = useState<number>(1)
     const [elementsPerPage, setElementsPerPage] = useState<number>(2)
 
     const [page, setPage] = useState(1)
+
+    
 
     const redirectNotFound = async () => {
         router.push("/404")

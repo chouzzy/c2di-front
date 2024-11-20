@@ -1,4 +1,4 @@
-import { Button, Text, useDisclosure } from "@chakra-ui/react"
+import { Button, Spinner, Text, useDisclosure } from "@chakra-ui/react"
 import { PiArrowArcLeft, PiArrowArcRight, PiArrowCircleLeft, PiArrowCircleRight, PiCheckThin } from "react-icons/pi";
 import { IoMdAlert } from "react-icons/io"
 import { Dispatch, SetStateAction, useEffect, useState } from "react"
@@ -74,34 +74,42 @@ export function NotificationsBoard({ totalDocuments, page, pageRange, setPage, n
         <>
             <Flex h={52} w='100%' border='1px' borderColor={'grayDivisor'} borderRadius={8} px={4} py={2} flexDir={'column'} justifyContent={'space-between'}>
 
-                <Flex flexDir={'column'}>
-                {notifications.map((notification) => {
-                    const { isRead } = notification
-                    return (
-                        <Flex
-                            key={notification.id}
-                            onClick={() => { openNotification(notification.id) }}
-                            _hover={{ color: 'graySide', transition: '300ms' }}
-                            color={isRead ? 'grayDivisor' : 'darkSide'}
-                            cursor={'pointer'}
-                            py={2}
-                            gap={4}
-                            borderBottom='1px'
-                            borderColor={'grayDivisor'}
-                            alignItems={'center'}
-                            justifyContent={'space-between'}
-                        >
-                            <Text fontSize={12} fontWeight={'medium'}>
-                                {notification.title.length > 67 ? notification.title.slice(0, 67) + '...' : notification.title}
-                            </Text>
-                            <Flex color={isRead ? 'darkSide' : 'yellowSide'}>
-                                {isRead ? <PiCheckThin size={20} /> : <IoMdAlert size={20} />}
-                            </Flex>
-                        </Flex>
-                    )
-                })}
-                </Flex>
+                {notifications ?
+                    <Flex flexDir={'column'}>
+                        {notifications.map((notification) => {
+                            const { isRead } = notification
+                            return (
+                                <Flex
+                                    key={notification.id}
+                                    onClick={() => { openNotification(notification.id) }}
+                                    _hover={{ color: 'graySide', transition: '300ms' }}
+                                    color={isRead ? 'grayDivisor' : 'darkSide'}
+                                    cursor={'pointer'}
+                                    py={2}
+                                    gap={4}
+                                    borderBottom='1px'
+                                    borderColor={'grayDivisor'}
+                                    alignItems={'center'}
+                                    justifyContent={'space-between'}
+                                >
+                                    <Text fontSize={12} fontWeight={'medium'}>
+                                        {notification.title.length > 67 ? notification.title.slice(0, 67) + '...' : notification.title}
+                                    </Text>
+                                    <Flex color={isRead ? 'darkSide' : 'yellowSide'}>
+                                        {isRead ? <PiCheckThin size={20} /> : <IoMdAlert size={20} />}
+                                    </Flex>
+                                </Flex>
+                            )
+                        })}
+                    </Flex>
+                    :
+                    <Flex w='100%' h='100%' alignItems={'center'} justifyContent={'center'}>
+                        <Spinner boxSize={24} />
+                    </Flex>
 
+
+
+                }
                 <Flex justifyContent={'space-between'}>
                     <Button
                         onClick={previousPage}
@@ -114,7 +122,7 @@ export function NotificationsBoard({ totalDocuments, page, pageRange, setPage, n
                         isDisabled={page <= 1}
                     >
                         <Flex minW={18} alignItems={'center'} justifyContent={'center'}>
-                            <Text><PiArrowCircleLeft size={18}/></Text>
+                            <Text><PiArrowCircleLeft size={18} /></Text>
                         </Flex>
                     </Button>
 
@@ -127,10 +135,11 @@ export function NotificationsBoard({ totalDocuments, page, pageRange, setPage, n
                         isDisabled={page >= Math.ceil(totalDocuments / pageRange)}
                     >
                         <Flex minW={18} alignItems={'center'} justifyContent={'center'}>
-                            <Text><PiArrowCircleRight size={18}/></Text>
+                            <Text><PiArrowCircleRight size={18} /></Text>
                         </Flex>
                     </Button>
                 </Flex>
+
             </Flex>
 
             <NotificationsModal

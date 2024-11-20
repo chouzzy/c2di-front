@@ -6,6 +6,7 @@ interface ProjectDocuments {
 }
 
 interface Image {
+  label: string;
   url: string;
   description?: string;
 }

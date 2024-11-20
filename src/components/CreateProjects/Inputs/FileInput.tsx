@@ -1,7 +1,8 @@
-import { Flex, FormControl, FormLabel, Input } from "@chakra-ui/react";
+import { Flex, FormControl, FormLabel, Input, Text } from "@chakra-ui/react";
 import { useState } from "react";
 import { UseFormRegisterReturn } from "react-hook-form";
 import { ErrorInputComponent } from "@/components/ErrorInputComponent";
+import { ArrowArcLeft } from "phosphor-react";
 
 
 
@@ -9,6 +10,7 @@ interface UsersInputProps {
     label_top: string,
     allowedTypes: string[],
     accept: string,
+    icon?: any,
     isRequired?: boolean,
     disabled?: boolean,
     defaultValue?: string,
@@ -19,7 +21,7 @@ interface UsersInputProps {
 
 
 
-export function ProjectFileInput({ label_top, allowedTypes, accept, isRequired, disabled = false, register, maxWidth, label_bottom }: UsersInputProps
+export function ProjectFileInput({ label_top, allowedTypes, accept, icon, isRequired, disabled = false, register, maxWidth, label_bottom }: UsersInputProps
 ) {
     const [selectedFile, setSelectedFile] = useState(null);
     const [error, setError] = useState('');
@@ -34,7 +36,7 @@ export function ProjectFileInput({ label_top, allowedTypes, accept, isRequired, 
 
             if (files[index]) {
 
-                const maxSize = 5 * 1024 * 1024; // 5 MB
+                const maxSize = 50 * 1024 * 1024; // 5 MB
                 const selectedFilesArray = Array.from(files);
 
                 if (!allowedTypes.includes(files[index].type)) {
@@ -69,7 +71,11 @@ export function ProjectFileInput({ label_top, allowedTypes, accept, isRequired, 
             </Flex>
 
             <FormLabel fontWeight={'semibold'} fontSize={'sm'}>
-                {label_top}
+                <Flex ml={4} gap={2} alignItems={'center'}>
+                    <Text>{label_top}</Text>
+                    <Flex> {icon}</Flex>
+
+                </Flex>
             </FormLabel>
 
             <Input
@@ -82,8 +88,7 @@ export function ProjectFileInput({ label_top, allowedTypes, accept, isRequired, 
                 w='100%'
                 maxW={maxWidth ?? '100%'}
                 px={4}
-                py={0}
-                h={20}
+                h={16}
                 border='1px solid'
                 borderRadius={6}
                 multiple={true}

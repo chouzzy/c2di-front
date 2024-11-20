@@ -76,7 +76,6 @@ export function InfosGerais({ userData, projectData }: ProjectDataProps) {
     }, [triggerReloadNotifications])
 
     useEffect(() => {
-        console.log(page)
 
         const getProjectNotifications = async (id: Investment["id"]) => {
 
@@ -100,7 +99,6 @@ export function InfosGerais({ userData, projectData }: ProjectDataProps) {
             setCreateNotificationLoading(true)
             setYupError("")
 
-            console.log(data)
 
             data = {
                 ...data,
@@ -109,14 +107,12 @@ export function InfosGerais({ userData, projectData }: ProjectDataProps) {
 
             const response = await createPrismaNotification(data)
 
-            console.log(response)
 
 
             if (response.status === 200 || response.status === 202) {
                 notificationCreatedConfirmed()
             }
             else {
-                console.log('erro no cradastro')
                 alert('Ocorreu um problema no cadastro, entre em contato com o suporte.')
                 throw Error("Ocorreu um problema ao cadastrar")
             }
@@ -142,7 +138,7 @@ export function InfosGerais({ userData, projectData }: ProjectDataProps) {
         <Flex w='100%' py={8} flexDir={'column'}>
             {/* IMAGEM GIGANTE */}
             <Flex w='100%'>
-                <Image src={projectData.images[0].url} h={300} w='100%' objectFit={'cover'} objectPosition={'center'} />
+                <Image src={`/assets/projects/${projectData.images[0].url}`}  h={300} w='100%' objectFit={'cover'} objectPosition={'center'} />
             </Flex>
 
             <Flex w='100%' py={16} gap={8}>

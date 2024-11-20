@@ -122,7 +122,6 @@ export default function CreateProject() {
                                 <Flex boxSize={42} mx='auto'>
                                     <Spinner
                                         boxSize={42}
-                                        color='redSide'
                                     />
                                 </Flex>
                                 :

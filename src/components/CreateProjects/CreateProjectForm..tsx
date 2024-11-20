@@ -31,20 +31,21 @@ export function CreateProjectForm({ user, router, userData }: CreateInvestorAcco
 
     const pages = [0, 1, 2]
 
-    const [page, setPage] = useState(0)
+    const [page, setPage] = useState(2)
 
     // SUBMIT FORM
     const onSubmit = async (data: any) => {
 
         try {
-            // console.log('data')
-            // console.log(data)
             if (page < (pages.length - 1)) {
                 nextPage()
                 return
             }
 
             data = await createInvestorUtils(data, userData.id)
+
+            console.log('data')
+            console.log(data)
 
 
             await createInvestmentSchema.validate(data);
@@ -107,27 +108,25 @@ export function CreateProjectForm({ user, router, userData }: CreateInvestorAcco
                             <Flex flexDir={'column'} gap={8}>
 
 
-                                {/* DADOS PESSOAIS */}
                                 {page === 0 ?
                                     <FirstPage register={register} userData={userData} />
                                     :
                                     ''
                                 }
 
-                                {/* OBJETIVOS E EXPERIENCIA */}
                                 {page === 1 ?
                                     <SecondPage register={register} userData={userData} />
                                     :
                                     ''
                                 }
-                                {/* RISCO, HORIZONTE E PATRIMONIO */}
+
+                                {/* FOTOS E DOCUMENTOS */}
                                 {page === 2 ?
                                     <ThirdPage register={register} userData={userData} />
                                     :
                                     ''
                                 }
 
-                                {/* PREFERÊNCIAS E CONSIDERAÇÕES FINAIS */}
 
 
                             </Flex>
