@@ -10,7 +10,7 @@ import { useEffect, useState } from 'react'
 import { HeaderInvestorGalleryFotosProject } from '@/components/projects/headers/HeaderInvestorGalleryFotosProject'
 import { HeaderAdminGalleryFotosProject } from '@/components/projects/headers/HeaderAdminGalleryFotosProject'
 import { getProjectByID } from '@/app/api/getProject/route'
-import { ProjectMedia360ProjectManager } from '@/components/projects/dashboard/media360'
+import { ProjectMedia360ProjectManager } from '@/components/projects/dashboard/project-manager/media360'
 
 export default function ProjectMedia360() {
 
@@ -117,6 +117,7 @@ export default function ProjectMedia360() {
 
                     <Flex h='100%'>
                         <Flex>
+                            <Flex w={64}></Flex>
                             <SideBar userData={userData} />
                         </Flex>
 

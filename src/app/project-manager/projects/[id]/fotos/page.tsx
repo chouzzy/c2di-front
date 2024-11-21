@@ -14,7 +14,7 @@ import { getProjectList, getProjectManagerProjectsList } from '@/app/api/getProj
 import { ProjectDashboardProjectManager } from '@/components/projects/dashboard/project-manager'
 import { HeaderInvestorGalleryFotosProject } from '@/components/projects/headers/HeaderInvestorGalleryFotosProject'
 import { HeaderAdminGalleryFotosProject } from '@/components/projects/headers/HeaderAdminGalleryFotosProject'
-import { ProjectFotosProjectManager } from '@/components/projects/dashboard/fotos'
+import { ProjectFotosProjectManager } from '@/components/projects/dashboard/project-manager/fotos'
 import { getProjectByID } from '@/app/api/getProject/route'
 
 export default function ProjectPhotos() {
@@ -123,6 +123,7 @@ export default function ProjectPhotos() {
 
                     <Flex h='100%'>
                         <Flex>
+                            <Flex w={64}></Flex>
                             <SideBar userData={userData} />
                         </Flex>
 

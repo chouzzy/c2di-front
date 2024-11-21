@@ -10,7 +10,7 @@ import { useEffect, useState } from 'react'
 import { HeaderInvestorGalleryFotosProject } from '@/components/projects/headers/HeaderInvestorGalleryFotosProject'
 import { HeaderAdminGalleryFotosProject } from '@/components/projects/headers/HeaderAdminGalleryFotosProject'
 import { getProjectByID } from '@/app/api/getProject/route'
-import { ProjectPlantasProjectManager } from '@/components/projects/dashboard/plantas'
+import { ProjectPlantasProjectManager } from '@/components/projects/dashboard/project-manager/plantas'
 
 export default function ProjectPlantas() {
 
@@ -118,6 +118,7 @@ export default function ProjectPlantas() {
 
                     <Flex h='100%'>
                         <Flex>
+                            <Flex w={64}></Flex>
                             <SideBar userData={userData} />
                         </Flex>
 

@@ -44,10 +44,10 @@ function ProjectResumeProjectManager({ userData, user, projectData }: ProjectDat
             </Flex>
 
             {page == 0 ? (<InfosGerais userData={userData} projectData={projectData} />) : ('')}
-            {page == 1 ? (<FichaTecnica projectData={projectData} />) : ('')}
-            {page == 2 ? (<Partners partnerList={partnerList} setPartnerList={setPartnerList} user={user} projectData={projectData} />) : ('')}
-            {page == 3 ? (<DocumentsList documentList={documentList} setDocumentList={setDocumentList} user={user} projectData={projectData}  />) : ('')}
-            {page == 4 ? (<ProjectGallery projectData={projectData} />) : ('')}
+            {page == 1 ? (<FichaTecnica userData={userData} projectData={projectData} />) : ('')}
+            {page == 2 ? (<Partners  userData={userData} partnerList={partnerList} setPartnerList={setPartnerList} user={user} projectData={projectData} />) : ('')}
+            {page == 3 ? (<DocumentsList userData={userData} documentList={documentList} setDocumentList={setDocumentList} user={user} projectData={projectData}  />) : ('')}
+            {page == 4 ? (<ProjectGallery userData={userData} projectData={projectData} />) : ('')}
 
 
         </Flex>

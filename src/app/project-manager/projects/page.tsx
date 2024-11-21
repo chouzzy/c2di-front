@@ -24,8 +24,8 @@ export default function ProjectManagersProjects() {
 
     const [pageLoaded, setPageLoaded] = useState(false);
 
-    const [totalPages, setTotalPages] = useState<number>(1)
-    const [elementsPerPage, setElementsPerPage] = useState<number>(2)
+    const [totalPages, setTotalPages] = useState<number>(0)
+    const [elementsPerPage, setElementsPerPage] = useState<number>(4)
 
     const [page, setPage] = useState(1)
 
@@ -61,6 +61,7 @@ export default function ProjectManagersProjects() {
                 if (!totalPages) {
                     const projectResponseComplete = await getProjectManagerProjectsList({ projectManagerID: id })
                     if (projectResponseComplete) {
+                        console.log('setando total pages')
                         setTotalPages(projectResponseComplete.length)
                     }
                 }
@@ -128,6 +129,7 @@ export default function ProjectManagersProjects() {
 
                     <Flex h='100%'>
                         <Flex>
+                            <Flex w={64}></Flex>
                             <SideBar userData={userData} />
                         </Flex>
 

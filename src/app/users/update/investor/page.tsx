@@ -73,9 +73,10 @@ export default function Users() {
           :
 
           <Flex h='100%'>
-            <Flex>
-              <SideBar userData={userData} />
-            </Flex>
+                        <Flex>
+                            <Flex w={64}></Flex>
+                            <SideBar  userData={userData} />
+                        </Flex>
 
             <Flex h='100%' flexDir={'column'} w='100%' px={12} py={12} gap={6}>
 

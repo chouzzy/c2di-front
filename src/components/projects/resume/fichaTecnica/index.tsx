@@ -15,9 +15,10 @@ import { ValidationError } from 'yup';
 
 interface ProjectDataProps {
     projectData: Investment
+    userData: User
 }
 
-export function FichaTecnica({ projectData }: ProjectDataProps) {
+export function FichaTecnica({ userData, projectData }: ProjectDataProps) {
 
     const { register, handleSubmit, formState: { errors } } = useForm({});
     const [yupError, setYupError] = useState<string>("")
@@ -350,16 +351,19 @@ export function FichaTecnica({ projectData }: ProjectDataProps) {
                             <StaticProject dataType='MONEY' type='Custo estimado da fundação' data={String(projectData.predictedCost.workmanship)} />
                         }
                     </Flex>
-
-                    {editMode ?
-                        <Button type='submit' color={'lightSide'} fontWeight={'light'} bgColor={'darkSide'} mt={4} maxW={40}>
-                            Salvar dados
-                        </Button>
-                        :
-                        <Button color='lightSide' bgColor="redSide" onClick={handleEditClick} mt={4} maxW={40}>
-                            Editar
-                        </Button>
-                    }
+                    {userData.role != 'INVESTOR' ?
+                        <>
+                            {editMode ?
+                                <Button type='submit' color={'lightSide'} fontWeight={'light'} bgColor={'darkSide'} mt={4} maxW={40}>
+                                    Salvar dados
+                                </Button>
+                                :
+                                <Button color='lightSide' bgColor="redSide" onClick={handleEditClick} mt={4} maxW={40}>
+                                    Editar
+                                </Button>
+                            }
+                        </>
+                        : ''}
                 </Flex>
             </form>
         </Flex>

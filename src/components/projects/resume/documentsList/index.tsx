@@ -14,12 +14,12 @@ interface FormUsersProps {
     projectData: Investment
     documentList: ProjectDocuments[] | undefined
     setDocumentList: Dispatch<SetStateAction<ProjectDocuments[] | undefined>>
-
+    userData: User
 
 
 }
 
-function DocumentsList({ user, projectData, documentList, setDocumentList }: FormUsersProps) {
+function DocumentsList({ user, userData, projectData, documentList, setDocumentList }: FormUsersProps) {
 
     const { register, handleSubmit, formState: { errors } } = useForm({});
 
@@ -79,14 +79,13 @@ function DocumentsList({ user, projectData, documentList, setDocumentList }: For
     const onSubmit = async (data: any) => {
 
         try {
-            
+
             data = await documentsArrayAdapter(data)
             projectData.documents = projectData.documents.concat(data.documents)
-            const response:Investment = await changePrismaProjectDoc(projectData.id, projectData)
+            const response: Investment = await changePrismaProjectDoc(projectData.id, projectData)
             setDocumentList(response.documents)
             setAddMode(false)
 
-            console.log(response)
 
         } catch (error: any) {
             console.error(error)
@@ -110,73 +109,77 @@ function DocumentsList({ user, projectData, documentList, setDocumentList }: For
     return (
         <Flex w='100%' flexDirection="column" gap={2}>
 
-            <Flex w='100%' justifyContent={'end'}>
-                {editMode || addMode ?
-                    <Button onClick={handleEditCancel} color={'lightSide'} fontWeight={'light'} bgColor={'redSide'} maxW={40}>
-                        Cancelar
-                    </Button>
-                    :
-                    <Flex gap={4}>
-                        <Button color='lightSide' bgColor="graySide" onClick={handleAddClick} maxW={40}>
-                            Adicionar
+            {userData.role != 'INVESTOR' ?
+                <Flex w='100%' justifyContent={'end'}>
+                    {editMode || addMode ?
+                        <Button onClick={handleEditCancel} color={'lightSide'} fontWeight={'light'} bgColor={'redSide'} maxW={40}>
+                            Cancelar
                         </Button>
-                        <Button color='lightSide' bgColor="darkSide" onClick={handleEditClick} maxW={40}>
-                            Editar
-                        </Button>
-                    </Flex>
-                }
+                        :
+                        <Flex gap={4}>
+                            <Button color='lightSide' bgColor="graySide" onClick={handleAddClick} maxW={40}>
+                                Adicionar
+                            </Button>
+                            <Button color='lightSide' bgColor="darkSide" onClick={handleEditClick} maxW={40}>
+                                Editar
+                            </Button>
+                        </Flex>
+                    }
+                </Flex>
+                : ''
+            }
+
+
+            <Flex>
+                <TableContainer>
+                    <Table variant={'simple'}>
+                        <Thead>
+                            <Tr>
+                                <Th>Título</Th>
+                                {/* <Th>Descrição</Th> */}
+                                <Th>URL</Th>
+                            </Tr>
+                        </Thead>
+                        <Tbody>
+
+                            {documentList?.map((partner, index) => {
+                                return (
+                                    <Tr key={'name' + index}>
+                                        <Td>{partner.title}</Td>
+                                        {/* <Td>{partner.description}</Td> */}
+                                        <Td>
+                                            <Flex gap={2} justifyContent={'space-between'}>
+                                                <Link href={`${partner.url}`} target='_blank' _hover={{ color: 'blue.400' }}>
+                                                    {partner.url.length > 64 ? partner.url.slice(0, 64) + '...' : partner.url}
+                                                </Link>
+                                                {editMode ?
+
+                                                    <Flex
+                                                        onClick={() => {
+                                                            deleteDocumentTrigger(partner.id)
+                                                        }}
+                                                        _hover={{ color: 'redSide' }}
+                                                        fontWeight={'medium'}
+                                                        cursor={'pointer'}
+                                                        alignItems={'center'}
+                                                        fontSize={16}
+                                                        pr={2}
+                                                    >
+                                                        <Trash />
+                                                    </Flex>
+                                                    :
+                                                    ''
+                                                }
+                                            </Flex>
+                                        </Td>
+                                    </Tr>
+                                )
+                            })}
+
+                        </Tbody>
+                    </Table>
+                </TableContainer>
             </Flex>
-
-
-
-            <TableContainer>
-                <Table variant={'simple'}>
-                    <Thead>
-                        <Tr>
-                            <Th>Título</Th>
-                            <Th>Descrição</Th>
-                            <Th>URL</Th>
-                        </Tr>
-                    </Thead>
-                    <Tbody>
-
-                        {documentList?.map((partner, index) => {
-                            return (
-                                <Tr key={'name' + index}>
-                                    <Td>{partner.title}</Td>
-                                    <Td>{partner.description}</Td>
-                                    <Td>
-                                        <Flex gap={2} justifyContent={'space-between'}>
-                                            <Link href={`${partner.url}`} target='_blank' _hover={{ color: 'blue.400' }}>
-                                                {partner.url.length > 72 ? partner.url.slice(0, 72) + '...' : partner.url}
-                                            </Link>
-                                            {editMode ?
-
-                                                <Flex
-                                                    onClick={() => {
-                                                        deleteDocumentTrigger(partner.id)
-                                                    }}
-                                                    _hover={{ color: 'redSide' }}
-                                                    fontWeight={'medium'}
-                                                    cursor={'pointer'}
-                                                    alignItems={'center'}
-                                                    fontSize={16}
-                                                    pr={2}
-                                                >
-                                                    <Trash />
-                                                </Flex>
-                                                :
-                                                ''
-                                            }
-                                        </Flex>
-                                    </Td>
-                                </Tr>
-                            )
-                        })}
-
-                    </Tbody>
-                </Table>
-            </TableContainer>
             <form onSubmit={handleSubmit(onSubmit)}>
                 {addMode ?
                     <Flex w='100%' flexDir={'column'}>
@@ -188,7 +191,7 @@ function DocumentsList({ user, projectData, documentList, setDocumentList }: For
                             label_top='Documentos (PDF)'
                             register={register("document")}
                         />
-                        <Button mx={4} _hover={{bgColor:'redSide'}} size={'md'} borderRadius={2} type='submit' color={'lightSide'} fontWeight={'light'} bgColor={'darkSide'} mt={4}>
+                        <Button ml={4} _hover={{ bgColor: 'redSide' }} size={'md'} borderRadius={8} type='submit' color={'lightSide'} fontWeight={'light'} bgColor={'graySide'} maxW={32} mt={4}>
                             Salvar dados
                         </Button>
                     </Flex>

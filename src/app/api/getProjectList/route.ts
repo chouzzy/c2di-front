@@ -13,10 +13,16 @@ interface ListInvestmentRequestProps {
 }
 
 
-const getProjectList = async () => {
+const getProjectList = async ({page, pageRange}:ListInvestmentRequestProps) => {
     try {
 
-        const response = await axios.get(`http://localhost:8081/investments/`, { withCredentials: true })
+        const response = await axios.get(`http://localhost:8081/investments/`, { 
+            params: {
+                page: page,
+                pageRange: pageRange
+            },
+            withCredentials: true 
+        })
 
         if (response.status == 200 || response.status == 202) {
             const investments: Investment[] = response.data.investments

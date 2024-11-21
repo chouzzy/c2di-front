@@ -103,6 +103,7 @@ export default function CreateProject() {
 
                     <Flex h='100%'>
                         <Flex>
+                            <Flex w={64}></Flex>
                             <SideBar userData={userData} />
                         </Flex>
 

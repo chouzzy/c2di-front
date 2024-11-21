@@ -11,11 +11,11 @@ interface FormUsersProps {
     projectData: Investment
     partnerList: Partners[] | undefined
     setPartnerList: Dispatch<SetStateAction<Partners[] | undefined>>
-
+    userData: User
 
 }
 
-function Partners({ user, projectData, partnerList, setPartnerList }: FormUsersProps) {
+function Partners({ user, userData, projectData, partnerList, setPartnerList }: FormUsersProps) {
 
     const [pageLoaded, setPageLoaded] = useState(true)
     const [deletingPartner, setDeletingPartner] = useState(false)
@@ -91,7 +91,7 @@ function Partners({ user, projectData, partnerList, setPartnerList }: FormUsersP
 
                 console.log(newPartner)
 
-                
+
                 const response: Investment = await changePrismaProjectPartners(projectData.id, projectData)
                 setNewPartnerActivity('')
                 setNewPartnerUrl('')
@@ -130,22 +130,26 @@ function Partners({ user, projectData, partnerList, setPartnerList }: FormUsersP
     return (
         <Flex w='100%' flexDirection="column" gap={2}>
 
-            <Flex w='100%' justifyContent={'end'}>
-                {editMode || addMode ?
-                    <Button onClick={handleEditCancel} color={'lightSide'} fontWeight={'light'} bgColor={'redSide'} maxW={40}>
-                        Cancelar
-                    </Button>
-                    :
-                    <Flex gap={4}>
-                        <Button color='lightSide' bgColor="graySide" onClick={handleAddClick} maxW={40}>
-                            Adicionar
+            {userData.role != 'INVESTOR' ?
+
+                <Flex w='100%' justifyContent={'end'}>
+                    {editMode || addMode ?
+                        <Button onClick={handleEditCancel} color={'lightSide'} fontWeight={'light'} bgColor={'redSide'} maxW={40}>
+                            Cancelar
                         </Button>
-                        <Button color='lightSide' bgColor="darkSide" onClick={handleEditClick} maxW={40}>
-                            Editar
-                        </Button>
-                    </Flex>
-                }
-            </Flex>
+                        :
+                        <Flex gap={4}>
+                            <Button color='lightSide' bgColor="graySide" onClick={handleAddClick} maxW={40}>
+                                Adicionar
+                            </Button>
+                            <Button color='lightSide' bgColor="darkSide" onClick={handleEditClick} maxW={40}>
+                                Editar
+                            </Button>
+                        </Flex>
+                    }
+                </Flex>
+                : ''
+            }
 
 
 

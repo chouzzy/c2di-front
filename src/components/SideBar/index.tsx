@@ -13,6 +13,7 @@ import { MenuItem } from './MenuItem';
 import { Header } from './Header';
 import { usePathname, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import { BsBuildings } from 'react-icons/bs';
 
 interface SideBarProps {
     userData: User | null
@@ -86,8 +87,9 @@ export function SideBar({ userData, projectData }: SideBarProps) {
             flexDirection="column"
             alignItems="start"
             justifyContent="space-between"
+            position={'fixed'}
+            h='100vh'
             w={64}
-            h='100%'
             px={4}
             py={8}
             bg="beigeSide"
@@ -114,7 +116,12 @@ export function SideBar({ userData, projectData }: SideBarProps) {
                 {/* Itens do menu */}
                 <Flex flexDirection="column" alignItems="flex-start" w="100%">
 
-                    <MenuItem href={`dashboard`} isActive={pathName == "/dashboard"} icon={SquaresFour} title='Dashboard' />
+
+                    {(userData?.role != 'PROJECT_MANAGER') ?
+                        <MenuItem href={`dashboard`} isActive={pathName == "/dashboard"} icon={SquaresFour} title='Dashboard' />
+                        :
+                        ''
+                    }
 
                     {(userData?.role == "ADMINISTRATOR") ?
                         <MenuItem href={`projects`} isActive={pathName == `/projects/${projectData?.id}` || pathName == `/projects`} icon={House} title='Imóveis' />
@@ -122,19 +129,19 @@ export function SideBar({ userData, projectData }: SideBarProps) {
                         ''
                     }
                     {(userData?.role == 'PROJECT_MANAGER') ?
-                        <MenuItem href={`projects`} isActive={pathName == `/project-manager/projects/${projectData?.id}` || pathName == `/project-manager/projects`} icon={House} title='Imóveis' />
+                        <MenuItem href={`projects`} isActive={pathName == `/project-manager/projects/${projectData?.id}` || pathName == `/project-manager/projects`} icon={BsBuildings} title='Projetos' />
                         :
                         ''
                     }
                     {userData?.role == "ADMINISTRATOR" ?
-                        <MenuItem href={`users/list`} isActive={pathName == "/users/list"} icon={Users} title='Usuários' />
+                        <MenuItem href={`users/list`} isActive={pathName == "/users/list" || pathName.startsWith('/users/update/investor') || pathName.startsWith('/users/update/project-manager') || pathName.startsWith('/users/update/administrator')} icon={Users} title='Usuários' />
                         :
                         ''
                     }
                     {userData?.role == "INVESTOR" ?
                         <>
                             <MenuItem href={`myinvestments`} isActive={pathName == `/myinvestments`} icon={BookOpen} title='Meus investimentos' />
-                            <MenuItem href={`projects`} icon={ChartLineUp} isActive={pathName == `/projects`} title='Investir' />
+                            <MenuItem href={`projects`} icon={ChartLineUp} isActive={pathName.startsWith(`/projects`)} title='Investir' />
                         </>
                         :
                         ''

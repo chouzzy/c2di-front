@@ -16,6 +16,7 @@ export default function CreateInvestorAccount() {
     const { user, isLoading } = useUser()
     const router = useRouter()
 
+
     useEffect(() => {
 
         const manageLogin = async (user: UserProfile) => {
@@ -38,10 +39,12 @@ export default function CreateInvestorAccount() {
                             router.push(`/users/update/administrator/`)
                             break
                     }
+                } else {
+                    console.log('Usuário ainda não cadastrado no banco de dados.');
+                    setLoadingDBUser(false)
                 }
 
             } catch (error) {
-
                 if (error instanceof AxiosError) {
 
                     if (error.status == 404) {
@@ -57,9 +60,12 @@ export default function CreateInvestorAccount() {
         };
 
         if (user) {
+
+            console.log('user')
+            console.log(user)
             manageLogin(user);
         } else {
-            router.push('/authentication')
+            // router.push('/authentication')
         }
 
     }, [user]);

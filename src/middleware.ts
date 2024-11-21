@@ -1,5 +1,5 @@
 // middleware.js
-import { withMiddlewareAuthRequired, getSession } from '@auth0/nextjs-auth0/edge';
+import { withMiddlewareAuthRequired, getSession, updateSession } from '@auth0/nextjs-auth0/edge';
 import { checkUserByEmail } from './app/api/checkUserByEmail/route';
 import { UserProfile } from '@auth0/nextjs-auth0/client';
 import { NextResponse } from 'next/server';
@@ -23,9 +23,35 @@ export default withMiddlewareAuthRequired(async function middleware(req) {
 
   if (session) {
 
+    if (!session.user.userdb) {
+
       const user = await getUser(session.user)
-      const {id, email, role} = user
       
+      console.log('session.user.userdb')
+      console.log(session.user.userdb)
+      
+        if (user) {
+            // Atualiza a sessão com o objeto user
+            await updateSession(req, res, { ...session, user: { ...session.user, userdb: user }});
+        } else {
+            // const auth0Cookie = req.cookies.get('appSession');
+            // console.log('req.cookies')
+            // console.log(req.cookies)
+            // console.log('auth0Cookie')
+            // console.log(auth0Cookie)
+
+            // if (auth0Cookie) {
+            //     if (req.nextUrl.pathname !== '/authentication/create/investor' && req.nextUrl.pathname !== '/' && req.nextUrl.pathname !== '/api/auth/logout') {  
+            //         console.log('redbarra')
+            //             return NextResponse.redirect(new URL('/', req.url)); // Aguarda 500 milissegundos antes de redirecionar
+            //       }
+            // }
+        }
+    }
+
+    if (session.user.userdb) {
+
+        const {id, role} = session.user.userdb
 
     // ROLE MIDDLEWARES
 
@@ -89,7 +115,7 @@ export default withMiddlewareAuthRequired(async function middleware(req) {
                 return NextResponse.redirect(new URL('/project-manager/projects', req.url)); // Redireciona para a página inicial
             }
         }
-
+    }
 
     //   HOMEPAGE ROUTES
     //   if (role === 'INVESTOR' && (

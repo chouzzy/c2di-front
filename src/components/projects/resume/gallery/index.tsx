@@ -8,9 +8,10 @@ import { Galeria360 } from "./galeria360"
 
 interface ProjectDataProps {
     projectData: Investment
+    userData: User
 }
 
-export function ProjectGallery({ projectData }: ProjectDataProps) {
+export function ProjectGallery({ userData, projectData }: ProjectDataProps) {
 
     return (
         <Flex flexDir={'column'} py={4} gap={8}>
@@ -19,7 +20,7 @@ export function ProjectGallery({ projectData }: ProjectDataProps) {
                 <Flex w='100%' gap={16}>
 
                     {/* CAPA */}
-                    <CapaGaleria projectData={projectData} />
+                    <CapaGaleria userData={userData} projectData={projectData} />
 
                     {/* FOTOS */}
                     <FotosGaleria projectData={projectData} />

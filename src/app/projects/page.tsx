@@ -5,26 +5,33 @@ import { SpinnerFullScreen } from '@/components/Loading/SpinnerFullScreen'
 import { SideBar } from '@/components/SideBar'
 import { UserProfile, useUser } from '@auth0/nextjs-auth0/client'
 import { Container, Flex, Spinner } from '@chakra-ui/react'
-import { useParams, useRouter } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
-import { getProjectList } from '../api/getProjectList/route'
 import { HeaderInvestorProjectList } from '@/components/projects/headers/HeaderInvestorProjectList'
 import { HeaderAdminProjectList } from '@/components/projects/headers/HeaderAdminProjectList'
 import { ProjectDashboardInvestor } from '@/components/projects/dashboard/investor'
+import { getProjectList, getProjectManagerProjectsList } from '@/app/api/getProjectList/route'
 
-export default function Projects() {
+export default function ProjectInvestorProjects() {
 
     const router = useRouter();
-    const params = useParams();
+
     const { user, isLoading } = useUser()
 
     const [userData, setUserData] = useState<User | null>(null);
     const [projectsData, setProjectsData] = useState<Investment[] | null>(null);
 
-    const [pageLoaded, setPageLoaded] = useState(true);
+    const [pageLoaded, setPageLoaded] = useState(false);
+
+    const [totalPages, setTotalPages] = useState<number>(1)
+    const [elementsPerPage, setElementsPerPage] = useState<number>(2)
+
+    const [page, setPage] = useState(1)
+
+    
 
     const redirectNotFound = async () => {
-        // router.push("/404")
+        router.push("/404")
     }
 
     // GET USER
@@ -44,11 +51,22 @@ export default function Projects() {
             }
         }
 
-        const fetchProjectData = async () => {
+        const fetchProjectData = async (id: User["id"]) => {
             try {
 
-                const projectResponse = await getProjectList()
+                let pageString = String(page)
+                let pageRangeString = String(elementsPerPage)
+
+                if (!totalPages) {
+                    const projectResponseComplete = await getProjectList({ page: pageString, pageRange: pageRangeString })
+                    if (projectResponseComplete) {
+                        setTotalPages(projectResponseComplete.length)
+                    }
+                }
+
+                const projectResponse = await getProjectList({ page: pageString, pageRange: pageRangeString })
                 setProjectsData(projectResponse)
+                setPageLoaded(true)
 
             } catch (error) {
 
@@ -62,14 +80,16 @@ export default function Projects() {
 
             if (user) {
                 fetchUserData(user);
-                fetchProjectData();
+                if (userData) {
+                    fetchProjectData(userData.id);
+                }
 
             } else {
                 router.push('/authentication')
             }
         }
 
-    }, [user])
+    }, [user, page])
 
     if (!user) {
         return (
@@ -82,6 +102,11 @@ export default function Projects() {
         )
     }
     if (!userData) {
+        return (
+            <SpinnerFullScreen />
+        )
+    }
+    if (!totalPages) {
         return (
             <SpinnerFullScreen />
         )
@@ -102,6 +127,7 @@ export default function Projects() {
 
                     <Flex h='100%'>
                         <Flex>
+                            <Flex w={64}></Flex>
                             <SideBar userData={userData} />
                         </Flex>
 
@@ -114,7 +140,7 @@ export default function Projects() {
                                 borderBottom={'1px solid #E5E7EB'}
                                 pb={8}
                             >
-                                {userData.role == "INVESTOR" ? <HeaderInvestorProjectList /> : ''}
+                                {userData.role == "INVESTOR" ? <HeaderInvestorProjectList />  : ''}
                                 {userData.role != "INVESTOR" ? <HeaderAdminProjectList user={user} userData={userData} /> : ''}
                             </Flex>
 
@@ -131,7 +157,7 @@ export default function Projects() {
                                 < Flex flexDir={'column'}>
 
                                     <Flex gap={12}>
-                                        <ProjectDashboardInvestor projectsData={projectsData} />
+                                        <ProjectDashboardInvestor elementsPerPage={elementsPerPage} totalPages={totalPages} page={page} setPage={setPage} projectsData={projectsData} />
                                     </Flex>
 
                                 </Flex>

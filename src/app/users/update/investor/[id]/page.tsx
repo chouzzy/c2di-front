@@ -92,6 +92,7 @@ export default function Users() {
 
                     <Flex h='100%'>
                         <Flex>
+                            <Flex w={64}></Flex>
                             <SideBar userData={userAdminData} />
                         </Flex>
 

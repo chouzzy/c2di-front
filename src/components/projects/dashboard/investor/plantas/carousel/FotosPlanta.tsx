@@ -1,4 +1,4 @@
-import { Button, Flex, Image, Text } from "@chakra-ui/react";
+import { Flex, Image, Text } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Scrollbar, Pagination, A11y } from 'swiper/modules';
@@ -8,28 +8,27 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
 import { deletePrismaProjectImage } from "@/app/api/deleteInvestmentImage/route";
-import { FotosExternoInput } from "@/components/CreateProjects/Inputs/FotosExternoInput";
 
 
-interface FotosExternoProps {
+interface FotosPlantaProps {
     projectData: Investment
     openImage: (img: Investment["images"][0]) => void
 }
 
-export function FotosExterno({ projectData, openImage }: FotosExternoProps) {
+export function FotosPlanta({ projectData, openImage }: FotosPlantaProps) {
 
     const [editMode, setEditMode] = useState(false)
     const [isDeletingImage, setIsDeletingImage] = useState(false)
     const [deletingImageID, setDeletingImageID] = useState<string>()
 
-    const [externo, setExterno] = useState<Investment["images"]>(projectData.images.filter(img => img.label === 'EXTERNO'))
+    const [planta, setPlanta] = useState<Investment["images"]>(projectData.images.filter(img => img.label === 'PLANTAS'))
 
     const deleteImage = (imageID: Investment["images"][0]["id"]) => {
         setDeletingImageID(imageID)
         setIsDeletingImage(true)
     }
 
-    // DELETE IMAGE EXTERNO
+    // DELETE IMAGE PLANTAS
     useEffect(() => {
 
         const deleteImage = async (imageID: Investment["images"][0]["id"]) => {
@@ -38,7 +37,8 @@ export function FotosExterno({ projectData, openImage }: FotosExternoProps) {
                 const response = await deletePrismaProjectImage(projectData.id, imageID)
                 // Salvando alterações no estado
                 projectData.images = response.images
-                setExterno(response.images.filter((img: Investment["images"][0]) => img.label === 'EXTERNO'))
+                setPlanta(response.images.filter((img: Investment["images"][0]) => img.label === 'PLANTAS'))
+
             } catch (error) {
                 console.error(error)
             }
@@ -54,6 +54,8 @@ export function FotosExterno({ projectData, openImage }: FotosExternoProps) {
 
 
 
+
+
     return (
 
         <Flex flexDir={'column'} gap={8}>
@@ -63,34 +65,9 @@ export function FotosExterno({ projectData, openImage }: FotosExternoProps) {
 
                 {/* LABEL */}
                 <Text fontSize={20} fontWeight={'medium'} mt={2}>
-                    Área interna ({externo.length})
+                    Planta ({planta.length})
                 </Text>
 
-                {/* EDIT MODE */}
-                <Flex gap={4} alignItems={'center'}>
-
-                    {editMode ?
-                        <FotosExternoInput
-                            key={"FOTOS"}
-                            allowedTypes={['image/png', 'image/jpeg', 'image/jpg']}
-                            accept="image/*"
-                            projectData={projectData}
-                        />
-                        :
-                        ''
-                    }
-
-                    <Button
-                        onClick={() => { setEditMode(!editMode) }}
-                        mt={2}
-                        size={'md'}
-                        _hover={editMode ? { bgColor: 'darkSide' } : { bgColor: 'redSide' }}
-                        color={'lightSide'}
-                        bgColor={editMode ? 'redSide' : 'darkSide'}>
-                        {editMode ? 'Cancelar' : 'Editar'}
-                    </Button>
-
-                </Flex>
             </Flex>
 
             {/* SWIPER */}
@@ -104,7 +81,7 @@ export function FotosExterno({ projectData, openImage }: FotosExternoProps) {
                     // pagination
                     scrollbar={{ draggable: true }}
                 >
-                    {externo.map((img) => {
+                    {planta.map((img) => {
                         return (
 
                             <SwiperSlide key={img.id}>

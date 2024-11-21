@@ -7,8 +7,9 @@ import { useForm } from "react-hook-form";
 
 interface ProjectDataProps {
     projectData: Investment
+    userData: User
 }
-export function CapaGaleria({ projectData }: ProjectDataProps) {
+export function CapaGaleria({ userData, projectData }: ProjectDataProps) {
 
     const { register, handleSubmit, formState: { errors } } = useForm({});
 
@@ -21,14 +22,17 @@ export function CapaGaleria({ projectData }: ProjectDataProps) {
                     <Flex> <Text fontSize={16} fontWeight={'semibold'}> Capa </Text></Flex>
                     <Flex> <Text fontSize={14}> Imagem que aparecerá como capa do projeto. </Text></Flex>
                 </Flex>
-                <Flex>
-                    <CapaInput
-                        key={"CAPA"}
-                        allowedTypes={['image/png', 'image/jpeg', 'image/jpg']}
-                        accept="image/*"
-                        projectData={projectData}
-                    />
-                </Flex>
+                {userData.role != 'INVESTOR' ?
+
+                    <Flex>
+                        <CapaInput
+                            key={"CAPA"}
+                            allowedTypes={['image/png', 'image/jpeg', 'image/jpg']}
+                            accept="image/*"
+                            projectData={projectData}
+                        />
+                    </Flex>
+                    : ''}
             </Flex>
 
             {/* IMAGE */}

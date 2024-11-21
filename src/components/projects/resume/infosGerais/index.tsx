@@ -9,7 +9,8 @@ import { AxiosError } from "axios";
 import { IoMdAlert } from "react-icons/io";
 import { useForm } from "react-hook-form";
 import { NotificationsBoard } from "./notificationsBoard";
-import { NotificationsHeader } from "./notificationsHeader";
+import { NotificationsHeaderInvestor } from "./notificationsHeaderAdmin";
+import { NotificationsHeaderAdmin } from "./notificationsHeaderInvestor";
 
 interface ProjectDataProps {
     projectData: Investment
@@ -138,7 +139,7 @@ export function InfosGerais({ userData, projectData }: ProjectDataProps) {
         <Flex w='100%' py={8} flexDir={'column'}>
             {/* IMAGEM GIGANTE */}
             <Flex w='100%'>
-                <Image src={`/assets/projects/${projectData.images[0].url}`}  h={300} w='100%' objectFit={'cover'} objectPosition={'center'} />
+                <Image src={`/assets/projects/${projectData.images[0].url}`} h={300} w='100%' objectFit={'cover'} objectPosition={'center'} />
             </Flex>
 
             <Flex w='100%' py={16} gap={8}>
@@ -167,7 +168,11 @@ export function InfosGerais({ userData, projectData }: ProjectDataProps) {
                 {/* QUADRO DE AVISOS */}
                 <Flex w='100%' flexDir={'column'} gap={8}>
 
-                    <NotificationsHeader createNotification={createNotification}/>
+                    {userData.role == 'INVESTOR' ?
+                        <NotificationsHeaderInvestor createNotification={createNotification} />
+                        :
+                        <NotificationsHeaderAdmin createNotification={createNotification} />
+                    }
 
                     <NotificationsBoard totalDocuments={totalDocuments} page={page} pageRange={pageRange} setPage={setPage} reloadNotifications={reloadNotifications} notifications={notifications} />
 

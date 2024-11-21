@@ -19,8 +19,9 @@ const setAccessTokenCookie = async () => {
 export default function Home() {
 
   const { user, error, isLoading } = useUser()
+  console.log('user')
+  console.log(user)
   const [loginStatus, setLoginStatus] = useState('Aguarde, estamos te redirecionando...')
-
   const router = useRouter()
 
   // MANAGE LOGIN
@@ -28,7 +29,6 @@ export default function Home() {
     const manageLogin = async (user: UserProfile) => {
       try {
 
-        console.log('userresponse')
         await setAccessTokenCookie()
         const userResponse = await checkUserByEmail(user)
 
@@ -45,8 +45,11 @@ export default function Home() {
               router.push(`/users/update/investor/`)
               break
           }
+        } else {
+          router.push(`/authentication/create/investor`)
         }
 
+        
       } catch (error) {
 
         if (error instanceof AxiosError) {

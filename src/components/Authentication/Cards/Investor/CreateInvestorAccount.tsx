@@ -101,12 +101,12 @@ export function CreateInvestorAccountCard({ user, router }: CreateInvestorAccoun
         } catch (error: any) {
             if (error instanceof AxiosError) {
                 if (error.response) {
-                    console.log(error)
+                    setYupError(error.response.data.error.message)
                 } else {
-                    console.log(error)
+                    console.error(error)
                 }
             } else {
-                console.log(error)
+                console.error(error)
             }
         }
     };

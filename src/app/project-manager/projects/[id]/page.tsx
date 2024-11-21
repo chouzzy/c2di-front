@@ -115,9 +115,10 @@ export default function ProjectManagerProject() {
         <Flex h='100%'>
 
           {/* SIDEBAR */}
-          <Flex>
-            <SideBar projectData={projectData} userData={userData} />
-          </Flex>
+                        <Flex>
+                            <Flex w={64}></Flex>
+                            <SideBar projectData={projectData} userData={userData} />
+                        </Flex>
 
 
           {/* MAIN */}

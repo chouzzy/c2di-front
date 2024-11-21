@@ -1,10 +1,11 @@
 import { Link, Flex, Icon, Text } from "@chakra-ui/react";
 import { IconProps, SquaresFour } from "phosphor-react";
 import { ForwardRefExoticComponent, RefAttributes } from "react";
+import { IconType } from "react-icons/lib";
 
 interface MenuItemProps {
     href: string,
-    icon: ForwardRefExoticComponent<IconProps & RefAttributes<SVGSVGElement>>,
+    icon: ForwardRefExoticComponent<IconProps & RefAttributes<SVGSVGElement>> | IconType, 
     title: string
     isActive?: boolean
 }
