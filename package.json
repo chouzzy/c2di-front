@@ -15,6 +15,7 @@
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.5",
     "@hookform/resolvers": "^3.9.1",
+    "@photo-sphere-viewer/core": "^5.11.1",
     "@types/crypto-js": "^4.2.2",
     "@types/react-icons": "^3.0.0",
     "@types/yup": "^0.32.0",
@@ -31,7 +32,10 @@
     "react-hook-form": "^7.53.1",
     "react-icons": "^5.3.0",
     "react-intersection-observer": "^9.13.1",
+    "react-photo-sphere-viewer": "^6.0.0",
+    "react-responsive-carousel": "^3.2.23",
     "sitemap": "^8.0.0",
+    "swiper": "^11.1.15",
     "yup": "^1.4.0"
   },
   "devDependencies": {

@@ -4,7 +4,7 @@ body {
 
 input[type="file"]::file-selector-button {
   background-color: #EF3A5D;
-  color: white;
+  color: #fbfbfb;
   padding: 6px 10px;
   border: none;
   border-radius: 2px;
@@ -14,15 +14,48 @@ input[type="file"]::file-selector-button {
 }
 
 input[type="file"].classer::file-selector-button {
-  background-color: black;
-  color: white;
+  background-color: #0F172A;
+  color: #fbfbfb;
   border: none;
   border-radius: 2px;
   cursor: pointer;
   margin-top: 0px;
   font-size: 12px;
 }
+input[type="file"].fotos::file-selector-button {
+  background-color: #0F172A;
+  color: #fbfbfb;
+  border: none;
+  border-radius: 8px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  cursor: pointer;
+  margin-top: 0px;
+  margin-right: 40px;
+  font-size: 16px;
+  font-weight: 600;
+}
+:hover[type="file"]::file-selector-button {
+  background-color: #64748B;
+  transition: 500ms;
+  
+}
+:hover[type="file"].fotos::file-selector-button {
+  background-color: #64748B;
+  transition: 500ms;
+  
+}
+:hover[type="file"].classer::file-selector-button {
+  background-color: #64748B;
+  transition: 500ms;
+  
+}
+
 input[type="file"].classer {
+  border:none;
+}
+
+input[type="file"].fotos {
   border:none;
 }
 

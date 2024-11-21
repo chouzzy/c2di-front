@@ -6,6 +6,7 @@ interface ProjectDocuments {
 }
 
 interface Image {
+  id: string;
   label: string;
   url: string;
   description?: string;
@@ -108,6 +109,7 @@ interface Investment {
   notifications: Notification[];
   userInvestments: UserInvestment[];
   projectManagerID: string
+  active?: boolean
   createdAt: Date;
   updatedAt: Date;
 }

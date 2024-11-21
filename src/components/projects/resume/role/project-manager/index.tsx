@@ -21,6 +21,8 @@ interface ProjectDataProps {
 function ProjectResumeProjectManager({ userData, user, projectData }: ProjectDataProps) {
 
     const [page, SetPage] = useState(0)
+    const [partnerList, setPartnerList] = useState<Investment["partners"] | undefined>(projectData.partners)
+    const [documentList, setDocumentList] = useState<Investment["documents"] | undefined>(projectData.documents)
 
     if (!user) {
         return <SpinnerFullScreen />
@@ -43,8 +45,8 @@ function ProjectResumeProjectManager({ userData, user, projectData }: ProjectDat
 
             {page == 0 ? (<InfosGerais userData={userData} projectData={projectData} />) : ('')}
             {page == 1 ? (<FichaTecnica projectData={projectData} />) : ('')}
-            {page == 2 ? (<Partners user={user} projectData={projectData} />) : ('')}
-            {page == 3 ? (<DocumentsList user={user} projectData={projectData} />) : ('')}
+            {page == 2 ? (<Partners partnerList={partnerList} setPartnerList={setPartnerList} user={user} projectData={projectData} />) : ('')}
+            {page == 3 ? (<DocumentsList documentList={documentList} setDocumentList={setDocumentList} user={user} projectData={projectData}  />) : ('')}
             {page == 4 ? (<ProjectGallery projectData={projectData} />) : ('')}
 
 

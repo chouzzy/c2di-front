@@ -87,7 +87,7 @@ export function SideBar({ userData, projectData }: SideBarProps) {
             alignItems="start"
             justifyContent="space-between"
             w={64}
-            h="100%" // Altura total da tela
+            h='100%'
             px={4}
             py={8}
             bg="beigeSide"

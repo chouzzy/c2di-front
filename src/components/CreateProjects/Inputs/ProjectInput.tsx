@@ -7,7 +7,7 @@ interface UsersInputProps {
     value?: string | number
     isRequired?: boolean,
     disabled?: boolean,
-    defaultValue?: string,
+    defaultValue?: string|number,
     // errors: any
     // fieldName: string
     register: UseFormRegisterReturn<any>

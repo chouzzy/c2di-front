@@ -5,8 +5,8 @@ interface ProjectDashboardInvestorProps {
     projectsData: Investment[]
     setPage: Dispatch<SetStateAction<number>>
     page: number
-    totalPages:number
-    elementsPerPage:number
+    totalPages: number
+    elementsPerPage: number
 }
 
 export function ProjectDashboardProjectManager({ projectsData, page, setPage, totalPages, elementsPerPage }: ProjectDashboardInvestorProps) {
@@ -20,15 +20,38 @@ export function ProjectDashboardProjectManager({ projectsData, page, setPage, to
 
     return (
         <Flex flexDir={'column'} w='100%' gap={16} >
+
             <Flex>
+                {/* MENU COM PROJETOS */}
                 <SimpleGrid columns={2} w='100%'>
+
                     {projectsData.map((project) => {
+
                         return (
 
+                            // CARD DO PROJETO
                             <Flex key={project.id} flexDir={'column'} gap={4} w={440} mt={6}>
+
+                                {/* IMAGEM E STATUS */}
                                 <Flex>
-                                    <Image src={`/assets/projects/${project.images[0].url}`} h={160} w={440} objectFit={'cover'} objectPosition={'center'} />
+                                    <Flex w='100%' flexDir={'column'} gap={1}>
+                                        <Image src={`/assets/projects/${project.images[0].url}`} h={160} w={440} objectFit={'cover'} objectPosition={'center'} />
+
+                                        <Flex
+                                            w={'min'}
+                                            px={2}
+                                            bgColor={project.active ? 'green.400' : 'orange.200'}
+                                            fontSize={'sm'}
+                                            fontWeight={'semibold'}
+                                            color={project.active ? 'green.800' : 'orange.800'}
+                                            borderRadius={4}
+                                        >
+                                            {project.active ? <Text>Ativo</Text> : <Text>Arquivado</Text>}
+                                        </Flex>
+                                    </Flex>
                                 </Flex>
+
+                                {/* DADOS DO PROJETO */}
                                 <Flex flexDir={'column'} gap={2} h={16}>
 
                                     <Text fontSize={20} fontWeight={'semibold'}>
@@ -38,8 +61,8 @@ export function ProjectDashboardProjectManager({ projectsData, page, setPage, to
                                         {project.description}
                                     </Text>
                                 </Flex>
-                                <Flex>
-                                </Flex>
+
+                                {/* ACTION BUTTONS */}
                                 <Flex justifyContent={'start'} gap={8}>
                                     <Link href={`/project-manager/projects/${project.id}`}>
                                         <Button _hover={{ bgColor: 'graySide' }} color={'lightSide'} bgColor={'darkSide'} fontSize={14}>
@@ -62,10 +85,12 @@ export function ProjectDashboardProjectManager({ projectsData, page, setPage, to
                     })}
                 </SimpleGrid>
             </Flex>
+
+            {/* FOOTER */}
             <Flex w='100%' justifyContent={'space-between'} gap={4} >
                 <Flex>
                     <Text>
-                        Mostrando {page} de 38 projetos
+                        Total de {projectsData.length} projeto(s)
                     </Text>
                 </Flex>
                 <Flex gap={4}>
@@ -89,7 +114,7 @@ export function ProjectDashboardProjectManager({ projectsData, page, setPage, to
                         _hover={{ bgColor: 'graySide' }}
                         color={'lightSide'}
                         bgColor={'darkSide'}
-                        isDisabled={page >= Math.ceil(totalPages/elementsPerPage)}
+                        isDisabled={page >= Math.ceil(totalPages / elementsPerPage)}
                     >
                         <Flex minW={18} alignItems={'center'} justifyContent={'center'}>
                             <Text>Próximo</Text>

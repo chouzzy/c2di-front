@@ -73,4 +73,79 @@ const createInvestmentSchema = yup.object({
 
 }).noUnknown(true, "Campos desconhecidos no corpo da requisição.").strict();
 
-export { createInvestmentSchema };
+
+
+const updateInvestmentSchema = yup.object({
+
+  title: yup.string(),
+  description: yup.string(),
+  projectType: yup
+    .mixed()
+    .oneOf(["RESIDENCIAL_MULTIFAMILIAR", "RESIDENCIAL_VERTICAL", "COMERCIAL_GERAL", "MISTO"]),
+  totalUnits: yup.string(),
+  numberOfFloors: yup.string(),
+  unitsPerFloor: yup.string(),
+  floorPlanTypes: yup.array().of(yup.string()).min(1, "Deve haver pelo menos uma tipologia de planta"),
+  launchDate: yup.string(),
+  constructionStartDate: yup.string(),
+  expectedDeliveryDate: yup.string(),
+  address: yup.object().shape({
+    street: yup.string().required("A rua é obrigatória."),
+    number: yup.string().required("O número é obrigatório."),
+    complement: yup.string().optional(),
+    district: yup.string().required("O bairro é obrigatório."),
+    city: yup.string().required("A cidade é obrigatória."),
+    state: yup.string().required("O estado é obrigatório."),
+    zipCode: yup.string().required("O CEP é obrigatório."),
+  }),
+
+  partners: yup.array().of(
+    yup.object().shape({
+      id: yup.string().required("A ID é obrigatório."),
+      url: yup.string().required("O link do parceiro é obrigatório"),
+      name: yup.string().required('O nome do parceiro é obrigatório'),
+      activity: yup.string().required("O segmento de atuação do parceiro é obrigatório"),
+    })
+  ).nullable(),
+
+  documents: yup
+    .array()
+    .of(
+      yup.object().shape({
+        title: yup.string(),
+        url: yup.string().url()
+      }),
+    ),
+  images: yup
+    .array()
+    .of(
+      yup.object().shape({
+        label: yup.string().oneOf(["DESTAQUES", "GERAL", "PLANTAS", "EXTERNO", "INTERNO", "PANORAMICAS"]).required('Label obrigatória'),
+        url: yup.string().required("A URL da imagem é obrigatória."),
+        description: yup.string().optional(),
+      }),
+    ),
+
+  investmentValue: yup.string(),
+  companyName: yup.string(),
+  finishDate: yup.string().nullable(), // A data de término pode ser nula
+  buildingStatus: yup.string(),
+  investmentDate: yup.string(),
+  predictedCost: yup.object().shape({
+    foundation: yup.string().required("O custo previsto da fundação é obrigatório."),
+    structure: yup.string().required("O custo previsto da estrutura é obrigatório."),
+    implantation: yup.string().required("O custo previsto da implantação é obrigatório."),
+    workmanship: yup.string().required("O custo previsto da mão de obra é obrigatório."),
+  }),
+  realizedCost: yup.object().shape({
+    foundation: yup.string().required("O custo realizado da fundação é obrigatório."),
+    structure: yup.string().required("O custo realizado da estrutura é obrigatório."),
+    implantation: yup.string().required("O custo realizado da implantação é obrigatório."),
+    workmanship: yup.string().required("O custo realizado da mão de obra é obrigatório."),
+  }).nullable(),
+  projectManagerID: yup.string(),
+  active: yup.boolean()
+
+}).noUnknown(true, "Campos desconhecidos no corpo da requisição.").strict();
+
+export { createInvestmentSchema, updateInvestmentSchema };

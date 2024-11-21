@@ -39,7 +39,6 @@ export function ProjectGallery({ projectData }: ProjectDataProps) {
                     {/* 360 GALERIA */}
                     <Galeria360 projectData={projectData}/>
                     
-
                 </Flex>
             </Flex>
         </Flex>

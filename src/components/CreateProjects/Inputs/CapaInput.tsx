@@ -54,6 +54,11 @@ export function CapaInput({ allowedTypes, accept, projectData }: UsersInputProps
 
         const files = event.target.files;
 
+        
+        if (!files) {
+            return
+        }
+
         if (files[0]) {
 
             const maxSize = 50 * 1024 * 1024; // 5 MB

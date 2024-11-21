@@ -34,11 +34,12 @@ async function imagesArrayAdapter(data: any) {
                     const foto = files[index];
 
                     images.push({
+                        id: 'newimage',
                         label: label,
                         url: foto.name,
                         description: foto.name
                     })
-                    
+
                 }
             }
         }
@@ -62,8 +63,9 @@ async function documentsArrayAdapter(data: any) {
         for (let index = 0; index < data.document.length; index++) {
 
             data.documents.push({
+                id:'newDoc',
                 title: data.document[index].name,
-                url: 'https://images.unsplash.com/photo-1605146769289-440113cc3d00?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+                url: `https://${data.document[index].name}`,
                 description: data.document[index].name
             })
         }
@@ -102,11 +104,35 @@ async function projectTypeAdapter(data: any) {
     }
 
 }
+async function projectTypeReverseAdapter(data: any) {
+
+    try {
+        switch (data.projectType) {
+            case 'RESIDENCIAL_MULTIFAMILIAR':
+                data.projectType = "Residencial Multifamiliar"
+                break
+            case 'RESIDENCIAL_VERTICAL':
+                data.projectType = "Residencial vertical"
+                break
+            case 'COMERCIAL_GERAL':
+                data.projectType = "Comercial geral"
+                break
+            case 'MISTO':
+                data.projectType = "Misto"
+                break
+        }
+
+        return data
+
+    } catch (error) {
+        throw error
+    }
+
+}
 
 async function floorPlanTypesAdapter(data: any) {
 
     try {
-
         data.floorPlanTypes = data.floorPlanTypes.split(",")
 
         return data
@@ -116,4 +142,20 @@ async function floorPlanTypesAdapter(data: any) {
     }
 }
 
-export { createInvestorUtils, imagesArrayAdapter, documentsArrayAdapter, projectTypeAdapter, floorPlanTypesAdapter }
+async function numbersAdapter(data: any) {
+
+    try {
+        data.totalUnits = Number(data.totalUnits)
+        data.numberOfFloors = Number(data.numberOfFloors)
+        data.unitsPerFloor = Number(data.unitsPerFloor)
+
+        console.log(data.unitsPerFloor)
+
+        return data
+
+    } catch (error) {
+        throw error
+    }
+}
+
+export { createInvestorUtils, imagesArrayAdapter, documentsArrayAdapter, projectTypeAdapter, floorPlanTypesAdapter, projectTypeReverseAdapter, numbersAdapter,}

@@ -1,4 +1,5 @@
 import { resetPassword } from "@/app/api/changePassword/route";
+import { changeProjectStatus } from "@/app/api/changeProjectStatus/route";
 import { deletePrismaAndAuth0User } from "@/app/api/deletePrismaAndAuth0User/route";
 import { UserProfile } from "@auth0/nextjs-auth0/client";
 import { Button, Flex, Spinner, Text, useDisclosure, Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, ModalFooter } from "@chakra-ui/react";
@@ -17,56 +18,73 @@ export function HeaderAdminProject({ projectData, userData, user }: HeaderProjec
     const router = useRouter()
     const { isOpen, onOpen, onClose } = useDisclosure() // Adiciona o hook useDisclosure
     const [changingPassword, setChangingPassword] = useState(false)
-    const [deletingUser, setDeletingUser] = useState(false)
-    const [deleteUserConfirm, setDeleteUserConfirm] = useState(false)
-    const [userDeleted, setUserDeleted] = useState(false)
+    const [archivingProject, setArchivingProject] = useState(false)
+    const [archiveProjectConfirm, setArchiveProjectConfirm] = useState(false)
+    const [archivedProject, setArchivedProject] = useState(false)
     const [modalMessage, setModalMessage] = useState(''); // Estado para a mensagem do modal
 
-    const deleteUser = () => {
-        setDeletingUser(true)
+    const [activatingProject, setActivatingProject] = useState(false)
+    const [confirmProjectActivation, setConfirmProjectActivation] = useState(false)
+
+    const archiveProject = () => {
+        setArchivingProject(true)
         onOpen()
     }
 
-    const deleteUserConfirmed = () => {
-        setDeleteUserConfirm(true)
+    const activateProject = () => {
+        setActivatingProject(true)
         onOpen()
     }
 
-    const cancelDeleteUser = () => {
-        setDeletingUser(false)
-        setDeleteUserConfirm(false)
+    const archiveProjectConfirmed = () => {
+        setArchiveProjectConfirm(true)
+    }
+
+    const activateProjectConfirmed = () => {
+        setConfirmProjectActivation(true)
+    }
+
+    const cancelArchiveProject = () => {
+        setArchivingProject(false)
+        setArchiveProjectConfirm(false)
         onClose()
     }
 
-    const refreshPageAfterCloseModal = () => {
-        if (userDeleted) {
-            onClose()
-            // router.push('/api/auth/logout')
-        } else {
-            onClose()
-        }
-    }
 
     useEffect(() => {
-        const deleteUser = async (id: User["id"], auth0UserID: UserProfile["sub"]) => {
-            setDeletingUser(true)
-            const deleteUserSuccessMessage = await deletePrismaAndAuth0User(id, auth0UserID)
-            setModalMessage(deleteUserSuccessMessage); // Define a mensagem do modal
-            setUserDeleted(true)
-            onClose()
-            router.push('/api/auth/logout')
+
+        const archiveProject = async (projectData: Investment, status: boolean) => {
+
+            try {
+
+                console.log('projeto active:' + status)
+                setArchivedProject(true)
+                const response = await changeProjectStatus(projectData.id, status)
+                console.log('response')
+                console.log(response)
+                onClose()
+                window.location.href = 'http://localhost:3000/project-manager/projects'
+
+            } catch (error) {
+                console.error(error)
+            }
 
         }
 
-        if (deletingUser) {
+        if (archivingProject) {
 
-            if (userData && user) {
-                deleteUser(userData.id, user.sub)
-                setChangingPassword(false)
+            if (projectData) {
+                archiveProject(projectData, false)
+            }
+        }
+        if (activatingProject) {
+
+            if (projectData) {
+                archiveProject(projectData, true)
             }
         }
 
-    }, [deleteUserConfirm])
+    }, [archiveProjectConfirm, confirmProjectActivation])
 
     return (
         <>
@@ -84,64 +102,76 @@ export function HeaderAdminProject({ projectData, userData, user }: HeaderProjec
             </Flex>
 
             <Flex gap={8} alignItems={'center'}>
-                <Button onClick={deleteUser} _hover={{ bgColor: 'red' }} color={'lightSide'} bgColor={'redSide'} mt={4}>
-                    <Flex minW={32} alignItems={'center'} justifyContent={'center'}>
-                        <Text>Desativar projeto</Text>
-                    </Flex>
-                </Button>
+                {projectData.active ?
+                    <Button onClick={archiveProject} _hover={{ bgColor: 'red' }} color={'lightSide'} bgColor={'redSide'} mt={4}>
+                        <Flex minW={32} alignItems={'center'} justifyContent={'center'}>
+                            <Text>Arquivar projeto</Text>
+                        </Flex>
+                    </Button>
+                    :
+                    <Button onClick={activateProject} _hover={{ bgColor: 'green.600' }} color={'lightSide'} bgColor={'green.400'} mt={4}>
+                        <Flex minW={32} alignItems={'center'} justifyContent={'center'}>
+                            <Text>Reativar projeto</Text>
+                        </Flex>
+                    </Button>
+                }
+
             </Flex>
 
             {/* Modal */}
-            <Modal isOpen={isOpen} onClose={refreshPageAfterCloseModal} >
+            <Modal isOpen={isOpen} onClose={cancelArchiveProject} >
                 <ModalOverlay />
                 <ModalContent>
-                    {deletingUser ?
-                        <>
-                            <ModalHeader>
-                                <Flex gap={2} alignItems={'start'} flexDir={'column'} pt={4}>
-                                    <Text>
-                                        Desativar usuário
-                                    </Text>
-                                    <Text fontWeight={'light'} fontSize={14}>
-                                        Esta ação não pode ser desfeita. Você irá deletar este usuário permanentemente do portal.
-                                    </Text>
-                                </Flex>
-                            </ModalHeader>
-                            <ModalCloseButton onClick={cancelDeleteUser} color={'#EF3A5D'} />
-                            <ModalBody>
-                                <Flex flexDir={'column'} alignItems={'center'} justifyContent={'center'} gap={2}>
-                                    <Text textAlign={'center'} fontWeight={'light'}>
-                                        {modalMessage} {/* Exibe a mensagem do modal */}
-                                    </Text>
-                                </Flex>
-                                <Flex alignItems={'center'} justifyContent={'end'} gap={2}>
-                                    <Button onClick={cancelDeleteUser} _hover={{ bgColor: 'graySide' }} color={'lightSide'} bgColor={'darkSide'} mt={4}>
-                                        <Flex minW={16} alignItems={'center'} justifyContent={'center'} fontWeight={'normal'}>
-                                            <Text>Voltar</Text>
-                                        </Flex>
-                                    </Button>
-                                    <Button onClick={deleteUserConfirmed} _hover={{ bgColor: 'red' }} color={'lightSide'} bgColor={'redSide'} mt={4}>
-                                        <Flex minW={16} alignItems={'center'} justifyContent={'center'} fontWeight={'normal'}>
-                                            <Text>Deletar</Text>
-                                        </Flex>
-                                    </Button>
-                                </Flex>
-                            </ModalBody>
-                        </>
-                        :
+                    <ModalHeader>
+                        <Flex gap={2} alignItems={'start'} flexDir={'column'} pt={4}>
+                            
+                            {projectData.active ?
+                                <Text> Arquivar projeto? </Text>
+                                :
+                                <Text> Reativar projeto? </Text>
+                            }
 
-                        <ModalBody>
-                            <Flex p={8} flexDir={'column'} alignItems={'center'} justifyContent={'center'} gap={2}>
-                                <Flex alignItems={'center'}>
-                                    <Envelope size={32} color={'#EF3A5D'} />
-                                    <Key size={24} color={'#EF3A5D'} />
-                                </Flex>
-                                <Text textAlign={'center'} fontWeight={'normal'}>
-                                    {modalMessage} {/* Exibe a mensagem do modal */}
-                                </Text>
+
+                            <Flex fontWeight={'light'} fontSize={14}>
+                                {projectData.active ?
+                                    <Text> Esta ação pode gerar consequências graves, você irá desativar o projeto para todos os usuários. </Text>
+                                    :
+                                    <Text> Você reativará o projeto para todos os usuários </Text>
+                                }
                             </Flex>
-                        </ModalBody>
-                    }
+
+                        </Flex>
+                    </ModalHeader>
+                    <ModalCloseButton onClick={cancelArchiveProject} color={'#EF3A5D'} />
+                    <ModalBody>
+                        <Flex flexDir={'column'} alignItems={'center'} justifyContent={'center'} gap={2}>
+                            <Text textAlign={'center'} fontWeight={'light'}>
+                                {modalMessage}
+                            </Text>
+                        </Flex>
+                        <Flex alignItems={'center'} justifyContent={'end'} gap={2}>
+                            <Button onClick={cancelArchiveProject} _hover={{ bgColor: 'graySide' }} color={'lightSide'} bgColor={'darkSide'} mt={4}>
+                                <Flex minW={16} alignItems={'center'} justifyContent={'center'} fontWeight={'normal'}>
+                                    <Text>Voltar</Text>
+                                </Flex>
+                            </Button>
+
+                            {projectData.active ?
+                                <Button onClick={archiveProjectConfirmed} _hover={{ bgColor: 'red' }} color={'lightSide'} bgColor={'redSide'} mt={4}>
+                                    <Flex minW={16} alignItems={'center'} justifyContent={'center'} fontWeight={'normal'}>
+                                        <Text>Arquivar</Text>
+                                    </Flex>
+                                </Button>
+                                :
+                                <Button onClick={activateProjectConfirmed} _hover={{ bgColor: 'green.600' }} color={'lightSide'} bgColor={'green.400'} mt={4}>
+                                    <Flex minW={16} alignItems={'center'} justifyContent={'center'} fontWeight={'normal'}>
+                                        <Text>Reativar</Text>
+                                    </Flex>
+                                </Button>
+                            }
+                        </Flex>
+                    </ModalBody>
+
                     {/* <ModalFooter>
                         <Button colorScheme='red' mr={3} onClick={onClose}>
                             Fechar

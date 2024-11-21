@@ -2,8 +2,11 @@ import axios from "axios";
 
 const changePrismaProjectCapa = async (id:any, updateData:Investment) => {
     try {
+
+        const {images} = updateData
+
         const response = await axios.put(`http://localhost:8081/investments/update/${id}`, {
-            images: updateData.images
+            images
         }, {
             withCredentials: true, 
             headers: {

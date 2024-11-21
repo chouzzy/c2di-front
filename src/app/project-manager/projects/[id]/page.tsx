@@ -3,7 +3,6 @@
 import { checkUserByEmail } from '@/app/api/checkUserByEmail/route'
 import { getProjectByID } from '@/app/api/getProject/route'
 import { SpinnerFullScreen } from '@/components/Loading/SpinnerFullScreen'
-import ProjectResume from '@/components/projects/resume/role/investor'
 import ProjectResumeProjectManager from '@/components/projects/resume/role/project-manager'
 import { SideBar } from '@/components/SideBar'
 import { HeaderAdminProject } from '@/components/users/HeaderAdminProject'
@@ -22,10 +21,10 @@ export default function ProjectManagerProject() {
   const [userData, setUserData] = useState<User | null>(null);
   const [projectData, setProjectData] = useState<Investment | null>(null);
 
-  const [pageLoaded, setPageLoaded] = useState(true);
+  const [pageLoaded, setPageLoaded] = useState(false);
 
   const redirectNotFound = async () => {
-    // router.push("/404")
+    router.push("/404")
   }
 
   // GET USER
@@ -54,7 +53,7 @@ export default function ProjectManagerProject() {
       } catch (error) {
 
         console.error('Erro ao buscar dados do projeto:', error);
-        await redirectNotFound()
+        // await redirectNotFound()
 
       }
     }
@@ -62,12 +61,14 @@ export default function ProjectManagerProject() {
     if (!isLoading) {
 
       if (user) {
-        
+
         fetchUserData(user);
 
         if (params.id && typeof (params.id) == 'string') {
-            fetchProjectData(params.id);
+          fetchProjectData(params.id);
         }
+
+        setPageLoaded(true)
 
       } else {
         router.push('/authentication')
@@ -94,58 +95,75 @@ export default function ProjectManagerProject() {
 
 
   return (
-    <>
-      <Container maxW={'1440px'} mx='auto' h='100vh'>
-        {!pageLoaded ?
-          <Flex h='100%' w='100%' alignItems={'center'} justifyContent={'center'}>
-            <Spinner
-              boxSize={40}
-              color='redSide'
-            />
-          </Flex>
-          :
 
-          <Flex h='100%'>
-            <Flex>
-              <SideBar projectData={projectData} userData={userData} />
+    <Container maxW={'1440px'} mx='auto' h='100vh'>
+
+
+      {/* SPINNER */}
+      {!pageLoaded ?
+
+        <Flex h='100%' w='100%' alignItems={'center'} justifyContent={'center'}>
+          <Spinner
+            boxSize={40}
+            color='redSide'
+          />
+        </Flex>
+
+
+        :
+
+        <Flex h='100%'>
+
+          {/* SIDEBAR */}
+          <Flex>
+            <SideBar projectData={projectData} userData={userData} />
+          </Flex>
+
+
+          {/* MAIN */}
+          <Flex h='100%' flexDir={'column'} w='100%' px={12} py={12} gap={6}>
+
+
+
+            {/* HEADER */}
+            <Flex
+              justifyContent={'space-between'}
+              alignItems={'center'}
+              borderBottom={'1px solid #E5E7EB'}
+              pb={8}
+            >
+              <HeaderAdminProject projectData={projectData} userData={userData} user={user} />
             </Flex>
 
-            <Flex h='100%' flexDir={'column'} w='100%' px={12} py={12} gap={6}>
 
-              {/* HEADER */}
-              <Flex
-                justifyContent={'space-between'}
-                alignItems={'center'}
-                borderBottom={'1px solid #E5E7EB'}
-                pb={8}
-              >
-                {userData.role == 'INVESTOR'? <HeaderInvestorProject projectData={projectData}/>: ''}
-                {userData.role != 'INVESTOR'? <HeaderAdminProject projectData={projectData} userData={userData} user={user}/>: ''}
+            {/* SPINNER */}
+
+            {!userData ?
+
+              <Flex boxSize={42} mx='auto'>
+                <Spinner
+                  boxSize={42}
+                  color='redSide'
+                />
               </Flex>
+              :
 
-              {!userData ?
-                <Flex boxSize={42} mx='auto'>
-                  <Spinner
-                    boxSize={42}
-                    color='redSide'
-                  />
+              // MENU RESUME
+              <Flex flexDir={'column'}>
+
+                <Flex gap={12}>
+                  <ProjectResumeProjectManager userData={userData} user={user} projectData={projectData} />
                 </Flex>
-                :
 
-                // {/* BODY FORMS */}
-                < Flex flexDir={'column'}>
+              </Flex>
+            }
 
-                  <Flex gap={12}>
-                    <ProjectResumeProjectManager userData={userData} user={user} projectData={projectData} />
-                  </Flex>
-
-                </Flex>
-              }
-
-            </Flex>
           </Flex>
-        }
-      </Container >
-    </>
+        </Flex>
+      }
+
+
+    </Container >
+
   )
 }

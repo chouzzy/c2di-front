@@ -31,6 +31,10 @@ export function ProjectFileInput({ label_top, allowedTypes, accept, icon, isRequ
         setError("")
 
         const files = event.target.files;
+        
+        if (!files) {
+            return
+        }
 
         for (let index = 0; index < files.length; index++) {
 
