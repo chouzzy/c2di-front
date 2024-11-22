@@ -62,3 +62,8 @@ input[type="file"].fotos {
 .my-custom-class {
   color: red;
 }
+
+
+.percentProgress {
+  color:red
+}

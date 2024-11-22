@@ -1,6 +1,7 @@
 "use client"
 
 import { checkUserByEmail } from '@/app/api/checkUserByEmail/route'
+import { SpinnerFullScreen } from '@/components/Loading/SpinnerFullScreen'
 import { SideBar } from '@/components/SideBar'
 import FormUsers from '@/components/users/FormUsers'
 import { UsersHeader } from '@/components/users/Header'
@@ -35,7 +36,7 @@ export default function Users() {
       try {
 
         const userResponse = await checkUserByEmail(user)
-        
+
         setUserData(userResponse)
         setPageLoaded(true)
 
@@ -61,20 +62,14 @@ export default function Users() {
   return (
     <>
       <Container maxW={'1440px'} mx='auto' h='100vh'>
-        {!pageLoaded ?
-          <Flex h='100%' w='100%' alignItems={'center'} justifyContent={'center'}>
-            <Spinner
-              boxSize={40}
-              color='redSide'
-            />
-          </Flex>
-          :
+
+        {userData && user ?
 
           <Flex h='100%'>
-                        <Flex>
-                            <Flex w={64}></Flex>
-                            <SideBar  userData={userData} />
-                        </Flex>
+            <Flex>
+              <Flex w={64}></Flex>
+              <SideBar userData={userData} />
+            </Flex>
 
             <Flex h='100%' flexDir={'column'} w='100%' px={12} py={12} gap={6}>
 
@@ -86,30 +81,21 @@ export default function Users() {
                 pb={8}
               >
                 <UsersListHeader />
+              </Flex>{/* BODY FORMS */}
+              < Flex flexDir={'column'}>
+
+                <Flex gap={12}>
+                  <UsersList userData={userData} user={user} />
+                </Flex>
+
               </Flex>
-
-              {!userData ?
-                <Flex boxSize={42} mx='auto'>
-                  <Spinner
-                    boxSize={42}
-                    color='redSide'
-                  />
-                </Flex>
-                :
-
-                // {/* BODY FORMS */}
-                < Flex flexDir={'column'}>
-
-                  <Flex gap={12}>
-                    <UsersList userData={userData} user={user} />
-                  </Flex>
-
-                </Flex>
-              }
 
             </Flex>
           </Flex>
+          :
+          <SpinnerFullScreen />
         }
+
       </Container >
     </>
   )

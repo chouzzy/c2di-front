@@ -76,49 +76,21 @@ export default function ProjectInvestorProject() {
     }
 
   }, [user])
-
-  if (!user) {
-    return (
-      <SpinnerFullScreen />
-    )
-  }
-  if (!projectData) {
-    return (
-      <SpinnerFullScreen />
-    )
-  }
-  if (!userData) {
-    return (
-      <SpinnerFullScreen />
-    )
-  }
-
-
   return (
 
     <Container maxW={'1440px'} mx='auto' h='100vh'>
 
 
       {/* SPINNER */}
-      {!pageLoaded ?
-
-        <Flex h='100%' w='100%' alignItems={'center'} justifyContent={'center'}>
-          <Spinner
-            boxSize={40}
-            color='redSide'
-          />
-        </Flex>
-
-
-        :
+      {userData && user && projectData ?
 
         <Flex h='100%'>
 
           {/* SIDEBAR */}
-                        <Flex>
-                            <Flex w={64}></Flex>
-                            <SideBar projectData={projectData} userData={userData} />
-                        </Flex>
+          <Flex>
+            <Flex w={64}></Flex>
+            <SideBar projectData={projectData} userData={userData} />
+          </Flex>
 
 
           {/* MAIN */}
@@ -137,30 +109,20 @@ export default function ProjectInvestorProject() {
             </Flex>
 
 
-            {/* SPINNER */}
+            {/* MENU RESUME */}
+            <Flex flexDir={'column'}>
 
-            {!userData ?
-
-              <Flex boxSize={42} mx='auto'>
-                <Spinner
-                  boxSize={42}
-                  color='redSide'
-                />
+              <Flex gap={12}>
+                <ProjectResumeInvestor userData={userData} user={user} projectData={projectData} />
               </Flex>
-              :
 
-              // MENU RESUME
-              <Flex flexDir={'column'}>
+            </Flex>
 
-                <Flex gap={12}>
-                  <ProjectResumeInvestor userData={userData} user={user} projectData={projectData} />
-                </Flex>
-
-              </Flex>
-            }
 
           </Flex>
         </Flex>
+        :
+        <SpinnerFullScreen />
       }
 
 

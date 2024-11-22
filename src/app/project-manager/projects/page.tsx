@@ -29,7 +29,7 @@ export default function ProjectManagersProjects() {
 
     const [page, setPage] = useState(1)
 
-    
+
 
     const redirectNotFound = async () => {
         router.push("/404")
@@ -93,40 +93,10 @@ export default function ProjectManagersProjects() {
 
     }, [user, page])
 
-    if (!user) {
-        return (
-            <SpinnerFullScreen />
-        )
-    }
-    if (!projectsData) {
-        return (
-            <SpinnerFullScreen />
-        )
-    }
-    if (!userData) {
-        return (
-            <SpinnerFullScreen />
-        )
-    }
-    if (!totalPages) {
-        return (
-            <SpinnerFullScreen />
-        )
-    }
-
-
     return (
         <>
             <Container maxW={'1440px'} mx='auto' h='100vh'>
-                {!pageLoaded ?
-                    <Flex h='100%' w='100%' alignItems={'center'} justifyContent={'center'}>
-                        <Spinner
-                            boxSize={40}
-                            color='redSide'
-                        />
-                    </Flex>
-                    :
-
+                {userData && user && projectsData ?
                     <Flex h='100%'>
                         <Flex>
                             <Flex w={64}></Flex>
@@ -146,27 +116,19 @@ export default function ProjectManagersProjects() {
                                 {userData.role != "INVESTOR" ? <HeaderAdminProjectList user={user} userData={userData} /> : ''}
                             </Flex>
 
-                            {!userData ?
-                                <Flex boxSize={42} mx='auto'>
-                                    <Spinner
-                                        boxSize={42}
-                                        color='redSide'
-                                    />
+                            {/* BODY FORMS */}
+                            < Flex flexDir={'column'}>
+
+                                <Flex gap={12}>
+                                    <ProjectDashboardProjectManager elementsPerPage={elementsPerPage} totalPages={totalPages} page={page} setPage={setPage} projectsData={projectsData} />
                                 </Flex>
-                                :
 
-                                // {/* BODY FORMS */}
-                                < Flex flexDir={'column'}>
-
-                                    <Flex gap={12}>
-                                        <ProjectDashboardProjectManager elementsPerPage={elementsPerPage} totalPages={totalPages} page={page} setPage={setPage} projectsData={projectsData} />
-                                    </Flex>
-
-                                </Flex>
-                            }
-
+                            </Flex>
                         </Flex>
                     </Flex>
+                    
+                    :
+                    <SpinnerFullScreen />
                 }
             </Container >
         </>

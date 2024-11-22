@@ -109,9 +109,19 @@ interface Investment {
   notifications: Notification[];
   userInvestments: UserInvestment[];
   projectManagerID: string
+  buildingProgress: BuildingProgress
   active?: boolean
   createdAt: Date;
   updatedAt: Date;
+}
+
+interface BuildingProgress {
+  acabamento: number
+  alvenaria: number
+  estrutura: number
+  fundacao: number
+  instalacoes: number
+  pintura: number
 }
 
 interface Partners {

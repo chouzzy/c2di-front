@@ -136,13 +136,13 @@ export function InfosGerais({ userData, projectData }: ProjectDataProps) {
 
 
     return (
-        <Flex w='100%' py={8} flexDir={'column'}>
+        <Flex w='100%' py={8} flexDir={'row'} gap={16}>
             {/* IMAGEM GIGANTE */}
-            <Flex w='100%'>
-                <Image src={`/assets/projects/${projectData.images[0].url}`} h={300} w='100%' objectFit={'cover'} objectPosition={'center'} />
+            <Flex>
+                <Image src={`/assets/projects/${projectData.images[0].url}`} h={640} w={440} objectFit={'cover'} objectPosition={'center'} borderRadius={2} boxShadow={'2xl'} />
             </Flex>
 
-            <Flex w='100%' py={16} gap={8}>
+            <Flex gap={8} flexDir={'column'} justifyContent={'space-between'}>
 
                 {/* GRAFICOS */}
                 <Flex w='100%' flexDir={'column'} gap={8}>

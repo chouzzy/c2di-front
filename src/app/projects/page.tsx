@@ -28,7 +28,7 @@ export default function ProjectInvestorProjects() {
 
     const [page, setPage] = useState(1)
 
-    
+
 
     const redirectNotFound = async () => {
         router.push("/404")
@@ -76,55 +76,20 @@ export default function ProjectInvestorProjects() {
             }
         }
 
-        if (!isLoading) {
-
-            if (user) {
-                fetchUserData(user);
-                if (userData) {
-                    fetchProjectData(userData.id);
-                }
-
-            } else {
-                router.push('/authentication')
+        if (user) {
+            fetchUserData(user);
+            if (userData) {
+                fetchProjectData(userData.id);
             }
+
         }
 
     }, [user, page])
 
-    if (!user) {
-        return (
-            <SpinnerFullScreen />
-        )
-    }
-    if (!projectsData) {
-        return (
-            <SpinnerFullScreen />
-        )
-    }
-    if (!userData) {
-        return (
-            <SpinnerFullScreen />
-        )
-    }
-    if (!totalPages) {
-        return (
-            <SpinnerFullScreen />
-        )
-    }
-
-
     return (
         <>
             <Container maxW={'1440px'} mx='auto' h='100vh'>
-                {!pageLoaded ?
-                    <Flex h='100%' w='100%' alignItems={'center'} justifyContent={'center'}>
-                        <Spinner
-                            boxSize={40}
-                            color='redSide'
-                        />
-                    </Flex>
-                    :
-
+                {userData && user && projectsData ?
                     <Flex h='100%'>
                         <Flex>
                             <Flex w={64}></Flex>
@@ -134,37 +99,29 @@ export default function ProjectInvestorProjects() {
                         <Flex h='100%' flexDir={'column'} w='100%' px={12} py={12} gap={6}>
 
                             {/* HEADER */}
-                            <Flex
+                            < Flex
                                 justifyContent={'space-between'}
                                 alignItems={'center'}
                                 borderBottom={'1px solid #E5E7EB'}
                                 pb={8}
                             >
-                                {userData.role == "INVESTOR" ? <HeaderInvestorProjectList />  : ''}
+                                {userData.role == "INVESTOR" ? <HeaderInvestorProjectList /> : ''}
                                 {userData.role != "INVESTOR" ? <HeaderAdminProjectList user={user} userData={userData} /> : ''}
                             </Flex>
 
-                            {!userData ?
-                                <Flex boxSize={42} mx='auto'>
-                                    <Spinner
-                                        boxSize={42}
-                                        color='redSide'
-                                    />
+                            {/* BODY FORMS */}
+                            < Flex flexDir={'column'}>
+
+                                <Flex gap={12}>
+                                    <ProjectDashboardInvestor elementsPerPage={elementsPerPage} totalPages={totalPages} page={page} setPage={setPage} projectsData={projectsData} />
                                 </Flex>
-                                :
 
-                                // {/* BODY FORMS */}
-                                < Flex flexDir={'column'}>
-
-                                    <Flex gap={12}>
-                                        <ProjectDashboardInvestor elementsPerPage={elementsPerPage} totalPages={totalPages} page={page} setPage={setPage} projectsData={projectsData} />
-                                    </Flex>
-
-                                </Flex>
-                            }
+                            </Flex>
 
                         </Flex>
                     </Flex>
+                    :
+                    <SpinnerFullScreen />
                 }
             </Container >
         </>
