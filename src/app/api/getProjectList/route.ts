@@ -10,16 +10,18 @@ interface ListInvestmentRequestProps {
     projectManagerID?: Investment["projectManagerID"];
     page?: string;
     pageRange?: string;
+    active?: Investment["active"];
 }
 
 
-const getProjectList = async ({page, pageRange}:ListInvestmentRequestProps) => {
+const getProjectList = async ({page, pageRange, active}:ListInvestmentRequestProps) => {
     try {
 
         const response = await axios.get(`http://localhost:8081/investments/`, { 
             params: {
                 page: page,
-                pageRange: pageRange
+                pageRange: pageRange,
+                active: active?? true
             },
             withCredentials: true 
         })

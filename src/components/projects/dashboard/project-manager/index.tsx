@@ -93,7 +93,7 @@ export function ProjectDashboardProjectManager({ projectsData, page, setPage, to
             <Flex w='100%' justifyContent={'space-between'} gap={4} >
                 <Flex>
                     <Text>
-                        Total de {projectsData.length} projeto(s)
+                        Mostrando {projectsData.length} de {totalPages} projeto(s)
                     </Text>
                 </Flex>
                 <Flex gap={4}>
@@ -117,7 +117,7 @@ export function ProjectDashboardProjectManager({ projectsData, page, setPage, to
                         _hover={{ bgColor: 'graySide' }}
                         color={'lightSide'}
                         bgColor={'darkSide'}
-                        isDisabled={page>= Math.ceil(totalPages / elementsPerPage)}
+                        isDisabled={page >= Math.ceil(totalPages / elementsPerPage)}
                     >
                         <Flex minW={18} alignItems={'center'} justifyContent={'center'}>
                             <Text>Próximo</Text>

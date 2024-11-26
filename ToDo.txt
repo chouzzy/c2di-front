@@ -20,7 +20,6 @@ Considerações da C2DI:
 - trocar destaques por fachada
 - área externa virar área comum, área interna como 
 - trocar área interna por decorado
-- separar área interna por tipologia
 - investidor só pode ver mídia 360 do projeto dele
 - deixar a foto do prédio em pé ao invés de deitada na capa do projeto
 - quebrar gráfico horizontal na metade

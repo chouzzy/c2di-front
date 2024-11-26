@@ -203,7 +203,7 @@ export function SecondPage({ register, userData }: PersonalDataAndGoalsProps) {
                         type='number'
                         placeholder={'Ex: 73.422,00'}
                         label_top='Custo estimado da fundação'
-                        register={register("predictedCost.foundation")}
+                        register={register("predictedCost.foundation", {valueAsNumber:true})}
                     />
                 </Flex>
                 <Flex w='100%'>
@@ -214,7 +214,7 @@ export function SecondPage({ register, userData }: PersonalDataAndGoalsProps) {
                         type='number'
                         placeholder={'R$ 1.200,00/m²'}
                         label_top='Custo estrutural estimado por [m²]'
-                        register={register("predictedCost.structure")}
+                        register={register("predictedCost.structure", {valueAsNumber:true})}
                     />
                 </Flex>
 
@@ -227,7 +227,7 @@ export function SecondPage({ register, userData }: PersonalDataAndGoalsProps) {
                         type='number'
                         placeholder={'R$ 2.300/m²'}
                         label_top='Custo estimado da implantação [m²]'
-                        register={register("predictedCost.implantation")}
+                        register={register("predictedCost.implantation", {valueAsNumber:true})}
                     />
                 </Flex>
 
@@ -240,7 +240,7 @@ export function SecondPage({ register, userData }: PersonalDataAndGoalsProps) {
                         type='number'
                         placeholder={'R$ 80.135,00'}
                         label_top='Custo estimado da mão de obra'
-                        register={register("predictedCost.workmanship")}
+                        register={register("predictedCost.workmanship", {valueAsNumber:true})}
                     />
                 </Flex>
 

@@ -139,17 +139,17 @@ enum ProjectType {
 }
 
 interface RealizedCost {
-  foundation: string;
-  structure: string;
-  implantation: string;
-  workmanship: string;
+  foundation: number;
+  structure: number;
+  implantation: number;
+  workmanship: number;
 }
 
 interface PredictedCost {
-  foundation: string;
-  structure: string;
-  implantation: string;
-  workmanship: string;
+  foundation: number;
+  structure: number;
+  implantation: number;
+  workmanship: number;
 }
 
 interface InvestorProfile {

@@ -1,4 +1,5 @@
-import { Button, Flex, Image, Modal, ModalBody, ModalCloseButton, ModalContent, ModalHeader, ModalOverlay, Spinner, Text, useDisclosure } from "@chakra-ui/react";
+import { Button, Divider, Flex, Image, Modal, ModalBody, ModalCloseButton, ModalContent, ModalHeader, ModalOverlay, Spinner, Text, useDisclosure } from "@chakra-ui/react";
+import { LineChart, Line, CartesianGrid, XAxis, YAxis, BarChart, Bar, Legend, Tooltip } from 'recharts';
 import { createPrismaNotification } from "@/app/api/createNotification/route";
 import { getPrismaNotification } from "@/app/api/getNotification/route";
 import { ErrorInputComponent } from "@/components/ErrorInputComponent";
@@ -24,6 +25,12 @@ export interface listNotificationsResponse {
 
 export function InfosGerais({ userData, projectData }: ProjectDataProps) {
 
+    const { predictedCost, realizedCost } = projectData
+    const { acabamento, alvenaria, estrutura, fundacao, instalacoes, pintura } = projectData.buildingProgress
+
+    const maxCost = Math.max(predictedCost.foundation, realizedCost.foundation, predictedCost.workmanship, realizedCost.workmanship)
+    const maxCostPerArea = Math.max(predictedCost.structure, realizedCost.structure, predictedCost.implantation, realizedCost.implantation)
+
     const { register, handleSubmit } = useForm()
     const { isOpen, onOpen, onClose } = useDisclosure() // Adiciona o hook useDisclosure
     const [createNotificationLoading, setCreateNotificationLoading] = useState(false)
@@ -34,6 +41,37 @@ export function InfosGerais({ userData, projectData }: ProjectDataProps) {
     const [page, setPage] = useState(1)
     const [pageRange, setPageRange] = useState(4)
     const [totalDocuments, setTotalDocuments] = useState(0)
+
+    const data = [
+        { etapa: 'Fundação', Evolução: fundacao },
+        { etapa: 'Estrutura', Evolução: estrutura },
+        { etapa: 'Instalações', Evolução: instalacoes },
+        { etapa: 'Alvenaria', Evolução: alvenaria },
+        { etapa: 'Acabamento', Evolução: acabamento },
+        { etapa: 'Pintura', Evolução: pintura },
+    ];
+
+    const dataCost = [
+        { etapa: 'Mão de obra R$', Previsto: predictedCost.workmanship, Realizado: realizedCost.workmanship },
+        { etapa: 'Fundação R$', Previsto: predictedCost.foundation, Realizado: realizedCost.foundation },
+    ];
+    const dataCostPerArea = [
+        { etapa: 'Estrutura R$/m²', Previsto: predictedCost.structure, Realizado: realizedCost.structure },
+        { etapa: 'Implantação R$/m²', Previsto: predictedCost.implantation, Realizado: realizedCost.implantation },
+    ];
+
+    const formatador = new Intl.NumberFormat('pt-BR', {
+        style: 'currency',
+        currency: 'BRL',
+        maximumFractionDigits:0
+    });
+
+    const renderCustomBarLabel = ({ payload, x, y, width, height, value }: any) => {
+        return <text x={x + width / 2} y={y} fill="#0F172A" textAnchor="middle" dy={-8} fontWeight={500} >{`${value}%`}</text>;
+    };
+    const renderCustomBarLabelMonetary = ({ payload, x, y, width, height, value }: any) => {
+        return <text x={x + width / 2} y={y} fill="#0F172A" textAnchor="middle" dy={-8} fontWeight={500} >{`${formatador.format(Number(value))}`}</text>;
+    };
 
 
     const createNotification = () => {
@@ -132,36 +170,58 @@ export function InfosGerais({ userData, projectData }: ProjectDataProps) {
     };
 
 
-
-
-
     return (
         <Flex w='100%' py={8} flexDir={'row'} gap={16}>
             {/* IMAGEM GIGANTE */}
             <Flex>
-                <Image src={`/assets/projects/${projectData.images[0].url}`} h={640} w={440} objectFit={'cover'} objectPosition={'center'} borderRadius={2} boxShadow={'2xl'} />
+                <Image src={`/assets/projects/${projectData.images[0].url}`} h={'100%'} minW={440} objectFit={'cover'} objectPosition={'center'} borderRadius={2} boxShadow={'2xl'} />
             </Flex>
 
             <Flex gap={8} flexDir={'column'} justifyContent={'space-between'}>
 
                 {/* GRAFICOS */}
-                <Flex w='100%' flexDir={'column'} gap={8}>
+                <Flex w='100%' flexDir={'column'} gap={2}>
                     <Flex flexDir={'column'}>
                         <Text fontSize={20} fontWeight={'semibold'}>
-                            Gráfico de custo previsto x realizado
+                            Gráfico de custo previsto x realizado:
                         </Text>
-                        <Text fontSize={14} fontWeight={'normal'} color='graySide' letterSpacing={'-0.2px'}>
-                            Aqui ficará o gráfico de custo previsto da obra vs realizado mês a mês
-                        </Text>
+                        <Flex gap={2} fontSize={12} py={4}>
+
+                            <Flex>
+                                <BarChart width={280} height={200} data={dataCost} barGap={24}>
+                                    <XAxis dataKey="etapa" />
+                                    <YAxis type='number' domain={([0, (maxCost + maxCost / 10)])} hide />
+                                    <Tooltip />
+                                    <Legend />
+                                    <Bar radius={8} barSize={40} dataKey="Previsto" fill="#51c25d" label={renderCustomBarLabelMonetary} activeBar={{ stroke: 'cyan', strokeWidth: 2, }} />
+                                    <Bar radius={8} barSize={40} dataKey="Realizado" fill="#1591ea" label={renderCustomBarLabelMonetary} activeBar={{ stroke: 'cyan', strokeWidth: 2, }} />
+                                </BarChart>
+                            </Flex>
+                            <Divider orientation="vertical" h={64} my='auto' bgColor={'grayDivisor'} />
+                            <Flex>
+                                <BarChart width={280} height={200} data={dataCostPerArea} barGap={20}>
+                                    <XAxis dataKey="etapa" />
+                                    <YAxis type='number' domain={([0, (maxCostPerArea + maxCostPerArea / 10)])} hide />
+                                    <Tooltip />
+                                    <Legend />
+                                    <Bar radius={8} barSize={40} dataKey="Previsto" fill="#51c25d" label={renderCustomBarLabelMonetary} activeBar={{ stroke: 'cyan', strokeWidth: 2, }} />
+                                    <Bar radius={8} barSize={40} dataKey="Realizado" fill="#1591ea" label={renderCustomBarLabelMonetary} activeBar={{ stroke: 'cyan', strokeWidth: 2, }} />
+                                </BarChart>
+                            </Flex>
+                        </Flex>
                     </Flex>
 
-                    <Flex flexDir={'column'}>
+                    <Flex flexDir={'column'} fontSize={12}>
                         <Text fontSize={20} fontWeight={'semibold'}>
-                            Gráfico do andamento da obra
+                            Gráfico do andamento da obra:
                         </Text>
-                        <Text fontSize={14} fontWeight={'normal'} color='graySide' letterSpacing={'-0.2px'}>
-                            Aqui ficará o gráfico do andamento de cada uma das partes da obra
-                        </Text>
+                        <BarChart width={580} height={200} data={data}>
+                            <XAxis dataKey="etapa" />
+                            <YAxis type='number' domain={([0, 120])} hide />
+                            <Tooltip />
+                            <Legend />
+                            <Bar radius={8} barSize={40} dataKey="Evolução" fill="#1591ea" label={renderCustomBarLabel} activeBar={{ stroke: 'cyan', strokeWidth: 2, }} />
+                        </BarChart>
                     </Flex>
                 </Flex>
 

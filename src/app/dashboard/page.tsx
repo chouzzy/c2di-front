@@ -11,8 +11,11 @@ import { HeaderInvestorProjectList } from '@/components/projects/headers/HeaderI
 import { HeaderAdminProjectList } from '@/components/projects/headers/HeaderAdminProjectList'
 import { ProjectDashboardInvestor } from '@/components/projects/dashboard/investor'
 import { getProjectList, getProjectManagerProjectsList } from '@/app/api/getProjectList/route'
+import { HeaderInvestorDashboard } from '@/components/dashboard/headers/HeaderInvestorDashboard'
+import { HeaderAdminDashboard } from '@/components/dashboard/headers/HeaderAdminDashboard'
+import { MainInvestorDashboard } from '@/components/dashboard/main/MainInvestorDashboard'
 
-export default function ProjectInvestorProjects() {
+export default function Dashboard() {
 
     const router = useRouter();
 
@@ -56,18 +59,7 @@ export default function ProjectInvestorProjects() {
 
                 let pageString = String(page)
                 let pageRangeString = String(elementsPerPage)
-
-                if (!totalPages) {
-                    const projectResponseComplete = await getProjectList({ page: undefined, pageRange: undefined })
-                    const projectResponseActives = projectResponseComplete.filter((project: Investment) => project.active === true)
-                
-                    if (projectResponseActives) {
-                        console.log(projectResponseActives)
-                        setTotalPages(projectResponseActives.length)
-                    }
-                }
-
-                const projectResponse = await getProjectList({ page: pageString, pageRange: pageRangeString, active:true })
+                const projectResponse = await getProjectList({ page: pageString, pageRange: pageRangeString, active: true })
 
                 setProjectsData(projectResponse)
                 setPageLoaded(true)
@@ -88,7 +80,7 @@ export default function ProjectInvestorProjects() {
 
         }
 
-    }, [user, page])
+    }, [user])
 
     return (
         <>
@@ -109,15 +101,16 @@ export default function ProjectInvestorProjects() {
                                 borderBottom={'1px solid #E5E7EB'}
                                 pb={8}
                             >
-                                {userData.role == "INVESTOR" ? <HeaderInvestorProjectList /> : ''}
-                                {userData.role != "INVESTOR" ? <HeaderAdminProjectList user={user} userData={userData} /> : ''}
+                                {userData.role == "INVESTOR" ? <HeaderInvestorDashboard /> : ''}
+                                {userData.role != "INVESTOR" ? <HeaderAdminDashboard user={user} userData={userData} /> : ''}
                             </Flex>
 
                             {/* BODY FORMS */}
                             < Flex flexDir={'column'}>
 
                                 <Flex gap={12}>
-                                    <ProjectDashboardInvestor elementsPerPage={elementsPerPage} totalPages={totalPages} page={page} setPage={setPage} projectsData={projectsData} />
+                                    {userData.role == "INVESTOR" ? <MainInvestorDashboard /> : ''}
+                                    {userData.role != "INVESTOR" ? <MainInvestorDashboard /> : ''}
                                 </Flex>
 
                             </Flex>

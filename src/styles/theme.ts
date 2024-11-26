@@ -52,6 +52,10 @@ export const theme = extendTheme({
     whatsapp: "#25D366",
     appleBlack: "#000000",
 
+    // GRAFICOS
+    blueGraph: '#1591ea',
+    greenGraph: '#51c25d',
+
 
 
     santaFe: '#B16E51',
