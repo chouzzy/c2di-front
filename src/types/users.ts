@@ -15,9 +15,11 @@ interface Image {
 interface UserInvestment {
   id: string;
   user: User;
-  userId: string;
+  userID: string;
   investment: Investment;
-  investmentId: string;
+  investmentID: string;
+  investedValue: number
+  dataInvestimento: Date
   createdAt: Date;
   updatedAt: Date;
 }

@@ -44,36 +44,36 @@ export const data = [
     },
     {
         name: 'Page 8',
-        uv: 3490,
+        uv: 3890,
         pv: 4300,
         amt: 2100,
     },
     {
         name: 'Page 9',
-        uv: 3490,
-        pv: 4300,
+        uv: 4100,
+        pv: 5300,
         amt: 2100,
     },
     {
         name: 'Page 10',
-        uv: 3490,
-        pv: 4300,
+        uv: 4500,
+        pv: 6000,
         amt: 2100,
     },
     {
         name: 'Page 11',
-        uv: 3490,
-        pv: 4300,
+        uv: 6490,
+        pv: 6900,
         amt: 2100,
     },
 ];
 
 
 export const data01 = [
-    { name: 'Group A', value: 400 , color:'#0F172A'},
-    { name: 'Group B', value: 300 , color:'#64748B'},
-    { name: 'Group C', value: 300 , color:'#1591ea'},
-    { name: 'Group D', value: 200 , color:'#51c25d'},
+    { name: 'Group A', value: 400 , color:'#47556955'},
+    { name: 'Group B', value: 300 , color:'#47556999'},
+    { name: 'Group C', value: 300 , color:'#475569bb'},
+    { name: 'Group D', value: 200 , color:'#475569ff'},
 ];
 export const data02 = [
     { name: 'A1', value: 100 },

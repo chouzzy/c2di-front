@@ -36,10 +36,12 @@ export const theme = extendTheme({
   colors: {
     darkSide: "#0F172A",
     lightSide: "#fbfbfb",
+    graySide: "#64748B",
+    darkSideTransparent: "#0F172Aaa",
+    grayCardSide:"#475569",
     grayDivisor: "#E5E7EB",
     grayDivisorTransparent: "#E5E7EBaa",
     inputBorder: "#CBD5E1",
-    graySide: "#64748B",
     grayHoverSide: "#e4e4e7",
     grayMenuSide: "#e4e4e7",
     grayBox: "#E2E8F0",
@@ -55,6 +57,7 @@ export const theme = extendTheme({
     // GRAFICOS
     blueGraph: '#1591ea',
     greenGraph: '#51c25d',
+    greenProfit: '#46cb18',
 
 
 

@@ -140,7 +140,7 @@ export function SideBar({ userData, projectData }: SideBarProps) {
                     }
                     {userData?.role == "INVESTOR" ?
                         <>
-                            <MenuItem href={`myinvestments`} isActive={pathName == `/myinvestments`} icon={BookOpen} title='Meus investimentos' />
+                            <MenuItem href={`myInvestments`} isActive={pathName == `/myInvestments`} icon={BookOpen} title='Meus investimentos' />
                             <MenuItem href={`projects`} icon={ChartLineUp} isActive={pathName.startsWith(`/projects`)} title='Investir' />
                         </>
                         :
