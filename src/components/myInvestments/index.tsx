@@ -21,20 +21,20 @@ export function MyInvestmentsList({ userInvestmentsData, projectsData, page, set
         setPage(page - 1)
     }
 
-    
-
- 
 
     return (
         <Flex flexDir={'column'} w='100%' gap={16} pb={20}>
 
             <Flex flexDir={'column'}>
                 <Flex flexDir={'column'} gap={4}>
+                    
                     <Text fontSize={18} fontWeight={'semibold'}>
                         Total de investimentos: {projectsData.length}
                     </Text>
+
                     {/* CARDS */}
-                    <MyInvestmentCards userInvestmentsData={userInvestmentsData}/>
+                    <MyInvestmentCards userInvestmentsData={userInvestmentsData} projectsData={projectsData} />
+
                 </Flex>
             </Flex>
 
@@ -53,7 +53,7 @@ export function MyInvestmentsList({ userInvestmentsData, projectsData, page, set
                         return (
 
                             // CARD DO PROJETO
-                            <Flex key={project.id} flexDir={'column'} gap={2} w={'100%'}>
+                            <Flex key={project.id} flexDir={'column'} gap={2} w={'100%'} border='1px' borderColor={'grayDivisor'} p={4} borderRadius={8} boxShadow={'md'}>
 
                                 {/* IMAGEM E STATUS */}
                                 <Flex>

@@ -26,3 +26,21 @@ Considerações da C2DI:
 
 - mandar prints
 - peso do perfil do investidor
+
+
+Considerações 27/11
+
+- Primeiro grafico de financeiro: previsto e realizado total um grafico de linha onde X vai ser grana e Y vai ser tempo - só um valor total
+- Primeiro grafico de % de construção: previsto e realizado total um grafico de linha onde X vai ser grana e Y vai ser tempo
+
+andamento da obra: serviços preliminares/movimentação de terra - fundação - estrutura - eletrica - hidraulica - ar condicionado - alvenaria - pintura - gesso - acabamentos finais
+
+colocar imagens ilustrativas em Entenda um pouco mais sobre o seu projeto: (imagens de fundação, estrutura etc)
+pensar em validações para que o gerente de projetos não altere custos importantes da obra (gerente de obra não pode alterar ficha)
+mostrar cotação das moedas principais, selic, e outras coisas
+ver chances de graficos em fullScreen
+- criar role MORADOR para que ele veja apenas 
+
+- PARA HOJE: PRINTS DAS TELAS, PESOS DOS PERFIS DE INVESTIDOR
+- PARA AMANHÃ: ABA INVESTIDORES, TROCAR GRAFICOS DAS INFOSGERAIS, RETIRAR BOTAUM EDITAR
+- PARA SEXTA: MEMPHIS DEPLOY

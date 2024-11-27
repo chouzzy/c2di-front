@@ -202,7 +202,7 @@ export function BuildingStatus({ userData, projectData }: ProjectDataProps) {
                     <YAxis type='number' domain={([0, 120])} hide />
                     <Tooltip />
                     <Legend />
-                    <Bar radius={8} barSize={64} dataKey="Evolução" fill="#1591ea" label={renderCustomBarLabel} activeBar={{ stroke: 'cyan', strokeWidth: 2, }} />
+                    <Bar radius={8} barSize={64} dataKey="Evolução" fill="#64748B" label={renderCustomBarLabel} activeBar={{ stroke: 'cyan', strokeWidth: 2, }} />
                 </BarChart>
             </Flex>
 
@@ -273,8 +273,8 @@ export function BuildingStatus({ userData, projectData }: ProjectDataProps) {
                             <YAxis type='number' domain={([0, (maxCost + maxCost / 10)])} hide />
                             <Tooltip />
                             <Legend />
-                            <Bar radius={8} barSize={64} dataKey="Previsto" fill="#51c25d" label={renderCustomBarLabelMonetary} activeBar={{ stroke: 'cyan', strokeWidth: 2, }} />
-                            <Bar radius={8} barSize={64} dataKey="Realizado" fill="#1591ea" label={renderCustomBarLabelMonetary} activeBar={{ stroke: 'cyan', strokeWidth: 2, }} />
+                            <Bar radius={8} barSize={64} dataKey="Previsto" fill="#64748B" label={renderCustomBarLabelMonetary} activeBar={{ stroke: 'cyan', strokeWidth: 2, }} />
+                            <Bar radius={8} barSize={64} dataKey="Realizado" fill="#51c25d" label={renderCustomBarLabelMonetary} activeBar={{ stroke: 'cyan', strokeWidth: 2, }} />
                         </BarChart>
                     </Flex>
                     <Divider orientation="vertical" h={64} my='auto' bgColor={'grayDivisor'} />
@@ -284,8 +284,8 @@ export function BuildingStatus({ userData, projectData }: ProjectDataProps) {
                             <YAxis type='number' domain={([0, (maxCostPerArea + maxCostPerArea / 10)])} hide />
                             <Tooltip />
                             <Legend />
-                            <Bar radius={8} barSize={64} dataKey="Previsto" fill="#51c25d" label={renderCustomBarLabelMonetary} activeBar={{ stroke: 'cyan', strokeWidth: 2, }} />
-                            <Bar radius={8} barSize={64} dataKey="Realizado" fill="#1591ea" label={renderCustomBarLabelMonetary} activeBar={{ stroke: 'cyan', strokeWidth: 2, }} />
+                            <Bar radius={8} barSize={64} dataKey="Previsto" fill="#64748B" label={renderCustomBarLabelMonetary} activeBar={{ stroke: 'cyan', strokeWidth: 2, }} />
+                            <Bar radius={8} barSize={64} dataKey="Realizado" fill="#51c25d" label={renderCustomBarLabelMonetary} activeBar={{ stroke: 'cyan', strokeWidth: 2, }} />
                         </BarChart>
                     </Flex>
                 </Flex>

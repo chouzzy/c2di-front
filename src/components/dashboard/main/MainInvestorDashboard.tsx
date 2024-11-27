@@ -9,10 +9,24 @@ import { MdKeyboardDoubleArrowRight } from "react-icons/md";
 
 interface InvestorDashboardProps {
     projectsData: Investment[]
+    userInvestmentsData: UserInvestment[]
 }
 
-export function MainInvestorDashboard({ projectsData }: InvestorDashboardProps) {
+export function MainInvestorDashboard({ projectsData, userInvestmentsData }: InvestorDashboardProps) {
 
+    const historicoDeValorizacao = projectsData[0].historicoDeValorizacao
+
+    const maiorValor = historicoDeValorizacao.reduce((maior, item) => (item.value > maior.value ? item : maior), historicoDeValorizacao[0]);
+    const menorValor = historicoDeValorizacao.reduce((menor, item) => (item.value < menor.value ? item : menor), historicoDeValorizacao[0]);
+    const evolution = maiorValor.value - menorValor.value
+    
+    const historicoFormatado = historicoDeValorizacao.map(item => {
+        const data = new Date(item.date);
+        const mesAno = data.toLocaleDateString('pt-BR', { month: '2-digit', year: '2-digit' });
+        return { ...item, date: mesAno }; // Retorna um novo objeto com a data formatada
+    });
+    
+    
     return (
         <Flex w='100%'>
             <Flex w='100%' flexDir={'column'} gap={16} pb={48}>
@@ -23,15 +37,15 @@ export function MainInvestorDashboard({ projectsData }: InvestorDashboardProps) 
                     {/* GRAFICO 1 */}
                     <Flex flexDir={'column'} gap={2}>
                         <Flex flexDir={'column'}>
-                            <Text fontWeight={'semibold'} fontSize={20}>Título do gráfico</Text>
-                            <Text fontSize={12}>Período do gráfico</Text>
+                            <Text fontWeight={'semibold'} fontSize={20}>Valorização do imóvel</Text>
+                            <Text fontSize={12}>Gráfico mensal</Text>
                         </Flex>
                         <Flex>
 
                             <AreaChart
                                 width={620}
                                 height={272}
-                                data={data}
+                                data={historicoFormatado}
                                 margin={{
                                     top: 10,
                                     right: 30,
@@ -39,11 +53,11 @@ export function MainInvestorDashboard({ projectsData }: InvestorDashboardProps) 
                                     bottom: 0,
                                 }}
                             >
-                                <XAxis dataKey="name" />
-                                <YAxis hide />
+                                <XAxis dataKey="date" fontSize={12}/>
+                                <YAxis domain={([menorValor.value-(evolution/2), maiorValor.value])} fontSize={12}/>
                                 <Tooltip />
-                                <Area type="monotone" dataKey="uv" stroke="#0F172A" fill="#0F172A" />
-                                <Area type="monotone" dataKey="pv" stroke="#0F172A" fill="#475569" />
+                                <Area type="monotone" dataKey="value"  stroke="#0F172A" fill="#0F172A" />
+                                {/* <Area type="monotone" dataKey="pv" stroke="#0F172A" fill="#475569" /> */}
                             </AreaChart>
                         </Flex>
                     </Flex>
@@ -253,7 +267,7 @@ export function MainInvestorDashboard({ projectsData }: InvestorDashboardProps) 
                         })}
                         <Flex border={'1px'} borderColor={'grayDivisor'} bgColor={'grayHoverSide'}>
 
-                            <Link href="/myInvestments" _hover={{ color: 'lightSide', bgColor:'grayCardSide' }} h='100%'>
+                            <Link href="/myInvestments" _hover={{ color: 'lightSide', bgColor: 'grayCardSide' }} h='100%'>
                                 <Flex h='100%' alignItems={'center'} justifyContent={'center'} >
                                     <Flex> <MdKeyboardDoubleArrowRight size={40} /> </Flex>
                                 </Flex>

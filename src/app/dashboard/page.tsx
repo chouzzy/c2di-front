@@ -4,16 +4,13 @@ import { checkUserByEmail } from '@/app/api/checkUserByEmail/route'
 import { SpinnerFullScreen } from '@/components/Loading/SpinnerFullScreen'
 import { SideBar } from '@/components/SideBar'
 import { UserProfile, useUser } from '@auth0/nextjs-auth0/client'
-import { Container, Flex, Spinner } from '@chakra-ui/react'
+import { Container, Flex } from '@chakra-ui/react'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
-import { HeaderInvestorProjectList } from '@/components/projects/headers/HeaderInvestorProjectList'
-import { HeaderAdminProjectList } from '@/components/projects/headers/HeaderAdminProjectList'
-import { ProjectDashboardInvestor } from '@/components/projects/dashboard/investor'
-import { getProjectList, getProjectManagerProjectsList } from '@/app/api/getProjectList/route'
 import { HeaderInvestorDashboard } from '@/components/dashboard/headers/HeaderInvestorDashboard'
 import { HeaderAdminDashboard } from '@/components/dashboard/headers/HeaderAdminDashboard'
 import { MainInvestorDashboard } from '@/components/dashboard/main/MainInvestorDashboard'
+import { getUserInvestmentListByUserID, getUserInvestmentListComplete } from '../api/getUserInvestmentListByID/route'
 
 export default function Dashboard() {
 
@@ -25,9 +22,9 @@ export default function Dashboard() {
     const [projectsData, setProjectsData] = useState<Investment[] | null>(null);
 
     const [pageLoaded, setPageLoaded] = useState(false);
-
-    const [totalPages, setTotalPages] = useState<number>(0)
     const [elementsPerPage, setElementsPerPage] = useState<number>(4)
+
+    const [userInvestmentsData, setUserInvestmentsData] = useState<UserInvestment[] | null>(null);
 
     const [page, setPage] = useState(1)
 
@@ -59,15 +56,26 @@ export default function Dashboard() {
 
                 let pageString = String(page)
                 let pageRangeString = String(elementsPerPage)
-                const projectResponse = await getProjectList({ page: pageString, pageRange: pageRangeString, active: true })
 
-                setProjectsData(projectResponse)
-                setPageLoaded(true)
+                const projectResponseComplete = await getUserInvestmentListByUserID({ page: undefined, pageRange: undefined, userID: id })
+                const userInvestments = await getUserInvestmentListComplete()
+
+                // const projectResponseActives = projectResponseComplete.filter((project: Investment) => project.active === true)
+
+                if (projectResponseComplete) {
+                    setProjectsData(projectResponseComplete)
+                    setPageLoaded(true)
+                }
+
+                if (userInvestments) {
+                    setUserInvestmentsData(userInvestments)
+                }
+
 
             } catch (error) {
 
                 console.error('Erro ao buscar dados do projeto:', error);
-                await redirectNotFound()
+                // await redirectNotFound()
 
             }
         }
@@ -85,7 +93,7 @@ export default function Dashboard() {
     return (
         <>
             <Container maxW={'1440px'} mx='auto' h='100vh'>
-                {userData && user && projectsData ?
+                {userData && user && projectsData && userInvestmentsData ?
                     <Flex h='100%'>
                         <Flex>
                             <Flex w={64}></Flex>
@@ -109,8 +117,8 @@ export default function Dashboard() {
                             < Flex flexDir={'column'}>
 
                                 <Flex gap={12}>
-                                    {userData.role == "INVESTOR" ? <MainInvestorDashboard projectsData={projectsData} /> : ''}
-                                    {userData.role != "INVESTOR" ? <MainInvestorDashboard projectsData={projectsData}/> : ''}
+                                    {userData.role == "INVESTOR" ? <MainInvestorDashboard projectsData={projectsData} userInvestmentsData={userInvestmentsData} /> : ''}
+                                    {userData.role != "INVESTOR" ? <MainInvestorDashboard projectsData={projectsData} userInvestmentsData={userInvestmentsData} /> : ''}
                                 </Flex>
 
                             </Flex>

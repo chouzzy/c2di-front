@@ -1,3 +1,8 @@
+interface HistoricoDeValorizacao {
+  value: number
+  date: number
+}
+
 interface ProjectDocuments {
   id: string;
   title: string;
@@ -19,6 +24,7 @@ interface UserInvestment {
   investment: Investment;
   investmentID: string;
   investedValue: number
+  valorCorrente: number
   dataInvestimento: Date
   createdAt: Date;
   updatedAt: Date;
@@ -112,6 +118,9 @@ interface Investment {
   userInvestments: UserInvestment[];
   projectManagerID: string
   buildingProgress: BuildingProgress
+  valorOriginal: number
+  valorCorrente: number
+  historicoDeValorizacao: HistoricoDeValorizacao[]
   active?: boolean
   createdAt: Date;
   updatedAt: Date;

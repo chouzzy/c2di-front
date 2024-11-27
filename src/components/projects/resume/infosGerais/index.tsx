@@ -185,27 +185,27 @@ export function InfosGerais({ userData, projectData }: ProjectDataProps) {
                         <Text fontSize={20} fontWeight={'semibold'}>
                             Gráfico de custo previsto x realizado:
                         </Text>
-                        <Flex gap={2} fontSize={12} py={4}>
+                        <Flex gap={2} fontSize={12} py={2}>
 
                             <Flex>
-                                <BarChart width={280} height={200} data={dataCost} barGap={24}>
+                                <BarChart width={240} height={200} data={dataCost} barGap={24}>
                                     <XAxis dataKey="etapa" />
                                     <YAxis type='number' domain={([0, (maxCost + maxCost / 10)])} hide />
                                     <Tooltip />
                                     <Legend />
-                                    <Bar radius={8} barSize={40} dataKey="Previsto" fill="#51c25d" label={renderCustomBarLabelMonetary} activeBar={{ stroke: 'cyan', strokeWidth: 2, }} />
-                                    <Bar radius={8} barSize={40} dataKey="Realizado" fill="#1591ea" label={renderCustomBarLabelMonetary} activeBar={{ stroke: 'cyan', strokeWidth: 2, }} />
+                                    <Bar radius={8} barSize={32} dataKey="Previsto" fill="#64748B" label={renderCustomBarLabelMonetary} activeBar={{ stroke: 'cyan', strokeWidth: 2, }} />
+                                    <Bar radius={8} barSize={32} dataKey="Realizado" fill="#51c25d" label={renderCustomBarLabelMonetary} activeBar={{ stroke: 'cyan', strokeWidth: 2, }} />
                                 </BarChart>
                             </Flex>
                             <Divider orientation="vertical" h={64} my='auto' bgColor={'grayDivisor'} />
                             <Flex>
-                                <BarChart width={280} height={200} data={dataCostPerArea} barGap={20}>
+                                <BarChart width={240} height={200} data={dataCostPerArea} barGap={20}>
                                     <XAxis dataKey="etapa" />
                                     <YAxis type='number' domain={([0, (maxCostPerArea + maxCostPerArea / 10)])} hide />
                                     <Tooltip />
                                     <Legend />
-                                    <Bar radius={8} barSize={40} dataKey="Previsto" fill="#51c25d" label={renderCustomBarLabelMonetary} activeBar={{ stroke: 'cyan', strokeWidth: 2, }} />
-                                    <Bar radius={8} barSize={40} dataKey="Realizado" fill="#1591ea" label={renderCustomBarLabelMonetary} activeBar={{ stroke: 'cyan', strokeWidth: 2, }} />
+                                    <Bar radius={8} barSize={32} dataKey="Previsto" fill="#64748B" label={renderCustomBarLabelMonetary} activeBar={{ stroke: 'cyan', strokeWidth: 2, }} />
+                                    <Bar radius={8} barSize={32} dataKey="Realizado" fill="#51c25d" label={renderCustomBarLabelMonetary} activeBar={{ stroke: 'cyan', strokeWidth: 2, }} />
                                 </BarChart>
                             </Flex>
                         </Flex>
@@ -215,12 +215,12 @@ export function InfosGerais({ userData, projectData }: ProjectDataProps) {
                         <Text fontSize={20} fontWeight={'semibold'}>
                             Gráfico do andamento da obra:
                         </Text>
-                        <BarChart width={580} height={200} data={data}>
+                        <BarChart width={580} height={160} data={data}>
                             <XAxis dataKey="etapa" />
                             <YAxis type='number' domain={([0, 120])} hide />
                             <Tooltip />
                             <Legend />
-                            <Bar radius={8} barSize={40} dataKey="Evolução" fill="#1591ea" label={renderCustomBarLabel} activeBar={{ stroke: 'cyan', strokeWidth: 2, }} />
+                            <Bar radius={8} barSize={40} dataKey="Evolução" fill="#64748B" label={renderCustomBarLabel} activeBar={{ stroke: 'cyan', strokeWidth: 2, }} />
                         </BarChart>
                     </Flex>
                 </Flex>

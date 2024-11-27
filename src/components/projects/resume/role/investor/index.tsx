@@ -36,7 +36,7 @@ function ProjectResumeInvestor({ userData, user, projectData }: ProjectDataProps
 
         <Flex w='100%' flexDirection="column" gap={2}>
 
-            <Flex w={'min-content'} gap={4} px={4} py={2} bgColor={'grayMenuSide'} borderRadius={4} >
+            <Flex w={'100%'} gap={4} px={4} py={2} bgColor={'grayMenuSide'} borderRadius={4} >
                 <Flex onClick={() => { SetPage(0) }} minW={'max-content'} borderRadius={4} py={2} px={1} as='button' fontWeight={'medium'} bgColor={page == 0 ? 'white' : 'inherit'} >Informações gerais</Flex>
                 <Flex onClick={() => { SetPage(1) }} minW={'max-content'} borderRadius={4} py={2} px={1} as='button' fontWeight={'medium'} bgColor={page == 1 ? 'white' : 'inherit'} >Ficha Técnica</Flex>
                 <Flex onClick={() => { SetPage(2) }} minW={'max-content'} borderRadius={4} py={2} px={1} as='button' fontWeight={'medium'} bgColor={page == 2 ? 'white' : 'inherit'} >Parceiros</Flex>
