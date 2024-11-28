@@ -57,13 +57,13 @@ async function imagesArrayAdapter(data: any) {
 async function documentsArrayAdapter(data: any) {
     try {
 
-        const documents: Investment["documents"] = []
+        const documents: Investment["documents"] | UserInvestment["documents"] = []
         data = { ...data, documents }
 
         for (let index = 0; index < data.document.length; index++) {
 
             data.documents.push({
-                id:'newDoc',
+                id: 'newDoc',
                 title: data.document[index].name,
                 url: `https://${data.document[index].name}`,
                 description: data.document[index].name
@@ -158,4 +158,10 @@ async function numbersAdapter(data: any) {
     }
 }
 
-export { createInvestorUtils, imagesArrayAdapter, documentsArrayAdapter, projectTypeAdapter, floorPlanTypesAdapter, projectTypeReverseAdapter, numbersAdapter,}
+const formatadorMoedaReal = new Intl.NumberFormat('pt-BR', {
+    style: 'currency',
+    currency: 'BRL',
+    maximumFractionDigits: 0
+});
+
+export { createInvestorUtils, imagesArrayAdapter, documentsArrayAdapter, projectTypeAdapter, floorPlanTypesAdapter, projectTypeReverseAdapter, numbersAdapter, formatadorMoedaReal }

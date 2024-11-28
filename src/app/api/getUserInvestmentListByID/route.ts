@@ -79,4 +79,29 @@ const getUserInvestmentListByInvestmentID = async ({page, pageRange, investmentI
     }
 };
 
-export { getUserInvestmentListByUserID, getUserInvestmentListByInvestmentID, getUserInvestmentListComplete }
+
+const filterUserInvestmentsByInvestmentID = async ({page, pageRange, investmentID}:getUserInvestmentListByInvestmentIDProps) => {
+    try {
+
+        const response = await axios.get(`http://localhost:8081/usersInvestments/byInvestment`, { 
+            params: {
+                investmentID: investmentID,
+                page: page,
+                pageRange: pageRange,
+            },
+            withCredentials: true 
+        })
+
+        if (response.status == 200 || response.status == 202) {
+            const users: UserInvestment[] = response.data.list
+            return users
+        } else {
+            throw Error("Ocorreu um erro inesperado")
+        }
+
+    } catch (error) {
+        throw error
+    }
+};
+
+export { getUserInvestmentListByUserID, getUserInvestmentListByInvestmentID, getUserInvestmentListComplete, filterUserInvestmentsByInvestmentID }

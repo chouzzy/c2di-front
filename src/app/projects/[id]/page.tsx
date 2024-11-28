@@ -3,6 +3,7 @@
 import { checkUserByEmail } from '@/app/api/checkUserByEmail/route'
 import { getProjectByID } from '@/app/api/getProject/route'
 import { SpinnerFullScreen } from '@/components/Loading/SpinnerFullScreen'
+import ProjectResumeAdmin from '@/components/projects/resume/role/admin'
 import ProjectResumeInvestor from '@/components/projects/resume/role/investor'
 import ProjectResumeProjectManager from '@/components/projects/resume/role/project-manager'
 import { SideBar } from '@/components/SideBar'
@@ -113,7 +114,9 @@ export default function ProjectInvestorProject() {
             <Flex flexDir={'column'}>
 
               <Flex gap={12}>
-                <ProjectResumeInvestor userData={userData} user={user} projectData={projectData} />
+                {userData.role == "INVESTOR" ? <ProjectResumeInvestor userData={userData} user={user} projectData={projectData} /> : "" }
+                {userData.role == "ADMINISTRATOR" ? <ProjectResumeAdmin userData={userData} user={user} projectData={projectData} /> : "" }
+
               </Flex>
 
             </Flex>

@@ -25,6 +25,7 @@ interface UserInvestment {
   investmentID: string;
   investedValue: number
   valorCorrente: number
+  documents: ProjectDocuments[];
   dataInvestimento: Date
   createdAt: Date;
   updatedAt: Date;
