@@ -11,10 +11,10 @@ import { LiaMoneyBillWaveAltSolid } from "react-icons/lia";
 import { BiSolidUserCircle } from "react-icons/bi";
 import { FaMoneyCheckAlt } from 'react-icons/fa';
 import { BsCalendarDateFill } from 'react-icons/bs';
-import { getUsersResumed } from '@/app/api/getUsersResumed/route';
-import { createPrismaUserInvestment } from '@/app/api/createUserInvestment/route';
-import { filterUserInvestmentsByInvestmentID, getUserInvestmentListByInvestmentID, getUserInvestmentListComplete } from '@/app/api/getUserInvestmentListByID/route';
-import { deletePrismaUserInvestment } from '@/app/api/deleteUserInvestmentDocument/route';
+import { getUsersResumed } from '@/app/services/getUsersResumed/route';
+import { createPrismaUserInvestment } from '@/app/services/createUserInvestment/route';
+import { filterUserInvestmentsByInvestmentID, getUserInvestmentListByInvestmentID, getUserInvestmentListComplete } from '@/app/services/getUserInvestmentListByID/route';
+import { deletePrismaUserInvestment } from '@/app/services/deleteUserInvestmentDocument/route';
 
 interface FormUsersProps {
     user: UserProfile | undefined

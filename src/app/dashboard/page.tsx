@@ -1,6 +1,6 @@
 "use client"
 
-import { checkUserByEmail } from '@/app/api/checkUserByEmail/route'
+import { checkUserByEmail } from '@/app/services/checkUserByEmail/route'
 import { SpinnerFullScreen } from '@/components/Loading/SpinnerFullScreen'
 import { SideBar } from '@/components/SideBar'
 import { UserProfile, useUser } from '@auth0/nextjs-auth0/client'
@@ -10,7 +10,7 @@ import { useEffect, useState } from 'react'
 import { HeaderInvestorDashboard } from '@/components/dashboard/headers/HeaderInvestorDashboard'
 import { HeaderAdminDashboard } from '@/components/dashboard/headers/HeaderAdminDashboard'
 import { MainInvestorDashboard } from '@/components/dashboard/main/MainInvestorDashboard'
-import { getUserInvestmentListByUserID, getUserInvestmentListComplete } from '../api/getUserInvestmentListByID/route'
+import { getUserInvestmentListByUserID, getUserInvestmentListComplete } from '../services/getUserInvestmentListByID/route'
 
 export default function Dashboard() {
 

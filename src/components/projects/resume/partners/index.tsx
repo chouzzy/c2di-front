@@ -3,8 +3,8 @@ import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { UserProfile } from '@auth0/nextjs-auth0/client';
 import { SpinnerFullScreen } from '@/components/Loading/SpinnerFullScreen';
 import { Trash } from 'phosphor-react';
-import { deletePrismaProjectPartner } from '@/app/api/deleteInvestmentPartner/route';
-import { changePrismaProjectPartners } from '@/app/api/changePartner/route';
+import { deletePrismaProjectPartner } from '@/app/services/deleteInvestmentPartner/route';
+import { changePrismaProjectPartners } from '@/app/services/changePartner/route';
 
 interface FormUsersProps {
     user: UserProfile | undefined

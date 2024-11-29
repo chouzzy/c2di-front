@@ -1,6 +1,6 @@
 "use client"
 
-import { checkUserByEmail } from '@/app/api/checkUserByEmail/route'
+import { checkUserByEmail } from '@/app/services/checkUserByEmail/route'
 import { SpinnerFullScreen } from '@/components/Loading/SpinnerFullScreen'
 import { SideBar } from '@/components/SideBar'
 import { UserProfile, useUser } from '@auth0/nextjs-auth0/client'
@@ -10,7 +10,7 @@ import { useEffect, useState } from 'react'
 import { HeaderInvestorProjectList } from '@/components/projects/headers/HeaderInvestorProjectList'
 import { HeaderAdminProjectList } from '@/components/projects/headers/HeaderAdminProjectList'
 import { ProjectDashboardInvestor } from '@/components/projects/dashboard/investor'
-import { getProjectList, getProjectManagerProjectsList } from '@/app/api/getProjectList/route'
+import { getProjectList, getProjectManagerProjectsList } from '@/app/services/getProjectList/route'
 import { ProjectDashboardProjectManager } from '@/components/projects/dashboard/project-manager'
 
 export default function ProjectManagersProjects() {

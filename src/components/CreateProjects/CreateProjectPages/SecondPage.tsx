@@ -4,7 +4,7 @@ import { FieldValues, UseFormRegister } from "react-hook-form";
 import { ProjectInput } from "../Inputs/ProjectInput";
 import { ProjectSelectInput } from "../Inputs/SelectInput";
 import { AuthSelectInput } from "@/components/Authentication/Inputs/AuthSelectInput";
-import { fetchStates, fetchCities } from "@/app/api/ibge/route";
+import { fetchStates, fetchCities } from "@/app/services/ibge/route";
 import { useEffect, useState } from "react";
 
 interface PersonalDataAndGoalsProps {

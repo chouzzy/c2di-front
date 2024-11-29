@@ -14,7 +14,7 @@ import { UsersInput } from './UsersInput';
 import { UsersSelectInput } from './UsersSelectInput';
 import { genderOptions } from './utils';
 import { useRouter } from 'next/navigation';
-import { fetchCities, fetchStates } from '@/app/api/ibge/route';
+import { fetchCities, fetchStates } from '@/app/services/ibge/route';
 import { SpinnerFullScreen } from '../Loading/SpinnerFullScreen';
 
 interface FormUsersProps {

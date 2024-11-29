@@ -1,6 +1,6 @@
-import { resetPassword } from "@/app/api/changePassword/route";
-import { changeProjectStatus } from "@/app/api/changeProjectStatus/route";
-import { deletePrismaAndAuth0User } from "@/app/api/deletePrismaAndAuth0User/route";
+import { resetPassword } from "@/app/services/changePassword/route";
+import { changeProjectStatus } from "@/app/services/changeProjectStatus/route";
+import { deletePrismaAndAuth0User } from "@/app/services/deletePrismaAndAuth0User/route";
 import { UserProfile } from "@auth0/nextjs-auth0/client";
 import { Button, Flex, Spinner, Text, useDisclosure, Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, ModalFooter } from "@chakra-ui/react";
 import { useRouter } from "next/navigation";

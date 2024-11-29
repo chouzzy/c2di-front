@@ -1,4 +1,4 @@
-import { resetPassword } from "@/app/api/changePassword/route";
+import { resetPassword } from "@/app/services/changePassword/route";
 import { Button, Flex, Spinner, Text, useDisclosure, Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, ModalFooter } from "@chakra-ui/react";
 import { Envelope, Key } from "phosphor-react";
 import { useEffect, useState } from "react";

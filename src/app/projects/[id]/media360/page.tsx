@@ -1,6 +1,6 @@
 "use client"
 
-import { checkUserByEmail } from '@/app/api/checkUserByEmail/route'
+import { checkUserByEmail } from '@/app/services/checkUserByEmail/route'
 import { SpinnerFullScreen } from '@/components/Loading/SpinnerFullScreen'
 import { SideBar } from '@/components/SideBar'
 import { UserProfile, useUser } from '@auth0/nextjs-auth0/client'
@@ -9,7 +9,7 @@ import { useParams, useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { HeaderInvestorGalleryFotosProject } from '@/components/projects/headers/HeaderInvestorGalleryFotosProject'
 import { HeaderAdminGalleryFotosProject } from '@/components/projects/headers/HeaderAdminGalleryFotosProject'
-import { getProjectByID } from '@/app/api/getProject/route'
+import { getProjectByID } from '@/app/services/getProject/route'
 import { ProjectMedia360ProjectManager } from '@/components/projects/dashboard/project-manager/media360'
 import { ProjectMedia360Investor } from '@/components/projects/dashboard/investor/media360'
 

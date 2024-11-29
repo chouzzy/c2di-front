@@ -4,7 +4,7 @@ import { UserProfile, useUser } from "@auth0/nextjs-auth0/client";
 import { useEffect, useState } from "react";
 import axios, { AxiosError } from "axios";
 import { useRouter } from "next/navigation";
-import { checkUserByEmail } from "./api/checkUserByEmail/route";
+import { checkUserByEmail } from "./services/checkUserByEmail/route";
 
 const setAccessTokenCookie = async () => {
   try {

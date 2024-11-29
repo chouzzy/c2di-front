@@ -1,5 +1,5 @@
 import { FotosPlantaInput } from "@/components/CreateProjects/Inputs/FotosPlantaInput";
-import { deletePrismaProjectImage } from "@/app/api/deleteInvestmentImage/route";
+import { deletePrismaProjectImage } from "@/app/services/deleteInvestmentImage/route";
 import { Navigation, Scrollbar, Pagination, A11y } from 'swiper/modules';
 import { Button, Flex, Image, Text } from "@chakra-ui/react";
 import { Swiper, SwiperSlide } from 'swiper/react';

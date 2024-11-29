@@ -1,13 +1,13 @@
 "use client"
 
-import { checkUserByEmail } from '@/app/api/checkUserByEmail/route'
+import { checkUserByEmail } from '@/app/services/checkUserByEmail/route'
 import { SpinnerFullScreen } from '@/components/Loading/SpinnerFullScreen'
 import { SideBar } from '@/components/SideBar'
 import { UserProfile, useUser } from '@auth0/nextjs-auth0/client'
 import { Container, Flex, Spinner } from '@chakra-ui/react'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
-import { getProjectManagerProjectsList } from '@/app/api/getProjectList/route'
+import { getProjectManagerProjectsList } from '@/app/services/getProjectList/route'
 import { CreateProjectHeader } from '@/components/CreateProjects/Header'
 import { CreateProjectForm } from '@/components/CreateProjects/CreateProjectForm.'
 
