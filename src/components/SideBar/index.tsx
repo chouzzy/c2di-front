@@ -134,7 +134,7 @@ export function SideBar({ userData, projectData }: SideBarProps) {
                         ''
                     }
                     {userData?.role == "ADMINISTRATOR" ?
-                        <MenuItem href={`users/list`} isActive={pathName == "/users/list" || pathName.startsWith('/users/update/investor') || pathName.startsWith('/users/update/project-manager') || pathName.startsWith('/users/update/administrator')} icon={Users} title='Usuários' />
+                        <MenuItem href={`users/list`} isActive={pathName == "/users/list" || pathName.startsWith('/users/update/investor') || pathName.startsWith('/users/update/project-manager') || pathName.startsWith('/users/update/administrator/')} icon={Users} title='Usuários' />
                         :
                         ''
                     }

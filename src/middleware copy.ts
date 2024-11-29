@@ -133,7 +133,7 @@ export default withMiddlewareAuthRequired(async function middleware(req) {
 
 
     } else {
-        return NextResponse.redirect(new URL('/authentication', req.url)); // Redireciona para /login
+        return NextResponse.redirect(new URL('/authentication2s', req.url)); // Redireciona para /login
     }
 //   res.cookies.set('hl', user.language);
   return res;

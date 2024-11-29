@@ -36,13 +36,13 @@ export default function Home() {
 
           switch (userResponse.role) {
             case "INVESTOR":
-              router.push(`/users/update/investor/`)
+              router.push(`/dashboard`)
               break
             case 'PROJECT_MANAGER':
-              router.push(`/users/update/project-manager/`)
+              router.push(`/project-manager`)
               break
             case 'ADMINISTRATOR':
-              router.push(`/users/update/investor/`)
+              router.push(`/projects`)
               break
           }
         } else {
@@ -71,8 +71,6 @@ export default function Home() {
 
       if (user) {
         manageLogin(user);
-      } else {
-        router.push('/authentication')
       }
   }, [user]);
 
