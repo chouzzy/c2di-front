@@ -4,6 +4,5 @@ import { handleAuth, handleLogin, handleLogout, handleCallback } from '@auth0/ne
 import { NextResponse } from 'next/server';
 
 export const GET = handleAuth({
-    login: handleLogin(),
     logout: handleLogout({ returnTo: '/authentication' }),
 });
