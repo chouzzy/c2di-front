@@ -9,11 +9,11 @@ import { ValidationError } from "yup";
 import axios, { Axios, AxiosError } from "axios";
 import { createUsersSchema } from "@/schemas/usersSchema";
 import { genderOptions } from "@/components/users/utils";
-import { fetchCities, fetchStates } from "@/app/services/ibge/route";
+import { fetchCities, fetchStates } from "@/app/services/ibge";
 import { UserProfile, useUser } from "@auth0/nextjs-auth0/client";
-import { checkUserByEmail } from "@/app/services/checkUserByEmail/route";
+import { checkUserByEmail } from "@/app/services/checkUserByEmail";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
-import { createPrismaUser } from "@/app/services/createUser/route";
+import { createPrismaUser } from "@/app/services/createUser";
 
 interface CreateInvestorAccountCardProps {
     user: UserProfile

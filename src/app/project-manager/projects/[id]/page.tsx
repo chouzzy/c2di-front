@@ -1,7 +1,7 @@
 "use client"
 
-import { checkUserByEmail } from '@/app/services/checkUserByEmail/route'
-import { getProjectByID } from '@/app/services/getProject/route'
+import { checkUserByEmail } from '@/app/services/checkUserByEmail'
+import { getProjectByID } from '@/app/services/getProject'
 import { SpinnerFullScreen } from '@/components/Loading/SpinnerFullScreen'
 import ProjectResumeProjectManager from '@/components/projects/resume/role/project-manager'
 import { SideBar } from '@/components/SideBar'

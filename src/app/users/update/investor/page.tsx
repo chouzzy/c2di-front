@@ -1,6 +1,6 @@
 "use client"
 
-import { checkUserByEmail } from '@/app/services/checkUserByEmail/route'
+import { checkUserByEmail } from '@/app/services/checkUserByEmail'
 import { SpinnerFullScreen } from '@/components/Loading/SpinnerFullScreen'
 import { SideBar } from '@/components/SideBar'
 import FormUsers from '@/components/users/FormUsers'

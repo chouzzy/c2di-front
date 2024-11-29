@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { UseFormRegisterReturn } from "react-hook-form";
 import { ErrorInputComponent } from "@/components/ErrorInputComponent";
 import { ArrowArcLeft } from "phosphor-react";
-import { changePrismaProjectCapa } from "@/app/services/changeCapa/route";
+import { changePrismaProjectCapa } from "@/app/services/changeCapa";
 
 
 

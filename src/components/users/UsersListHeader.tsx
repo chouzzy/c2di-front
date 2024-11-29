@@ -5,7 +5,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { ErrorInputComponent } from "../ErrorInputComponent";
 import { AxiosError } from "axios";
-import { createPrismaUser } from "@/app/services/createUser/route";
+import { createPrismaUser } from "@/app/services/createUser";
 import { useRouter } from "next/navigation";
 import { AuthInput } from "../Authentication/Inputs/AuthInput";
 import { SelectInput } from "../Authentication/Inputs/SelectInput";

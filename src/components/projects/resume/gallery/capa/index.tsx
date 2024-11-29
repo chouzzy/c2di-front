@@ -1,4 +1,4 @@
-import { changePrismaProjectCapa } from "@/app/services/changeCapa/route";
+import { changePrismaProjectCapa } from "@/app/services/changeCapa";
 import { CapaInput } from "@/components/CreateProjects/Inputs/CapaInput";
 import { ProjectFileInput } from "@/components/CreateProjects/Inputs/FileInput";
 import { Button, Flex, Image, Text } from "@chakra-ui/react";

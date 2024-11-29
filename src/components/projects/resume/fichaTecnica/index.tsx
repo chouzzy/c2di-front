@@ -1,4 +1,4 @@
-import { updateProjectFicha } from '@/app/services/updateProjectFicha/route';
+import { updateProjectFicha } from '@/app/services/updateProjectFicha';
 import { floorPlanTypesAdapter, numbersAdapter, projectTypeAdapter, projectTypeReverseAdapter } from '@/app/services/utils';
 import { AuthInput } from '@/components/Authentication/Inputs/AuthInput';
 import { ProjectInput } from '@/components/CreateProjects/Inputs/ProjectInput';

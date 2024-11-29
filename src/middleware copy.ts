@@ -1,6 +1,6 @@
 // middleware.js
 import { withMiddlewareAuthRequired, getSession, updateSession} from '@auth0/nextjs-auth0/edge';
-import { checkUserByEmail } from './app/services/checkUserByEmail/route';
+import { checkUserByEmail } from './app/services/checkUserByEmail';
 import { UserProfile } from '@auth0/nextjs-auth0/client';
 import { NextResponse } from 'next/server';
 

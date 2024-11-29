@@ -2,11 +2,11 @@ import { Button, Flex, FormLabel, Input, InputGroup, InputRightAddon, Link, Spin
 import { formataData, formataDataMonthShort, formatarMoeda, formatarPercentual } from "@/app/services/utils";
 import { XAxis, YAxis, BarChart, Bar, Legend, Tooltip, AreaChart, Area } from 'recharts';
 import { ProjectFileInput } from "@/components/CreateProjects/Inputs/FileInput";
-import { importExcelProgress } from "@/app/services/importExcelProgress/route";
+import { importExcelProgress } from "@/app/services/importExcelProgress";
 import { ErrorInputComponent } from "@/components/ErrorInputComponent";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
-import { changePrismaProjectBuildingProgress } from "@/app/services/changeBuildingProgress/route";
+import { changePrismaProjectBuildingProgress } from "@/app/services/changeBuildingProgress";
 
 interface ProjectDataProps {
     projectData: Investment

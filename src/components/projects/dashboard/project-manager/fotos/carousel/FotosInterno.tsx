@@ -7,7 +7,7 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
-import { deletePrismaProjectImage } from "@/app/services/deleteInvestmentImage/route";
+import { deletePrismaProjectImage } from "@/app/services/deleteInvestmentImage";
 import { FotosInternoInput } from "@/components/CreateProjects/Inputs/FotosInternoInput";
 
 

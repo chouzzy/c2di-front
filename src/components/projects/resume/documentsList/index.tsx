@@ -3,11 +3,11 @@ import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { UserProfile } from '@auth0/nextjs-auth0/client';
 import { SpinnerFullScreen } from '@/components/Loading/SpinnerFullScreen';
 import { Trash } from 'phosphor-react';
-import { deletePrismaProjectDocument } from '@/app/services/deleteInvestmentDocument/route';
+import { deletePrismaProjectDocument } from '@/app/services/deleteInvestmentDocument';
 import { ProjectFileInput } from '@/components/CreateProjects/Inputs/FileInput';
 import { useForm } from 'react-hook-form';
 import { documentsArrayAdapter } from '@/app/services/utils';
-import { changePrismaProjectDoc } from '@/app/services/changeDoc/route';
+import { changePrismaProjectDoc } from '@/app/services/changeDoc';
 
 interface FormUsersProps {
     user: UserProfile | undefined

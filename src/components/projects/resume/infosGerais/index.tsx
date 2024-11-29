@@ -1,7 +1,7 @@
 import { Button, Flex, Image, Modal, ModalBody, ModalCloseButton, ModalContent, ModalHeader, ModalOverlay, Spinner, Text, useDisclosure } from "@chakra-ui/react";
 import { XAxis, YAxis, BarChart, Bar, Legend, Tooltip, Area, AreaChart } from 'recharts';
-import { createPrismaNotification } from "@/app/services/createNotification/route";
-import { getPrismaNotification } from "@/app/services/getNotification/route";
+import { createPrismaNotification } from "@/app/services/createNotification";
+import { getPrismaNotification } from "@/app/services/getNotification";
 import { ErrorInputComponent } from "@/components/ErrorInputComponent";
 import { useEffect, useState } from "react";
 import { TextAreaInput } from "@/components/CreateProjects/Inputs/TextAreaInput";

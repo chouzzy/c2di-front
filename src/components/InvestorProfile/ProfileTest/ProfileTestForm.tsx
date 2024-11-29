@@ -9,7 +9,7 @@ import { PersonalDataAndGoals } from "./PersonalDataAndGoals";
 import { RiskAndExperience } from "./RiskAndExperience";
 import { HorizonAndNetWorth } from "./HorizonAndNetWorth";
 import { PreferencesAndConsiderations } from "./PreferencesAndConsiderations";
-import { updateInvestorProfile } from "@/app/services/updateInvestorProfile/route";
+import { updateInvestorProfile } from "@/app/services/updateInvestorProfile";
 
 interface CreateInvestorAccountCardProps {
     user: UserProfile

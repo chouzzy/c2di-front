@@ -2,7 +2,7 @@ import { Button, Flex, Input, Link, Table, TableContainer, Tbody, Td, Th, Thead,
 import { TbEdit } from "react-icons/tb";
 import { SpinnerFullScreen } from '../Loading/SpinnerFullScreen';
 import { useEffect, useState } from 'react';
-import { getUsersResumed } from '@/app/services/getUsersResumed/route';
+import { getUsersResumed } from '@/app/services/getUsersResumed';
 import { UserProfile } from '@auth0/nextjs-auth0/client';
 import { useRouter } from 'next/navigation';
 import { Trash } from 'phosphor-react';

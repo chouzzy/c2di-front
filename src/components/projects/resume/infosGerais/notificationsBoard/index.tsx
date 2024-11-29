@@ -3,7 +3,7 @@ import { PiArrowArcLeft, PiArrowArcRight, PiArrowCircleLeft, PiArrowCircleRight,
 import { IoMdAlert } from "react-icons/io"
 import { Dispatch, SetStateAction, useEffect, useState } from "react"
 import { Flex } from "@chakra-ui/react/flex"
-import { readPrismaNotification } from "@/app/services/readNotification/route";
+import { readPrismaNotification } from "@/app/services/readNotification";
 import { NotificationsModal } from "./notificationsModal";
 import { ArrowArcLeft, ArrowArcRight } from "phosphor-react";
 

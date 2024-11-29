@@ -1,5 +1,5 @@
 'use client'
-import { checkUserByEmail } from "@/app/services/checkUserByEmail/route";
+import { checkUserByEmail } from "@/app/services/checkUserByEmail";
 import { BlackCard } from "@/components/Authentication/Cards/BlackCard";
 import { ProjectManagerAccountCard } from "@/components/Authentication/Cards/ProjectManager/ProjectManagerAccount";
 import { SpinnerFullScreen } from "@/components/Loading/SpinnerFullScreen";

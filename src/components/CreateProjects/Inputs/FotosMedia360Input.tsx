@@ -1,7 +1,7 @@
 import { Flex, FormControl, Input } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { ErrorInputComponent } from "@/components/ErrorInputComponent";
-import { changePrismaProjectFotos } from "@/app/services/changeFotos/route";
+import { changePrismaProjectFotos } from "@/app/services/changeFotos";
 
 
 
