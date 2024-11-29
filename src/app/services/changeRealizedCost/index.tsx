@@ -3,7 +3,7 @@ import axios from "axios";
 const changePrismaProjectRealizedCost = async (id:any, updateData:Investment) => {
     try {
         const {realizedCost} = updateData
-        const response = await axios.put(`http://localhost:8081/investments/update/${id}`, {
+        const response = await axios.put(`https://c2di-front.vercel.app/investments/update/${id}`, {
             realizedCost
         }, {
             withCredentials: true, 

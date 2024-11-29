@@ -63,7 +63,7 @@ export function HeaderAdminProject({ projectData, userData, user }: HeaderProjec
                 console.log('response')
                 console.log(response)
                 onClose()
-                window.location.href = 'http://localhost:3000/project-manager/projects'
+                window.location.href = 'https://c2di-front.vercel.app//project-manager/projects'
 
             } catch (error) {
                 console.error(error)

@@ -12,7 +12,7 @@ interface createPrismaUserInvestmentProps {
 
 const createPrismaUserInvestment = async (data:createPrismaUserInvestmentProps) => {
     try {
-        const response = await axios.post(`http://localhost:8081/usersInvestments/create`, data, {
+        const response = await axios.post(`https://c2di-front.vercel.app/usersInvestments/create`, data, {
             withCredentials: true, 
             headers: {
                 'Content-Type': 'application/json' // Define o header Content-Type

@@ -2,7 +2,7 @@ import axios from "axios";
 
 const changeProjectStatus = async (id:any, status:boolean) => {
     try {
-        const response = await axios.put(`http://localhost:8081/investments/update/${id}`, {
+        const response = await axios.put(`https://c2di-front.vercel.app/investments/update/${id}`, {
             active: status
         }, {
             withCredentials: true, 

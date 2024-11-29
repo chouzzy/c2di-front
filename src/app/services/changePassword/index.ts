@@ -4,7 +4,7 @@ import axios, { AxiosError } from "axios";
 const resetPassword = async (email:User["email"]|UserProfile["email"]) => {
     try {
 
-        const response = await axios.post('http://localhost:8081/users/reset-password', 
+        const response = await axios.post('https://c2di-front.vercel.app/users/reset-password', 
             { email: email }, // Corpo da requisição
             { 
                 withCredentials: true, 

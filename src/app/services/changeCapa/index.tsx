@@ -5,7 +5,7 @@ const changePrismaProjectCapa = async (id:any, updateData:Investment) => {
 
         const {images} = updateData
 
-        const response = await axios.put(`http://localhost:8081/investments/update/${id}`, {
+        const response = await axios.put(`https://c2di-front.vercel.app/investments/update/${id}`, {
             images
         }, {
             withCredentials: true, 

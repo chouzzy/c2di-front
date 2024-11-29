@@ -2,7 +2,7 @@ import axios from "axios";
 
 const getPrismaNotification = async (id:any, page:number, pageRange:number) => {
     try {
-        const response = await axios.get(`http://localhost:8081/notifications/list/${id}`, {
+        const response = await axios.get(`https://c2di-front.vercel.app/notifications/list/${id}`, {
             params: {
                 page: page,
                 pageRange: pageRange

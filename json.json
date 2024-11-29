@@ -13,11 +13,11 @@
     },
     "sbjs_current_add": {
         "name": "sbjs_current_add",
-        "value": "fd=2024-05-27 12:33:03|||ep=http://localhost:3000/|||rf=(none)"
+        "value": "fd=2024-05-27 12:33:03|||ep=https://c2di-front.vercel.app//|||rf=(none)"
     },
     "sbjs_first_add": {
         "name": "sbjs_first_add",
-        "value": "fd=2024-05-27 12:33:03|||ep=http://localhost:3000/|||rf=(none)"
+        "value": "fd=2024-05-27 12:33:03|||ep=https://c2di-front.vercel.app//|||rf=(none)"
     },
     "sbjs_current": {
         "name": "sbjs_current",

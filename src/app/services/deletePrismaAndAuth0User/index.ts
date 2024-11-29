@@ -3,7 +3,7 @@ import axios, { AxiosError } from "axios";
 
 const deletePrismaAndAuth0User = async (id:User["id"], auth0UserID:UserProfile["sub"]) => {
     try {
-        const response = await axios.delete('http://localhost:8081/users/delete', {
+        const response = await axios.delete('https://c2di-front.vercel.app/users/delete', {
             data: { 
               id: id,
               auth0UserID: auth0UserID 
