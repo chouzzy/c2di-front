@@ -122,9 +122,23 @@ interface Investment {
   valorOriginal: number
   valorCorrente: number
   historicoDeValorizacao: HistoricoDeValorizacao[]
+  financialTotalProgress: FinancialTotalProgress[]
+  buildingTotalProgress: BuildingTotalProgress[]
   active?: boolean
   createdAt: Date;
   updatedAt: Date;
+}
+
+interface FinancialTotalProgress {
+  data: Date
+  previsto: number
+  realizado: number
+}
+
+interface BuildingTotalProgress {
+  data: Date
+  previsto: number
+  realizado: number
 }
 
 interface BuildingProgress {

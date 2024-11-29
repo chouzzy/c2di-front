@@ -4,10 +4,13 @@ import { ErrorInputComponent } from "@/components/ErrorInputComponent";
 import { Button, Divider, Flex, FormLabel, Input, InputGroup, InputRightAddon, Spinner, Text } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { LineChart, Line, CartesianGrid, XAxis, YAxis, BarChart, Bar, Legend, Tooltip } from 'recharts';
+import { LineChart, Line, CartesianGrid, XAxis, YAxis, BarChart, Bar, Legend, Tooltip, AreaChart, Area } from 'recharts';
 import exceljs from 'exceljs'
 import path from "path";
 import axios from "axios";
+import { formataData, formataDataMonthShort, formatarMoeda, formatarPercentual } from "@/app/services/utils";
+import { ProjectFileInput } from "@/components/CreateProjects/Inputs/FileInput";
+import { importExcelProgress } from "@/app/api/importExcelProgress/route";
 
 interface ProjectDataProps {
     projectData: Investment
@@ -21,11 +24,11 @@ export interface listNotificationsResponse {
 
 export function BuildingStatus({ userData, projectData }: ProjectDataProps) {
 
-    const { predictedCost, realizedCost } = projectData
+    const { predictedCost, realizedCost, financialTotalProgress, buildingTotalProgress } = projectData
     const { acabamento, alvenaria, estrutura, fundacao, instalacoes, pintura } = projectData.buildingProgress
 
-    const maxCost = Math.max(predictedCost.foundation, realizedCost.foundation, predictedCost.workmanship, realizedCost.workmanship)
-    const maxCostPerArea = Math.max(predictedCost.structure, realizedCost.structure, predictedCost.implantation, realizedCost.implantation)
+    const minCost = financialTotalProgress[0].previsto
+    const maxCost = financialTotalProgress[financialTotalProgress.length - 1].previsto
 
     const [editModeAndamento, setEditModeAndamento] = useState(false); // Estado para controlar o modo de edição
     const [editModeCusto, setEditModeCusto] = useState(false); // Estado para controlar o modo de edição
@@ -44,32 +47,9 @@ export function BuildingStatus({ userData, projectData }: ProjectDataProps) {
         { etapa: 'Pintura', Evolução: pintura },
     ];
 
-    const dataCost = [
-        { etapa: 'Mão de obra R$', Previsto: predictedCost.workmanship, Realizado: realizedCost.workmanship },
-        { etapa: 'Fundação R$', Previsto: predictedCost.foundation, Realizado: realizedCost.foundation },
-    ];
-    const dataCostPerArea = [
-        { etapa: 'Implantação R$/m²', Previsto: predictedCost.implantation, Realizado: realizedCost.implantation },
-        { etapa: 'Estrutura R$/m²', Previsto: predictedCost.structure, Realizado: realizedCost.structure },
-    ];
-
-    const formatador = new Intl.NumberFormat('pt-BR', {
-        style: 'currency',
-        currency: 'BRL',
-        maximumFractionDigits: 0
-    });
-
-
-
     const renderCustomBarLabel = ({ payload, x, y, width, height, value }: any) => {
         return <text x={x + width / 2} y={y} fill="#0F172A" textAnchor="middle" dy={-8} fontWeight={500} >{`${value}%`}</text>;
     };
-
-    const renderCustomBarLabelMonetary = ({ payload, x, y, width, height, value }: any) => {
-        return <text x={x + width / 2} y={y} fill="#0F172A" textAnchor="middle" dy={-8} fontWeight={500} >{`${formatador.format(Number(value))}`}</text>;
-    };
-
-
 
     const editAndamento = async () => {
         setEditModeAndamento(!editModeAndamento)
@@ -99,19 +79,23 @@ export function BuildingStatus({ userData, projectData }: ProjectDataProps) {
         }
     }
 
-    const onSubmitCost = async (data: any) => {
+    const onSubmitImport = async (data: any) => {
 
         setYupError("")
         setUpdatingDB(true)
-        const { foundation, implantation, structure, workmanship }: Investment["realizedCost"] = data
-        projectData.realizedCost = { foundation, implantation, structure, workmanship }
-
-        console.log(data)
 
         try {
-            const response: Investment["realizedCost"] = await changePrismaProjectRealizedCost(projectData.id, projectData)
-            setUpdatingDB(false)
-            setEditModeCusto(false)
+            const file = data.document[0]
+
+            const formData = new FormData();
+            formData.append('file', file); // Adiciona o arquivo ao FormData
+
+            const investment = await importExcelProgress(formData, projectData.id)
+            projectData.financialTotalProgress = investment.financialTotalProgress
+            projectData.buildingTotalProgress = investment.buildingTotalProgress
+
+            setEditModeCusto(!editModeCusto)
+
         } catch (error) {
 
             console.error('Erro no update do building progress')
@@ -120,212 +104,242 @@ export function BuildingStatus({ userData, projectData }: ProjectDataProps) {
         }
     }
 
-    useEffect(() => {
-        const sendFile = async () => {
-            try {
-                // 1. Busca o arquivo usando Axios
-                const response = await axios.get('/data/evolucao.xlsx', {
-                    responseType: 'arraybuffer', // Define o tipo de resposta como ArrayBuffer
-                });
 
-                // 2. Cria um FormData para enviar o arquivo
-                const formData = new FormData();
-                const blob = new Blob([response.data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' }); // Cria um Blob a partir do ArrayBuffer
-                formData.append('file', blob, 'evolucao.xlsx'); // Adiciona o arquivo ao FormData
-
-                // 3. Envia o arquivo para a API
-                const apiResponse = await axios.post('http://localhost:8081/investments/progress/import', formData, {
-                    withCredentials: true,
-                    headers: {
-                        'Content-Type': 'multipart/form-data'
-                    },
-                });
-
-                console.log(apiResponse.data); // Resposta da API
-
-            } catch (error) {
-                console.error('Erro ao enviar o arquivo:', error);
-            }
-        };
-
-        sendFile();
-    }, []);
 
 
     return (
-        <Flex w='100%' py={8} flexDir={'row'} flexDirection={'column'} maxW={800}>
+        <Flex w='100%' py={8} flexDir={'row'} flexDirection={'column'} gap={16}>
 
             <ErrorInputComponent error={yupError} />
 
-            {/* HEADER ANDAMENTO */}
-            <Flex flexDir={'column'} pl={6} gap={2}>
-
-                {userData.role != 'INVESTOR' ?
-
-                    <Flex justifyContent={'end'}>
-                        <Button color='lightSide' bgColor="darkSide" onClick={editAndamento} size={'sm'}>
-                            Editar dados
-                        </Button>
-                    </Flex>
-
-                    : ''
-                }
-                <Text fontWeight={'semibold'} fontSize={20}> Andamento da obra:</Text>
-
-                <Text>
-                    O gráfico de barras apresenta a evolução de cada etapa da obra,
-                    permitindo que você acompanhe o progresso de forma clara e visual.
-                    As barras representam as etapas da construção, e a altura de cada barra indica o
-                    percentual de conclusão daquela etapa.
-                </Text>
-            </Flex>
-
-            {/* GRAFICOS ANDAMENTO */}
             <Flex flexDir={'column'}>
+                {/* HEADER ANDAMENTO */}
+                <Flex flexDir={'column'} gap={2}>
 
-                {editModeAndamento ?
-                    <Flex pl={6} pt={8} flexDir={'column'} gap={4}>
-                        <Flex>
-                            <Text fontSize={14} fontWeight={'semibold'}>Alterar dados do gráfico:</Text>
+                    {userData.role != 'INVESTOR' ?
+
+                        <Flex justifyContent={'end'}>
+                            <Button color='lightSide' bgColor="darkSide" onClick={editAndamento} size={'sm'}>
+                                Editar dados
+                            </Button>
                         </Flex>
-                        <form onSubmit={handleSubmit(onSubmitAndamento)}>
-                            <Flex gap={2} fontSize={12} alignItems={'center'}>
 
-                                <Flex>
-                                    <FormLabel fontSize={12}> Fundação <InputGroup>
-                                        <Input isRequired={true} size={'md'} w={16} type="number" min={0} max={100} placeholder='Fundação' defaultValue={fundacao} {...register("fundacao", { valueAsNumber: true })} />
-                                        <InputRightAddon w={10}>%</InputRightAddon>
-                                    </InputGroup> </FormLabel>
-                                </Flex>
-                                <Flex>
-                                    <FormLabel fontSize={12}> Estrutura <InputGroup>
-                                        <Input isRequired={true} size={'md'} w={16} type="number" min={0} max={100} placeholder='Estrutura' defaultValue={estrutura} {...register("estrutura", { valueAsNumber: true })} />
-                                        <InputRightAddon w={10}>%</InputRightAddon>
-                                    </InputGroup> </FormLabel>
-                                </Flex>
-                                <Flex>
-                                    <FormLabel fontSize={12}> Instalações <InputGroup>
-                                        <Input isRequired={true} size={'md'} w={16} type="number" min={0} max={100} placeholder='Instalações' defaultValue={instalacoes} {...register("instalacoes", { valueAsNumber: true })} />
-                                        <InputRightAddon w={10}>%</InputRightAddon>
-                                    </InputGroup> </FormLabel>
-                                </Flex>
-                                <Flex>
-                                    <FormLabel fontSize={12}> Alvenaria <InputGroup>
-                                        <Input isRequired={true} size={'md'} w={16} type="number" min={0} max={100} placeholder='Alvenaria' defaultValue={alvenaria} {...register("alvenaria", { valueAsNumber: true })} />
-                                        <InputRightAddon w={10}>%</InputRightAddon>
-                                    </InputGroup> </FormLabel>
-                                </Flex>
-                                <Flex>
-                                    <FormLabel fontSize={12}> Acabamento <InputGroup>
-                                        <Input isRequired={true} size={'md'} w={16} type="number" min={0} max={100} placeholder='Acabamento' defaultValue={acabamento} {...register("acabamento", { valueAsNumber: true })} />
-                                        <InputRightAddon w={10}>%</InputRightAddon>
-                                    </InputGroup> </FormLabel>
-                                </Flex>
-                                <Flex>
-                                    <FormLabel fontSize={12}> Pintura <InputGroup>
-                                        <Input isRequired={true} size={'md'} w={16} type="number" min={0} max={100} placeholder='Pintura' defaultValue={pintura} {...register("pintura", { valueAsNumber: true })} />
-                                        <InputRightAddon w={10}>%</InputRightAddon>
-                                    </InputGroup> </FormLabel>
-                                </Flex>
-                                <Flex pt={2.5}> <Button type="submit" color='lightSide' bgColor="darkSide" size={'md'}> {updatingDB ? <Spinner boxSize={6} /> : 'Alterar'} </Button> </Flex>
+                        : ''
+                    }
+                    <Text fontWeight={'semibold'} fontSize={20}> Andamento da obra:</Text>
+
+                    <Text>
+                        O gráfico de barras apresenta a evolução de cada etapa da obra,
+                        permitindo que você acompanhe o progresso de forma clara e visual.
+                        As barras representam as etapas da construção, e a altura de cada barra indica o
+                        percentual de conclusão daquela etapa.
+                    </Text>
+                </Flex>
+
+                {/* GRAFICOS ANDAMENTO */}
+                <Flex flexDir={'column'}>
+
+                    {editModeAndamento ?
+                        <Flex pt={8} flexDir={'column'} gap={4}>
+                            <Flex>
+                                <Text fontSize={14} fontWeight={'semibold'}>Alterar dados do gráfico:</Text>
                             </Flex>
-                        </form>
-                    </Flex>
-                    : ''
-                }
-                <BarChart width={700} height={500} data={data}>
-                    <XAxis dataKey="etapa" />
-                    <YAxis type='number' domain={([0, 120])} hide />
-                    <Tooltip />
-                    <Legend />
-                    <Bar radius={8} barSize={64} dataKey="Evolução" fill="#64748B" label={renderCustomBarLabel} activeBar={{ stroke: 'cyan', strokeWidth: 2, }} />
-                </BarChart>
+                            <form onSubmit={handleSubmit(onSubmitAndamento)}>
+                                <Flex gap={2} fontSize={12} alignItems={'center'}>
+
+                                    <Flex>
+                                        <FormLabel fontSize={12}> Fundação <InputGroup>
+                                            <Input isRequired={true} size={'md'} w={16} type="number" min={0} max={100} placeholder='Fundação' defaultValue={fundacao} {...register("fundacao", { valueAsNumber: true })} />
+                                            <InputRightAddon w={10}>%</InputRightAddon>
+                                        </InputGroup> </FormLabel>
+                                    </Flex>
+                                    <Flex>
+                                        <FormLabel fontSize={12}> Estrutura <InputGroup>
+                                            <Input isRequired={true} size={'md'} w={16} type="number" min={0} max={100} placeholder='Estrutura' defaultValue={estrutura} {...register("estrutura", { valueAsNumber: true })} />
+                                            <InputRightAddon w={10}>%</InputRightAddon>
+                                        </InputGroup> </FormLabel>
+                                    </Flex>
+                                    <Flex>
+                                        <FormLabel fontSize={12}> Instalações <InputGroup>
+                                            <Input isRequired={true} size={'md'} w={16} type="number" min={0} max={100} placeholder='Instalações' defaultValue={instalacoes} {...register("instalacoes", { valueAsNumber: true })} />
+                                            <InputRightAddon w={10}>%</InputRightAddon>
+                                        </InputGroup> </FormLabel>
+                                    </Flex>
+                                    <Flex>
+                                        <FormLabel fontSize={12}> Alvenaria <InputGroup>
+                                            <Input isRequired={true} size={'md'} w={16} type="number" min={0} max={100} placeholder='Alvenaria' defaultValue={alvenaria} {...register("alvenaria", { valueAsNumber: true })} />
+                                            <InputRightAddon w={10}>%</InputRightAddon>
+                                        </InputGroup> </FormLabel>
+                                    </Flex>
+                                    <Flex>
+                                        <FormLabel fontSize={12}> Acabamento <InputGroup>
+                                            <Input isRequired={true} size={'md'} w={16} type="number" min={0} max={100} placeholder='Acabamento' defaultValue={acabamento} {...register("acabamento", { valueAsNumber: true })} />
+                                            <InputRightAddon w={10}>%</InputRightAddon>
+                                        </InputGroup> </FormLabel>
+                                    </Flex>
+                                    <Flex>
+                                        <FormLabel fontSize={12}> Pintura <InputGroup>
+                                            <Input isRequired={true} size={'md'} w={16} type="number" min={0} max={100} placeholder='Pintura' defaultValue={pintura} {...register("pintura", { valueAsNumber: true })} />
+                                            <InputRightAddon w={10}>%</InputRightAddon>
+                                        </InputGroup> </FormLabel>
+                                    </Flex>
+                                    <Flex pt={2.5}> <Button type="submit" color='lightSide' bgColor="darkSide" size={'md'}> {updatingDB ? <Spinner boxSize={6} /> : 'Alterar'} </Button> </Flex>
+                                </Flex>
+                            </form>
+                        </Flex>
+                        : ''
+                    }
+                    <BarChart width={1100} height={500} data={data}>
+                        <XAxis dataKey="etapa" />
+                        <YAxis type='number' domain={([0, 120])} hide />
+                        <Tooltip />
+                        <Legend />
+                        <Bar radius={8} barSize={64} dataKey="Evolução" fill="#64748B" label={renderCustomBarLabel} activeBar={{ stroke: 'cyan', strokeWidth: 2, }} />
+                    </BarChart>
+                </Flex>
             </Flex>
 
+            {/* ACOMPANHAMENTOS */}
+            <Flex flexDir={'column'} gap={20}>
 
-            {/* HEADER ANDAMENTO */}
-            <Flex flexDir={'column'} pl={6} gap={2}>
+                {/* ANDAMENTOS TITULO E IMPORT */}
+                <Flex flexDir={'column'} gap={4}>
 
-                {userData.role != 'INVESTOR' ?
+                    <Flex justifyContent={'space-between'}>
+                        <Text fontWeight={'semibold'} fontSize={24}> Acompanhamentos</Text>
+                        {userData.role != 'INVESTOR' ?
 
-                    <Flex justifyContent={'end'}>
-                        <Button color='lightSide' bgColor="darkSide" onClick={editCost} size={'sm'}>
-                            Editar dados
-                        </Button>
-                    </Flex>
-
-                    : ''
-                }
-                <Text fontWeight={'semibold'} fontSize={20}> Custos da obra:</Text>
-
-                <Text>
-                    O gráfico de barras apresenta os custos previstos e realizados de cada etapa da obra,
-                    permitindo que você acompanhe o investimento de forma clara e visual. As barras verdes representam os custos previstos,
-                    enquanto as barras azuis representam os custos realizados. Compare os valores e acompanhe o investimento em cada fase da construção!
-                </Text>
-            </Flex>
-
-            {/* GRAFICOS CUSTO*/}
-            <Flex flexDir={'column'}>
-
-                {editModeCusto ?
-                    <Flex pl={6} pt={8} flexDir={'column'} gap={4}>
-                        <Flex>
-                            <Text fontSize={14} fontWeight={'semibold'}>Alterar dados do gráfico:</Text>
-                        </Flex>
-                        <form onSubmit={handleSubmit(onSubmitCost)}>
-                            <Flex gap={2} fontSize={12} alignItems={'center'}>
-
-                                <Flex>
-                                    <FormLabel fontSize={12}> Mão de obra <InputGroup>
-                                        <Input isRequired={true} size={'md'} w={24} type="number" placeholder='Mão de obra' defaultValue={realizedCost.workmanship} {...register("workmanship", { valueAsNumber: true })} /> <InputRightAddon >R$</InputRightAddon>
-                                    </InputGroup> </FormLabel>
-                                </Flex>
-                                <Flex>
-                                    <FormLabel fontSize={12}> Fundação <InputGroup>
-                                        <Input isRequired={true} size={'md'} w={24} type="number" placeholder='Fundação' defaultValue={realizedCost.foundation} {...register("foundation", { valueAsNumber: true })} /> <InputRightAddon >R$</InputRightAddon>
-                                    </InputGroup> </FormLabel>
-                                </Flex>
-                                <Flex>
-                                    <FormLabel fontSize={12}> Implantação <InputGroup>
-                                        <Input isRequired={true} size={'md'} w={24} type="number" placeholder='Implantação' defaultValue={realizedCost.implantation} {...register("implantation", { valueAsNumber: true })} /> <InputRightAddon >R$/m²</InputRightAddon>
-                                    </InputGroup> </FormLabel>
-                                </Flex>
-                                <Flex>
-                                    <FormLabel fontSize={12}> Estrutura <InputGroup>
-                                        <Input isRequired={true} size={'md'} w={24} type="number" placeholder='Estrutura' defaultValue={realizedCost.structure} {...register("structure", { valueAsNumber: true })} /> <InputRightAddon >R$/m²</InputRightAddon>
-                                    </InputGroup> </FormLabel>
-                                </Flex>
-                                <Flex pt={2.5}> <Button type="submit" color='lightSide' bgColor="darkSide" size={'md'}> {updatingDB ? <Spinner boxSize={6} /> : 'Alterar'} </Button> </Flex>
+                            <Flex justifyContent={'end'}>
+                                <Button color='lightSide' bgColor="darkSide" borderRadius={4} onClick={editCost} size={'sm'}>
+                                    Importar dados
+                                </Button>
                             </Flex>
-                        </form>
+
+                            : ''
+                        }
                     </Flex>
-                    : ''
-                }
-                <Flex gap={4}>
-                    <Flex>
-                        <BarChart width={400} height={500} data={dataCost} barGap={20}>
-                            <XAxis dataKey="etapa" />
-                            <YAxis type='number' domain={([0, (maxCost + maxCost / 10)])} hide />
-                            <Tooltip />
-                            <Legend />
-                            <Bar radius={8} barSize={64} dataKey="Previsto" fill="#64748B" label={renderCustomBarLabelMonetary} activeBar={{ stroke: 'cyan', strokeWidth: 2, }} />
-                            <Bar radius={8} barSize={64} dataKey="Realizado" fill="#51c25d" label={renderCustomBarLabelMonetary} activeBar={{ stroke: 'cyan', strokeWidth: 2, }} />
-                        </BarChart>
+
+                    {editModeCusto ?
+                        <Flex flexDir={'column'} gap={4}>
+                            <form onSubmit={handleSubmit(onSubmitImport)}>
+                                <Flex w='100%' flexDir={'row'} alignItems={'center'}>
+                                    <ProjectFileInput
+                                        key={"EXCEL"}
+                                        className={'excel'}
+                                        isRequired={true}
+                                        multiple={false}
+                                        allowedTypes={['application/vnd.ms-excel', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet']}
+                                        accept=".xls, .xlsx"
+                                        label_top='Documentos (Excel)'
+                                        register={register("document")}
+                                    />
+                                    <Button ml={4} maxW={32} mt={12} _hover={{ bgColor: 'redSide' }} size={'md'} borderRadius={8} type='submit' color={'lightSide'} fontWeight={'light'} bgColor={'redSide'} >
+                                        Salvar dados
+                                    </Button>
+                                </Flex>
+                            </form>
+                        </Flex>
+                        : ''
+                    }
+
+                </Flex>
+
+                {/* ANDAMENTO FINANCEIRO */}
+                <Flex flexDir={'column'}>
+                    {/* HEADER CUSTO FINANCEIRO*/}
+                    <Flex flexDir={'row'} alignItems={'center'} gap={16}>
+
+                        <Flex flexDir={'column'}>
+                            <Text fontWeight={'semibold'} fontSize={20}> Acompanhamento financeiro:</Text>
+
+                            <Text>
+                                Mantenha-se informado sobre o cronograma financeiro da obra com este gráfico de linhas. Compare o previsto com o realizado e acompanhe o seu investimento mês a mês.
+                            </Text>
+                        </Flex>
+
                     </Flex>
-                    <Divider orientation="vertical" h={64} my='auto' bgColor={'grayDivisor'} />
-                    <Flex>
-                        <BarChart width={400} height={500} data={dataCostPerArea} barGap={20}>
-                            <XAxis dataKey="etapa" />
-                            <YAxis type='number' domain={([0, (maxCostPerArea + maxCostPerArea / 10)])} hide />
-                            <Tooltip />
+
+                    {/* GRAFICOS CUSTO FINANCEIRO*/}
+                    <Flex flexDir={'column'}>
+
+                        {/* GRAFICO 1 */}
+                        <AreaChart
+                            width={1100}
+                            height={500}
+                            data={financialTotalProgress}
+                            margin={{
+                                top: 50,
+                                right: 0,
+                                left: 12,
+                                bottom: 0,
+                            }}
+                        >
+                            <XAxis dataKey="data" fontSize={12} tickFormatter={formataData} />
+                            <YAxis domain={([minCost, maxCost])} fontSize={12} tickFormatter={formatarMoeda} />
                             <Legend />
-                            <Bar radius={8} barSize={64} dataKey="Previsto" fill="#64748B" label={renderCustomBarLabelMonetary} activeBar={{ stroke: 'cyan', strokeWidth: 2, }} />
-                            <Bar radius={8} barSize={64} dataKey="Realizado" fill="#51c25d" label={renderCustomBarLabelMonetary} activeBar={{ stroke: 'cyan', strokeWidth: 2, }} />
-                        </BarChart>
+                            <Tooltip
+                                formatter={(value: number, name: string, props) => {
+                                    if (name === 'realizado' || name === 'previsto') {
+                                        return [formatarMoeda(value), name]; // Formata o valor no tooltip
+                                    }
+                                    return [value, name];
+                                }}
+                                labelFormatter={formataDataMonthShort}
+                            />
+                            <Area type="monotone" dataKey="previsto" stroke="#0F172A" fill="#0F172A44" />
+                            <Area type="monotone" dataKey="realizado" stroke="#1591ea" fill="#1591eabb" />
+                        </AreaChart>
+                    </Flex>
+                </Flex>
+
+
+                {/* ACOMPANHAMENTO OBRA TOTAL */}
+                <Flex flexDir={'column'}>
+                    {/* HEADER PROGRESSO DE OBRA TOTAL*/}
+                    <Flex flexDir={'row'} alignItems={'center'} gap={16}>
+                        <Flex flexDir={'column'} >
+                            <Text fontWeight={'semibold'} fontSize={20}> Acompanhamento de obra:</Text>
+
+                            <Text>
+                                Analise o progresso da obra através do gráfico de linhas interativo. Compare o percentual previsto e realizado em cada mês e avalie o ritmo da construção.
+                            </Text>
+                        </Flex>
+                    </Flex>
+
+                    {/* GRAFICOS PROGRESSO DE OBRA TOTAL*/}
+                    <Flex flexDir={'column'}>
+                        {/* GRAFICO 1 */}
+                        <AreaChart
+                            width={1100}
+                            height={500}
+                            data={buildingTotalProgress}
+                            margin={{
+                                top: 50,
+                                right: 0,
+                                left: 12,
+                                bottom: 0,
+                            }}
+                        >
+                            <XAxis dataKey="data" fontSize={12} tickFormatter={formataData} />
+                            <YAxis domain={([0, 1])} fontSize={12} tickFormatter={formatarPercentual} />
+                            <Legend />
+                            <Tooltip
+                                formatter={(value: number, name: string, props) => {
+                                    if (name === 'realizado' || name === 'previsto') {
+                                        return [formatarPercentual(value), name]; // Formata o valor no tooltip
+                                    }
+                                    return [value, name];
+                                }}
+                                labelFormatter={formataDataMonthShort}
+                            />
+                            <Area type="monotone" dataKey="previsto" stroke="#0F172A" fill="#0F172A44" />
+                            <Area type="monotone" dataKey="realizado" stroke="#1591ea" fill="#1591ea44" />
+                        </AreaChart>
                     </Flex>
                 </Flex>
             </Flex>
+
+
 
             {/* FOOTER */}
             <Flex gap={4} flexDir={'column'} fontSize={12} pt={6}>
@@ -349,6 +363,6 @@ export function BuildingStatus({ userData, projectData }: ProjectDataProps) {
                 <Text> <b>Mão de obra:</b> <br></br> É o esforço humano que transforma os materiais em um edifício completo. A mão de obra qualificada é essencial para garantir a qualidade, segurança e eficiência da obra. </Text>
 
             </Flex>
-        </Flex>
+        </Flex >
     )
 }

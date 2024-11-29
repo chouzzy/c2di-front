@@ -164,4 +164,22 @@ const formatadorMoedaReal = new Intl.NumberFormat('pt-BR', {
     maximumFractionDigits: 0
 });
 
-export { createInvestorUtils, imagesArrayAdapter, documentsArrayAdapter, projectTypeAdapter, floorPlanTypesAdapter, projectTypeReverseAdapter, numbersAdapter, formatadorMoedaReal }
+const formatarMoeda = (valor: number) => {
+    return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL', maximumFractionDigits:0 }).format(valor);
+};
+
+const formatarPercentual = (valor: number) => {
+    return `${valor*100}%`
+};
+
+const formataData = (dataString: string) => {
+    const data = new Date(dataString);
+    return data.toLocaleDateString('pt-BR', { month: '2-digit', year: '2-digit' });
+  };
+
+const formataDataMonthShort = (dataString: string) => {
+    const data = new Date(dataString);
+    return data.toLocaleDateString('pt-BR', { month: 'short', year: '2-digit' });
+  };
+
+export { createInvestorUtils, imagesArrayAdapter, documentsArrayAdapter, projectTypeAdapter, floorPlanTypesAdapter, projectTypeReverseAdapter, numbersAdapter, formatadorMoedaReal, formatarMoeda, formataData, formataDataMonthShort, formatarPercentual }

@@ -10,6 +10,8 @@ interface UsersInputProps {
     label_top: string,
     allowedTypes: string[],
     accept: string,
+    multiple?: boolean
+    className?: string
     icon?: any,
     isRequired?: boolean,
     disabled?: boolean,
@@ -21,7 +23,7 @@ interface UsersInputProps {
 
 
 
-export function ProjectFileInput({ label_top, allowedTypes, accept, icon, isRequired, disabled = false, register, maxWidth, label_bottom }: UsersInputProps
+export function ProjectFileInput({ label_top, allowedTypes, accept, className, multiple=true, icon, isRequired, disabled = false, register, maxWidth, label_bottom }: UsersInputProps
 ) {
     const [selectedFile, setSelectedFile] = useState(null);
     const [error, setError] = useState('');
@@ -84,6 +86,7 @@ export function ProjectFileInput({ label_top, allowedTypes, accept, icon, isRequ
 
             <Input
                 {...register}
+                className={className?? ''}
                 type={'file'}
                 onChange={handleFileChange}
                 bgColor={'white'}
@@ -95,7 +98,7 @@ export function ProjectFileInput({ label_top, allowedTypes, accept, icon, isRequ
                 h={16}
                 border='1px solid'
                 borderRadius={6}
-                multiple={true}
+                multiple={multiple}
                 borderColor={'#00000000'}
                 accept={accept}
 
