@@ -26,7 +26,7 @@ export function CreateProjectForm({ user, router, userData }: CreateInvestorAcco
     const [yupError, setYupError] = useState<string>("")
 
     const handleSaveClick = () => {
-        window.location.href = 'https://c2di-front.vercel.app//projects'
+        window.location.href = `${window.location.pathname}`
     };
 
     const pages = [0, 1, 2]

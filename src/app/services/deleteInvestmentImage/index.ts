@@ -2,7 +2,7 @@ import axios from "axios";
 
 const deletePrismaProjectImage = async (investmentID:Investment["id"], imageID:Investment["images"][0]["id"]) => {
     try {
-        const response = await axios.put(`https://c2di-front.vercel.app/investments/delete/image`, {
+        const response = await axios.put(`https://c2diserver.awer.co/investments/delete/image`, {
             data: {
                 investmentID: investmentID,
                 imageID: imageID

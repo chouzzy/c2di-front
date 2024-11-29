@@ -45,7 +45,7 @@ export function HeaderAdminProjectList({ userData, user }: HeaderAdminProjectPro
     }
 
     const handleCreateInvestment = () => {
-        window.location.href = 'https://c2di-front.vercel.app//create-project'
+        window.location.href = `${window.location.pathname}`
 
     }
 

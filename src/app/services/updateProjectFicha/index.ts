@@ -4,7 +4,7 @@ const updateProjectFicha = async (id: any, updateData: Investment) => {
     try {
 
 
-        const response = await axios.put(`https://c2di-front.vercel.app/investments/update/${id}`,
+        const response = await axios.put(`https://c2diserver.awer.co/investments/update/${id}`,
             updateData,
             {
                 withCredentials: true,
