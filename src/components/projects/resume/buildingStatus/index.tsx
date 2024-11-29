@@ -5,7 +5,9 @@ import { Button, Divider, Flex, FormLabel, Input, InputGroup, InputRightAddon, S
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { LineChart, Line, CartesianGrid, XAxis, YAxis, BarChart, Bar, Legend, Tooltip } from 'recharts';
-
+import exceljs from 'exceljs'
+import path from "path";
+import axios from "axios";
 
 interface ProjectDataProps {
     projectData: Investment
@@ -54,10 +56,10 @@ export function BuildingStatus({ userData, projectData }: ProjectDataProps) {
     const formatador = new Intl.NumberFormat('pt-BR', {
         style: 'currency',
         currency: 'BRL',
-        maximumFractionDigits:0
+        maximumFractionDigits: 0
     });
 
-    
+
 
     const renderCustomBarLabel = ({ payload, x, y, width, height, value }: any) => {
         return <text x={x + width / 2} y={y} fill="#0F172A" textAnchor="middle" dy={-8} fontWeight={500} >{`${value}%`}</text>;
@@ -81,7 +83,7 @@ export function BuildingStatus({ userData, projectData }: ProjectDataProps) {
 
         setYupError("")
         setUpdatingDB(true)
-        
+
         const { acabamento, alvenaria, estrutura, fundacao, instalacoes, pintura }: Investment["buildingProgress"] = data
         projectData.buildingProgress = { acabamento, alvenaria, estrutura, fundacao, instalacoes, pintura }
 
@@ -118,8 +120,36 @@ export function BuildingStatus({ userData, projectData }: ProjectDataProps) {
         }
     }
 
+    useEffect(() => {
+        const sendFile = async () => {
+            try {
+                // 1. Busca o arquivo usando Axios
+                const response = await axios.get('/data/evolucao.xlsx', {
+                    responseType: 'arraybuffer', // Define o tipo de resposta como ArrayBuffer
+                });
 
+                // 2. Cria um FormData para enviar o arquivo
+                const formData = new FormData();
+                const blob = new Blob([response.data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' }); // Cria um Blob a partir do ArrayBuffer
+                formData.append('file', blob, 'evolucao.xlsx'); // Adiciona o arquivo ao FormData
 
+                // 3. Envia o arquivo para a API
+                const apiResponse = await axios.post('http://localhost:8081/investments/progress/import', formData, {
+                    withCredentials: true,
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    },
+                });
+
+                console.log(apiResponse.data); // Resposta da API
+
+            } catch (error) {
+                console.error('Erro ao enviar o arquivo:', error);
+            }
+        };
+
+        sendFile();
+    }, []);
 
 
     return (
@@ -163,32 +193,38 @@ export function BuildingStatus({ userData, projectData }: ProjectDataProps) {
 
                                 <Flex>
                                     <FormLabel fontSize={12}> Fundação <InputGroup>
-                                        <Input isRequired={true} size={'md'} w={16} type="number" min={0} max={100} placeholder='Fundação' defaultValue={fundacao} {...register("fundacao", { valueAsNumber: true })} /> <InputRightAddon w={10}>%</InputRightAddon>
+                                        <Input isRequired={true} size={'md'} w={16} type="number" min={0} max={100} placeholder='Fundação' defaultValue={fundacao} {...register("fundacao", { valueAsNumber: true })} />
+                                        <InputRightAddon w={10}>%</InputRightAddon>
                                     </InputGroup> </FormLabel>
                                 </Flex>
                                 <Flex>
                                     <FormLabel fontSize={12}> Estrutura <InputGroup>
-                                        <Input isRequired={true} size={'md'} w={16} type="number" min={0} max={100} placeholder='Estrutura' defaultValue={estrutura} {...register("estrutura", { valueAsNumber: true })} /> <InputRightAddon w={10}>%</InputRightAddon>
+                                        <Input isRequired={true} size={'md'} w={16} type="number" min={0} max={100} placeholder='Estrutura' defaultValue={estrutura} {...register("estrutura", { valueAsNumber: true })} />
+                                        <InputRightAddon w={10}>%</InputRightAddon>
                                     </InputGroup> </FormLabel>
                                 </Flex>
                                 <Flex>
                                     <FormLabel fontSize={12}> Instalações <InputGroup>
-                                        <Input isRequired={true} size={'md'} w={16} type="number" min={0} max={100} placeholder='Instalações' defaultValue={instalacoes} {...register("instalacoes", { valueAsNumber: true })} /> <InputRightAddon w={10}>%</InputRightAddon>
+                                        <Input isRequired={true} size={'md'} w={16} type="number" min={0} max={100} placeholder='Instalações' defaultValue={instalacoes} {...register("instalacoes", { valueAsNumber: true })} />
+                                        <InputRightAddon w={10}>%</InputRightAddon>
                                     </InputGroup> </FormLabel>
                                 </Flex>
                                 <Flex>
                                     <FormLabel fontSize={12}> Alvenaria <InputGroup>
-                                        <Input isRequired={true} size={'md'} w={16} type="number" min={0} max={100} placeholder='Alvenaria' defaultValue={alvenaria} {...register("alvenaria", { valueAsNumber: true })} /> <InputRightAddon w={10}>%</InputRightAddon>
+                                        <Input isRequired={true} size={'md'} w={16} type="number" min={0} max={100} placeholder='Alvenaria' defaultValue={alvenaria} {...register("alvenaria", { valueAsNumber: true })} />
+                                        <InputRightAddon w={10}>%</InputRightAddon>
                                     </InputGroup> </FormLabel>
                                 </Flex>
                                 <Flex>
                                     <FormLabel fontSize={12}> Acabamento <InputGroup>
-                                        <Input isRequired={true} size={'md'} w={16} type="number" min={0} max={100} placeholder='Acabamento' defaultValue={acabamento} {...register("acabamento", { valueAsNumber: true })} /> <InputRightAddon w={10}>%</InputRightAddon>
+                                        <Input isRequired={true} size={'md'} w={16} type="number" min={0} max={100} placeholder='Acabamento' defaultValue={acabamento} {...register("acabamento", { valueAsNumber: true })} />
+                                        <InputRightAddon w={10}>%</InputRightAddon>
                                     </InputGroup> </FormLabel>
                                 </Flex>
                                 <Flex>
                                     <FormLabel fontSize={12}> Pintura <InputGroup>
-                                        <Input isRequired={true} size={'md'} w={16} type="number" min={0} max={100} placeholder='Pintura' defaultValue={pintura} {...register("pintura", { valueAsNumber: true })} /> <InputRightAddon w={10}>%</InputRightAddon>
+                                        <Input isRequired={true} size={'md'} w={16} type="number" min={0} max={100} placeholder='Pintura' defaultValue={pintura} {...register("pintura", { valueAsNumber: true })} />
+                                        <InputRightAddon w={10}>%</InputRightAddon>
                                     </InputGroup> </FormLabel>
                                 </Flex>
                                 <Flex pt={2.5}> <Button type="submit" color='lightSide' bgColor="darkSide" size={'md'}> {updatingDB ? <Spinner boxSize={6} /> : 'Alterar'} </Button> </Flex>

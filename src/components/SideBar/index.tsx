@@ -129,7 +129,7 @@ export function SideBar({ userData, projectData }: SideBarProps) {
                         ''
                     }
                     {(userData?.role == 'PROJECT_MANAGER') ?
-                        <MenuItem href={`projects`} isActive={pathName == `/project-manager/projects/${projectData?.id}` || pathName == `/project-manager/projects`} icon={BsBuildings} title='Projetos' />
+                        <MenuItem href={`projects`} isActive={pathName.startsWith(`/project-manager`)} icon={BsBuildings} title='Projetos' />
                         :
                         ''
                     }

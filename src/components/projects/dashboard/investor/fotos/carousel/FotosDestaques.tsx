@@ -75,7 +75,7 @@ export function FotosDestaques({ projectData, openImage }: FotosDestaquesProps) 
                 <Swiper
                     modules={[Navigation, Pagination, Scrollbar, A11y]}
                     spaceBetween={50}
-                    slidesPerView={4}
+                    slidesPerView={destaques.length < 4 ? destaques.length : 4}
                     navigation
                     loop
                     // pagination

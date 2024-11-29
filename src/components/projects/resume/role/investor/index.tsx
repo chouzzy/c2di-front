@@ -1,8 +1,4 @@
-import { StaticProject } from '@/components/users/StaticProject';
-import {
-    Flex,
-    Button,
-} from '@chakra-ui/react';
+import { Flex } from '@chakra-ui/react';
 import { FichaTecnica } from '../../fichaTecnica';
 import { useState } from 'react';
 import Partners from '../../partners';
@@ -48,7 +44,7 @@ function ProjectResumeInvestor({ userData, user, projectData }: ProjectDataProps
             {page == 0 ? (<InfosGerais userData={userData} projectData={projectData} />) : ('')}
             {page == 1 ? (<FichaTecnica userData={userData} projectData={projectData} />) : ('')}
             {page == 2 ? (<Partners userData={userData} partnerList={partnerList} setPartnerList={setPartnerList} user={user} projectData={projectData} />) : ('')}
-            {page == 3 ? (<DocumentsList userData={userData} documentList={documentList} setDocumentList={setDocumentList} user={user} projectData={projectData}  />) : ('')}
+            {page == 3 ? (<DocumentsList userData={userData} documentList={documentList} setDocumentList={setDocumentList} user={user} projectData={projectData} />) : ('')}
             {page == 4 ? (<ProjectGallery userData={userData} projectData={projectData} />) : ('')}
             {page == 5 ? (<BuildingStatus userData={userData} projectData={projectData} />) : ('')}
 

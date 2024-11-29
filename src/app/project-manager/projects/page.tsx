@@ -22,18 +22,10 @@ export default function ProjectManagersProjects() {
     const [userData, setUserData] = useState<User | null>(null);
     const [projectsData, setProjectsData] = useState<Investment[] | null>(null);
 
-    const [pageLoaded, setPageLoaded] = useState(false);
-
     const [totalPages, setTotalPages] = useState<number>(0)
     const [elementsPerPage, setElementsPerPage] = useState<number>(4)
 
     const [page, setPage] = useState(1)
-
-
-
-    const redirectNotFound = async () => {
-        router.push("/404")
-    }
 
     // GET USER
     useEffect(() => {
@@ -45,12 +37,20 @@ export default function ProjectManagersProjects() {
                 setUserData(userResponse)
 
             } catch (error) {
-
                 console.error('Erro ao buscar dados do usuário:', error);
-                await redirectNotFound()
-
             }
         }
+
+        if (!userData && user) {
+            fetchUserData(user);
+        }
+
+    }, [isLoading])
+
+
+
+    // GET MANAGERS PROJECT
+    useEffect(() => {
 
         const fetchProjectData = async (id: User["id"]) => {
             try {
@@ -59,78 +59,66 @@ export default function ProjectManagersProjects() {
                 let pageRangeString = String(elementsPerPage)
 
                 if (!totalPages) {
+
                     const projectResponseComplete = await getProjectManagerProjectsList({ projectManagerID: id })
+
                     if (projectResponseComplete) {
-                        console.log('setando total pages')
                         setTotalPages(projectResponseComplete.length)
                     }
                 }
 
                 const projectResponse = await getProjectManagerProjectsList({ projectManagerID: id, page: pageString, pageRange: pageRangeString })
                 setProjectsData(projectResponse)
-                setPageLoaded(true)
 
             } catch (error) {
-
                 console.error('Erro ao buscar dados do projeto:', error);
-                await redirectNotFound()
-
             }
         }
 
-        if (!isLoading) {
-
-            if (user) {
-                fetchUserData(user);
-                if (userData) {
-                    fetchProjectData(userData.id);
-                }
-
-            } else {
-                router.push('/authentication')
-            }
+        if (userData) {
+            fetchProjectData(userData.id);
         }
 
-    }, [user, page])
+    }, [userData, page])
 
-    return (
-        <>
-            <Container maxW={'1440px'} mx='auto' h='100vh'>
-                {userData && user && projectsData ?
-                    <Flex h='100%'>
-                        <Flex>
-                            <Flex w={64}></Flex>
-                            <SideBar userData={userData} />
+return (
+    <>
+        <Container maxW={'1440px'} mx='auto' h='100vh'>
+            {userData && user && projectsData ?
+                <Flex h='100%'>
+                    <Flex>
+                        <Flex w={64}></Flex>
+                        <SideBar userData={userData} />
+                    </Flex>
+
+                    <Flex h='100%' flexDir={'column'} w='100%' px={12} py={12} gap={6}>
+
+                        {/* HEADER */}
+                        <Flex
+                            justifyContent={'space-between'}
+                            alignItems={'center'}
+                            borderBottom={'1px solid #E5E7EB'}
+                            pb={8}
+                        >
+                            {userData.role == "INVESTOR" ? <HeaderInvestorProjectList /> : ''}
+                            {userData.role != "INVESTOR" ? <HeaderAdminProjectList user={user} userData={userData} /> : ''}
                         </Flex>
 
-                        <Flex h='100%' flexDir={'column'} w='100%' px={12} py={12} gap={6}>
+                        {/* BODY FORMS */}
+                        < Flex flexDir={'column'}>
 
-                            {/* HEADER */}
-                            <Flex
-                                justifyContent={'space-between'}
-                                alignItems={'center'}
-                                borderBottom={'1px solid #E5E7EB'}
-                                pb={8}
-                            >
-                                {userData.role == "INVESTOR" ? <HeaderInvestorProjectList /> : ''}
-                                {userData.role != "INVESTOR" ? <HeaderAdminProjectList user={user} userData={userData} /> : ''}
+                            <Flex gap={12}>
+                                <ProjectDashboardProjectManager elementsPerPage={elementsPerPage} totalPages={totalPages} page={page} setPage={setPage} projectsData={projectsData} />
                             </Flex>
 
-                            {/* BODY FORMS */}
-                            < Flex flexDir={'column'}>
-
-                                <Flex gap={12}>
-                                    <ProjectDashboardProjectManager elementsPerPage={elementsPerPage} totalPages={totalPages} page={page} setPage={setPage} projectsData={projectsData} />
-                                </Flex>
-
-                            </Flex>
                         </Flex>
                     </Flex>
-                    
-                    :
-                    <SpinnerFullScreen />
-                }
-            </Container >
-        </>
-    )
+                </Flex>
+
+                :
+                <SpinnerFullScreen />
+            }
+        </Container >
+    </>
+)
 }

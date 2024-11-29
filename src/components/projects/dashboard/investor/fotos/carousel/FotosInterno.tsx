@@ -74,7 +74,7 @@ export function FotosInterno({ projectData, openImage }: FotosDestaquesProps) {
                 <Swiper
                     modules={[Navigation, Pagination, Scrollbar, A11y]}
                     spaceBetween={50}
-                    slidesPerView={4}
+                    slidesPerView={interno.length < 4 ? interno.length : 4}
                     navigation
                     loop
                     // pagination

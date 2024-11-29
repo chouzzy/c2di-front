@@ -75,7 +75,7 @@ export function FotosPlanta({ projectData, openImage }: FotosPlantaProps) {
                 <Swiper
                     modules={[Navigation, Pagination, Scrollbar, A11y]}
                     spaceBetween={50}
-                    slidesPerView={4}
+                    slidesPerView={planta.length < 4 ? planta.length : 4}
                     navigation
                     loop
                     // pagination

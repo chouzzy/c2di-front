@@ -1,20 +1,21 @@
-import { Button, Flex, Image, Modal, ModalBody, ModalCloseButton, ModalContent, ModalOverlay, Spinner, Text, useDisclosure } from "@chakra-ui/react";
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
-import { Swiper, SwiperSlide, useSwiper } from 'swiper/react';
+import { FotosPlantaInput } from "@/components/CreateProjects/Inputs/FotosPlantaInput";
+import { deletePrismaProjectImage } from "@/app/api/deleteInvestmentImage/route";
 import { Navigation, Scrollbar, Pagination, A11y } from 'swiper/modules';
+import { Button, Flex, Image, Text } from "@chakra-ui/react";
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { useEffect, useState } from "react";
 
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
-import { deletePrismaProjectImage } from "@/app/api/deleteInvestmentImage/route";
-import { FotosPlantaInput } from "@/components/CreateProjects/Inputs/FotosPlantaInput";
 
 
 interface FotosPlantaProps {
     projectData: Investment
     openImage: (img: Investment["images"][0]) => void
 }
+
 
 export function FotosPlanta({ projectData, openImage }: FotosPlantaProps) {
 
@@ -52,8 +53,6 @@ export function FotosPlanta({ projectData, openImage }: FotosPlantaProps) {
         }
 
     }, [isDeletingImage])
-
-
 
 
 
@@ -101,7 +100,7 @@ export function FotosPlanta({ projectData, openImage }: FotosPlantaProps) {
                 <Swiper
                     modules={[Navigation, Pagination, Scrollbar, A11y]}
                     spaceBetween={50}
-                    slidesPerView={4}
+                    slidesPerView={planta.length < 4 ? planta.length : 4}
                     navigation
                     loop
                     // pagination

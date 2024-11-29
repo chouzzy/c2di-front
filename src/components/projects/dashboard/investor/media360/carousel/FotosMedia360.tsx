@@ -23,7 +23,7 @@ export function FotosMedia360({ projectData, openImage }: FotosMedia360Props) {
     const [isDeletingImage, setIsDeletingImage] = useState(false)
     const [deletingImageID, setDeletingImageID] = useState<string>()
 
-    const [planta, setMedia360] = useState<Investment["images"]>(projectData.images.filter(img => img.label === 'PANORAMICAS'))
+    const [media360, setMedia360] = useState<Investment["images"]>(projectData.images.filter(img => img.label === 'PANORAMICAS'))
 
     const deleteImage = (imageID: Investment["images"][0]["id"]) => {
         setDeletingImageID(imageID)
@@ -68,7 +68,7 @@ export function FotosMedia360({ projectData, openImage }: FotosMedia360Props) {
 
                 {/* LABEL */}
                 <Flex fontSize={20} fontWeight={'medium'} mt={2} alignItems={'center'} gap={2}>
-                    <Flex alignItems={'center'} gap={1}>Fotos 360º<BsBadgeVrFill size={20} /></Flex>  ({planta.length})
+                    <Flex alignItems={'center'} gap={1}>Fotos 360º<BsBadgeVrFill size={20} /></Flex>  ({media360.length})
                 </Flex>
 
                 
@@ -77,7 +77,7 @@ export function FotosMedia360({ projectData, openImage }: FotosMedia360Props) {
             {/* 360 IMAGES */}
             <Flex maxW={'100%'} gap={2}>
                 <SimpleGrid columns={2} gap={2} w='100%'>
-                    {planta.map((img) => {
+                    {media360.map((img) => {
                         return (
                             <Flex
                                 key={img.id}

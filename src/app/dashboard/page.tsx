@@ -118,7 +118,7 @@ export default function Dashboard() {
 
                                 <Flex gap={12}>
                                     {userData.role == "INVESTOR" ? <MainInvestorDashboard projectsData={projectsData} userInvestmentsData={userInvestmentsData} /> : ''}
-                                    {userData.role != "INVESTOR" ? <MainInvestorDashboard projectsData={projectsData} userInvestmentsData={userInvestmentsData} /> : ''}
+                                    {userData.role != "INVESTOR" ? <Flex> Em construção 🚜 </Flex> : ''}
                                 </Flex>
 
                             </Flex>

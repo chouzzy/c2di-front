@@ -1,7 +1,7 @@
 import { Flex, FormControl, Input } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { ErrorInputComponent } from "@/components/ErrorInputComponent";
-import { changePrismaProjectFotos } from "@/app/api/changePartner/route";
+import { changePrismaProjectFotos } from "@/app/api/changeFotos/route";
 
 
 
@@ -25,8 +25,6 @@ export function FotosInternoInput({ allowedTypes, accept, projectData }: FotosIn
         const uploadFotos = async (updateData: Investment) => {
 
             try {
-                console.log('updateData')
-                console.log(updateData)
 
                 const response = await changePrismaProjectFotos(projectData.id, updateData)
                 window.location.reload()

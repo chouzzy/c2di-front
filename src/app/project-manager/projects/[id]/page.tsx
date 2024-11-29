@@ -14,18 +14,11 @@ import { useEffect, useState } from 'react'
 
 export default function ProjectManagerProject() {
 
-  const router = useRouter();
   const params = useParams();
   const { user, isLoading } = useUser()
 
   const [userData, setUserData] = useState<User | null>(null);
   const [projectData, setProjectData] = useState<Investment | null>(null);
-
-  const [pageLoaded, setPageLoaded] = useState(false);
-
-  const redirectNotFound = async () => {
-    router.push("/404")
-  }
 
   // GET USER
   useEffect(() => {
@@ -37,50 +30,45 @@ export default function ProjectManagerProject() {
         setUserData(userResponse)
 
       } catch (error) {
-
         console.error('Erro ao buscar dados do usuário:', error);
-        await redirectNotFound()
 
       }
     }
 
+    if (!userData && user) {
+
+      fetchUserData(user)
+    }
+
+  }, [isLoading])
+
+
+  // GET PROJECT
+  useEffect(() => {
+
     const fetchProjectData = async (projectID: Investment["id"]) => {
+
       try {
 
         const projectResponse = await getProjectByID(projectID) // FILTRAR PROJETOS
         setProjectData(projectResponse)
 
       } catch (error) {
-
         console.error('Erro ao buscar dados do projeto:', error);
-        // await redirectNotFound()
-
       }
     }
 
-    if (!isLoading) {
-
-      if (user) {
-
-        fetchUserData(user);
-
-        if (params.id && typeof (params.id) == 'string') {
-          fetchProjectData(params.id);
-        }
-
-        setPageLoaded(true)
-
-      } else {
-        router.push('/authentication')
-      }
+    if (params.id && typeof (params.id) == 'string') {
+      fetchProjectData(params.id);
     }
 
-  }, [user])
+  }, [params.id])
+
+
 
   return (
 
     <Container maxW={'1440px'} mx='auto' h='100vh'>
-
 
       {/* SPINNER */}
       {userData && user && projectData ?

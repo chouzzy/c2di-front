@@ -1,38 +1,31 @@
 "use client"
 
-import { checkUserByEmail } from '@/app/api/checkUserByEmail/route'
-import { SpinnerFullScreen } from '@/components/Loading/SpinnerFullScreen'
-import { SideBar } from '@/components/SideBar'
-import { UserProfile, useUser } from '@auth0/nextjs-auth0/client'
-import { Container, Flex, Spinner } from '@chakra-ui/react'
-import { useRouter } from 'next/navigation'
-import { useEffect, useState } from 'react'
 import { HeaderInvestorProjectList } from '@/components/projects/headers/HeaderInvestorProjectList'
 import { HeaderAdminProjectList } from '@/components/projects/headers/HeaderAdminProjectList'
 import { ProjectDashboardInvestor } from '@/components/projects/dashboard/investor'
-import { getProjectList, getProjectManagerProjectsList } from '@/app/api/getProjectList/route'
+import { SpinnerFullScreen } from '@/components/Loading/SpinnerFullScreen'
+import { checkUserByEmail } from '@/app/api/checkUserByEmail/route'
+import { UserProfile, useUser } from '@auth0/nextjs-auth0/client'
+import { getProjectList } from '@/app/api/getProjectList/route'
+import { Container, Flex } from '@chakra-ui/react'
+import { SideBar } from '@/components/SideBar'
+import { useRouter } from 'next/navigation'
+import { useEffect, useState } from 'react'
+
+
 
 export default function ProjectInvestorProjects() {
-
-    const router = useRouter();
 
     const { user, isLoading } = useUser()
 
     const [userData, setUserData] = useState<User | null>(null);
     const [projectsData, setProjectsData] = useState<Investment[] | null>(null);
 
-    const [pageLoaded, setPageLoaded] = useState(false);
-
     const [totalPages, setTotalPages] = useState<number>(0)
     const [elementsPerPage, setElementsPerPage] = useState<number>(4)
 
     const [page, setPage] = useState(1)
 
-
-
-    const redirectNotFound = async () => {
-        router.push("/404")
-    }
 
     // GET USER
     useEffect(() => {
@@ -44,12 +37,18 @@ export default function ProjectInvestorProjects() {
                 setUserData(userResponse)
 
             } catch (error) {
-
                 console.error('Erro ao buscar dados do usuário:', error);
-                await redirectNotFound()
-
             }
         }
+
+        if (!userData && user) {
+            fetchUserData(user);
+        }
+
+    }, [isLoading])
+
+    // GET USER PROJECTS
+    useEffect(() => {
 
         const fetchProjectData = async (id: User["id"]) => {
             try {
@@ -57,44 +56,41 @@ export default function ProjectInvestorProjects() {
                 let pageString = String(page)
                 let pageRangeString = String(elementsPerPage)
 
-                if (!totalPages) {
+                if (!totalPages) { // FAZ A REQUISIÇÃO DE TOTAL DE ELEMENTOS APENAS 1 VEZ
+
                     const projectResponseComplete = await getProjectList({ page: undefined, pageRange: undefined })
+                    console.log('projecst COMPLETE')
                     const projectResponseActives = projectResponseComplete.filter((project: Investment) => project.active === true)
-                
+
                     if (projectResponseActives) {
-                        console.log(projectResponseActives)
                         setTotalPages(projectResponseActives.length)
                     }
                 }
 
-                const projectResponse = await getProjectList({ page: pageString, pageRange: pageRangeString, active:true })
+                const projectResponse = await getProjectList({ page: pageString, pageRange: pageRangeString, active: true })
 
                 setProjectsData(projectResponse)
-                setPageLoaded(true)
 
             } catch (error) {
-
                 console.error('Erro ao buscar dados do projeto:', error);
-                await redirectNotFound()
 
             }
         }
 
-        if (user) {
-            fetchUserData(user);
-            if (userData) {
-                fetchProjectData(userData.id);
-            }
 
+        if (userData) {
+            fetchProjectData(userData.id);
         }
 
-    }, [user, page])
+    }, [userData, page])
 
     return (
         <>
             <Container maxW={'1440px'} mx='auto' h='100vh'>
                 {userData && user && projectsData ?
+
                     <Flex h='100%'>
+
                         <Flex>
                             <Flex w={64}></Flex>
                             <SideBar userData={userData} />
@@ -124,6 +120,7 @@ export default function ProjectInvestorProjects() {
 
                         </Flex>
                     </Flex>
+
                     :
                     <SpinnerFullScreen />
                 }

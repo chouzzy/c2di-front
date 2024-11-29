@@ -14,26 +14,12 @@ import { ProjectPlantasProjectManager } from '@/components/projects/dashboard/pr
 
 export default function ProjectPlantas() {
 
-    const router = useRouter();
     const params = useParams();
 
     const { user, isLoading } = useUser()
 
     const [userData, setUserData] = useState<User | null>(null);
     const [projectData, setProjectData] = useState<Investment | null>(null);
-
-    const [pageLoaded, setPageLoaded] = useState(true);
-
-    const [totalPages, setTotalPages] = useState<number>(1)
-    const [elementsPerPage, setElementsPerPage] = useState<number>(2)
-
-    const [page, setPage] = useState(1)
-
-
-
-    const redirectNotFound = async () => {
-        router.push("/404")
-    }
 
     // GET USER
     useEffect(() => {
@@ -45,76 +31,45 @@ export default function ProjectPlantas() {
                 setUserData(userResponse)
 
             } catch (error) {
-
                 console.error('Erro ao buscar dados do usuário:', error);
-                await redirectNotFound()
 
             }
         }
 
+        if (!userData && user) {
+
+            fetchUserData(user)
+        }
+
+    }, [isLoading])
+
+
+    // GET PROJECT
+    useEffect(() => {
+
         const fetchProjectData = async (projectID: Investment["id"]) => {
+
             try {
 
                 const projectResponse = await getProjectByID(projectID) // FILTRAR PROJETOS
                 setProjectData(projectResponse)
-                setPageLoaded(true)
 
             } catch (error) {
-
                 console.error('Erro ao buscar dados do projeto:', error);
-                await redirectNotFound()
-
             }
         }
 
-        if (!isLoading) {
-
-            if (user) {
-                fetchUserData(user);
-                if (params.id && typeof (params.id) == 'string') {
-                    fetchProjectData(params.id);
-                }
-
-            } else {
-                router.push('/authentication')
-            }
+        if (params.id && typeof (params.id) == 'string') {
+            fetchProjectData(params.id);
         }
 
-    }, [user, page])
-
-    if (!user) {
-        return (
-            <SpinnerFullScreen />
-        )
-    }
-    if (!userData) {
-        return (
-            <SpinnerFullScreen />
-        )
-    }
-    if (!projectData) {
-        return (
-            <SpinnerFullScreen />
-        )
-    }
-    if (!totalPages) {
-        return (
-            <SpinnerFullScreen />
-        )
-    }
+    }, [params.id])
 
 
     return (
         <>
             <Container maxW={'1440px'} mx='auto' h='100vh'>
-                {!pageLoaded ?
-                    <Flex h='100%' w='100%' alignItems={'center'} justifyContent={'center'}>
-                        <Spinner
-                            boxSize={40}
-                            color='redSide'
-                        />
-                    </Flex>
-                    :
+                {userData && projectData ?
 
                     <Flex h='100%'>
                         <Flex>
@@ -135,27 +90,19 @@ export default function ProjectPlantas() {
                                 {userData.role != "INVESTOR" ? <HeaderAdminGalleryFotosProject /> : ''}
                             </Flex>
 
-                            {!userData ?
-                                <Flex boxSize={42} mx='auto'>
-                                    <Spinner
-                                        boxSize={42}
-                                        color='redSide'
-                                    />
+                            {/* MANAGER */}
+                            <Flex flexDir={'column'}>
+
+                                <Flex gap={12}>
+                                    <ProjectPlantasProjectManager projectData={projectData} />
                                 </Flex>
-                                :
 
-                                // {/* BODY FORMS */}
-                                < Flex flexDir={'column'}>
-
-                                    <Flex gap={12}>
-                                        <ProjectPlantasProjectManager projectData={projectData} />
-                                    </Flex>
-
-                                </Flex>
-                            }
+                            </Flex>
 
                         </Flex>
                     </Flex>
+                    :
+                    <SpinnerFullScreen />
                 }
             </Container >
         </>

@@ -22,16 +22,9 @@ interface ProjectDataProps {
 
 function ProjectResumeAdmin({ userData, user, projectData }: ProjectDataProps) {
 
-    const [page, SetPage] = useState(0)
+    const [page, SetPage] = useState(5)
     const [partnerList, setPartnerList] = useState<Investment["partners"] | undefined>(projectData.partners)
     const [documentList, setDocumentList] = useState<Investment["documents"] | undefined>(projectData.documents)
-
-    if (!user) {
-        return <SpinnerFullScreen />
-    }
-    if (!projectData) {
-        return <SpinnerFullScreen />
-    }
 
     return (
 

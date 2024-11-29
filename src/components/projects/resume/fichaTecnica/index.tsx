@@ -351,7 +351,8 @@ export function FichaTecnica({ userData, projectData }: ProjectDataProps) {
                             <StaticProject dataType='MONEY' type='Custo estimado da fundação' data={String(projectData.predictedCost.workmanship)} />
                         }
                     </Flex>
-                    {userData.role != 'INVESTOR' ?
+                    {userData.role != 'ADMINISTRATOR' ?
+                        '' :
                         <>
                             {editMode ?
                                 <Button type='submit' color={'lightSide'} fontWeight={'light'} bgColor={'darkSide'} mt={4} maxW={40}>
@@ -363,7 +364,7 @@ export function FichaTecnica({ userData, projectData }: ProjectDataProps) {
                                 </Button>
                             }
                         </>
-                        : ''}
+                    }
                 </Flex>
             </form>
         </Flex>

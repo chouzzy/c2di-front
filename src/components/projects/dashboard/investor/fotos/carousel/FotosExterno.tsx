@@ -73,7 +73,7 @@ export function FotosExterno({ projectData, openImage }: FotosExternoProps) {
                 <Swiper
                     modules={[Navigation, Pagination, Scrollbar, A11y]}
                     spaceBetween={50}
-                    slidesPerView={4}
+                    slidesPerView={externo.length < 4 ? externo.length : 4}
                     navigation
                     loop
                     // pagination

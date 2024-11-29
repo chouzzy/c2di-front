@@ -26,15 +26,15 @@ interface FormUsersProps {
 
 }
 
-function InvestorList({ user, userData, projectData, documentList, setDocumentList }: FormUsersProps) {
+function InvestorList({ userData, projectData }: FormUsersProps) {
 
-    const { register, handleSubmit, formState: { errors } } = useForm({});
+    const { register, handleSubmit } = useForm({});
     
     const hoje = new Date().toISOString().split('T')[0];
 
     const [editMode, setEditMode] = useState(false); // Estado para controlar o modo de edição
     const [addMode, setAddMode] = useState(false); // Estado para controlar o modo de edição
-    
+
     const [usersList, setUsersList] = useState<User[]>()
     const [userInvestmentsList, setUserInvestmentsList] = useState<UserInvestment[]>()
 
@@ -192,6 +192,7 @@ function InvestorList({ user, userData, projectData, documentList, setDocumentLi
                             {userInvestmentsList?.map((userInvestment, index) => {
 
                                 const user = usersList?.filter((user: User) => { return user.id === userInvestment.userID })[0]
+                                const date = `${new Date(userInvestment.dataInvestimento).toLocaleDateString("pt-br")}`
 
                                 return (
                                     <Tr key={'name' + index}>
@@ -199,7 +200,7 @@ function InvestorList({ user, userData, projectData, documentList, setDocumentLi
                                         <Td>{user?.email}</Td>
                                         <Td>{user?.investorProfileName ?? 'Não informado'}</Td>
                                         <Td>{formatadorMoedaReal.format(userInvestment.investedValue)}</Td>
-                                        {/* <Td>{userInvestment.dataInvestimento.toISOString()}</Td> */}
+                                        <Td>{date}</Td>
                                         {/* <Td>{user.description}</Td> */}
                                         <Td>
                                             <Flex gap={2} justifyContent={'space-between'}>
@@ -249,7 +250,7 @@ function InvestorList({ user, userData, projectData, documentList, setDocumentLi
                                             return user.email === e.target.value
                                         })[0])
                                     }} >
-                                        {usersList.map((user, i) => {
+                                        {usersList.map((user) => {
                                             return <option key={user.id} value={user.email}>{user.email}</option>
                                         })}
                                     </Select>
