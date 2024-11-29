@@ -1,5 +1,5 @@
-import { Button, Divider, Flex, Image, Modal, ModalBody, ModalCloseButton, ModalContent, ModalHeader, ModalOverlay, Spinner, Text, useDisclosure } from "@chakra-ui/react";
-import { LineChart, Line, CartesianGrid, XAxis, YAxis, BarChart, Bar, Legend, Tooltip } from 'recharts';
+import { Button, Flex, Image, Modal, ModalBody, ModalCloseButton, ModalContent, ModalHeader, ModalOverlay, Spinner, Text, useDisclosure } from "@chakra-ui/react";
+import { XAxis, YAxis, BarChart, Bar, Legend, Tooltip, Area, AreaChart } from 'recharts';
 import { createPrismaNotification } from "@/app/api/createNotification/route";
 import { getPrismaNotification } from "@/app/api/getNotification/route";
 import { ErrorInputComponent } from "@/components/ErrorInputComponent";
@@ -7,11 +7,11 @@ import { useEffect, useState } from "react";
 import { TextAreaInput } from "@/components/CreateProjects/Inputs/TextAreaInput";
 import { ProjectInput } from "@/components/CreateProjects/Inputs/ProjectInput";
 import { AxiosError } from "axios";
-import { IoMdAlert } from "react-icons/io";
 import { useForm } from "react-hook-form";
 import { NotificationsBoard } from "./notificationsBoard";
 import { NotificationsHeaderInvestor } from "./notificationsHeaderAdmin";
 import { NotificationsHeaderAdmin } from "./notificationsHeaderInvestor";
+import { formataData, formatarMoeda, formataDataMonthShort, formatarPercentual } from "@/app/services/utils";
 
 interface ProjectDataProps {
     projectData: Investment
@@ -25,11 +25,11 @@ export interface listNotificationsResponse {
 
 export function InfosGerais({ userData, projectData }: ProjectDataProps) {
 
-    const { predictedCost, realizedCost } = projectData
+    const { predictedCost, realizedCost, financialTotalProgress, buildingTotalProgress } = projectData
     const { acabamento, alvenaria, estrutura, fundacao, instalacoes, pintura } = projectData.buildingProgress
 
-    const maxCost = Math.max(predictedCost.foundation, realizedCost.foundation, predictedCost.workmanship, realizedCost.workmanship)
-    const maxCostPerArea = Math.max(predictedCost.structure, realizedCost.structure, predictedCost.implantation, realizedCost.implantation)
+    const minCost = financialTotalProgress[0].previsto
+    const maxCost = financialTotalProgress[financialTotalProgress.length - 1].previsto
 
     const { register, handleSubmit } = useForm()
     const { isOpen, onOpen, onClose } = useDisclosure() // Adiciona o hook useDisclosure
@@ -51,26 +51,15 @@ export function InfosGerais({ userData, projectData }: ProjectDataProps) {
         { etapa: 'Pintura', Evolução: pintura },
     ];
 
-    const dataCost = [
-        { etapa: 'Mão de obra R$', Previsto: predictedCost.workmanship, Realizado: realizedCost.workmanship },
-        { etapa: 'Fundação R$', Previsto: predictedCost.foundation, Realizado: realizedCost.foundation },
-    ];
-    const dataCostPerArea = [
-        { etapa: 'Estrutura R$/m²', Previsto: predictedCost.structure, Realizado: realizedCost.structure },
-        { etapa: 'Implantação R$/m²', Previsto: predictedCost.implantation, Realizado: realizedCost.implantation },
-    ];
 
     const formatador = new Intl.NumberFormat('pt-BR', {
         style: 'currency',
         currency: 'BRL',
-        maximumFractionDigits:0
+        maximumFractionDigits: 0
     });
 
     const renderCustomBarLabel = ({ payload, x, y, width, height, value }: any) => {
         return <text x={x + width / 2} y={y} fill="#0F172A" textAnchor="middle" dy={-8} fontWeight={500} >{`${value}%`}</text>;
-    };
-    const renderCustomBarLabelMonetary = ({ payload, x, y, width, height, value }: any) => {
-        return <text x={x + width / 2} y={y} fill="#0F172A" textAnchor="middle" dy={-8} fontWeight={500} >{`${formatador.format(Number(value))}`}</text>;
     };
 
 
@@ -171,7 +160,7 @@ export function InfosGerais({ userData, projectData }: ProjectDataProps) {
 
 
     return (
-        <Flex w='100%' py={8} flexDir={'row'} gap={16}>
+        <Flex w='100%' py={8} flexDir={'row'} gap={12}>
             {/* IMAGEM GIGANTE */}
             <Flex>
                 <Image src={`/assets/projects/${projectData.images[0].url}`} h={'100%'} minW={440} objectFit={'cover'} objectPosition={'center'} borderRadius={2} boxShadow={'2xl'} />
@@ -182,38 +171,79 @@ export function InfosGerais({ userData, projectData }: ProjectDataProps) {
                 {/* GRAFICOS */}
                 <Flex w='100%' flexDir={'column'} gap={2}>
                     <Flex flexDir={'column'}>
-                        <Text fontSize={20} fontWeight={'semibold'}>
-                            Gráfico de custo previsto x realizado:
-                        </Text>
-                        <Flex gap={2} fontSize={12} py={2}>
+                        <Flex gap={8} fontSize={12} py={2} flexDir={'column'}>
 
-                            <Flex>
-                                <BarChart width={240} height={200} data={dataCost} barGap={24}>
-                                    <XAxis dataKey="etapa" />
-                                    <YAxis type='number' domain={([0, (maxCost + maxCost / 10)])} hide />
-                                    <Tooltip />
+                            {/* FINANCEIRO TOTAL */}
+                            <Flex flexDir={'column'}>
+                                <Text fontSize={16} fontWeight={'semibold'}>
+                                    Financeiro (previsto x realizado):
+                                </Text>
+                                <AreaChart
+                                    width={600}
+                                    height={200}
+                                    data={financialTotalProgress}
+                                    margin={{
+                                        top: 16,
+                                        right: 0,
+                                        left: 12,
+                                        bottom: 0,
+                                    }}
+                                >
+                                    <XAxis dataKey="data" fontSize={12} tickFormatter={formataData} />
+                                    <YAxis domain={([minCost, maxCost])} fontSize={12} tickFormatter={formatarMoeda} />
                                     <Legend />
-                                    <Bar radius={8} barSize={32} dataKey="Previsto" fill="#64748B" label={renderCustomBarLabelMonetary} activeBar={{ stroke: 'cyan', strokeWidth: 2, }} />
-                                    <Bar radius={8} barSize={32} dataKey="Realizado" fill="#51c25d" label={renderCustomBarLabelMonetary} activeBar={{ stroke: 'cyan', strokeWidth: 2, }} />
-                                </BarChart>
+                                    <Tooltip
+                                        formatter={(value: number, name: string, props) => {
+                                            if (name === 'realizado' || name === 'previsto') {
+                                                return [formatarMoeda(value), name]; // Formata o valor no tooltip
+                                            }
+                                            return [value, name];
+                                        }}
+                                        labelFormatter={formataDataMonthShort}
+                                    />
+                                    <Area type="monotone" dataKey="previsto" stroke="#0F172A" fill="#0F172A44" />
+                                    <Area type="monotone" dataKey="realizado" stroke="#1591ea" fill="#1591eabb" />
+                                </AreaChart>
                             </Flex>
-                            <Divider orientation="vertical" h={64} my='auto' bgColor={'grayDivisor'} />
-                            <Flex>
-                                <BarChart width={240} height={200} data={dataCostPerArea} barGap={20}>
-                                    <XAxis dataKey="etapa" />
-                                    <YAxis type='number' domain={([0, (maxCostPerArea + maxCostPerArea / 10)])} hide />
-                                    <Tooltip />
+
+                            {/* OBRA TOTAL */}
+                            <Flex flexDir={'column'}>
+                                <Text fontSize={16} fontWeight={'semibold'}>
+                                    Obra (previsto x realizado):
+                                </Text>
+                                <AreaChart
+                                    width={600}
+                                    height={200}
+                                    data={buildingTotalProgress}
+                                    margin={{
+                                        top: 16,
+                                        right: 0,
+                                        left: 0,
+                                        bottom: 0,
+                                    }}
+                                >
+                                    <XAxis dataKey="data" fontSize={12} tickFormatter={formataData} />
+                                    <YAxis domain={([0, 1])} fontSize={12} tickFormatter={formatarPercentual} />
                                     <Legend />
-                                    <Bar radius={8} barSize={32} dataKey="Previsto" fill="#64748B" label={renderCustomBarLabelMonetary} activeBar={{ stroke: 'cyan', strokeWidth: 2, }} />
-                                    <Bar radius={8} barSize={32} dataKey="Realizado" fill="#51c25d" label={renderCustomBarLabelMonetary} activeBar={{ stroke: 'cyan', strokeWidth: 2, }} />
-                                </BarChart>
+                                    <Tooltip
+                                        formatter={(value: number, name: string, props) => {
+                                            if (name === 'realizado' || name === 'previsto') {
+                                                return [formatarPercentual(value), name]; // Formata o valor no tooltip
+                                            }
+                                            return [value, name];
+                                        }}
+                                        labelFormatter={formataDataMonthShort}
+                                    />
+                                    <Area type="monotone" dataKey="previsto" stroke="#0F172A" fill="#0F172A44" />
+                                    <Area type="monotone" dataKey="realizado" stroke="#1591ea" fill="#1591ea44" />
+                                </AreaChart>
                             </Flex>
                         </Flex>
                     </Flex>
 
                     <Flex flexDir={'column'} fontSize={12}>
-                        <Text fontSize={20} fontWeight={'semibold'}>
-                            Gráfico do andamento da obra:
+                        <Text fontSize={16} fontWeight={'semibold'}>
+                            Acompanhamento de obra:
                         </Text>
                         <BarChart width={580} height={160} data={data}>
                             <XAxis dataKey="etapa" />

@@ -1,16 +1,12 @@
-import { changePrismaProjectBuildingProgress } from "@/app/api/changeBuildingProgress/route";
-import { changePrismaProjectRealizedCost } from "@/app/api/changeRealizedCost/route";
-import { ErrorInputComponent } from "@/components/ErrorInputComponent";
-import { Button, Divider, Flex, FormLabel, Input, InputGroup, InputRightAddon, Spinner, Text } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
-import { LineChart, Line, CartesianGrid, XAxis, YAxis, BarChart, Bar, Legend, Tooltip, AreaChart, Area } from 'recharts';
-import exceljs from 'exceljs'
-import path from "path";
-import axios from "axios";
+import { Button, Flex, FormLabel, Input, InputGroup, InputRightAddon, Link, Spinner, Text } from "@chakra-ui/react";
 import { formataData, formataDataMonthShort, formatarMoeda, formatarPercentual } from "@/app/services/utils";
+import { changePrismaProjectBuildingProgress } from "@/app/api/changeBuildingProgress/route";
+import { XAxis, YAxis, BarChart, Bar, Legend, Tooltip, AreaChart, Area } from 'recharts';
 import { ProjectFileInput } from "@/components/CreateProjects/Inputs/FileInput";
 import { importExcelProgress } from "@/app/api/importExcelProgress/route";
+import { ErrorInputComponent } from "@/components/ErrorInputComponent";
+import { useForm } from "react-hook-form";
+import { useState } from "react";
 
 interface ProjectDataProps {
     projectData: Investment
@@ -211,7 +207,7 @@ export function BuildingStatus({ userData, projectData }: ProjectDataProps) {
 
                             <Flex justifyContent={'end'}>
                                 <Button color='lightSide' bgColor="darkSide" borderRadius={4} onClick={editCost} size={'sm'}>
-                                    Importar dados
+                                    {editModeCusto? 'Cancelar':'Importar dados'}
                                 </Button>
                             </Flex>
 
@@ -238,6 +234,13 @@ export function BuildingStatus({ userData, projectData }: ProjectDataProps) {
                                     </Button>
                                 </Flex>
                             </form>
+                            <Flex>
+                                <Link href='https://drive.usercontent.google.com/download?id=1PNFcxDblSGSk_DsShpZk5Qpz9lBbCWHp&export=download&authuser=0&confirm=t&uuid=81b13ea6-73c6-4227-bd26-5791567c82ea&at=AENtkXbK1MWusDRElsQkSdQ3Y2Bu:1732899063115'
+                                target="_blank"    
+                                >
+                                    <Button _hover={{ bgColor: 'green.700' }} bgColor={'green.500'} px={4} py={2} borderRadius={4} color={'lightSide'} size='sm'>Baixe aqui a planilha modelo</Button>
+                                </Link>
+                            </Flex>
                         </Flex>
                         : ''
                     }
