@@ -21,7 +21,8 @@ export default function Dashboard() {
     const [userData, setUserData] = useState<User | null>(null);
     const [projectsData, setProjectsData] = useState<Investment[] | null>(null);
 
-    const [pageLoaded, setPageLoaded] = useState(false);
+    const [totalPages, setTotalPages] = useState<number>(0)
+
     const [elementsPerPage, setElementsPerPage] = useState<number>(4)
 
     const [userInvestmentsData, setUserInvestmentsData] = useState<UserInvestment[] | null>(null);
@@ -44,12 +45,18 @@ export default function Dashboard() {
                 setUserData(userResponse)
 
             } catch (error) {
-
                 console.error('Erro ao buscar dados do usuário:', error);
-                await redirectNotFound()
-
             }
         }
+
+        if (!userData && user) {
+            fetchUserData(user);
+        }
+
+    }, [isLoading])
+
+    // GET PROJECTS
+    useEffect(() => {
 
         const fetchProjectData = async (id: User["id"]) => {
             try {
@@ -57,18 +64,26 @@ export default function Dashboard() {
                 let pageString = String(page)
                 let pageRangeString = String(elementsPerPage)
 
-                const projectResponseComplete = await getUserInvestmentListByUserID({ page: undefined, pageRange: undefined, userID: id })
-                const userInvestments = await getUserInvestmentListComplete()
+                if (!totalPages) {
 
-                // const projectResponseActives = projectResponseComplete.filter((project: Investment) => project.active === true)
+                    const projectResponseComplete = await getUserInvestmentListByUserID({ page: undefined, pageRange: undefined, userID: id })
+                    const userInvestments = await getUserInvestmentListComplete()
+                    const projectResponseActives = projectResponseComplete.filter((project: Investment) => project.active === true)
 
-                if (projectResponseComplete) {
-                    setProjectsData(projectResponseComplete)
-                    setPageLoaded(true)
-                }
+                    // const projectResponseActives = projectResponseComplete.filter((project: Investment) => project.active === true)
 
-                if (userInvestments) {
-                    setUserInvestmentsData(userInvestments)
+                    if (projectResponseActives) {
+                        setTotalPages(projectResponseActives.length)
+                        setProjectsData(projectResponseActives)
+                    }
+
+                    if (userInvestments) {
+                        setUserInvestmentsData(userInvestments)
+                    }
+                } else {
+                    const projectResponseComplete = await getUserInvestmentListByUserID({ page: pageString, pageRange: pageRangeString, userID: id })
+                    const projectResponseActives = projectResponseComplete.filter((project: Investment) => project.active === true)
+                    setProjectsData(projectResponseActives)
                 }
 
 
@@ -80,15 +95,13 @@ export default function Dashboard() {
             }
         }
 
-        if (user) {
-            fetchUserData(user);
-            if (userData) {
-                fetchProjectData(userData.id);
-            }
-
+        if (userData) {
+            fetchProjectData(userData.id);
         }
 
-    }, [user])
+
+    }, [userData, page])
+
 
     return (
         <>
