@@ -39,7 +39,7 @@ export default function Home() {
               router.push(`/dashboard`)
               break
             case 'PROJECT_MANAGER':
-              router.push(`/project-manager`)
+              router.push(`/project-manager/projects`)
               break
             case 'ADMINISTRATOR':
               router.push(`/projects`)
