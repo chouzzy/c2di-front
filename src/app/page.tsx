@@ -36,7 +36,7 @@ export default function Home() {
           .split('; ')
           .find(row => row.startsWith('accessToken='))
           ?.split('=')[1];
-          
+
         const userResponse = await checkUserByEmail(user, accessToken)
 
         if (userResponse) {
