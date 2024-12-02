@@ -4,7 +4,7 @@ import { api } from "../axios";
 const getUserByID = async (id: User["id"]) => {
     try {
 
-        const response = await api.get(`https://c2diserver.awer.co /users/findByID/${id}`, { withCredentials: true })
+        const response = await api.get(`https://c2diserver.awer.co/users/findByID/${id}`, { withCredentials: true })
 
         if (response.status == 200 || response.status == 202) {
             const user: User = response.data.user

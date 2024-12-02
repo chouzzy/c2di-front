@@ -5,7 +5,7 @@ const changePrismaProjectCapa = async (id:any, updateData:Investment) => {
 
         const {images} = updateData
 
-        const response = await api.put(`https://c2diserver.awer.co /investments/update/${id}`, {
+        const response = await api.put(`https://c2diserver.awer.co/investments/update/${id}`, {
             images
         }, {
             withCredentials: true, 

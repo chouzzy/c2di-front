@@ -4,7 +4,7 @@ import { api } from "../axios";
 export const updateInvestorProfile = async (postData:InvestorProfile) => {
     try {
 
-        const response = await api.post(`https://c2diserver.awer.co /investorProfile/create`, postData, {
+        const response = await api.post(`https://c2diserver.awer.co/investorProfile/create`, postData, {
             withCredentials: true,
             headers: {
                 'Content-Type': 'application/json' // Define o header Content-Type

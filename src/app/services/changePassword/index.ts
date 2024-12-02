@@ -4,7 +4,7 @@ import { api } from "../axios";
 const resetPassword = async (email:User["email"]|UserProfile["email"]) => {
     try {
 
-        const response = await api.post(`https://c2diserver.awer.co /users/reset-password`, 
+        const response = await api.post(`https://c2diserver.awer.co/users/reset-password`, 
             { email: email }, // Corpo da requisição
             { 
                 withCredentials: true, 

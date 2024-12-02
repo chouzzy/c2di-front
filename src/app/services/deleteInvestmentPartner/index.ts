@@ -2,7 +2,7 @@ import { api } from "../axios";
 
 const deletePrismaProjectPartner = async (investmentID:Investment["id"], partnerID:Investment["partners"][0]["id"]) => {
     try {
-        const response = await api.put(`https://c2diserver.awer.co /investments/delete/partner`, {
+        const response = await api.put(`https://c2diserver.awer.co/investments/delete/partner`, {
             data: {
                 investmentID: investmentID,
                 partnerID: partnerID
