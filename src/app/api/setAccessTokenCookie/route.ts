@@ -28,11 +28,10 @@ const POST = withApiAuthRequired(async function POST(req) {
         if (!secretKey) {
             throw Error('Secret key not found')
         }
-        const encryptedToken = CryptoJS.AES.encrypt(btoa(accessToken), secretKey).toString();
 
         cookies().set({
             name: 'accessToken',
-            value: encryptedToken,
+            value: accessToken,
             path: "/",
             secure: true,
             sameSite: 'lax'
