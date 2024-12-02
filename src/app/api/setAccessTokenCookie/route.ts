@@ -33,8 +33,6 @@ const POST = withApiAuthRequired(async function POST(req) {
         cookies().set({
             name: 'accessToken',
             value: encryptedToken,
-            httpOnly: true,
-            domain: 'awer.co',
             path: "/",
             secure: true,
             sameSite: 'lax'
@@ -43,7 +41,6 @@ const POST = withApiAuthRequired(async function POST(req) {
         cookies().set({
             name: "theme",
             value: "light",
-            httpOnly: true,
             path: "/",
             maxAge: 60 * 60 * 24 * 365 * 1000,
             expires: new Date(Date.now() + 60 * 60 * 24 * 365 * 1000),
