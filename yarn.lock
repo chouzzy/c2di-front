@@ -789,6 +789,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/cookie@npm:^0.6.0":
+  version: 0.6.0
+  resolution: "@types/cookie@npm:0.6.0"
+  checksum: 5edce7995775b0b196b142883e4d4f71fd93c294eaec973670f1fa2540b70ea7390408ed513ddefef5fcb12a578100c76596e8f2a714b0c2ae9f70ee773f4510
+  languageName: node
+  linkType: hard
+
 "@types/crypto-js@npm:^4.2.2":
   version: 4.2.2
   resolution: "@types/crypto-js@npm:4.2.2"
@@ -1721,6 +1728,7 @@ __metadata:
     "@types/react-icons": ^3.0.0
     "@types/yup": ^0.32.0
     axios: ^1.7.7
+    cookies-next: 4.3.0
     crypto-js: ^4.2.0
     eslint: ^8
     eslint-config-next: 14.2.3
@@ -1882,6 +1890,23 @@ __metadata:
   version: 0.6.0
   resolution: "cookie@npm:0.6.0"
   checksum: f56a7d32a07db5458e79c726b77e3c2eff655c36792f2b6c58d351fb5f61531e5b1ab7f46987150136e366c65213cbe31729e02a3eaed630c3bf7334635fb410
+  languageName: node
+  linkType: hard
+
+"cookie@npm:^0.7.0":
+  version: 0.7.2
+  resolution: "cookie@npm:0.7.2"
+  checksum: 9bf8555e33530affd571ea37b615ccad9b9a34febbf2c950c86787088eb00a8973690833b0f8ebd6b69b753c62669ea60cec89178c1fb007bf0749abed74f93e
+  languageName: node
+  linkType: hard
+
+"cookies-next@npm:4.3.0":
+  version: 4.3.0
+  resolution: "cookies-next@npm:4.3.0"
+  dependencies:
+    "@types/cookie": ^0.6.0
+    cookie: ^0.7.0
+  checksum: b0f285c8e24757f9c1da284c24737d76bd759eae460bc8ab9280d14c4ec155acd8e0ba3ee583da2dd251ca5be4ae8c89d2576b52b4999fce7dedad11880352a2
   languageName: node
   linkType: hard
 

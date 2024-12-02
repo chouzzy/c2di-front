@@ -1,9 +1,9 @@
-import axios from "axios";
+import { api } from "../axios";;
 
 const changePrismaProjectPartners = async (id:any, updateData:Investment) => {
     try {
         const {partners} = updateData
-        const response = await axios.put(`https://c2diserver.awer.co/investments/update/${id}`, {
+        const response = await api.put(`https://c2diserver.awer.co/investments/update/${id}`, {
             partners
         }, {
             withCredentials: true, 

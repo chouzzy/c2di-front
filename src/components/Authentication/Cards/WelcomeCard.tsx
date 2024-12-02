@@ -4,7 +4,7 @@ import { FaFacebook, FaApple } from "react-icons/fa";
 import { AuthInput } from "../Inputs/AuthInput";
 import { FieldValues, UseFormRegister } from "react-hook-form";
 import { UserProfile } from "@auth0/nextjs-auth0/client";
-import axios from "axios";
+import { api } from "../axios";;
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 

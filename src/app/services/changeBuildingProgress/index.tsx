@@ -1,10 +1,10 @@
 
-import axios from "axios";
+import { api } from "../axios";;
 
 const changePrismaProjectBuildingProgress = async (id:any, updateData:Investment) => {
     try {
         const {buildingProgress} = updateData
-        const response = await axios.put(`https://c2diserver.awer.co/investments/update/${id}`, {
+        const response = await api.put(`https://c2diserver.awer.co/investments/update/${id}`, {
             buildingProgress
         }, {
             withCredentials: true,
@@ -42,7 +42,7 @@ export { changePrismaProjectBuildingProgress }
 // src/app/api/changeBuildingProgress/route.tsx
 
 // import { NextResponse } from 'next/server';
-// import axios from "axios";
+// import { api } from "../axios";;
 // // ... outras importações ...
 
 // export async function PUT(request: Request) {
@@ -51,7 +51,7 @@ export { changePrismaProjectBuildingProgress }
 //         const {buildingProgress} = projectData
 
 //         // Chama a função para atualizar o buildingProgress (ajuste a URL da API)
-//         const response = await axios.put(`https://c2diserver.awer.co/investments/update/${id}`, {buildingProgress}, {
+//         const response = await api.put(`https://c2diserver.awer.co/investments/update/${id}`, {buildingProgress}, {
 //             withCredentials: true,
 //             headers: {
 //                 'Content-Type': 'application/json'

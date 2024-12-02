@@ -1,8 +1,8 @@
-import axios from "axios";
+import { api } from "../axios";;
 
 const deletePrismaProjectDocument = async (investmentID:Investment["id"], documentID:Investment["documents"][0]["id"]) => {
     try {
-        const response = await axios.put(`https://c2diserver.awer.co/investments/delete/document`, {
+        const response = await api.put(`https://c2diserver.awer.co/investments/delete/document`, {
             data: {
                 investmentID: investmentID,
                 documentID: documentID

@@ -1,4 +1,4 @@
-import axios from "axios";
+import { api } from "../axios";;
 
 interface ListInvestmentRequestProps {
     title?: Investment["title"];
@@ -17,7 +17,7 @@ interface ListInvestmentRequestProps {
 const getProjectList = async ({page, pageRange, active}:ListInvestmentRequestProps) => {
     try {
 
-        const response = await axios.get(`https://c2diserver.awer.co/investments/`, { 
+        const response = await api.get(`https://c2diserver.awer.co/investments/`, { 
             params: {
                 page: page,
                 pageRange: pageRange,
@@ -41,7 +41,7 @@ const getProjectList = async ({page, pageRange, active}:ListInvestmentRequestPro
 const getProjectManagerProjectsList = async ({ projectManagerID, page, pageRange }: ListInvestmentRequestProps) => {
     try {
 
-        const response = await axios.get(`https://c2diserver.awer.co/investments/`, {
+        const response = await api.get(`https://c2diserver.awer.co/investments/`, {
             params: {
                 projectManagerID: projectManagerID,
                 page: page,

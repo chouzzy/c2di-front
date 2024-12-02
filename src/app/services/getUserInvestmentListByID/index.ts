@@ -1,4 +1,4 @@
-import axios from "axios";
+import { api } from "../axios";;
 
 interface getUserInvestmentListByUserIDProps {
     userID: UserInvestment["userID"],
@@ -16,7 +16,7 @@ interface getUserInvestmentListByInvestmentIDProps {
 const getUserInvestmentListComplete = async () => {
     try {
 
-        const response = await axios.get(`https://c2diserver.awer.co/usersInvestments/`, { 
+        const response = await api.get(`https://c2diserver.awer.co/usersInvestments/`, { 
             withCredentials: true 
         })
 
@@ -34,7 +34,7 @@ const getUserInvestmentListComplete = async () => {
 const getUserInvestmentListByUserID = async ({page, pageRange, userID}:getUserInvestmentListByUserIDProps) => {
     try {
 
-        const response = await axios.get(`https://c2diserver.awer.co/usersInvestments/`, { 
+        const response = await api.get(`https://c2diserver.awer.co/usersInvestments/`, { 
             params: {
                 userID: userID,
                 page: page,
@@ -58,7 +58,7 @@ const getUserInvestmentListByUserID = async ({page, pageRange, userID}:getUserIn
 const getUserInvestmentListByInvestmentID = async ({page, pageRange, investmentID}:getUserInvestmentListByInvestmentIDProps) => {
     try {
 
-        const response = await axios.get(`https://c2diserver.awer.co/usersInvestments/`, { 
+        const response = await api.get(`https://c2diserver.awer.co/usersInvestments/`, { 
             params: {
                 investmentID: investmentID,
                 page: page,
@@ -83,7 +83,7 @@ const getUserInvestmentListByInvestmentID = async ({page, pageRange, investmentI
 const filterUserInvestmentsByInvestmentID = async ({page, pageRange, investmentID}:getUserInvestmentListByInvestmentIDProps) => {
     try {
 
-        const response = await axios.get(`https://c2diserver.awer.co/usersInvestments/byInvestment`, { 
+        const response = await api.get(`https://c2diserver.awer.co/usersInvestments/byInvestment`, { 
             params: {
                 investmentID: investmentID,
                 page: page,

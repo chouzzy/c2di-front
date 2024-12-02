@@ -1,5 +1,5 @@
 import { UserProfile } from "@auth0/nextjs-auth0/client";
-import axios, { AxiosError } from "axios";
+import { api } from "../axios";
 
 interface createPrismaUserInvestmentProps {
     userID: UserInvestment["userID"],
@@ -12,7 +12,7 @@ interface createPrismaUserInvestmentProps {
 
 const createPrismaUserInvestment = async (data:createPrismaUserInvestmentProps) => {
     try {
-        const response = await axios.post(`https://c2diserver.awer.co/usersInvestments/create`, data, {
+        const response = await api.post(`https://c2diserver.awer.co/usersInvestments/create`, data, {
             withCredentials: true, 
             headers: {
                 'Content-Type': 'application/json' // Define o header Content-Type

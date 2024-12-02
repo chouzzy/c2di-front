@@ -1,9 +1,9 @@
 import { UserProfile } from "@auth0/nextjs-auth0/client";
-import axios, { AxiosError } from "axios";
+import { api } from "../axios";
 
 const deletePrismaAndAuth0User = async (id:User["id"], auth0UserID:UserProfile["sub"]) => {
     try {
-        const response = await axios.delete(`https://c2diserver.awer.co/users/delete`, {
+        const response = await api.delete(`https://c2diserver.awer.co/users/delete`, {
             data: { 
               id: id,
               auth0UserID: auth0UserID 

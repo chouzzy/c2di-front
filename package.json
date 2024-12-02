@@ -20,6 +20,7 @@
     "@types/react-icons": "^3.0.0",
     "@types/yup": "^0.32.0",
     "axios": "^1.7.7",
+    "cookies-next": "4.3.0",
     "crypto-js": "^4.2.0",
     "exceljs": "^4.4.0",
     "framer-motion": "^11.11.9",

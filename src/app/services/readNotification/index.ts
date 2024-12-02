@@ -1,9 +1,9 @@
 import { UserProfile } from "@auth0/nextjs-auth0/client";
-import axios, { AxiosError } from "axios";
+import { api } from "../axios";
 
 const readPrismaNotification = async (id:any) => {
     try {
-        const response = await axios.put(`https://c2diserver.awer.co/notifications/update/${id}`,
+        const response = await api.put(`https://c2diserver.awer.co/notifications/update/${id}`,
             {
             withCredentials: true, 
             headers: {

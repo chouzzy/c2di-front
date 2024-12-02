@@ -1,10 +1,10 @@
-import axios from "axios";
+import { api } from "../axios";;
 
 const updateProjectFicha = async (id: any, updateData: Investment) => {
     try {
 
 
-        const response = await axios.put(`https://c2diserver.awer.co/investments/update/${id}`,
+        const response = await api.put(`https://c2diserver.awer.co/investments/update/${id}`,
             updateData,
             {
                 withCredentials: true,

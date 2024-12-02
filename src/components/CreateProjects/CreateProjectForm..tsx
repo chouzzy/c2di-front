@@ -2,7 +2,6 @@ import { ErrorInputComponent } from "@/components/ErrorInputComponent";
 import { Flex, Button, Spinner } from "@chakra-ui/react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import axios, { AxiosError } from "axios";
 import { UserProfile } from "@auth0/nextjs-auth0/client";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import { updateInvestorProfile } from "@/app/services/updateInvestorProfile";
@@ -12,6 +11,7 @@ import { ThirdPage } from "./CreateProjectPages/ThirdPage";
 import { createInvestorUtils, documentsArrayAdapter, floorPlanTypesAdapter, imagesArrayAdapter, projectTypeAdapter } from "@/app/services/utils";
 import { createInvestmentSchema } from "@/schemas/investmentSchema";
 import { createPrismaInvestment } from "@/app/services/createInvestment";
+import { AxiosError } from "axios";
 
 interface CreateInvestorAccountCardProps {
     user: UserProfile

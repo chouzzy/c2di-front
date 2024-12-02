@@ -16,6 +16,7 @@ import { genderOptions } from './utils';
 import { useRouter } from 'next/navigation';
 import { fetchCities, fetchStates } from '@/app/services/ibge';
 import { SpinnerFullScreen } from '../Loading/SpinnerFullScreen';
+import { api } from '@/app/services/axios';
 
 interface FormUsersProps {
     userData: User | null
@@ -86,7 +87,7 @@ function FormUsers({ userData }: FormUsersProps) {
             
 
 
-            const response = await axios.put(`https://c2diserver.awer.co/users/update/${userData.id}`, data, {
+            const response = await api.put(`https://c2diserver.awer.co/users/update/${userData.id}`, data, {
                 withCredentials:true,
                 headers: {
                     'Content-Type': 'application/json' // Define o header Content-Type

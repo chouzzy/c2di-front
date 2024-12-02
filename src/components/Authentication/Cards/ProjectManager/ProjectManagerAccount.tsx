@@ -6,7 +6,6 @@ import { AuthInput } from "../../Inputs/AuthInput";
 import { AuthSelectInput } from "../../Inputs/AuthSelectInput";
 import { useRouter } from "next/navigation";
 import { ValidationError } from "yup";
-import axios, { AxiosError } from "axios";
 import { createUsersSchema } from "@/schemas/usersSchema";
 import { genderOptions } from "@/components/users/utils";
 import { fetchCities, fetchStates } from "@/app/services/ibge";
@@ -14,6 +13,7 @@ import { UserProfile, useUser } from "@auth0/nextjs-auth0/client";
 import { checkUserByEmail } from "@/app/services/checkUserByEmail";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import { createPrismaUser } from "@/app/services/createUser";
+import { AxiosError } from "axios";
 
 
 interface ProjectManagerAccountCardProps {

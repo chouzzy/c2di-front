@@ -1,4 +1,4 @@
-import axios from "axios";
+import { api } from "../axios";;
 
 const fetchStates = async () => {
     const response = await axios( // Adicione o await aqui

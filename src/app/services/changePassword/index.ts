@@ -1,10 +1,10 @@
 import { UserProfile } from "@auth0/nextjs-auth0/client";
-import axios, { AxiosError } from "axios";
+import { api } from "../axios";
 
 const resetPassword = async (email:User["email"]|UserProfile["email"]) => {
     try {
 
-        const response = await axios.post(`https://c2diserver.awer.co/users/reset-password`, 
+        const response = await api.post(`https://c2diserver.awer.co/users/reset-password`, 
             { email: email }, // Corpo da requisição
             { 
                 withCredentials: true, 

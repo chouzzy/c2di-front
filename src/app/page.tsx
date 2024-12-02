@@ -3,14 +3,15 @@
 import { Container, Flex, Spinner, Text } from "@chakra-ui/react";
 import { UserProfile, useUser } from "@auth0/nextjs-auth0/client";
 import { useEffect, useState } from "react";
-import axios, { AxiosError } from "axios";
 import { useRouter } from "next/navigation";
 import { checkUserByEmail } from "./services/checkUserByEmail";
+import { api } from "./services/axios";
+import { AxiosError } from "axios";
 
 const setAccessTokenCookie = async () => {
   try {
 
-    await axios.post('/api/setAccessTokenCookie');
+    await api.post('/api/setAccessTokenCookie');
   } catch (error) {
     console.error('Error setting access token cookie:', error);
     // Handle error (e.g., redirect to login)
