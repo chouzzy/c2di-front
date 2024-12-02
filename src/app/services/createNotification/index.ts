@@ -3,7 +3,7 @@ import axios, { AxiosError } from "axios";
 
 const createPrismaNotification = async (data:any) => {
     try {
-        const response = await axios.post(`https://c2diserver.awer.co//notifications/create`, data, {
+        const response = await axios.post(`https://c2diserver.awer.co/notifications/create`, data, {
             withCredentials: true, 
             headers: {
                 'Content-Type': 'application/json' // Define o header Content-Type

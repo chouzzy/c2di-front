@@ -3,7 +3,7 @@ import axios, { AxiosError } from "axios";
 
 const readPrismaNotification = async (id:any) => {
     try {
-        const response = await axios.put(`https://c2diserver.awer.co//notifications/update/${id}`,
+        const response = await axios.put(`https://c2diserver.awer.co/notifications/update/${id}`,
             {
             withCredentials: true, 
             headers: {
