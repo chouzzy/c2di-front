@@ -1,7 +1,7 @@
 import { api } from "../axios";;
 
 const fetchStates = async () => {
-    const response = await axios( // Adicione o await aqui
+    const response = await api( // Adicione o await aqui
         'https://servicodados.ibge.gov.br/api/v1/localidades/estados'
     );
 
@@ -16,7 +16,7 @@ const fetchStates = async () => {
 };
 
 const fetchCities = async (state:string) => {
-        const response = await axios(
+        const response = await api(
             `https://servicodados.ibge.gov.br/api/v1/localidades/estados/${state}/municipios`,
         );
 
