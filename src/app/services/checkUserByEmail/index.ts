@@ -3,9 +3,6 @@ import axios, { AxiosError } from "axios";
 
 const checkUserByEmail = async (user: UserProfile, accessToken?:string) => {
     try {
-        if (!accessToken) {
-            throw new Error("Token de acesso não encontrado no cookie.");
-          }
 
         const headers = {
             Authorization: `Bearer ${accessToken}`,
