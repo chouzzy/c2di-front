@@ -9,6 +9,7 @@ import { checkUserByEmail } from "./services/checkUserByEmail";
 
 const setAccessTokenCookie = async () => {
   try {
+
     await axios.post('/api/setAccessTokenCookie');
   } catch (error) {
     console.error('Error setting access token cookie:', error);
@@ -30,7 +31,13 @@ export default function Home() {
       try {
 
         await setAccessTokenCookie()
-        const userResponse = await checkUserByEmail(user)
+
+        const accessToken = document.cookie
+          .split('; ')
+          .find(row => row.startsWith('accessToken='))
+          ?.split('=')[1];
+          
+        const userResponse = await checkUserByEmail(user, accessToken)
 
         if (userResponse) {
 
@@ -49,7 +56,7 @@ export default function Home() {
           router.push(`/authentication/create/investor`)
         }
 
-        
+
       } catch (error) {
 
         if (error instanceof AxiosError) {
@@ -69,9 +76,9 @@ export default function Home() {
       }
     };
 
-      if (user) {
-        manageLogin(user);
-      }
+    if (user) {
+      manageLogin(user);
+    }
   }, [user]);
 
   return (

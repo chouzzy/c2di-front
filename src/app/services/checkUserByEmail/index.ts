@@ -1,13 +1,8 @@
 import { UserProfile } from "@auth0/nextjs-auth0/client";
 import axios, { AxiosError } from "axios";
 
-const checkUserByEmail = async (user: UserProfile) => {
+const checkUserByEmail = async (user: UserProfile, accessToken:string|undefined) => {
     try {
-        const accessToken = document.cookie
-        .split('; ')
-        .find(row => row.startsWith('accessToken='))
-        ?.split('=')[1];
-
         if (!accessToken) {
             throw new Error("Token de acesso não encontrado no cookie.");
           }
