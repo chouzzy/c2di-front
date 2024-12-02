@@ -31,6 +31,7 @@ const POST = withApiAuthRequired(async function POST(req) {
         name: 'accessToken',
         value: encryptedToken,
         httpOnly: true,
+        domain:'.awer.co',
         path: "/",
         secure: true,
         sameSite: 'lax'
