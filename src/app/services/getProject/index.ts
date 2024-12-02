@@ -3,7 +3,7 @@ import { api } from "../axios";
 const getProjectByID = async (id: Investment["id"]) => {
     try {
 
-        const response = await api.get(`https://c2diserver.awer.co/investments/${id}`, { withCredentials: true })
+        const response = await api.get(`http://localhost:8081/investments/${id}`, { withCredentials: true })
 
         if (response.status == 200 || response.status == 202) {
             const investment: Investment = response.data.investment

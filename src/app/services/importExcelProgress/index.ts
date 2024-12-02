@@ -4,7 +4,7 @@ import { api } from "../axios";
 const importExcelProgress = async (formData:FormData, projectID:Investment["id"]) => {
 
     try {
-        const response = await api.post(`https://c2diserver.awer.co/investments/progress/import/${projectID}`, formData, {
+        const response = await api.post(`http://localhost:8081/investments/progress/import/${projectID}`, formData, {
             withCredentials: true,
             headers: {
                 'Content-Type': 'multipart/form-data'
