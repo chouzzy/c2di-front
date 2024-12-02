@@ -1,4 +1,4 @@
-import { api } from "../axios";;
+import { api } from "../axios";
 
 const changePrismaProjectRealizedCost = async (id:any, updateData:Investment) => {
     try {

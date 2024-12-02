@@ -1,4 +1,4 @@
-import { api } from "../axios";;
+import { api } from "../axios";
 
 const updateProjectFicha = async (id: any, updateData: Investment) => {
     try {

@@ -1,4 +1,4 @@
-import { api } from "../axios";;
+import { api } from "../axios";
 
 const deletePrismaUserInvestment = async (userInvestmentID: UserInvestment["id"]) => {
     try {

@@ -1,4 +1,4 @@
-import { api } from "../axios";;
+import { api } from "../axios";
 
 interface ListInvestmentRequestProps {
     title?: Investment["title"];

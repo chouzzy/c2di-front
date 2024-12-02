@@ -1,4 +1,4 @@
-import { api } from "../axios";;
+import { api } from "../axios";
 
 const getPrismaNotification = async (id:any, page:number, pageRange:number) => {
     try {

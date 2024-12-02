@@ -1,5 +1,5 @@
+import { api } from "../axios";
 
-import { api } from "../axios";;
 
 const changePrismaProjectBuildingProgress = async (id:any, updateData:Investment) => {
     try {
@@ -42,7 +42,7 @@ export { changePrismaProjectBuildingProgress }
 // src/app/api/changeBuildingProgress/route.tsx
 
 // import { NextResponse } from 'next/server';
-// import { api } from "../axios";;
+// import { api } from "../axios";
 // // ... outras importações ...
 
 // export async function PUT(request: Request) {
