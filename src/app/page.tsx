@@ -1,4 +1,5 @@
 'use client'
+// app/page.tsx
 import { Container, Flex, Spinner, Text } from "@chakra-ui/react";
 import { UserProfile, useUser } from "@auth0/nextjs-auth0/client";
 import { useEffect, useState } from "react";
@@ -15,7 +16,6 @@ const setAccessTokenCookie = async () => {
   }
 };
 
-// app/page.tsx
 export default function Home() {
 
   const { user, error, isLoading } = useUser()

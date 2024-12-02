@@ -33,7 +33,7 @@ const POST = withApiAuthRequired(async function POST(req) {
         httpOnly: true,
         path: "/",
         secure: true,
-        sameSite: 'strict'
+        sameSite: 'lax'
     })
 
     return NextResponse.json({ message: "Cookies setados com sucesso!" });
