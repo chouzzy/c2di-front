@@ -32,12 +32,7 @@ export default function Home() {
 
         await setAccessTokenCookie()
 
-        const accessToken = document.cookie
-          .split('; ')
-          .find(row => row.startsWith('accessToken='))
-          ?.split('=')[1];
-
-        const userResponse = await checkUserByEmail(user, accessToken)
+        const userResponse = await checkUserByEmail(user)
 
         if (userResponse) {
 
