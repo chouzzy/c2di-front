@@ -4,8 +4,10 @@ import { cookies } from "next/headers";
 
 const checkUserByEmail = async (user: UserProfile) => {
     try {
-        const cookieStore = cookies();
-        const accessToken = cookieStore.get('accessToken')?.value;
+        const accessToken = document.cookie
+        .split('; ')
+        .find(row => row.startsWith('accessToken='))
+        ?.split('=')[1];
 
         if (!accessToken) {
             throw new Error("Token de acesso não encontrado no cookie.");
