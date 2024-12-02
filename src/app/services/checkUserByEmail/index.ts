@@ -1,6 +1,5 @@
 import { UserProfile } from "@auth0/nextjs-auth0/client";
 import axios, { AxiosError } from "axios";
-import { cookies } from "next/headers";
 
 const checkUserByEmail = async (user: UserProfile) => {
     try {
