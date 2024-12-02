@@ -3,7 +3,7 @@ import axios, { AxiosError } from "axios";
 
 const createPrismaUser = async (data:any) => {
     try {
-        const response = await axios.post(`https://c2diserver.awer.co/users/create`, data, {
+        const response = await axios.post(`https://c2diserver.awer.co//users/create`, data, {
             withCredentials: true, 
             headers: {
                 'Content-Type': 'application/json' // Define o header Content-Type

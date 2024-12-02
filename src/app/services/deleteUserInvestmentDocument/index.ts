@@ -2,7 +2,7 @@ import axios from "axios";
 
 const deletePrismaUserInvestment = async (userInvestmentID: UserInvestment["id"]) => {
     try {
-        const response = await axios.delete(`https://c2diserver.awer.co/usersInvestments/delete/${userInvestmentID}`, {
+        const response = await axios.delete(`https://c2diserver.awer.co//usersInvestments/delete/${userInvestmentID}`, {
             withCredentials: true,
             headers: {
                 'Content-Type': 'application/json' // Define o header Content-Type

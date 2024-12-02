@@ -2,7 +2,7 @@ import axios from "axios";
 
 const changeProjectStatus = async (id:any, status:boolean) => {
     try {
-        const response = await axios.put(`https://c2diserver.awer.co/investments/update/${id}`, {
+        const response = await axios.put(`https://c2diserver.awer.co//investments/update/${id}`, {
             active: status
         }, {
             withCredentials: true, 

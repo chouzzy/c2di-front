@@ -22,7 +22,6 @@ export default function CreateInvestorAccount() {
         const manageLogin = async (user: UserProfile) => {
 
             try {
-
                 const userResponse = await checkUserByEmail(user)
 
                 if (userResponse) {

@@ -18,14 +18,16 @@ async function getUser(user: UserProfile) {
   }
 
 export default withMiddlewareAuthRequired(async function middleware(req) {
-  const res = NextResponse.next();
-  const session = await getSession(req, res);
-
-  if (session) {
-
+    const res = NextResponse.next();
+    const session = await getSession(req, res);
+    
+    if (session) {
+        
+        
     if (!session.user.userdb) {
 
       const user = await getUser(session.user)
+
       
       console.log('session.user.userdb')
       console.log(session.user.userdb)
@@ -33,7 +35,8 @@ export default withMiddlewareAuthRequired(async function middleware(req) {
         if (user) {
             // Atualiza a sessão com o objeto user
             await updateSession(req, res, { ...session, user: { ...session.user, userdb: user }});
-        } else {
+        }
+        // else {
             // const auth0Cookie = req.cookies.get('appSession');
             // console.log('req.cookies')
             // console.log(req.cookies)
@@ -46,7 +49,7 @@ export default withMiddlewareAuthRequired(async function middleware(req) {
             //             return NextResponse.redirect(new URL('/', req.url)); // Aguarda 500 milissegundos antes de redirecionar
             //       }
             // }
-        }
+        // }
     }
 
     if (session.user.userdb) {

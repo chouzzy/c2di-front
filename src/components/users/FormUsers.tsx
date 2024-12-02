@@ -83,17 +83,17 @@ function FormUsers({ userData }: FormUsersProps) {
 
             data.birth = new Date(data.birth)
 
-            handleSaveClick()
+            
 
 
-            const response = await axios.put(`https://c2diserver.awer.co/users/update/${userData.id}`, data, {
+            const response = await axios.put(`https://c2diserver.awer.co//users/update/${userData.id}`, data, {
                 withCredentials:true,
                 headers: {
                     'Content-Type': 'application/json' // Define o header Content-Type
                 }
             });
-
             console.log(response)
+            handleSaveClick()
 
 
         } catch (error: any) {

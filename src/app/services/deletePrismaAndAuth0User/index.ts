@@ -3,7 +3,7 @@ import axios, { AxiosError } from "axios";
 
 const deletePrismaAndAuth0User = async (id:User["id"], auth0UserID:UserProfile["sub"]) => {
     try {
-        const response = await axios.delete('https://c2diserver.awer.co/users/delete', {
+        const response = await axios.delete(`https://c2diserver.awer.co//users/delete`, {
             data: { 
               id: id,
               auth0UserID: auth0UserID 

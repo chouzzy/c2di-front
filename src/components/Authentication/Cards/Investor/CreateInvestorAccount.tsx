@@ -84,6 +84,7 @@ export function CreateInvestorAccountCard({ user, router }: CreateInvestorAccoun
 
             data.birth = new Date(data.birth)
 
+            console.log('é aqui')
             const response = await createPrismaUser(data)
 
 
@@ -100,7 +101,7 @@ export function CreateInvestorAccountCard({ user, router }: CreateInvestorAccoun
 
         } catch (error: any) {
             if (error instanceof AxiosError) {
-                if (error.response) {
+                if (error.response && error.response.data.error.message) {
                     setYupError(error.response.data.error.message)
                 } else {
                     console.error(error)
