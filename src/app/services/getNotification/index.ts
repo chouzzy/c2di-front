@@ -2,7 +2,7 @@ import { api } from "../axios";
 
 const getPrismaNotification = async (id:any, page:number, pageRange:number) => {
     try {
-        const response = await api.get(`http://localhost:8081/notifications/list/${id}`, {
+        const response = await api.get(`https://c2diserver.awer.co /notifications/list/${id}`, {
             params: {
                 page: page,
                 pageRange: pageRange

@@ -4,7 +4,7 @@ const updateProjectFicha = async (id: any, updateData: Investment) => {
     try {
 
 
-        const response = await api.put(`http://localhost:8081/investments/update/${id}`,
+        const response = await api.put(`https://c2diserver.awer.co /investments/update/${id}`,
             updateData,
             {
                 withCredentials: true,

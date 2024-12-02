@@ -4,7 +4,7 @@ import { api } from "../axios";
 const changePrismaProjectBuildingProgress = async (id:any, updateData:Investment) => {
     try {
         const {buildingProgress} = updateData
-        const response = await api.put(`http://localhost:8081/investments/update/${id}`, {
+        const response = await api.put(`https://c2diserver.awer.co /investments/update/${id}`, {
             buildingProgress
         }, {
             withCredentials: true,
@@ -51,7 +51,7 @@ export { changePrismaProjectBuildingProgress }
 //         const {buildingProgress} = projectData
 
 //         // Chama a função para atualizar o buildingProgress (ajuste a URL da API)
-//         const response = await api.put(`http://localhost:8081/investments/update/${id}`, {buildingProgress}, {
+//         const response = await api.put(`https://c2diserver.awer.co /investments/update/${id}`, {buildingProgress}, {
 //             withCredentials: true,
 //             headers: {
 //                 'Content-Type': 'application/json'
