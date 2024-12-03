@@ -12,7 +12,7 @@ interface createPrismaUserInvestmentProps {
 
 const createPrismaUserInvestment = async (data:createPrismaUserInvestmentProps) => {
     try {
-        const response = await api.post(`https://c2diserver.awer.co/usersInvestments/create`, data, {
+        const response = await api.post(`http://localhost:8081/usersInvestments/create`, data, {
             withCredentials: true, 
             headers: {
                 'Content-Type': 'application/json' // Define o header Content-Type

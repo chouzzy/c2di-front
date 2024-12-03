@@ -1,16 +1,18 @@
-import { Button, Flex, Link, Text } from "@chakra-ui/react";
-import { Bell, BellRinging, Moon, Sun } from "phosphor-react";
+import { Flex, Text, useDisclosure } from "@chakra-ui/react";
+import { Bell, Moon, Sun } from "phosphor-react";
 import { useState } from "react";
-import { IoIosLogOut } from "react-icons/io";
+import { UserNotificationsModal } from "./userNotificationsModal";
 
 
 interface HeaderProps {
     name: string
+    userData: User
 }
 
-export function Header({ name }: HeaderProps) {
+export function Header({ name, userData }: HeaderProps) {
 
     const [darkMode, setDarkmode] = useState<boolean>(false)
+
 
     return (
         <Flex flexDirection="column" gap={2}>
@@ -50,8 +52,8 @@ export function Header({ name }: HeaderProps) {
 
                     }
                 </Flex>
-                <Flex as="button" borderRadius="md" py={2} _hover={{ color: "redSide", transition: "200ms" }}>
-                    <Bell size={20} />
+                <Flex borderRadius="md" py={2} _hover={{ color: "redSide", transition: "200ms" }} position={'relative'}>
+                    <UserNotificationsModal userData={userData} />
                 </Flex>
 
 

@@ -33,14 +33,12 @@ interface UserInvestment {
 
 interface Notification {
   id: string;
-  userId: string;
   investmentId: string;
   readonly title: string;
   message: string;
   isRead: boolean;
   createdAt: Date;
   investment: Investment;
-  user: User;
 }
 
 interface RefreshToken {
@@ -66,10 +64,15 @@ interface User {
   role: Role;
   userInvestments: UserInvestment[];
   investorProfile: InvestorProfile;
-  notifications: Notification[];
+  userNotifications: UserNotifications[];
   createdAt: Date;
   updatedAt: Date;
   refreshToken?: string;
+}
+
+interface UserNotifications {
+  notificationID: string
+  isRead: boolean
 }
 
 interface Address {

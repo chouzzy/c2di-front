@@ -84,6 +84,7 @@ export function SideBar({ userData, projectData }: SideBarProps) {
 
     return (
         <Flex
+            zIndex={1}
             flexDirection="column"
             alignItems="start"
             justifyContent="space-between"
@@ -103,7 +104,7 @@ export function SideBar({ userData, projectData }: SideBarProps) {
 
                 {userData ?
 
-                    <Header name={userData.name} />
+                    <Header name={userData.name} userData={userData} />
                     :
                     <Flex boxSize={16} mx='auto'>
                         <Spinner

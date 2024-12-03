@@ -52,12 +52,6 @@ export function InfosGerais({ userData, projectData }: ProjectDataProps) {
     ];
 
 
-    const formatador = new Intl.NumberFormat('pt-BR', {
-        style: 'currency',
-        currency: 'BRL',
-        maximumFractionDigits: 0
-    });
-
     const renderCustomBarLabel = ({ payload, x, y, width, height, value }: any) => {
         return <text x={x + width / 2} y={y} fill="#0F172A" textAnchor="middle" dy={-8} fontWeight={500} >{`${value}%`}</text>;
     };

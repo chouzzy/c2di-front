@@ -1,11 +1,11 @@
 import { Button, Spinner, Text, useDisclosure } from "@chakra-ui/react"
-import { PiArrowArcLeft, PiArrowArcRight, PiArrowCircleLeft, PiArrowCircleRight, PiCheckThin } from "react-icons/pi";
-import { IoMdAlert } from "react-icons/io"
+import { PiArrowCircleLeft, PiArrowCircleRight, PiCheckThin } from "react-icons/pi";
 import { Dispatch, SetStateAction, useEffect, useState } from "react"
 import { Flex } from "@chakra-ui/react/flex"
 import { readPrismaNotification } from "@/app/services/readNotification";
 import { NotificationsModal } from "./notificationsModal";
-import { ArrowArcLeft, ArrowArcRight } from "phosphor-react";
+import { HiOutlineSpeakerphone, HiSpeakerphone } from "react-icons/hi";
+
 
 
 interface NotificationsBoard {
@@ -77,7 +77,8 @@ export function NotificationsBoard({ totalDocuments, page, pageRange, setPage, n
                 {notifications ?
                     <Flex flexDir={'column'}>
                         {notifications.map((notification) => {
-                            const { isRead } = notification
+                            let { isRead } = notification
+                            isRead = false
                             return (
                                 <Flex
                                     key={notification.id}
@@ -95,8 +96,8 @@ export function NotificationsBoard({ totalDocuments, page, pageRange, setPage, n
                                     <Text fontSize={12} fontWeight={'medium'}>
                                         {notification.title.length > 67 ? notification.title.slice(0, 67) + '...' : notification.title}
                                     </Text>
-                                    <Flex color={isRead ? 'darkSide' : 'yellowSide'}>
-                                        {isRead ? <PiCheckThin size={20} /> : <IoMdAlert size={20} />}
+                                    <Flex color={'graySide'}>
+                                        {isRead ? <PiCheckThin size={20} /> : <HiSpeakerphone size={20} />}
                                     </Flex>
                                 </Flex>
                             )

@@ -2,7 +2,7 @@ import { api } from "../axios";
 
 const deletePrismaProjectImage = async (investmentID:Investment["id"], imageID:Investment["images"][0]["id"]) => {
     try {
-        const response = await api.put(`https://c2diserver.awer.co/investments/delete/image`, {
+        const response = await api.put(`http://localhost:8081/investments/delete/image`, {
             data: {
                 investmentID: investmentID,
                 imageID: imageID

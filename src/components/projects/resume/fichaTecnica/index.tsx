@@ -46,7 +46,7 @@ export function FichaTecnica({ userData, projectData }: ProjectDataProps) {
             const response = await updateProjectFicha(projectData.id, data)
             console.log(response)
 
-            window.location.reload()
+            window.location.href = `${window.location.pathname}`
 
         } catch (error: any) {
             console.error(error)
@@ -293,7 +293,7 @@ export function FichaTecnica({ userData, projectData }: ProjectDataProps) {
                                     type='number'
                                     placeholder={'Ex: 73.422,00'}
                                     label_top='Custo estimado da fundação'
-                                    register={register("predictedCost.foundation")}
+                                    register={register("predictedCost.foundation",{valueAsNumber:true})}
                                 />
                                 :
                                 <StaticProject dataType='MONEY' type='Custo estimado da fundação' data={String(projectData.predictedCost.foundation)} />
@@ -309,7 +309,7 @@ export function FichaTecnica({ userData, projectData }: ProjectDataProps) {
                                     type='number'
                                     placeholder={'R$ 1.200,00/m²'}
                                     label_top='Custo estrutural estimado por [m²]'
-                                    register={register("predictedCost.structure")}
+                                    register={register("predictedCost.structure",{valueAsNumber:true})}
                                 />
                                 :
                                 <StaticProject dataType='AREA' type='Custo estrutural estimado por [m²]' data={String(projectData.predictedCost.structure)} />
@@ -326,7 +326,7 @@ export function FichaTecnica({ userData, projectData }: ProjectDataProps) {
                                     type='number'
                                     placeholder={'R$ 2.300/m²'}
                                     label_top='Custo estimado da implantação [m²]'
-                                    register={register("predictedCost.implantation")}
+                                    register={register("predictedCost.implantation",{valueAsNumber:true})}
                                 />
                                 :
                                 <StaticProject dataType='AREA' type='Custo estimado da implantação [m²]' data={String(projectData.predictedCost.implantation)} />
@@ -345,7 +345,7 @@ export function FichaTecnica({ userData, projectData }: ProjectDataProps) {
                                 type='number'
                                 placeholder={'R$ 80.135,00'}
                                 label_top='Custo estimado da mão de obra'
-                                register={register("predictedCost.workmanship")}
+                                register={register("predictedCost.workmanship",{valueAsNumber:true})}
                             />
                             :
                             <StaticProject dataType='MONEY' type='Custo estimado da fundação' data={String(projectData.predictedCost.workmanship)} />
