@@ -87,7 +87,7 @@ function FormUsers({ userData }: FormUsersProps) {
             
 
 
-            const response = await api.put(`http://localhost:8081/users/update/${userData.id}`, data, {
+            const response = await api.put(`users/update/${userData.id}`, data, {
                 withCredentials:true,
                 headers: {
                     'Content-Type': 'application/json' // Define o header Content-Type

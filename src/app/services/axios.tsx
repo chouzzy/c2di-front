@@ -5,7 +5,7 @@ import { getCookie, getCookies, setCookie, deleteCookie, hasCookie } from 'cooki
 
 
 export const api = axios.create({
-  baseURL: '/',
+  baseURL: 'https://c2diserver.awer.co/',
   withCredentials: true // Importante para enviar cookies
 });
 

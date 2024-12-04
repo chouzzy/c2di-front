@@ -3,7 +3,7 @@ import { api } from "../axios";
 const listUserNotifications = async (userID: User["id"], page: number, pageRange: number) => {
     try {
 
-        const response = await api.get(`http://localhost:8081/notifications/users/list`, {
+        const response = await api.get(`notifications/users/list`, {
             params: {
                 userID: userID,
                 page: page,

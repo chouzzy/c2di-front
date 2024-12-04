@@ -2,7 +2,7 @@ import { api } from "../axios";
 
 const deletePrismaUserInvestment = async (userInvestmentID: UserInvestment["id"]) => {
     try {
-        const response = await api.delete(`http://localhost:8081/usersInvestments/delete/${userInvestmentID}`, {
+        const response = await api.delete(`usersInvestments/delete/${userInvestmentID}`, {
             withCredentials: true,
             headers: {
                 'Content-Type': 'application/json' // Define o header Content-Type

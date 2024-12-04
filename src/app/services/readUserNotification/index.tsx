@@ -3,7 +3,7 @@ import { api } from "../axios";
 const readPrismaUserNotification = async (id: any, updateData: User) => {
     try {
         
-        const response = await api.put(`http://localhost:8081/users/update/${id}`, updateData, {
+        const response = await api.put(`users/update/${id}`, updateData, {
             withCredentials: true,
             headers: {
                 'Content-Type': 'application/json' // Define o header Content-Type

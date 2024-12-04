@@ -4,7 +4,7 @@ import { api } from "../axios";
 const resetPassword = async (email:User["email"]|UserProfile["email"]) => {
     try {
 
-        const response = await api.post(`http://localhost:8081/users/reset-password`, 
+        const response = await api.post(`users/reset-password`, 
             { email: email }, // Corpo da requisição
             { 
                 withCredentials: true, 

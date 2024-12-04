@@ -3,7 +3,7 @@ import { api } from "../axios";
 
 const readPrismaNotification = async (id:any) => {
     try {
-        const response = await api.put(`http://localhost:8081/notifications/update/${id}`,
+        const response = await api.put(`notifications/update/${id}`,
             {
             withCredentials: true, 
             headers: {

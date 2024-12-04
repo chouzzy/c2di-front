@@ -3,7 +3,7 @@ import { api } from "../axios";
 
 const deletePrismaAndAuth0User = async (id:User["id"], auth0UserID:UserProfile["sub"]) => {
     try {
-        const response = await api.delete(`http://localhost:8081/users/delete`, {
+        const response = await api.delete(`users/delete`, {
             data: { 
               id: id,
               auth0UserID: auth0UserID 

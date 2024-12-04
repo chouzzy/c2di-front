@@ -4,7 +4,7 @@ import { api } from "../axios";
 const getUsersResumed = async (page: number, pageRange: number) => {
     try {
 
-        const response = await api.get(`http://localhost:8081/users/resume`, { withCredentials: true })
+        const response = await api.get(`users/resume`, { withCredentials: true })
 
         if (response.status == 200 || response.status == 202) {
             const users: User[] = response.data.users

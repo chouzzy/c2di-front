@@ -3,7 +3,7 @@ import { api } from "../axios";
 const changePrismaProjectPartners = async (id:any, updateData:Investment) => {
     try {
         const {partners} = updateData
-        const response = await api.put(`http://localhost:8081/investments/update/${id}`, {
+        const response = await api.put(`investments/update/${id}`, {
             partners
         }, {
             withCredentials: true, 
