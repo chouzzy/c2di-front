@@ -10,7 +10,6 @@ const POST = withApiAuthRequired(async function POST(req) {
 
     try {
 
-
         const res = new NextResponse();
         const { accessToken } = await getAccessToken(req, res, {
             authorizationParams: {
@@ -28,6 +27,9 @@ const POST = withApiAuthRequired(async function POST(req) {
         if (!secretKey) {
             throw Error('Secret key not found')
         }
+
+        console.log('accessToken')
+        console.log(accessToken)
 
         cookies().set({
             name: 'accessToken',
