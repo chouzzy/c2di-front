@@ -6,12 +6,12 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { checkUserByEmail } from "./services/checkUserByEmail";
 import { api } from "./services/axios";
-import { AxiosError } from "axios";
+import axios, { AxiosError } from "axios";
 
 const setAccessTokenCookie = async () => {
   try {
 
-    await api.post('/api/setAccessTokenCookie');
+    await axios.post('/api/setAccessTokenCookie');
   } catch (error) {
     console.error('Error setting access token cookie:', error);
     // Handle error (e.g., redirect to login)
