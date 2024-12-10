@@ -193,7 +193,7 @@ function FormUsers({ userData }: FormUsersProps) {
                         <UsersInput
                             key={"profession"}
                             type='text'
-                            placeholder={'userData.profession'}
+                            placeholder={'Gerente financeiro'}
                             label_top='Sua profissão'
                             defaultValue={userData.profession}
                             register={register("profession")}

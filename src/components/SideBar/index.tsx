@@ -102,9 +102,9 @@ export function SideBar({ userData, projectData }: SideBarProps) {
 
 
                 // MOBILE
-                <Flex w='100%'>
+                <Flex w='100%' alignItems={'center'}>
 
-                    <Flex justifyContent={'space-between'} w='100%' p={4}>
+                    <Flex justifyContent={'space-between'} w='100%' p={4} alignItems={'center'}>
 
                         <Link _hover={{ textDecor: 'none' }} href='/'>
                             <Flex>
