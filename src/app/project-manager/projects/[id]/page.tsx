@@ -68,27 +68,24 @@ export default function ProjectManagerProject() {
 
   return (
 
-    <Container maxW={'1440px'} mx='auto' h='100vh'>
+    <Flex maxW={'1440px'} h='100vh'>
 
       {/* SPINNER */}
       {userData && user && projectData ?
 
-        <Flex h='100%'>
+        <Flex h='100%' flexDir={['column', 'column', 'row', 'row', 'row']} >
 
-          {/* SIDEBAR */}
           <Flex>
-            <Flex w={64}></Flex>
-            <SideBar projectData={projectData} userData={userData} />
+            <Flex w={[0, 0, 0, 64, 64]}></Flex>
+            <SideBar userData={userData} />
           </Flex>
 
 
           {/* MAIN */}
-          <Flex h='100%' flexDir={'column'} w='100%' px={12} py={12} gap={6}>
-
-
+          <Flex h='100%' flexDir={'column'} w='100%' px={[4, 4, 4, 12, 12]} py={[6, 6, 6, 12, 12]} gap={[4, 4, 4, 6, 6]}>
 
             {/* HEADER */}
-            <Flex
+            < Flex
               justifyContent={'space-between'}
               alignItems={'center'}
               borderBottom={'1px solid #E5E7EB'}
@@ -114,7 +111,7 @@ export default function ProjectManagerProject() {
       }
 
 
-    </Container >
+    </Flex >
 
   )
 }

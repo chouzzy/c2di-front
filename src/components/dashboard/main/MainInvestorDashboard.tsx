@@ -1,4 +1,4 @@
-import { Button, Flex, Image, Link, SimpleGrid, Text } from "@chakra-ui/react";
+import { Button, Flex, Image, Link, SimpleGrid, Text, useBreakpointValue } from "@chakra-ui/react";
 import { AreaChart, CartesianGrid, XAxis, YAxis, Area, Tooltip, Bar, BarChart, Legend, Pie, PieChart, Cell } from "recharts";
 import { data, data01, data02 } from "./data/dashData";
 import { IoIosArrowForward, IoIosTrendingUp } from "react-icons/io";
@@ -14,14 +14,17 @@ interface InvestorDashboardProps {
 
 export function MainInvestorDashboard({ projectsData, userInvestmentsData }: InvestorDashboardProps) {
 
+    const isMobile = useBreakpointValue({ base: true, sm: true, md: false, lg: false, xl: false })
+
+
     if (projectsData.length == 0) {
         return (
             <Flex h={500} w='100%' alignItems={'center'} justifyContent={'center'}>
                 <Flex flexDir={'column'} borderRadius={8} bgColor={'darkSide'} color={'lightSide'} p={8} alignItems={'center'} justifyContent={'center'} gap={8} fontWeight={600}>
 
                     <Text >Você não possui nenhum projeto ainda, clique abaixo para ver os projetos disponíveis</Text>
-                    <Link href='projects' _hover={{textDecor:'none'}}>
-                        <Flex _hover={{bgColor:'green.400', transition:'400ms'}} cursor={'pointer'} bgColor={'redSide'} borderRadius={8} px={4} py={2}> Ver projetos disponíveis</Flex>
+                    <Link href='projects' _hover={{ textDecor: 'none' }}>
+                        <Flex _hover={{ bgColor: 'green.400', transition: '400ms' }} cursor={'pointer'} bgColor={'redSide'} borderRadius={8} px={4} py={2}> Ver projetos disponíveis</Flex>
                     </Link>
                 </Flex>
             </Flex>)
@@ -47,7 +50,7 @@ export function MainInvestorDashboard({ projectsData, userInvestmentsData }: Inv
                 <Flex w='100%' flexDir={'column'} gap={16} pb={48}>
 
                     {/* PRMEIRA LINHA */}
-                    <Flex justifyContent={'space-between'} w='100%'>
+                    <Flex justifyContent={'space-between'} w='100%'  flexDir={['column', 'column', 'row', 'row', 'row']} mt={8}>
 
                         {/* GRAFICO 1 */}
                         <Flex flexDir={'column'} gap={2}>
@@ -99,7 +102,7 @@ export function MainInvestorDashboard({ projectsData, userInvestmentsData }: Inv
                     </Flex>
 
                     {/* SEGUNDA LINHA */}
-                    <Flex justifyContent={'space-between'} w='100%' alignItems={'start'}>
+                    <Flex justifyContent={'space-between'} w='100%' alignItems={['center','center','center','start','start']} flexDir={['column', 'column', 'row', 'row', 'row']} gap={4}>
 
                         {/* GRAFICO DE BARRAS */}
                         <Flex flexDir={'column'} gap={2}>
@@ -158,6 +161,7 @@ export function MainInvestorDashboard({ projectsData, userInvestmentsData }: Inv
                                     <Flex fontSize={12}>Dado 1</Flex>
                                     <Flex justifyContent={'space-between'}>
                                         <Flex fontSize={22} fontWeight={'medium'} letterSpacing={2} color={'green.300'}> <Text> R$7.265,33 </Text></Flex>
+                                        {isMobile}
                                         <Flex fontSize={14} alignItems={'center'} color={'green.300'}> <Text> +11.01% </Text> <IoIosTrendingUp /> </Flex>
                                     </Flex>
 
@@ -226,7 +230,11 @@ export function MainInvestorDashboard({ projectsData, userInvestmentsData }: Inv
 
                             {projectsData.map((project, index) => {
 
+                                
                                 if (index > 2) {
+                                    return
+                                }
+                                if (isMobile && index > 0) {
                                     return
                                 }
                                 return (

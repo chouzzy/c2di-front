@@ -90,39 +90,41 @@ export function HeaderSelf({ userData, user }: HeaderSelfProps) {
 
     return (
         <>
-            <Flex flexDir={'column'}>
-                <Flex>
-                    <Text fontSize={28} fontWeight={'semibold'}>
-                        Perfil do usuário
-                    </Text>
+            <Flex flexDir={['column','column','column','row','row']} w='100%' justifyContent={'space-between'}>
+                <Flex flexDir={'column'}>
+                    <Flex>
+                        <Text fontSize={[24, 24, 24, 28, 28]} fontWeight={'semibold'}>
+                            Perfil do usuário
+                        </Text>
+                    </Flex>
+                    <Flex>
+                        <Text fontSize={[14, 14, 14, 16, 16]}>
+                            Aqui você pode visualizar e editar as informações cadastradas no painel
+                        </Text>
+                    </Flex>
                 </Flex>
-                <Flex>
-                    <Text fontSize={16}>
-                        Aqui você pode visualizar e editar as informações cadastradas no painel
-                    </Text>
-                </Flex>
-            </Flex>
 
-            <Flex gap={8} alignItems={'center'}>
-                {user.sub?.split('|')[0] === 'auth0' ?
-                    <Button onClick={changePassword} _hover={{ bgColor: 'redSide' }} color={'lightSide'} bgColor={'darkSide'} mt={4}>
-                        <Flex minW={32} alignItems={'center'} justifyContent={'center'}>
+                <Flex gap={8} alignItems={'center'}>
+                    {user.sub?.split('|')[0] === 'auth0' ?
+                        <Button onClick={changePassword} size={['sm','sm','sm','md']} _hover={{ bgColor: 'redSide' }} color={'lightSide'} bgColor={'darkSide'} mt={4}>
+                            <Flex alignItems={'center'} justifyContent={'center'}>
 
-                            {changingPassword ?
-                                <Spinner boxSize={4} />
-                                :
-                                <Text>Alterar senha</Text>
-                            }
+                                {changingPassword ?
+                                    <Spinner boxSize={4} />
+                                    :
+                                    <Text>Alterar senha</Text>
+                                }
+                            </Flex>
+                        </Button>
+                        :
+                        ''
+                    }
+                    <Button onClick={deleteUser} size={['sm','sm','sm','md']} _hover={{ bgColor: 'red' }} color={'lightSide'} bgColor={'redSide'} mt={4}>
+                        <Flex alignItems={'center'} justifyContent={'center'}>
+                            <Text>Desativar usuário</Text>
                         </Flex>
                     </Button>
-                    :
-                    ''
-                }
-                <Button onClick={deleteUser} _hover={{ bgColor: 'red' }} color={'lightSide'} bgColor={'redSide'} mt={4}>
-                    <Flex minW={32} alignItems={'center'} justifyContent={'center'}>
-                        <Text>Desativar usuário</Text>
-                    </Flex>
-                </Button>
+                </Flex>
             </Flex>
 
             {/* Modal */}

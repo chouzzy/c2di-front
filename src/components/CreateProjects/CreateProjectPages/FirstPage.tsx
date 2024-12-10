@@ -41,7 +41,7 @@ export function FirstPage({ register, userData }: PersonalDataAndGoalsProps) {
             />
 
             {/* 3ª linha */}
-            <Flex mt={4} w='100%' gap={8} justifyContent={'space-between'}>
+            <Flex mt={4} w='100%' gap={8} justifyContent={'space-between'} flexDir={['column', 'column', 'row', 'row', 'row']}>
 
                 <Flex w='100%'>
 
@@ -101,7 +101,7 @@ export function FirstPage({ register, userData }: PersonalDataAndGoalsProps) {
 
 
             {/* 4ª linha */}
-            <Flex mt={4} w='100%' gap={8} justifyContent={'space-between'}>
+            <Flex mt={4} w='100%' gap={8} justifyContent={'space-between'} flexDir={['column', 'column', 'row', 'row', 'row']}>
 
                 <Flex w='100%'>
 
@@ -120,7 +120,7 @@ export function FirstPage({ register, userData }: PersonalDataAndGoalsProps) {
             </Flex>
 
             {/* 5ª linha */}
-            <Flex mt={4} w='100%' gap={8} justifyContent={'space-between'}>
+            <Flex mt={4} w='100%' gap={8} justifyContent={'space-between'} flexDir={['column', 'column', 'row', 'row', 'row']}>
 
                 <Flex w='100%'>
 

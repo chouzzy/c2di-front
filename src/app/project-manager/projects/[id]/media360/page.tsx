@@ -21,7 +21,7 @@ export default function ProjectMedia360() {
 
     const [userData, setUserData] = useState<User | null>(null);
     const [projectData, setProjectData] = useState<Investment | null>(null);
-    
+
     // GET USER
     useEffect(() => {
 
@@ -73,16 +73,19 @@ export default function ProjectMedia360() {
 
                 {userData && projectData ?
 
-                    <Flex h='100%'>
+                    <Flex h='100%' flexDir={['column', 'column', 'row', 'row', 'row']} >
+
                         <Flex>
-                            <Flex w={64}></Flex>
+                            <Flex w={[0, 0, 0, 64, 64]}></Flex>
                             <SideBar userData={userData} />
                         </Flex>
 
-                        <Flex h='100%' flexDir={'column'} w='100%' px={12} py={12} gap={6}>
+
+                        {/* MAIN */}
+                        <Flex h='100%' flexDir={'column'} w='100%' px={[4, 4, 4, 12, 12]} py={[6, 6, 6, 12, 12]} gap={[4, 4, 4, 6, 6]}>
 
                             {/* HEADER */}
-                            <Flex
+                            < Flex
                                 justifyContent={'space-between'}
                                 alignItems={'center'}
                                 borderBottom={'1px solid #E5E7EB'}

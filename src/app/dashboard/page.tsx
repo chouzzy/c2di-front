@@ -107,20 +107,22 @@ export default function Dashboard() {
         <>
             <Container maxW={'1440px'} mx='auto' h='100vh'>
                 {userData && user && projectsData && userInvestmentsData ?
-                    <Flex h='100%'>
+
+                    <Flex h='100%' flexDir={['column', 'column', 'row', 'row', 'row']} >
+
                         <Flex>
-                            <Flex w={64}></Flex>
+                            <Flex w={[0, 0, 0, 64, 64]}></Flex>
                             <SideBar userData={userData} />
                         </Flex>
 
-                        <Flex h='100%' flexDir={'column'} w='100%' px={12} py={12} gap={6}>
+                        <Flex h='100%' flexDir={'column'} w='100%' px={[2, 2, 2, 12, 12]} py={[4, 4, 4, 12, 12]} gap={[0, 0, 0, 6, 6]}>
 
                             {/* HEADER */}
                             < Flex
                                 justifyContent={'space-between'}
                                 alignItems={'center'}
                                 borderBottom={'1px solid #E5E7EB'}
-                                pb={8}
+                                pb={[4, 4, 4, 8, 8]}
                             >
                                 {userData.role == "INVESTOR" ? <HeaderInvestorDashboard /> : ''}
                                 {userData.role != "INVESTOR" ? <HeaderAdminDashboard user={user} userData={userData} /> : ''}

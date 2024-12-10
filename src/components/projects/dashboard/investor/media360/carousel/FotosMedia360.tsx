@@ -76,7 +76,7 @@ export function FotosMedia360({ projectData, openImage }: FotosMedia360Props) {
 
             {/* 360 IMAGES */}
             <Flex maxW={'100%'} gap={2}>
-                <SimpleGrid columns={2} gap={2} w='100%'>
+                <SimpleGrid columns={[1,1,1,2,2]} gap={2} w='100%'>
                     {media360.map((img) => {
                         return (
                             <Flex

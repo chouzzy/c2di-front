@@ -4,7 +4,7 @@ import { BlackCard } from "@/components/Authentication/Cards/BlackCard";
 import { ProfileTestForm } from "@/components/InvestorProfile/ProfileTest/ProfileTestForm";
 import { SpinnerFullScreen } from "@/components/Loading/SpinnerFullScreen";
 import { UserProfile, useUser } from "@auth0/nextjs-auth0/client";
-import { Container, Flex, Spinner } from "@chakra-ui/react";
+import { Container, Flex, Spinner, useBreakpointValue } from "@chakra-ui/react";
 import { AxiosError } from "axios";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -17,6 +17,9 @@ export default function ProfileTest() {
     const router = useRouter()
 
     const [userData, setUserData] = useState<User | undefined>()
+
+    const isMobile = useBreakpointValue({ base: true, sm: true, md: false, lg: false, xl: false })
+
 
     // VALIDAR SÓ INVESTIDOR PODE ACESSAR ESSA ROTA
 
@@ -74,7 +77,7 @@ export default function ProfileTest() {
     }
 
     return (
-        <Container maxW={'1440px'} mx='auto' color='darkSide'>
+        <Flex maxW={'1440px'} mx='auto' color='darkSide'>
 
             {loadingDBUser ?
                 <Flex alignItems={'center'} justifyContent={'center'} h='100%' w='100%'>
@@ -87,10 +90,10 @@ export default function ProfileTest() {
                         {/* BEM VINDO DE VOLTA CARD */}
                         < ProfileTestForm user={user} router={router} userData={userData} />
                         {/* DARK CARD */}
-                        <BlackCard />
+                        {isMobile ? '' : <BlackCard />}
                     </>
                 </Flex>
             }
-        </Container>
+        </Flex>
     )
 }

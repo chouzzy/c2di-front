@@ -130,8 +130,9 @@ function DocumentsList({ user, userData, projectData, documentList, setDocumentL
             }
 
 
-            <Flex>
-                <TableContainer>
+
+            <Flex w={['90vw', '90vw', '90vw', '100%', '100%']}>
+                <TableContainer w={'100%'}>
                     <Table variant={'simple'}>
                         <Thead>
                             <Tr>

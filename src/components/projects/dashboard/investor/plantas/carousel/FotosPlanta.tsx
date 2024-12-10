@@ -1,4 +1,4 @@
-import { Flex, Image, Text } from "@chakra-ui/react";
+import { Flex, Image, Text, useBreakpointValue } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Scrollbar, Pagination, A11y } from 'swiper/modules';
@@ -27,6 +27,9 @@ export function FotosPlanta({ projectData, openImage }: FotosPlantaProps) {
         setDeletingImageID(imageID)
         setIsDeletingImage(true)
     }
+
+    const slidesResponsive = useBreakpointValue({ base: 1, sm: 1, md: 3, lg: 4, xl: 5 })
+
 
     // DELETE IMAGE PLANTAS
     useEffect(() => {
@@ -75,7 +78,7 @@ export function FotosPlanta({ projectData, openImage }: FotosPlantaProps) {
                 <Swiper
                     modules={[Navigation, Pagination, Scrollbar, A11y]}
                     spaceBetween={50}
-                    slidesPerView={planta.length < 4 ? planta.length : 4}
+                    slidesPerView={planta.length < (slidesResponsive ?? 4) ? planta.length : slidesResponsive}
                     navigation
                     loop
                     // pagination

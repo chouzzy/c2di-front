@@ -31,7 +31,7 @@ export function CreateProjectForm({ user, router, userData }: CreateInvestorAcco
 
     const pages = [0, 1, 2]
 
-    const [page, setPage] = useState(0)
+    const [page, setPage] = useState(2)
 
     // SUBMIT FORM
     const onSubmit = async (data: any) => {
@@ -94,7 +94,7 @@ export function CreateProjectForm({ user, router, userData }: CreateInvestorAcco
 
     return (
         <Flex w='100%'>
-            <Flex w='100%' alignItems={'center'} justifyContent={'space-between'} flexDir={'column'}>
+            <Flex w='100%' alignItems={'center'} justifyContent={'space-between'} flexDir={'column'} >
 
                 <Flex flexDir={'column'} gap={8} h={780} w='100%'>
 
@@ -102,7 +102,7 @@ export function CreateProjectForm({ user, router, userData }: CreateInvestorAcco
                         <ErrorInputComponent error={yupError} />
                     </Flex>
                     <form onSubmit={handleSubmit(onSubmit)} style={{ height: '100%', width: '100%' }}>
-                        <Flex flexDir={'column'} justifyContent={'space-between'} h='100%'>
+                        <Flex flexDir={'column'} justifyContent={'space-between'} h='100%' gap={8}>
 
 
                             <Flex flexDir={'column'} gap={8}>
@@ -133,7 +133,6 @@ export function CreateProjectForm({ user, router, userData }: CreateInvestorAcco
 
                             <Flex alignItems={'center'} justifyContent={'space-between'} w='100%'>
 
-
                                 <Button
                                     colorScheme="blackAlpha"
                                     fontSize={14}
@@ -145,7 +144,7 @@ export function CreateProjectForm({ user, router, userData }: CreateInvestorAcco
                                 >
                                     Anterior
                                 </Button>
-                                <Flex>
+                                <Flex fontSize={14}>
                                     Página {page + 1} de {pages.length}
                                 </Flex>
 
@@ -157,11 +156,10 @@ export function CreateProjectForm({ user, router, userData }: CreateInvestorAcco
                                             color={'lightSide'}
                                             fontWeight={'light'}
                                             bgColor={'darkSide'}
-                                            mt={4}
-                                            minW={48}
+                                            size={['md', 'md', 'md', 'md', 'md']}
                                             _hover={{ bgColor: "graySide", transition: '300ms' }}
                                         >
-                                            Salvar e ir para o painel
+                                            Salvar
                                         </Button>
                                     </>
                                     :

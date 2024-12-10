@@ -18,7 +18,7 @@ export function StaticProject({ type, data, dataType }: StaticProfileProps) {
 
 
     return (
-        <Flex flexDir={'column'} gap={2}>
+        <Flex flexDir={'column'} gap={2} w='100%' alignItems={['center','center','center', 'start', 'start']}>
             <Text fontWeight={'semibold'} fontSize={16}> {type} </Text>
 
             {dataType == 'MONEY' ? <Flex bgColor={'white'}>{valorFormatado}</Flex> : ''}

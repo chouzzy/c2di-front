@@ -1,14 +1,13 @@
 import { updateProjectFicha } from '@/app/services/updateProjectFicha';
-import { floorPlanTypesAdapter, numbersAdapter, projectTypeAdapter, projectTypeReverseAdapter } from '@/app/services/utils';
+import { floorPlanTypesAdapter, projectTypeAdapter } from '@/app/services/utils';
 import { AuthInput } from '@/components/Authentication/Inputs/AuthInput';
 import { ProjectInput } from '@/components/CreateProjects/Inputs/ProjectInput';
 import { ProjectSelectInput } from '@/components/CreateProjects/Inputs/SelectInput';
 import { TextAreaInput } from '@/components/CreateProjects/Inputs/TextAreaInput';
 import { StaticProject } from '@/components/users/StaticProject';
 import { updateInvestmentSchema } from '@/schemas/investmentSchema';
-import { updateUsersSchema } from '@/schemas/usersSchema';
 import { Button, Flex } from '@chakra-ui/react';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { ValidationError } from 'yup';
 
@@ -64,7 +63,7 @@ export function FichaTecnica({ userData, projectData }: ProjectDataProps) {
                 <Flex gap={8} flexDir={'column'} w='100%'>
 
                     {/* Dates */}
-                    <Flex gap={12} w='100%'>
+                    <Flex gap={12} w='100%' flexDir={['column','column','column','row','row']}>
                         <Flex w='100%'>
                             {/* Title */}
                             {editMode ?
@@ -81,6 +80,7 @@ export function FichaTecnica({ userData, projectData }: ProjectDataProps) {
                                 <StaticProject type='Nome do empreendimento' data={projectData.title} />
                             }
                         </Flex>
+
                         <Flex w='100%'>
                             {/* Description */}
                             {editMode ?
@@ -121,7 +121,7 @@ export function FichaTecnica({ userData, projectData }: ProjectDataProps) {
                     </Flex>
 
                     {/* Dates */}
-                    <Flex gap={12} w='100%'>
+                    <Flex gap={12} w='100%' flexDir={['column','column','column','row','row']}>
                         <Flex w='100%'>
                             {/* Data de início da obra */}
                             {editMode ?
@@ -172,7 +172,7 @@ export function FichaTecnica({ userData, projectData }: ProjectDataProps) {
                     </Flex>
 
                     {/* Tipo e nome da construtora */}
-                    <Flex gap={12} w='100%'>
+                    <Flex gap={12} w='100%' flexDir={['column','column','column','row','row']}>
 
                         <Flex w='100%'>
                             {/* Tipo de projeto */}
@@ -226,7 +226,7 @@ export function FichaTecnica({ userData, projectData }: ProjectDataProps) {
 
                     </Flex>
 
-                    <Flex gap={12} w='100%'>
+                    <Flex gap={12} w='100%' flexDir={['column','column','column','row','row']}>
 
                         <Flex w='100%'>
                             {/* Número de unidade por pavimento */}
@@ -279,9 +279,7 @@ export function FichaTecnica({ userData, projectData }: ProjectDataProps) {
 
                     </Flex>
 
-
-
-                    <Flex gap={12} w='100%'>
+                    <Flex gap={12} w='100%' flexDir={['column','column','column','row','row']}>
 
                         <Flex w='100%'>
                             {/* 'Custo da fundação'*/}
@@ -333,9 +331,8 @@ export function FichaTecnica({ userData, projectData }: ProjectDataProps) {
                             }
                         </Flex>
 
-
                     </Flex>
-                    <Flex w={80}>
+                    <Flex w={['100%','100%','100%',80,80]}>
                         {/* 'Custo da mão de obra'*/}
                         {editMode ?
                             < ProjectInput

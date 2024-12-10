@@ -7,9 +7,10 @@ import { UserNotificationsModal } from "./userNotificationsModal";
 interface HeaderProps {
     name: string
     userData: User
+    isMobile?: boolean
 }
 
-export function Header({ name, userData }: HeaderProps) {
+export function Header({ name, userData, isMobile }: HeaderProps) {
 
     const [darkMode, setDarkmode] = useState<boolean>(false)
 
@@ -19,7 +20,7 @@ export function Header({ name, userData }: HeaderProps) {
 
             <Flex alignItems={'end'} justifyContent={'space-between'}>
 
-                <Flex flexDir={'column'}>
+                <Flex flexDir={'column'} w='100%' alignItems={['center', 'center', 'start', 'start', 'start']}>
 
                     <Text fontSize="xl" fontWeight="bold">
                         Bem vindo(a),
@@ -32,33 +33,36 @@ export function Header({ name, userData }: HeaderProps) {
             </Flex>
             {/* Botões no cabeçalho */}
 
-            <Flex
-                mt={4}
-                justifyContent={'space-between'}
-                borderBottom={'1px'}
-                borderColor={'grayDivisor'}
-                py={1}
-            >
+            {isMobile ?
+                ''
+                :
+
+
                 <Flex
-                    onClick={() => { setDarkmode(!darkMode) }}
-                    as="button"
-                    borderRadius="md"
-                    py={2}
-                    _hover={{ color: "redSide", transition: "200ms" }}>
-                    {darkMode ?
-                        <Sun size={24} />
-                        :
-                        <Moon size={24} />
+                    mt={4}
+                    justifyContent={'space-between'}
+                    borderBottom={'1px'}
+                    borderColor={'grayDivisor'}
+                    py={1}
+                >
+                    <Flex
+                        onClick={() => { setDarkmode(!darkMode) }}
+                        as="button"
+                        borderRadius="md"
+                        py={2}
+                        _hover={{ color: "redSide", transition: "200ms" }}>
+                        {darkMode ?
+                            <Sun size={24} />
+                            :
+                            <Moon size={24} />
 
-                    }
+                        }
+                    </Flex>
+                    <Flex borderRadius="md" py={2} _hover={{ color: "redSide", transition: "200ms" }} position={'relative'}>
+                        <UserNotificationsModal userData={userData} />
+                    </Flex>
                 </Flex>
-                <Flex borderRadius="md" py={2} _hover={{ color: "redSide", transition: "200ms" }} position={'relative'}>
-                    <UserNotificationsModal userData={userData} />
-                </Flex>
-
-
-
-            </Flex>
+            }
 
         </Flex>
     )

@@ -45,28 +45,27 @@ export function HeaderAdminProjectList({ userData, user }: HeaderAdminProjectPro
     }
 
     const handleCreateInvestment = () => {
-        window.location.href = `${window.location.pathname}`
-
+        window.location.href = `/create-project`
     }
 
     return (
         <>
             <Flex flexDir={'column'}>
                 <Flex>
-                    <Text fontSize={28} fontWeight={'semibold'}>
+                    <Text fontSize={[22, 22, 22, 28, 28]} fontWeight={'semibold'}>
                         Projetos
                     </Text>
                 </Flex>
                 <Flex>
-                    <Text fontSize={16}>
+                    <Text fontSize={[14,14,14,16,16]}>
                         Aqui você pode visualizar a listagem de projetos disponíveis para investir
                     </Text>
                 </Flex>
             </Flex>
 
             <Flex gap={8} alignItems={'center'}>
-                <Button onClick={() => { handleCreateInvestment() }} _hover={{ bgColor: 'graySide' }} color={'lightSide'} bgColor={'darkSide'} mt={4}>
-                    <Flex minW={32} alignItems={'center'} justifyContent={'center'}>
+                <Button onClick={() => { handleCreateInvestment() }} size={['sm','sm','sm','md']} _hover={{ bgColor: 'graySide' }} color={'lightSide'} bgColor={'darkSide'} mt={4}>
+                    <Flex alignItems={'center'} justifyContent={'center'}>
                         <Text>Criar imóvel</Text>
                     </Flex>
                 </Button>

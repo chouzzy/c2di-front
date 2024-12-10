@@ -1,4 +1,4 @@
-import { Button, Flex, Input, Link, Table, TableCaption, TableContainer, Tbody, Td, Tfoot, Th, Thead, Tr } from '@chakra-ui/react';
+import { Button, Flex, Input, Link, Table, TableCaption, TableContainer, Tbody, Td, Tfoot, Th, Thead, Tr, useBreakpointValue } from '@chakra-ui/react';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { UserProfile } from '@auth0/nextjs-auth0/client';
 import { SpinnerFullScreen } from '@/components/Loading/SpinnerFullScreen';
@@ -28,6 +28,8 @@ function Partners({ user, userData, projectData, partnerList, setPartnerList }: 
     const [newPartnerName, setNewPartnerName] = useState<Investment["partners"][0]["name"]>()
 
     const [savePartnerConfirmed, setSavePartnerConfirmed] = useState(false)
+
+    // const tableWidth = useBreakpointValue({ base: , sm: , md: false, lg: false, xl: false })
 
     const deletePartnerTrigger = (id: string) => {
 
@@ -128,7 +130,7 @@ function Partners({ user, userData, projectData, partnerList, setPartnerList }: 
     }
 
     return (
-        <Flex w='100%' flexDirection="column" gap={2}>
+        <Flex w='100%' flexDirection="column" gap={[2]}>
 
             {userData.role != 'INVESTOR' ?
 
@@ -153,71 +155,73 @@ function Partners({ user, userData, projectData, partnerList, setPartnerList }: 
 
 
 
-            <TableContainer>
-                <Table variant={'simple'}>
-                    <Thead>
-                        <Tr>
-                            <Th>Atuação</Th>
-                            <Th>Empresa</Th>
-                            <Th>Link</Th>
-                        </Tr>
-                    </Thead>
-                    <Tbody>
+            <Flex w={['90vw','90vw','90vw','100%','100%']}>
+                <TableContainer w={'100%'}>
+                    <Table variant={'simple'}>
+                        <Thead>
+                            <Tr>
+                                <Th>Atuação</Th>
+                                <Th>Empresa</Th>
+                                <Th>Link</Th>
+                            </Tr>
+                        </Thead>
+                        <Tbody>
 
-                        {partnerList?.map((partner, index) => {
-                            return (
-                                <Tr key={'name' + index}>
-                                    <Td>{partner.activity}</Td>
-                                    <Td>{partner.name}</Td>
+                            {partnerList?.map((partner, index) => {
+                                return (
+                                    <Tr key={'name' + index}>
+                                        <Td>{partner.activity}</Td>
+                                        <Td>{partner.name}</Td>
+                                        <Td>
+                                            <Flex gap={2} justifyContent={'space-between'}>
+                                                <Link href={`${partner.url}`} target='_blank' _hover={{ color: 'blue.400' }}>
+                                                    {partner.url.length > 72 ? partner.url.slice(0, 72) + '...' : partner.url}
+                                                </Link>
+                                                {editMode ?
+
+                                                    <Flex
+                                                        onClick={() => {
+                                                            deletePartnerTrigger(partner.id)
+                                                        }}
+                                                        _hover={{ color: 'redSide' }}
+                                                        fontWeight={'medium'}
+                                                        cursor={'pointer'}
+                                                        alignItems={'center'}
+                                                        fontSize={16}
+                                                        pr={2}
+                                                    >
+                                                        <Trash />
+                                                    </Flex>
+                                                    :
+                                                    ''
+                                                }
+                                            </Flex>
+                                        </Td>
+                                    </Tr>
+                                )
+                            })}
+                            {addMode ?
+                                <Tr>
+                                    <Td><Input placeholder='Segmento' onChange={(e) => { setNewPartnerActivity(e.target.value) }} /></Td>
+                                    <Td><Input placeholder='Nome da empresa' onChange={(e) => { setNewPartnerName(e.target.value) }} /></Td>
                                     <Td>
-                                        <Flex gap={2} justifyContent={'space-between'}>
-                                            <Link href={`${partner.url}`} target='_blank' _hover={{ color: 'blue.400' }}>
-                                                {partner.url.length > 72 ? partner.url.slice(0, 72) + '...' : partner.url}
-                                            </Link>
-                                            {editMode ?
+                                        <Flex gap={4}>
 
-                                                <Flex
-                                                    onClick={() => {
-                                                        deletePartnerTrigger(partner.id)
-                                                    }}
-                                                    _hover={{ color: 'redSide' }}
-                                                    fontWeight={'medium'}
-                                                    cursor={'pointer'}
-                                                    alignItems={'center'}
-                                                    fontSize={16}
-                                                    pr={2}
-                                                >
-                                                    <Trash />
-                                                </Flex>
-                                                :
-                                                ''
-                                            }
+
+                                            <Input placeholder='URL: Ex: https://www.magazineluiza.com.br/' onChange={(e) => { setNewPartnerUrl(e.target.value) }} />
+                                            <Button color='lightSide' bgColor="darkSide" onClick={handleSavePartnerClick} maxW={40}>
+                                                Salvar
+                                            </Button>
                                         </Flex>
                                     </Td>
                                 </Tr>
-                            )
-                        })}
-                        {addMode ?
-                            <Tr>
-                                <Td><Input placeholder='Segmento' onChange={(e) => { setNewPartnerActivity(e.target.value) }} /></Td>
-                                <Td><Input placeholder='Nome da empresa' onChange={(e) => { setNewPartnerName(e.target.value) }} /></Td>
-                                <Td>
-                                    <Flex gap={4}>
+                                : ''
+                            }
 
-
-                                        <Input placeholder='URL: Ex: https://www.magazineluiza.com.br/' onChange={(e) => { setNewPartnerUrl(e.target.value) }} />
-                                        <Button color='lightSide' bgColor="darkSide" onClick={handleSavePartnerClick} maxW={40}>
-                                            Salvar
-                                        </Button>
-                                    </Flex>
-                                </Td>
-                            </Tr>
-                            : ''
-                        }
-
-                    </Tbody>
-                </Table>
-            </TableContainer>
+                        </Tbody>
+                    </Table>
+                </TableContainer>
+            </Flex>
 
 
         </Flex>

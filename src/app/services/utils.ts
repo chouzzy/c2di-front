@@ -165,21 +165,33 @@ const formatadorMoedaReal = new Intl.NumberFormat('pt-BR', {
 });
 
 const formatarMoeda = (valor: number) => {
-    return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL', maximumFractionDigits:0 }).format(valor);
+    return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL', maximumFractionDigits: 0 }).format(valor);
 };
 
 const formatarPercentual = (valor: number) => {
-    return `${valor*100}%`
+    return `${valor * 100}%`
 };
 
 const formataData = (dataString: string) => {
     const data = new Date(dataString);
     return data.toLocaleDateString('pt-BR', { month: '2-digit', year: '2-digit' });
-  };
+};
 
 const formataDataMonthShort = (dataString: string) => {
     const data = new Date(dataString);
     return data.toLocaleDateString('pt-BR', { month: 'short', year: '2-digit' });
-  };
+};
 
-export { createInvestorUtils, imagesArrayAdapter, documentsArrayAdapter, projectTypeAdapter, floorPlanTypesAdapter, projectTypeReverseAdapter, numbersAdapter, formatadorMoedaReal, formatarMoeda, formataData, formataDataMonthShort, formatarPercentual }
+
+const hasUnreadNotifications = (notifications:UserNotifications[] | Notification[]) => {
+    // Itera sobre o array de notificações
+    for (let i = 0; i < notifications.length; i++) {
+        // Verifica se a propriedade isRead é false
+        if (notifications[i].isRead === false) {
+            return true; // Se encontrar, retorna true
+        }
+    }
+    return false; // Se não encontrar, retorna false
+}
+
+export { createInvestorUtils, imagesArrayAdapter, documentsArrayAdapter, projectTypeAdapter, floorPlanTypesAdapter, projectTypeReverseAdapter, numbersAdapter, formatadorMoedaReal, formatarMoeda, formataData, formataDataMonthShort, formatarPercentual, hasUnreadNotifications }

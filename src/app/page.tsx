@@ -81,9 +81,9 @@ export default function Home() {
     <Container maxW={'1440px'} mx='auto'>
       <Flex flexDir={'column'}>
         <Flex gap={2} p={4} alignItems={'center'}>
-          <Text>
+          {/* <Text>
             {loginStatus}
-          </Text>
+          </Text> */}
           <Spinner boxSize={4} />
         </Flex>
       </Flex>

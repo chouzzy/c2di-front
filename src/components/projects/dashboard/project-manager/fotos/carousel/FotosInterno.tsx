@@ -1,4 +1,4 @@
-import { Button, Flex, Image, Text } from "@chakra-ui/react";
+import { Button, Flex, Image, Text, useBreakpointValue } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Scrollbar, Pagination, A11y } from 'swiper/modules';
@@ -28,6 +28,7 @@ export function FotosInterno({ projectData, openImage }: FotosDestaquesProps) {
         setDeletingImageID(imageID)
         setIsDeletingImage(true)
     }
+    const slidesResponsive = useBreakpointValue({ base: 1, sm: 1, md: 3, lg: 4, xl: 5 })
 
     // DELETE IMAGE INTERNO
     useEffect(() => {
@@ -64,7 +65,7 @@ export function FotosInterno({ projectData, openImage }: FotosDestaquesProps) {
 
                 {/* LABEL */}
                 <Text fontSize={20} fontWeight={'medium'} mt={2}>
-                    Área interna ({interno.length})
+                    Decorado ({interno.length})
                 </Text>
 
                 {/* EDIT MODE */}
@@ -99,7 +100,7 @@ export function FotosInterno({ projectData, openImage }: FotosDestaquesProps) {
                 <Swiper
                     modules={[Navigation, Pagination, Scrollbar, A11y]}
                     spaceBetween={50}
-                    slidesPerView={interno.length < 4 ? interno.length : 4}
+                    slidesPerView={interno.length < (slidesResponsive??4) ? interno.length : slidesResponsive}
                     navigation
                     loop
                     // pagination

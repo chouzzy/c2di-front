@@ -4,14 +4,9 @@ import { checkUserByEmail } from '@/app/services/checkUserByEmail'
 import { SpinnerFullScreen } from '@/components/Loading/SpinnerFullScreen'
 import { SideBar } from '@/components/SideBar'
 import { UserProfile, useUser } from '@auth0/nextjs-auth0/client'
-import { Container, Flex, Spinner } from '@chakra-ui/react'
-import { useParams, useRouter } from 'next/navigation'
+import { Container, Flex } from '@chakra-ui/react'
+import { useParams } from 'next/navigation'
 import { useEffect, useState } from 'react'
-import { HeaderInvestorProjectList } from '@/components/projects/headers/HeaderInvestorProjectList'
-import { HeaderAdminProjectList } from '@/components/projects/headers/HeaderAdminProjectList'
-import { ProjectDashboardInvestor } from '@/components/projects/dashboard/investor'
-import { getProjectList, getProjectManagerProjectsList } from '@/app/services/getProjectList'
-import { ProjectDashboardProjectManager } from '@/components/projects/dashboard/project-manager'
 import { HeaderInvestorGalleryFotosProject } from '@/components/projects/headers/HeaderInvestorGalleryFotosProject'
 import { HeaderAdminGalleryFotosProject } from '@/components/projects/headers/HeaderAdminGalleryFotosProject'
 import { ProjectFotosProjectManager } from '@/components/projects/dashboard/project-manager/fotos'
@@ -75,16 +70,19 @@ export default function ProjectPhotos() {
             <Container maxW={'1440px'} mx='auto' h='100vh'>
                 {userData && projectData ?
 
-                    <Flex h='100%'>
+                    <Flex h='100%' flexDir={['column', 'column', 'row', 'row', 'row']} >
+
                         <Flex>
-                            <Flex w={64}></Flex>
+                            <Flex w={[0, 0, 0, 64, 64]}></Flex>
                             <SideBar userData={userData} />
                         </Flex>
 
-                        <Flex h='100%' flexDir={'column'} w='100%' px={12} py={12} gap={6}>
+
+                        {/* MAIN */}
+                        <Flex h='100%' flexDir={'column'} w='100%' px={[4, 4, 4, 12, 12]} py={[6, 6, 6, 12, 12]} gap={[4, 4, 4, 6, 6]}>
 
                             {/* HEADER */}
-                            <Flex
+                            < Flex
                                 justifyContent={'space-between'}
                                 alignItems={'center'}
                                 borderBottom={'1px solid #E5E7EB'}

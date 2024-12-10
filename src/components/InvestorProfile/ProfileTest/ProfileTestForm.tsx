@@ -37,8 +37,6 @@ export function ProfileTestForm({ user, router, userData }: CreateInvestorAccoun
     const onSubmit = async (data: any) => {
 
         try {
-            console.log('data')
-            console.log(data)
             if (page < (pages.length - 1)) {
                 nextPage()
                 return
@@ -97,8 +95,8 @@ export function ProfileTestForm({ user, router, userData }: CreateInvestorAccoun
 
                 <Flex flexDir={'column'} gap={8} px={8} h='100%' w='100%'>
                     {/* BEM VINDO E INSTRUÇÃO */}
-                    <Flex flexDir={'column'} alignItems={'center'} justifyContent={'center'}>
-                        <Flex fontSize={28} fontWeight={'semibold'} textAlign={'center'}>
+                    <Flex flexDir={'column'} alignItems={'center'} justifyContent={'center'} textAlign={'center'}>
+                        <Flex fontSize={[20,20,20,28,28]} fontWeight={'semibold'} >
                             Perfil do Investidor Imobiliário
                         </Flex>
                         <Flex>
@@ -110,7 +108,7 @@ export function ProfileTestForm({ user, router, userData }: CreateInvestorAccoun
                         <ErrorInputComponent error={yupError} />
                     </Flex>
                     <form onSubmit={handleSubmit(onSubmit)} style={{ height: '100%', width: '100%' }}>
-                        <Flex flexDir={'column'} justifyContent={'space-between'} h='100%'>
+                        <Flex flexDir={'column'} justifyContent={'space-between'} h='100%' gap={8}>
 
 
                             <Flex flexDir={'column'} gap={8}>

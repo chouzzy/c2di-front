@@ -1,6 +1,6 @@
 import { listUserNotifications } from "@/app/services/listUserNotifications"
 import { Modal, ModalOverlay, ModalContent, ModalHeader, Flex, ModalCloseButton, ModalBody, Button, Text, Spinner, Menu, MenuButton, MenuItem, MenuList, Avatar, HStack, LightMode, Spacer, VStack, useDisclosure } from "@chakra-ui/react"
-import { ArrowDown, Bell } from "phosphor-react"
+import { ArrowDown, Bell, BellRinging } from "phosphor-react"
 import { useEffect, useState } from "react"
 import { GoProjectRoadmap } from "react-icons/go"
 import { formatDistanceToNow } from 'date-fns';
@@ -9,6 +9,8 @@ import { ptBR } from 'date-fns/locale'; // Importa a localização em português
 import { PiArrowCircleLeft, PiArrowCircleRight } from "react-icons/pi"
 import { MdCircleNotifications } from "react-icons/md"
 import { readPrismaUserNotification } from "@/app/services/readUserNotification"
+import { hasUnreadNotifications } from "@/app/services/utils"
+import { HiBellAlert } from "react-icons/hi2"
 
 interface NotificationsModalProps {
     userData: User
@@ -28,9 +30,14 @@ export function UserNotificationsModal({ userData }: NotificationsModalProps) {
     const [userNotifications, setUserNotifications] = useState<Notification[] | null>()
     const [notificationOpened, setNotificationOpened] = useState<Notification>()
     const [readingNotification, setReadingNotification] = useState(false)
+    const [alertBell, setAlertBell] = useState(false)
 
-
-    // const [userDataNotifications, setUserDataNotifications] = useState<User["userNotifications"]>()
+    useEffect(() => {
+        if (userNotifications) {
+            const newNotifications = hasUnreadNotifications(userDataNotifications)
+            if (newNotifications) { setAlertBell(true) } else { setAlertBell(false) }
+        }
+    }, [userNotifications])
 
     const nextPage = async () => {
         setPage(page + 1)
@@ -67,8 +74,15 @@ export function UserNotificationsModal({ userData }: NotificationsModalProps) {
             try {
 
                 const response = await listUserNotifications(userID, page, pageRange)
-                setUserNotifications(response.notifications)
-                setTotalDocuments(response.totalDocs)
+                const { notifications, totalDocs } = response
+
+                // CHECA SE TEM NOVAS NOTIFICAÇÕES
+                if (notifications) {
+                    setUserNotifications(notifications)
+                    const newNotifications = hasUnreadNotifications(notifications)
+                    if (newNotifications) { setAlertBell(true) }
+                }
+                setTotalDocuments(totalDocs)
 
             } catch (error) {
                 console.error(error)
@@ -88,7 +102,6 @@ export function UserNotificationsModal({ userData }: NotificationsModalProps) {
         const readNotification = async (notificationID: Notification["id"]) => {
 
             try {
-                userData.userNotifications
 
                 const updatedUserNotifications = userData.userNotifications.map((notification) =>
                     notification.notificationID === notificationID ? { ...notification, isRead: true } : notification
@@ -97,6 +110,9 @@ export function UserNotificationsModal({ userData }: NotificationsModalProps) {
                 userData.userNotifications = updatedUserNotifications
 
                 const userUpdated = await readPrismaUserNotification(userData.id, userData)
+
+                const newNotifications = hasUnreadNotifications(userUpdated.userNotifications)
+                if (newNotifications) { setAlertBell(true) } else {setAlertBell(false)}
 
                 userData = userUpdated
 
@@ -115,11 +131,13 @@ export function UserNotificationsModal({ userData }: NotificationsModalProps) {
     return (
         <>
             <Menu >
+
                 <MenuButton onClick={() => setIsAlertsOpen(!isAlertsOpen)} as={Flex} cursor={'pointer'}>
-                    <Bell size={22} />
+                    {alertBell ? <HiBellAlert className="ringing" color='#EF3A5D' size={24} /> : <Bell size={24} />}
                 </MenuButton>
+
                 <Flex>
-                    <MenuList color='darkSide' w='400px'>
+                    <MenuList color='darkSide' w={['100vw', '100vw', '100vw', '400px', '400px']} mt={2}>
 
                         {/* TITULO */}
                         <Flex w='100%' textAlign={'center'} p={4}>
@@ -237,7 +255,7 @@ export function UserNotificationsModal({ userData }: NotificationsModalProps) {
                         </Flex>
                     </ModalHeader>
                     <ModalCloseButton color={'#EF3A5D'} />
-                    <ModalBody >
+                    <ModalBody>
                         {notificationOpened ?
                             <Flex flexDir={'column'} alignItems={'center'} justifyContent={'center'} gap={16} w='100%'>
                                 <Flex alignItems={'start'} flexDir={'column'} pt={4} w='100%' justifyContent={'space-between'} gap={12}>
@@ -249,8 +267,6 @@ export function UserNotificationsModal({ userData }: NotificationsModalProps) {
                                             {notificationOpened.message}
                                         </Text>
                                     </Flex>
-
-
 
 
                                 </Flex>

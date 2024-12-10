@@ -88,33 +88,37 @@ export function HeaderAdminProject({ projectData, userData, user }: HeaderProjec
 
     return (
         <>
-            <Flex flexDir={'column'}>
-                <Flex>
-                    <Text fontSize={28} fontWeight={'semibold'}>
-                        {projectData.title}
-                    </Text>
-                </Flex>
-                <Flex>
-                    <Text fontSize={16}>
-                        Aqui você pode visualizar e editar as informações cadastradas no painel
-                    </Text>
-                </Flex>
-            </Flex>
+            <Flex flexDir={['column','column','column','row','row']} alignItems={['center']} justifyContent={'space-between'} w='100%'>
 
-            <Flex gap={8} alignItems={'center'}>
-                {projectData.active ?
-                    <Button onClick={archiveProject} _hover={{ bgColor: 'red' }} color={'lightSide'} bgColor={'redSide'} mt={4}>
-                        <Flex minW={32} alignItems={'center'} justifyContent={'center'}>
-                            <Text>Arquivar projeto</Text>
-                        </Flex>
-                    </Button>
-                    :
-                    <Button onClick={activateProject} _hover={{ bgColor: 'green.600' }} color={'lightSide'} bgColor={'green.400'} mt={4}>
-                        <Flex minW={32} alignItems={'center'} justifyContent={'center'}>
-                            <Text>Reativar projeto</Text>
-                        </Flex>
-                    </Button>
-                }
+                <Flex flexDir={'column'} w='100%'>
+                    <Flex>
+                        <Text fontSize={[24, 24, 24, 28, 28]} fontWeight={'semibold'}>
+                            {projectData.title}
+                        </Text>
+                    </Flex>
+                    <Flex>
+                        <Text fontSize={16}>
+                            Aqui você pode visualizar e editar as informações cadastradas no painel
+                        </Text>
+                    </Flex>
+                </Flex>
+
+                <Flex gap={8} alignItems={'center'} w={['100%','100%','100%','initial','initial']}>
+                    {projectData.active ?
+                        <Button onClick={archiveProject}  minW={['100%','100%','100%',32,32]} _hover={{ bgColor: 'red' }} color={'lightSide'} bgColor={'redSide'} mt={4}>
+                            <Flex alignItems={'center'} justifyContent={'center'}>
+                                <Text>Arquivar projeto</Text>
+                            </Flex>
+                        </Button>
+                        :
+                        <Button onClick={activateProject}  minW={['100%','100%','100%',32,32]} _hover={{ bgColor: 'green.600' }} color={'lightSide'} bgColor={'green.400'} mt={4}>
+                            <Flex alignItems={'center'} justifyContent={'center'}>
+                                <Text>Reativar projeto</Text>
+                            </Flex>
+                        </Button>
+                    }
+
+                </Flex>
 
             </Flex>
 
@@ -124,7 +128,7 @@ export function HeaderAdminProject({ projectData, userData, user }: HeaderProjec
                 <ModalContent>
                     <ModalHeader>
                         <Flex gap={2} alignItems={'start'} flexDir={'column'} pt={4}>
-                            
+
                             {projectData.active ?
                                 <Text> Arquivar projeto? </Text>
                                 :

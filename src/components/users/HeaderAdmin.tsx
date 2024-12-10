@@ -89,23 +89,23 @@ export function AdminHeader({ userData, user }: AdminHeaderProps) {
     }, [deleteUserConfirm])
 
     return (
-        <>
+        <Flex flexDir={['column', 'column', 'column', 'row', 'row']} w='100%' justifyContent={'space-between'}>
             <Flex flexDir={'column'}>
                 <Flex>
-                    <Text fontSize={28} fontWeight={'semibold'}>
+                    <Text fontSize={[16, 16, 16, 28, 28]} fontWeight={'semibold'}>
                         Perfil do usuário
                     </Text>
                 </Flex>
                 <Flex>
-                    <Text fontSize={16}>
+                    <Text fontSize={[14, 14, 14, 16, 16]}>
                         Aqui você pode visualizar e editar as informações cadastradas no painel
                     </Text>
                 </Flex>
             </Flex>
 
             <Flex gap={8} alignItems={'center'}>
-                <Button onClick={changePassword} _hover={{ bgColor: 'redSide' }} color={'lightSide'} bgColor={'darkSide'} mt={4}>
-                    <Flex minW={32} alignItems={'center'} justifyContent={'center'}>
+                <Button onClick={changePassword} size={['sm', 'sm', 'sm', 'md']} _hover={{ bgColor: 'redSide' }} color={'lightSide'} bgColor={'darkSide'} mt={4}>
+                    <Flex alignItems={'center'} justifyContent={'center'}>
 
                         {changingPassword ?
                             <Spinner boxSize={4} />
@@ -114,8 +114,8 @@ export function AdminHeader({ userData, user }: AdminHeaderProps) {
                         }
                     </Flex>
                 </Button>
-                <Button onClick={deleteUser} _hover={{ bgColor: 'red' }} color={'lightSide'} bgColor={'redSide'} mt={4}>
-                    <Flex minW={32} alignItems={'center'} justifyContent={'center'}>
+                <Button onClick={deleteUser} size={['sm', 'sm', 'sm', 'md']} _hover={{ bgColor: 'red' }} color={'lightSide'} bgColor={'redSide'} mt={4}>
+                    <Flex alignItems={'center'} justifyContent={'center'}>
                         <Text>Desativar usuário</Text>
                     </Flex>
                 </Button>
@@ -179,7 +179,7 @@ export function AdminHeader({ userData, user }: AdminHeaderProps) {
                     </ModalFooter> */}
                 </ModalContent>
             </Modal>
-        </>
+        </Flex>
 
 
     )

@@ -29,7 +29,7 @@ interface FormUsersProps {
 function InvestorList({ userData, projectData }: FormUsersProps) {
 
     const { register, handleSubmit } = useForm({});
-    
+
     const hoje = new Date().toISOString().split('T')[0];
 
     const [editMode, setEditMode] = useState(false); // Estado para controlar o modo de edição
@@ -38,7 +38,7 @@ function InvestorList({ userData, projectData }: FormUsersProps) {
     const [usersList, setUsersList] = useState<User[]>()
     const [userInvestmentsList, setUserInvestmentsList] = useState<UserInvestment[]>()
 
-    
+
     const [investorDate, setInvestorDate] = useState<Date>(new Date());
     const [deletingUserInvestment, setDeletingUserInvestment] = useState(false)
     const [userInvestmentID, setUserInvestmentID] = useState('')
@@ -162,10 +162,10 @@ function InvestorList({ userData, projectData }: FormUsersProps) {
                         </Button>
                         :
                         <Flex gap={4}>
-                            <Button color='lightSide' bgColor="graySide" onClick={handleAddClick} maxW={40}>
+                            <Button color='lightSide' bgColor="graySide" onClick={handleAddClick} maxW={[24,24,24,40,40]}>
                                 Adicionar
                             </Button>
-                            <Button color='lightSide' bgColor="darkSide" onClick={handleEditClick} maxW={40}>
+                            <Button color='lightSide' bgColor="darkSide" onClick={handleEditClick} maxW={[20,20,20,40,40]}>
                                 Editar
                             </Button>
                         </Flex>
@@ -175,8 +175,8 @@ function InvestorList({ userData, projectData }: FormUsersProps) {
             }
 
 
-            <Flex flexDir={'column'} gap={16}>
-                <TableContainer>
+            <Flex w={['90vw', '90vw', '90vw', '100%', '100%']} flexDir={'column'}>
+                <TableContainer w={'100%'}>
                     <Table variant={'simple'}>
                         <Thead>
                             <Tr>
@@ -236,7 +236,7 @@ function InvestorList({ userData, projectData }: FormUsersProps) {
                 {addMode && usersList ?
                     <form onSubmit={handleSubmit(onSubmitInvestor)}>
 
-                        <Flex flexDir={'column'} p={4} bgColor={'darkSide'} borderRadius={'md'} color={'lightSide'}>
+                        <Flex flexDir={'column'} p={[0,0,0,4,4]} mt={8} bgColor={'darkSide'} borderRadius={'md'} color={'lightSide'}>
 
                             <Flex pt={4} textAlign={'center'}>
                                 <Text fontSize={24} mx='auto' fontWeight={'semibold'}> NOVO INVESTIDOR </Text>

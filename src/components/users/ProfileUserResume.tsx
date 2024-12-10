@@ -34,8 +34,8 @@ export function ProfileUserResume({ userData }: ProfileUsersProps) {
                         {/* Perfil de investidor (conservador, moderado, ousado) */}
                         {userData ?
 
-                            <Text fontSize={32} fontWeight={'medium'}>
-                                {userData.investorProfileName? userData.investorProfileName : 'Não informado.'}
+                            <Text fontSize={[24, 24, 24, 32, 32]} fontWeight={'medium'}>
+                                {userData.investorProfileName ? userData.investorProfileName : 'Não informado.'}
                             </Text>
                             :
                             <Flex boxSize={16} mx='auto'>
@@ -52,8 +52,8 @@ export function ProfileUserResume({ userData }: ProfileUsersProps) {
 
                     {userData ?
 
-                        <Text>
-                            {userData.investorProfileDescription? userData.investorProfileDescription : 'Faça agora mesmo o teste de perfil clicando no botão abaixo!'}
+                        <Text fontSize={[14, 14, 14, 16, 16]}>
+                            {userData.investorProfileDescription ? userData.investorProfileDescription : 'Faça agora mesmo o teste de perfil clicando no botão abaixo!'}
                         </Text>
                         :
                         <Flex boxSize={16} mx='auto'>
@@ -69,7 +69,7 @@ export function ProfileUserResume({ userData }: ProfileUsersProps) {
             <Flex>
 
                 {/* Refazer teste */}
-                <Button onClick={handleUpdateProfileTest} w={40} fontWeight={'normal'} bgColor={'redSide'} color={'lightSide'} mt={4}>
+                <Button onClick={handleUpdateProfileTest} size={['sm','sm','sm','md','md']} fontWeight={'normal'} bgColor={'redSide'} color={'lightSide'} mt={4}>
                     <Flex alignItems={'center'} justifyContent={'center'} w='100%'>
                         {isRedirecting ?
                             <Spinner boxSize={4} />

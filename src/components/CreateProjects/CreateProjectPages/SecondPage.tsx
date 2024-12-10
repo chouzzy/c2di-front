@@ -52,10 +52,10 @@ export function SecondPage({ register, userData }: PersonalDataAndGoalsProps) {
             </Flex>
 
             {/* Numero, Complemento e Bairro */}
-            <Flex alignItems={'center'} gap={8}>
+            <Flex alignItems={'center'} gap={8} flexDir={['column', 'column', 'row', 'row', 'row']}>
 
 
-                <Flex maxW={72} gap={8}>
+                <Flex w={['100%','100%','100%',72, 72]} gap={8}>
                     <AuthInput
                         key={"district"}
                         isRequired={true}
@@ -65,7 +65,7 @@ export function SecondPage({ register, userData }: PersonalDataAndGoalsProps) {
                         register={register("address.district")}
                     />
                 </Flex>
-                <Flex maxW={72} gap={8}>
+                <Flex w={['100%','100%','100%',72, 72]} gap={8}>
                     <AuthInput
                         key={"zipCode"}
                         isRequired={true}
@@ -76,7 +76,7 @@ export function SecondPage({ register, userData }: PersonalDataAndGoalsProps) {
                     />
                 </Flex>
 
-                <Flex minW={48} gap={8}>
+                <Flex w={['100%','100%','100%',48, 48]} gap={8}>
                     <AuthSelectInput
                         key={"state"}
                         isRequired={true}
@@ -89,7 +89,7 @@ export function SecondPage({ register, userData }: PersonalDataAndGoalsProps) {
                     />
                 </Flex>
 
-                <Flex >
+                <Flex w='100%'>
                     <AuthSelectInput
                         key={"city"}
                         isRequired={true}
@@ -105,10 +105,7 @@ export function SecondPage({ register, userData }: PersonalDataAndGoalsProps) {
             </Flex>
 
             {/* CEP, Estado e Cidade */}
-            <Flex mt={4} alignItems={'center'} gap={8} w='100%'>
-
-
-
+            <Flex mt={4} alignItems={'center'} gap={8} w='100%' flexDir={['column', 'column', 'row', 'row', 'row']}>
 
                 <Flex w='100%'>
                     <AuthInput
@@ -122,7 +119,7 @@ export function SecondPage({ register, userData }: PersonalDataAndGoalsProps) {
                 </Flex>
 
 
-                <Flex maxW={72} gap={8}>
+                <Flex w={['100%','100%','100%',72, 72]} gap={8}>
                     <AuthInput
                         key={"number"}
                         isRequired={true}
@@ -144,10 +141,10 @@ export function SecondPage({ register, userData }: PersonalDataAndGoalsProps) {
             </Flex>
 
             {/* Valores, construtora e status de construção */}
-            <Flex mt={4} alignItems={'center'} gap={8} w='100%'>
+            <Flex mt={4} alignItems={'center'} gap={8} w='100%' flexDir={['column', 'column', 'row', 'row', 'row']}>
 
                 {/* Valor investido */}
-                <Flex maxW={72} gap={8}>
+                <Flex w={['100%','100%','100%',72, 72]} gap={8}>
                     <AuthInput
                         key={"investmentValue"}
                         isRequired={true}
@@ -159,7 +156,7 @@ export function SecondPage({ register, userData }: PersonalDataAndGoalsProps) {
                 </Flex>
 
                 {/* Nome da construtora */}
-                <Flex maxW={72} gap={8}>
+                <Flex w={['100%','100%','100%',72, 72]} gap={8}>
                     <ProjectSelectInput
                         key={"buildingStatus"}
                         isRequired={true}
@@ -177,7 +174,7 @@ export function SecondPage({ register, userData }: PersonalDataAndGoalsProps) {
 
 
                 {/* Nome da construtora */}
-                <Flex maxW={72} gap={8}>
+                <Flex w={['100%','100%','100%',72, 72]} gap={8}>
                     <AuthInput
                         key={"companyName"}
                         isRequired={true}
@@ -193,7 +190,7 @@ export function SecondPage({ register, userData }: PersonalDataAndGoalsProps) {
 
 
             {/* Custo previsto */}
-            <Flex w='100%' gap={8} justifyContent={'space-between'}>
+            <Flex w='100%' gap={8} justifyContent={'space-between'} flexDir={['column', 'column', 'row', 'row', 'row']}>
                 <Flex w='100%'>
 
                     {/* 'Custo da fundação'*/}

@@ -28,65 +28,65 @@ export default function Users() {
         router.push("/404")
     }
 
-  // GET USER
-  useEffect(() => {
+    // GET USER
+    useEffect(() => {
 
-    const fetchAdminData = async (user: UserProfile) => {
+        const fetchAdminData = async (user: UserProfile) => {
 
-        const userResponse = await checkUserByEmail(user)
-        if (userResponse) {
-            setUserAdminData(userResponse)
-            setPageLoaded(true);
-        }
-    }
-
-    const fetchUserData = async (id: User["id"]) => {
-        try {
-
-            const userResponse = await getUserByID(id)
+            const userResponse = await checkUserByEmail(user)
             if (userResponse) {
-                setUserData(userResponse)
+                setUserAdminData(userResponse)
                 setPageLoaded(true);
             }
-
-        } catch (error) {
-
-            console.error('Erro ao buscar dados do usuário:', error);
-            await redirectNotFound()
-
         }
-    }
 
-    if (!isLoading) {
+        const fetchUserData = async (id: User["id"]) => {
+            try {
 
-        if (user) {
-            fetchAdminData(user);
-            if (params.id && typeof (params.id) == 'string') {
-                fetchUserData(params.id);
+                const userResponse = await getUserByID(id)
+                if (userResponse) {
+                    setUserData(userResponse)
+                    setPageLoaded(true);
+                }
+
+            } catch (error) {
+
+                console.error('Erro ao buscar dados do usuário:', error);
+                await redirectNotFound()
+
             }
-        } else {
-            // router.push('/authentication')
         }
-    }
 
-}, [user])
+        if (!isLoading) {
+
+            if (user) {
+                fetchAdminData(user);
+                if (params.id && typeof (params.id) == 'string') {
+                    fetchUserData(params.id);
+                }
+            } else {
+                // router.push('/authentication')
+            }
+        }
+
+    }, [user])
 
     if (!user) {
         return (
             <SpinnerFullScreen />
         )
     }
-    
+
     if (!pageLoaded) {
         return (
             <SpinnerFullScreen />
-        )    
+        )
     }
 
 
     return (
         <>
-            <Container maxW={'1440px'} mx='auto' h='100vh'>
+            <Flex maxW={'1440px'} h='100vh'>
                 {!pageLoaded ?
                     <Flex h='100%' w='100%' alignItems={'center'} justifyContent={'center'}>
                         <Spinner
@@ -95,17 +95,19 @@ export default function Users() {
                         />
                     </Flex>
                     :
+                    <Flex h='100%' flexDir={['column', 'column', 'row', 'row', 'row']} >
 
-                    <Flex h='100%'>
                         <Flex>
-                            <Flex w={64}></Flex>
-                            <SideBar userData={userAdminData} />
+                            <Flex w={[0, 0, 0, 64, 64]}></Flex>
+                            <SideBar userData={userData} />
                         </Flex>
 
-                        <Flex h='100%' flexDir={'column'} w='100%' px={12} py={12} gap={6}>
+
+                        {/* MAIN */}
+                        <Flex h='100%' flexDir={'column'} w='100%' px={[4, 4, 4, 12, 12]} py={[6, 6, 6, 12, 12]} gap={[4, 4, 4, 6, 6]}>
 
                             {/* HEADER */}
-                            <Flex
+                            < Flex
                                 justifyContent={'space-between'}
                                 alignItems={'center'}
                                 borderBottom={'1px solid #E5E7EB'}
@@ -137,7 +139,7 @@ export default function Users() {
                         </Flex>
                     </Flex>
                 }
-            </Container >
+            </Flex >
         </>
     )
 }

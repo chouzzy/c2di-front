@@ -1,4 +1,4 @@
-import { Button, Flex, FormLabel, Input, InputGroup, InputRightAddon, Link, Spinner, Text } from "@chakra-ui/react";
+import { Button, Flex, FormLabel, Input, InputGroup, InputRightAddon, Link, Spinner, Text, useBreakpointValue } from "@chakra-ui/react";
 import { formataData, formataDataMonthShort, formatarMoeda, formatarPercentual } from "@/app/services/utils";
 import { XAxis, YAxis, BarChart, Bar, Legend, Tooltip, AreaChart, Area } from 'recharts';
 import { ProjectFileInput } from "@/components/CreateProjects/Inputs/FileInput";
@@ -42,6 +42,28 @@ export function BuildingStatus({ userData, projectData }: ProjectDataProps) {
         { etapa: 'Acabamento', Evolução: acabamento },
         { etapa: 'Pintura', Evolução: pintura },
     ];
+
+    const graphWidth = useBreakpointValue({
+        base: 320,
+        sm: 320,
+        md: 320,
+        lg: 800,
+        xl: 1100
+    })
+    const graphHeight = useBreakpointValue({
+        base: 320,
+        sm: 320,
+        md: 320,
+        lg: 500,
+        xl: 500
+    })
+    const barWidth = useBreakpointValue({
+        base: 32,
+        sm: 32,
+        md: 32,
+        lg: 64,
+        xl: 64
+    })
 
     const renderCustomBarLabel = ({ payload, x, y, width, height, value }: any) => {
         return <text x={x + width / 2} y={y} fill="#0F172A" textAnchor="middle" dy={-8} fontWeight={500} >{`${value}%`}</text>;
@@ -108,7 +130,7 @@ export function BuildingStatus({ userData, projectData }: ProjectDataProps) {
 
             <ErrorInputComponent error={yupError} />
 
-            <Flex flexDir={'column'}>
+            <Flex flexDir={'column'} w='100%'>
                 {/* HEADER ANDAMENTO */}
                 <Flex flexDir={'column'} gap={2}>
 
@@ -122,9 +144,9 @@ export function BuildingStatus({ userData, projectData }: ProjectDataProps) {
 
                         : ''
                     }
-                    <Text fontWeight={'semibold'} fontSize={20}> Andamento da obra:</Text>
+                    <Text fontWeight={'semibold'} fontSize={[16, 16, 16, 20, 20]}> Andamento da obra:</Text>
 
-                    <Text>
+                    <Text fontSize={[14, 14, 14, 18, 18]}>
                         O gráfico de barras apresenta a evolução de cada etapa da obra,
                         permitindo que você acompanhe o progresso de forma clara e visual.
                         As barras representam as etapas da construção, e a altura de cada barra indica o
@@ -133,7 +155,7 @@ export function BuildingStatus({ userData, projectData }: ProjectDataProps) {
                 </Flex>
 
                 {/* GRAFICOS ANDAMENTO */}
-                <Flex flexDir={'column'}>
+                <Flex flexDir={'column'} alignItems={'center'}>
 
                     {editModeAndamento ?
                         <Flex pt={8} flexDir={'column'} gap={4}>
@@ -141,7 +163,7 @@ export function BuildingStatus({ userData, projectData }: ProjectDataProps) {
                                 <Text fontSize={14} fontWeight={'semibold'}>Alterar dados do gráfico:</Text>
                             </Flex>
                             <form onSubmit={handleSubmit(onSubmitAndamento)}>
-                                <Flex gap={2} fontSize={12} alignItems={'center'}>
+                                <Flex gap={2} fontSize={12} alignItems={'center'} flexDir={['column','column','column','row','row']}>
 
                                     <Flex>
                                         <FormLabel fontSize={12}> Fundação <InputGroup>
@@ -185,35 +207,34 @@ export function BuildingStatus({ userData, projectData }: ProjectDataProps) {
                         </Flex>
                         : ''
                     }
-                    <BarChart width={1100} height={500} data={data}>
+                    <BarChart width={graphWidth} height={graphHeight} data={data}>
                         <XAxis dataKey="etapa" />
                         <YAxis type='number' domain={([0, 120])} hide />
                         <Tooltip />
                         <Legend />
-                        <Bar radius={8} barSize={64} dataKey="Evolução" fill="#64748B" label={renderCustomBarLabel} activeBar={{ stroke: 'cyan', strokeWidth: 2, }} />
+                        <Bar radius={8} barSize={barWidth} dataKey="Evolução" fill="#64748B" label={renderCustomBarLabel} activeBar={{ stroke: 'cyan', strokeWidth: 2, }} />
                     </BarChart>
                 </Flex>
             </Flex>
 
             {/* ACOMPANHAMENTOS */}
-            <Flex flexDir={'column'} gap={20}>
+            <Flex flexDir={'column'} gap={4} w='100%'>
 
                 {/* ANDAMENTOS TITULO E IMPORT */}
                 <Flex flexDir={'column'} gap={4}>
 
-                    <Flex justifyContent={'space-between'}>
-                        <Text fontWeight={'semibold'} fontSize={24}> Acompanhamentos</Text>
-                        {userData.role != 'INVESTOR' ?
+                    {userData.role != 'INVESTOR' ?
+                        <Flex justifyContent={'space-between'}>
 
-                            <Flex justifyContent={'end'}>
+                            <Flex justifyContent={'end'} w='100%'>
                                 <Button color='lightSide' bgColor="darkSide" borderRadius={4} onClick={editCost} size={'sm'}>
-                                    {editModeCusto? 'Cancelar':'Importar dados'}
+                                    {editModeCusto ? 'Cancelar' : 'Importar dados'}
                                 </Button>
                             </Flex>
+                        </Flex>
 
-                            : ''
-                        }
-                    </Flex>
+                        : ''
+                    }
 
                     {editModeCusto ?
                         <Flex flexDir={'column'} gap={4}>
@@ -236,7 +257,7 @@ export function BuildingStatus({ userData, projectData }: ProjectDataProps) {
                             </form>
                             <Flex>
                                 <Link href='https://drive.usercontent.google.com/download?id=1PNFcxDblSGSk_DsShpZk5Qpz9lBbCWHp&export=download&authuser=0&confirm=t&uuid=81b13ea6-73c6-4227-bd26-5791567c82ea&at=AENtkXbK1MWusDRElsQkSdQ3Y2Bu:1732899063115'
-                                target="_blank"    
+                                    target="_blank"
                                 >
                                     <Button _hover={{ bgColor: 'green.700' }} bgColor={'green.500'} px={4} py={2} borderRadius={4} color={'lightSide'} size='sm'>Baixe aqui a planilha modelo</Button>
                                 </Link>
@@ -253,9 +274,9 @@ export function BuildingStatus({ userData, projectData }: ProjectDataProps) {
                     <Flex flexDir={'row'} alignItems={'center'} gap={16}>
 
                         <Flex flexDir={'column'}>
-                            <Text fontWeight={'semibold'} fontSize={20}> Acompanhamento financeiro:</Text>
+                            <Text fontWeight={'semibold'} fontSize={[16, 16, 16, 20, 20]}> Acompanhamento financeiro:</Text>
 
-                            <Text>
+                            <Text fontSize={[14, 14, 14, 18, 18]}>
                                 Mantenha-se informado sobre o cronograma financeiro da obra com este gráfico de linhas. Compare o previsto com o realizado e acompanhe o seu investimento mês a mês.
                             </Text>
                         </Flex>
@@ -263,18 +284,15 @@ export function BuildingStatus({ userData, projectData }: ProjectDataProps) {
                     </Flex>
 
                     {/* GRAFICOS CUSTO FINANCEIRO*/}
-                    <Flex flexDir={'column'}>
+                    <Flex flexDir={'column'} alignItems={'center'}>
 
                         {/* GRAFICO 1 */}
                         <AreaChart
-                            width={1100}
-                            height={500}
+                            width={graphWidth}
+                            height={graphHeight}
                             data={financialTotalProgress}
                             margin={{
                                 top: 50,
-                                right: 0,
-                                left: 12,
-                                bottom: 0,
                             }}
                         >
                             <XAxis dataKey="data" fontSize={12} tickFormatter={formataData} />
@@ -297,30 +315,27 @@ export function BuildingStatus({ userData, projectData }: ProjectDataProps) {
 
 
                 {/* ACOMPANHAMENTO OBRA TOTAL */}
-                <Flex flexDir={'column'}>
+                <Flex flexDir={'column'} alignItems={'center'}>
                     {/* HEADER PROGRESSO DE OBRA TOTAL*/}
                     <Flex flexDir={'row'} alignItems={'center'} gap={16}>
                         <Flex flexDir={'column'} >
-                            <Text fontWeight={'semibold'} fontSize={20}> Acompanhamento de obra:</Text>
+                            <Text fontWeight={'semibold'} fontSize={[16, 16, 16, 20, 20]}> Acompanhamento de obra:</Text>
 
-                            <Text>
+                            <Text fontSize={[14, 14, 14, 18, 18]}>
                                 Analise o progresso da obra através do gráfico de linhas interativo. Compare o percentual previsto e realizado em cada mês e avalie o ritmo da construção.
                             </Text>
                         </Flex>
                     </Flex>
 
                     {/* GRAFICOS PROGRESSO DE OBRA TOTAL*/}
-                    <Flex flexDir={'column'}>
+                    <Flex flexDir={'column'} alignItems={'center'}>
                         {/* GRAFICO 1 */}
                         <AreaChart
-                            width={1100}
-                            height={500}
+                            width={graphWidth}
+                            height={graphHeight}
                             data={buildingTotalProgress}
                             margin={{
                                 top: 50,
-                                right: 0,
-                                left: 12,
-                                bottom: 0,
                             }}
                         >
                             <XAxis dataKey="data" fontSize={12} tickFormatter={formataData} />

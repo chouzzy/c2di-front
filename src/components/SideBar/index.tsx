@@ -1,4 +1,4 @@
-import { Flex, Box, Text, Icon, Link, Image, Button, Spinner } from '@chakra-ui/react';
+import { Flex, Box, Text, Icon, Link, Image, Button, Spinner, useBreakpointValue, IconButton, Menu, MenuButton, MenuList, MenuItem as ChakraMenuItem } from '@chakra-ui/react';
 import {
     CaretDown,
     SquaresFour,
@@ -7,13 +7,15 @@ import {
     User,
     SignOut,
     Users,
-    House
+    House,
+    List
 } from 'phosphor-react';
 import { MenuItem } from './MenuItem';
 import { Header } from './Header';
 import { usePathname, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { BsBuildings } from 'react-icons/bs';
+import { UserNotificationsModal } from './Header/userNotificationsModal';
 
 interface SideBarProps {
     userData: User | null
@@ -22,11 +24,20 @@ interface SideBarProps {
 
 export function SideBar({ userData, projectData }: SideBarProps) {
 
+    const isMobile = useBreakpointValue({
+        base: true,
+        sm: true,
+        md: false,
+        lg: false,
+        xl: false
+    })
+
     const pathName = usePathname()
 
     const [pathRoleState, setPathRoleState] = useState('')
 
     const [loadingRole, setLoadingRole] = useState(true)
+
 
 
     useEffect(() => {
@@ -74,7 +85,9 @@ export function SideBar({ userData, projectData }: SideBarProps) {
 
 
                 {/* Rodapé */}
-                <Flex flexDir={'column'} gap={8}>
+
+
+                <Flex flexDir={'column'} gap={8} >
                     <Image src="/assets/logo_c2di.svg" alt="logo" />
                 </Flex>
             </Flex>
@@ -83,82 +96,183 @@ export function SideBar({ userData, projectData }: SideBarProps) {
 
 
     return (
-        <Flex
-            zIndex={1}
-            flexDirection="column"
-            alignItems="start"
-            justifyContent="space-between"
-            position={'fixed'}
-            h='100vh'
-            w={64}
-            px={4}
-            py={8}
-            bg="beigeSide"
-            color="darkSide"
 
-        >
-            <Flex flexDir={'column'} w='100%' gap={12}>
+        <>
+            {isMobile ?
 
 
-                {/* Cabeçalho */}
+                // MOBILE
+                <Flex w='100%'>
 
-                {userData ?
+                    <Flex justifyContent={'space-between'} w='100%' p={4}>
 
-                    <Header name={userData.name} userData={userData} />
-                    :
-                    <Flex boxSize={16} mx='auto'>
-                        <Spinner
-                            boxSize={8}
-                            color='darkSide'
-                        />
+                        <Link _hover={{ textDecor: 'none' }} href='/'>
+                            <Flex>
+                                <Image src='/assets/logo_c2di.png' objectFit={'contain'} maxW={24} />
+                            </Flex>
+                        </Link>
+
+                        {/* MENU E NOTIFICAÇÕES */}
+                        <Flex alignItems={'center'} gap={4}>
+
+                            <Flex>
+                                {userData ? <UserNotificationsModal userData={userData} /> : ''}
+                            </Flex>
+
+                            <Flex>
+                                <Menu>
+                                    <MenuButton
+                                        as={IconButton}
+                                        aria-label='Options'
+                                        icon={<List />}
+                                        variant='outline'
+                                    />
+                                    <MenuList
+                                        w='100vw'
+                                        bgColor="beigeSide"
+                                        color="darkSide"
+                                        borderRadius={0}
+                                    >
+                                        <Flex flexDir={'column'} w='100%' gap={12}>
+                                            {userData ?
+
+                                                <Header isMobile={isMobile} name={userData.name} userData={userData} />
+                                                :
+                                                <Flex boxSize={16} mx='auto'>
+                                                    <Spinner
+                                                        boxSize={8}
+                                                        color='darkSide'
+                                                    />
+                                                </Flex>
+                                            }
+                                            <Flex flexDirection="column" alignItems="flex-start" w="100%">
+
+
+
+                                                {(userData?.role != 'PROJECT_MANAGER') ?
+                                                    <MenuItem href={`dashboard`} isActive={pathName == "/dashboard"} icon={SquaresFour} title='Dashboard' />
+                                                    :
+                                                    ''
+                                                }
+
+                                                {(userData?.role == "ADMINISTRATOR") ?
+                                                    <MenuItem href={`projects`} isActive={pathName == `/projects/${projectData?.id}` || pathName == `/projects`} icon={House} title='Imóveis' />
+                                                    :
+                                                    ''
+                                                }
+                                                {(userData?.role == 'PROJECT_MANAGER') ?
+                                                    <MenuItem href={`projects`} isActive={pathName.startsWith(`/project-manager`)} icon={BsBuildings} title='Projetos' />
+                                                    :
+                                                    ''
+                                                }
+                                                {userData?.role == "ADMINISTRATOR" ?
+                                                    <MenuItem href={`users/list`} isActive={pathName == "/users/list" || pathName.startsWith('/users/update/investor') || pathName.startsWith('/users/update/project-manager') || pathName.startsWith('/users/update/administrator/')} icon={Users} title='Usuários' />
+                                                    :
+                                                    ''
+                                                }
+                                                {userData?.role == "INVESTOR" ?
+                                                    <>
+                                                        <MenuItem href={`myInvestments`} isActive={pathName == `/myInvestments`} icon={BookOpen} title='Meus investimentos' />
+                                                        <MenuItem href={`projects`} icon={ChartLineUp} isActive={pathName.startsWith(`/projects`)} title='Investir' />
+                                                    </>
+                                                    :
+                                                    ''
+                                                }
+                                                <MenuItem href={`users/update/${pathRoleState}`} isActive={pathName == `/users/update/${pathRoleState}`} icon={User} title='Meu perfil' />
+                                                <MenuItem href={`api/auth/logout`} isActive={pathName == "/api/auth/logout"} icon={SignOut} title='Logout' />
+
+                                            </Flex>
+                                        </Flex>
+                                    </MenuList>
+                                </Menu>
+                            </Flex>
+
+                        </Flex>
                     </Flex>
-                }
-
-                {/* Itens do menu */}
-                <Flex flexDirection="column" alignItems="flex-start" w="100%">
-
-
-                    {(userData?.role != 'PROJECT_MANAGER') ?
-                        <MenuItem href={`dashboard`} isActive={pathName == "/dashboard"} icon={SquaresFour} title='Dashboard' />
-                        :
-                        ''
-                    }
-
-                    {(userData?.role == "ADMINISTRATOR") ?
-                        <MenuItem href={`projects`} isActive={pathName == `/projects/${projectData?.id}` || pathName == `/projects`} icon={House} title='Imóveis' />
-                        :
-                        ''
-                    }
-                    {(userData?.role == 'PROJECT_MANAGER') ?
-                        <MenuItem href={`projects`} isActive={pathName.startsWith(`/project-manager`)} icon={BsBuildings} title='Projetos' />
-                        :
-                        ''
-                    }
-                    {userData?.role == "ADMINISTRATOR" ?
-                        <MenuItem href={`users/list`} isActive={pathName == "/users/list" || pathName.startsWith('/users/update/investor') || pathName.startsWith('/users/update/project-manager') || pathName.startsWith('/users/update/administrator/')} icon={Users} title='Usuários' />
-                        :
-                        ''
-                    }
-                    {userData?.role == "INVESTOR" ?
-                        <>
-                            <MenuItem href={`myInvestments`} isActive={pathName == `/myInvestments`} icon={BookOpen} title='Meus investimentos' />
-                            <MenuItem href={`projects`} icon={ChartLineUp} isActive={pathName.startsWith(`/projects`)} title='Investir' />
-                        </>
-                        :
-                        ''
-                    }
-                    <MenuItem href={`users/update/${pathRoleState}`} isActive={pathName == `/users/update/${pathRoleState}`} icon={User} title='Meu perfil' />
-                    <MenuItem href={`api/auth/logout`} isActive={pathName == "/api/auth/logout"} icon={SignOut} title='Logout' />
-
                 </Flex>
+                :
 
-            </Flex>
+                // DESKTOP
+                <Flex
+                    zIndex={1}
+                    flexDirection="column"
+                    alignItems="start"
+                    justifyContent="space-between"
+                    position={['fixed']}
+                    h='100vh'
+                    w={64}
+                    px={4}
+                    py={8}
+                    bg="beigeSide"
+                    color="darkSide"
+                >
+                    <Flex flexDir={'column'} w='100%' gap={12}>
 
 
-            {/* Rodapé */}
-            <Flex flexDir={'column'} gap={8}>
-                <Image src="/assets/logo_c2di.svg" alt="logo" />
-            </Flex>
-        </Flex>
+                        {/* Cabeçalho */}
+
+                        {userData ?
+
+                            <Header isMobile={isMobile} name={userData.name} userData={userData} />
+                            :
+                            <Flex boxSize={16} mx='auto'>
+                                <Spinner
+                                    boxSize={8}
+                                    color='darkSide'
+                                />
+                            </Flex>
+                        }
+
+                        {/* Itens do menu */}
+                        <Flex flexDirection="column" alignItems="flex-start" w="100%">
+
+
+                            {(userData?.role != 'PROJECT_MANAGER') ?
+                                <MenuItem href={`dashboard`} isActive={pathName == "/dashboard"} icon={SquaresFour} title='Dashboard' />
+                                :
+                                ''
+                            }
+
+                            {(userData?.role == "ADMINISTRATOR") ?
+                                <MenuItem href={`projects`} isActive={pathName == `/projects/${projectData?.id}` || pathName == `/projects`} icon={House} title='Imóveis' />
+                                :
+                                ''
+                            }
+                            {(userData?.role == 'PROJECT_MANAGER') ?
+                                <MenuItem href={`projects`} isActive={pathName.startsWith(`/project-manager`)} icon={BsBuildings} title='Projetos' />
+                                :
+                                ''
+                            }
+                            {userData?.role == "ADMINISTRATOR" ?
+                                <MenuItem href={`users/list`} isActive={pathName == "/users/list" || pathName.startsWith('/users/update/investor') || pathName.startsWith('/users/update/project-manager') || pathName.startsWith('/users/update/administrator/')} icon={Users} title='Usuários' />
+                                :
+                                ''
+                            }
+                            {userData?.role == "INVESTOR" ?
+                                <>
+                                    <MenuItem href={`myInvestments`} isActive={pathName == `/myInvestments`} icon={BookOpen} title='Meus investimentos' />
+                                    <MenuItem href={`projects`} icon={ChartLineUp} isActive={pathName.startsWith(`/projects`)} title='Investir' />
+                                </>
+                                :
+                                ''
+                            }
+                            <MenuItem href={`users/update/${pathRoleState}`} isActive={pathName == `/users/update/${pathRoleState}`} icon={User} title='Meu perfil' />
+                            <MenuItem href={`api/auth/logout`} isActive={pathName == "/api/auth/logout"} icon={SignOut} title='Logout' />
+
+                        </Flex>
+
+                    </Flex>
+
+
+                    {/* Rodapé */}
+                    <Flex flexDir={'column'} gap={8}>
+                        <Image src="/assets/logo_c2di.svg" alt="logo" />
+                    </Flex>
+                </Flex>
+            }
+
+
+
+        </>
     );
 }

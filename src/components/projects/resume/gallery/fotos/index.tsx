@@ -27,9 +27,9 @@ export function FotosGaleria({ projectData }: ProjectDataProps) {
             {/* IMAGE */}
             <Flex w='100%'>
                 <Flex gap={2} w='100%'>
-                    <Image src={`/assets/projects/${previousImages[0].url}`} h={32} w={40} objectFit={'cover'} objectPosition={'center'} />
-                    <Image src={`/assets/projects/${previousImages[1].url}`} h={32} w={40} objectFit={'cover'} objectPosition={'center'} />
-                    <Flex onClick={() => {redirectToFotos()}} w='100%' bgColor={'grayBox'} justifyContent={'center'} alignItems={'center'} cursor={'pointer'} _hover={{ bgColor: 'darkSide', color: 'lightSide', transition: '600ms' }}>
+                    <Image src={`/assets/projects/${previousImages[0].url}`} h={32} w={[28, 28, 28, 40, 40]} objectFit={'cover'} objectPosition={'center'} />
+                    <Image src={`/assets/projects/${previousImages[1].url}`} h={32} w={[28, 28, 28, 40, 40]} objectFit={'cover'} objectPosition={'center'} />
+                    <Flex onClick={() => { redirectToFotos() }} w='100%' bgColor={'grayBox'} justifyContent={'center'} alignItems={'center'} cursor={'pointer'} _hover={{ bgColor: 'darkSide', color: 'lightSide', transition: '600ms' }}>
                         <Text> Ver mais </Text>
                     </Flex>
                 </Flex>

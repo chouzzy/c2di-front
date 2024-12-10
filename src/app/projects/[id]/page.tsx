@@ -5,12 +5,11 @@ import { getProjectByID } from '@/app/services/getProject'
 import { SpinnerFullScreen } from '@/components/Loading/SpinnerFullScreen'
 import ProjectResumeAdmin from '@/components/projects/resume/role/admin'
 import ProjectResumeInvestor from '@/components/projects/resume/role/investor'
-import ProjectResumeProjectManager from '@/components/projects/resume/role/project-manager'
 import { SideBar } from '@/components/SideBar'
 import { HeaderAdminProject } from '@/components/users/HeaderAdminProject'
 import { HeaderInvestorProject } from '@/components/users/HeaderInvestorProject'
 import { UserProfile, useUser } from '@auth0/nextjs-auth0/client'
-import { Container, Flex, Spinner } from '@chakra-ui/react'
+import { Flex } from '@chakra-ui/react'
 import { useParams, useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 
@@ -70,34 +69,32 @@ export default function ProjectInvestorProject() {
 
   return (
 
-    <Container maxW={'1440px'} mx='auto' h='100vh'>
+    <Flex maxW={'1440px'} h='100vh'>
 
 
       {/* SPINNER */}
       {userData && user && projectData ?
 
-        <Flex h='100%'>
+        <Flex h='100%' flexDir={['column', 'column', 'row', 'row', 'row']} >
 
-          {/* SIDEBAR */}
           <Flex>
-            <Flex w={64}></Flex>
-            <SideBar projectData={projectData} userData={userData} />
+            <Flex w={[0, 0, 0, 64, 64]}></Flex>
+            <SideBar userData={userData} />
           </Flex>
 
 
           {/* MAIN */}
-          <Flex h='100%' flexDir={'column'} w='100%' px={12} py={12} gap={6}>
-
+          <Flex h='100%' flexDir={'column'} w='100%' px={[4, 4, 4, 12, 12]} py={[6, 6, 6, 12, 12]} gap={[4, 4, 4, 6, 6]}>
 
             {/* HEADER */}
-            <Flex
+            < Flex
               justifyContent={'space-between'}
               alignItems={'center'}
               borderBottom={'1px solid #E5E7EB'}
               pb={8}
             >
-              {userData.role == "INVESTOR" ? <HeaderInvestorProject projectData={projectData} /> : "" }
-              {userData.role != "INVESTOR" ? <HeaderAdminProject projectData={projectData} userData={userData} user={user} /> : "" }
+              {userData.role == "INVESTOR" ? <HeaderInvestorProject projectData={projectData} /> : ""}
+              {userData.role != "INVESTOR" ? <HeaderAdminProject projectData={projectData} userData={userData} user={user} /> : ""}
             </Flex>
 
 
@@ -105,8 +102,8 @@ export default function ProjectInvestorProject() {
             <Flex flexDir={'column'}>
 
               <Flex gap={12}>
-                {userData.role == "INVESTOR" ? <ProjectResumeInvestor userData={userData} user={user} projectData={projectData} /> : "" }
-                {userData.role == "ADMINISTRATOR" ? <ProjectResumeAdmin userData={userData} user={user} projectData={projectData} /> : "" }
+                {userData.role == "INVESTOR" ? <ProjectResumeInvestor userData={userData} user={user} projectData={projectData} /> : ""}
+                {userData.role == "ADMINISTRATOR" ? <ProjectResumeAdmin userData={userData} user={user} projectData={projectData} /> : ""}
 
               </Flex>
 
@@ -120,7 +117,7 @@ export default function ProjectInvestorProject() {
       }
 
 
-    </Container >
+    </Flex >
 
   )
 }

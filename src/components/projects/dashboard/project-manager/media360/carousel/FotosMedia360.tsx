@@ -67,7 +67,7 @@ export function FotosMedia360({ projectData, openImage }: FotosMedia360Props) {
         <Flex flexDir={'column'} gap={8}>
 
             {/* HEADER */}
-            <Flex w='100%' flexDir={'row'} gap={2} justifyContent={'space-between'} alignItems={'center'} minH={16}>
+            <Flex w='100%' gap={2} justifyContent={'space-between'} alignItems={'center'} minH={16} flexDir={['column', 'column', 'column', 'row', 'row']}>
 
                 {/* LABEL */}
                 <Flex fontSize={20} fontWeight={'medium'} mt={2} alignItems={'center'} gap={2}>
@@ -103,7 +103,7 @@ export function FotosMedia360({ projectData, openImage }: FotosMedia360Props) {
 
             {/* 360 IMAGES */}
             <Flex maxW={'100%'} gap={2}>
-                <SimpleGrid columns={2} gap={2} w='100%'>
+                <SimpleGrid columns={[1,1,1,2,2]} gap={2} w='100%'>
                     {media360.map((img) => {
                         return (
                             <Flex

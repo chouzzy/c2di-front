@@ -7,7 +7,7 @@ import { SpinnerFullScreen } from '@/components/Loading/SpinnerFullScreen'
 import { checkUserByEmail } from '@/app/services/checkUserByEmail'
 import { UserProfile, useUser } from '@auth0/nextjs-auth0/client'
 import { getProjectList } from '@/app/services/getProjectList'
-import { Container, Flex } from '@chakra-ui/react'
+import { Container, Flex, useBreakpointValue } from '@chakra-ui/react'
 import { SideBar } from '@/components/SideBar'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
@@ -25,7 +25,6 @@ export default function ProjectInvestorProjects() {
     const [elementsPerPage, setElementsPerPage] = useState<number>(4)
 
     const [page, setPage] = useState(1)
-
 
     // GET USER
     useEffect(() => {
@@ -86,24 +85,24 @@ export default function ProjectInvestorProjects() {
 
     return (
         <>
-            <Container maxW={'1440px'} mx='auto' h='100vh'>
+            <Flex maxW={'1440px'} >
                 {userData && user && projectsData ?
 
-                    <Flex h='100%'>
+                    <Flex h='100%' flexDir={['column', 'column', 'row', 'row', 'row']} >
 
                         <Flex>
-                            <Flex w={64}></Flex>
+                            <Flex w={[0, 0, 0, 64, 64]}></Flex>
                             <SideBar userData={userData} />
                         </Flex>
 
-                        <Flex h='100%' flexDir={'column'} w='100%' px={12} py={12} gap={6}>
+                        <Flex h='100%' flexDir={'column'} w='100%' px={[4,4,4,12,12]} py={[4,4,4,12,12]} gap={[0,0,0,6,6]}>
 
                             {/* HEADER */}
                             < Flex
                                 justifyContent={'space-between'}
                                 alignItems={'center'}
                                 borderBottom={'1px solid #E5E7EB'}
-                                pb={8}
+                                pb={[4,4,4,8,8]}
                             >
                                 {userData.role == "INVESTOR" ? <HeaderInvestorProjectList /> : ''}
                                 {userData.role != "INVESTOR" ? <HeaderAdminProjectList user={user} userData={userData} /> : ''}
@@ -124,7 +123,7 @@ export default function ProjectInvestorProjects() {
                     :
                     <SpinnerFullScreen />
                 }
-            </Container >
+            </Flex >
         </>
     )
 }

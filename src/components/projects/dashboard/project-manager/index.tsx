@@ -23,7 +23,7 @@ export function ProjectDashboardProjectManager({ projectsData, page, setPage, to
 
             <Flex>
                 {/* MENU COM PROJETOS */}
-                <SimpleGrid columns={2} w='100%'>
+                <SimpleGrid columns={[1, 1, 1, 2, 2]} w='100%' gap={4}>
 
                     {projectsData.map((project) => {
 
@@ -33,12 +33,12 @@ export function ProjectDashboardProjectManager({ projectsData, page, setPage, to
                         return (
 
                             // CARD DO PROJETO
-                            <Flex key={project.id} flexDir={'column'} gap={4} w={440} mt={6}>
+                            <Flex key={project.id} flexDir={'column'} gap={4} w={['100%', '100%', '100%', 440, 440]} mt={6}>
 
                                 {/* IMAGEM E STATUS */}
                                 <Flex>
                                     <Flex w='100%' flexDir={'column'} gap={1}>
-                                        <Image src={`/assets/projects/${project.images[0].url}`} h={160} w={440} objectFit={'cover'} objectPosition={'center'} />
+                                        <Image src={`/assets/projects/${project.images[0].url}`} h={160} w={['100%', '100%', '100%', 440, 440]} objectFit={'cover'} objectPosition={'center'} />
 
                                         <Flex
                                             w={'min'}
@@ -55,7 +55,7 @@ export function ProjectDashboardProjectManager({ projectsData, page, setPage, to
                                 </Flex>
 
                                 {/* DADOS DO PROJETO */}
-                                <Flex flexDir={'column'} gap={2} h={16}>
+                                <Flex flexDir={'column'} gap={[0, 0, 0, 2, 2]} h={[12, 12, 12, 16, 16]}>
 
                                     <Text fontSize={20} fontWeight={'semibold'}>
                                         {project.title}
@@ -66,16 +66,16 @@ export function ProjectDashboardProjectManager({ projectsData, page, setPage, to
                                 </Flex>
 
                                 {/* ACTION BUTTONS */}
-                                <Flex justifyContent={'start'} gap={8}>
+                                <Flex justifyContent={['space-between', 'space-between', 'space-between', 'start', 'start']} gap={8}>
                                     <Link href={`/project-manager/projects/${project.id}`}>
-                                        <Button _hover={{ bgColor: 'graySide' }} color={'lightSide'} bgColor={'darkSide'} fontSize={14}>
-                                            <Flex minW={24} alignItems={'center'} justifyContent={'center'}>
+                                        <Button _hover={{ bgColor: 'graySide' }} size={['sm','sm','sm','md','md']} color={'lightSide'} bgColor={'darkSide'} fontSize={14}>
+                                            <Flex alignItems={'center'} justifyContent={'center'}>
                                                 <Text>Ver projeto</Text>
                                             </Flex>
                                         </Button>
                                     </Link>
-                                    <Button _hover={{ bgColor: 'graySide' }} color={'lightSide'} bgColor={'darkSide'} fontSize={14}>
-                                        <Flex minW={32} alignItems={'center'} justifyContent={'center'}>
+                                    <Button _hover={{ bgColor: 'graySide' }} size={['sm','sm','sm','md','md']} color={'lightSide'} bgColor={'darkSide'} fontSize={14}>
+                                        <Flex alignItems={'center'} justifyContent={'center'}>
                                             <Text>Entrar em contato</Text>
                                         </Flex>
                                     </Button>
@@ -90,13 +90,8 @@ export function ProjectDashboardProjectManager({ projectsData, page, setPage, to
             </Flex>
 
             {/* FOOTER */}
-            <Flex w='100%' justifyContent={'space-between'} gap={4} >
-                <Flex>
-                    <Text>
-                        Mostrando {projectsData.length} de {totalPages} projeto(s)
-                    </Text>
-                </Flex>
-                <Flex gap={4}>
+            <Flex w='100%'  gap={4} >
+                <Flex gap={4} w='100%' alignItems={'center'} justifyContent={'space-between'}>
 
                     <Button
                         onClick={previousPage}
@@ -112,6 +107,11 @@ export function ProjectDashboardProjectManager({ projectsData, page, setPage, to
                         </Flex>
                     </Button>
 
+                    <Flex>
+                        <Text textAlign={'center'} fontSize={[12, 12, 12, 14, 14]}>
+                            Mostrando {projectsData.length} de {totalPages} projeto(s)
+                        </Text>
+                    </Flex>
                     <Button
                         onClick={nextPage}
                         _hover={{ bgColor: 'graySide' }}

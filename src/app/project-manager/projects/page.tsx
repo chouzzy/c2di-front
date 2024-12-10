@@ -81,44 +81,45 @@ export default function ProjectManagersProjects() {
 
     }, [userData, page])
 
-return (
-    <>
-        <Container maxW={'1440px'} mx='auto' h='100vh'>
-            {userData && user && projectsData ?
-                <Flex h='100%'>
-                    <Flex>
-                        <Flex w={64}></Flex>
-                        <SideBar userData={userData} />
-                    </Flex>
+    return (
+        <>
+            <Flex maxW={'1440px'} >
+                {userData && user && projectsData ?
+                    <Flex h='100%' flexDir={['column', 'column', 'row', 'row', 'row']} >
 
-                    <Flex h='100%' flexDir={'column'} w='100%' px={12} py={12} gap={6}>
-
-                        {/* HEADER */}
-                        <Flex
-                            justifyContent={'space-between'}
-                            alignItems={'center'}
-                            borderBottom={'1px solid #E5E7EB'}
-                            pb={8}
-                        >
-                            {userData.role == "INVESTOR" ? <HeaderInvestorProjectList /> : ''}
-                            {userData.role != "INVESTOR" ? <HeaderAdminProjectList user={user} userData={userData} /> : ''}
+                        <Flex>
+                            <Flex w={[0, 0, 0, 64, 64]}></Flex>
+                            <SideBar userData={userData} />
                         </Flex>
 
-                        {/* BODY FORMS */}
-                        < Flex flexDir={'column'}>
+                        <Flex h='100%' flexDir={'column'} w='100%' px={[4, 4, 4, 12, 12]} py={[4, 4, 4, 12, 12]} gap={[0, 0, 0, 6, 6]}>
 
-                            <Flex gap={12}>
-                                <ProjectDashboardProjectManager elementsPerPage={elementsPerPage} totalPages={totalPages} page={page} setPage={setPage} projectsData={projectsData} />
+                            {/* HEADER */}
+                            < Flex
+                                justifyContent={'space-between'}
+                                alignItems={'center'}
+                                borderBottom={'1px solid #E5E7EB'}
+                                pb={[4, 4, 4, 8, 8]}
+                            >
+                                {userData.role == "INVESTOR" ? <HeaderInvestorProjectList /> : ''}
+                                {userData.role != "INVESTOR" ? <HeaderAdminProjectList user={user} userData={userData} /> : ''}
                             </Flex>
 
+                            {/* BODY FORMS */}
+                            < Flex flexDir={'column'}>
+
+                                <Flex gap={12}>
+                                    <ProjectDashboardProjectManager elementsPerPage={elementsPerPage} totalPages={totalPages} page={page} setPage={setPage} projectsData={projectsData} />
+                                </Flex>
+
+                            </Flex>
                         </Flex>
                     </Flex>
-                </Flex>
 
-                :
-                <SpinnerFullScreen />
-            }
-        </Container >
-    </>
-)
+                    :
+                    <SpinnerFullScreen />
+                }
+            </Flex >
+        </>
+    )
 }

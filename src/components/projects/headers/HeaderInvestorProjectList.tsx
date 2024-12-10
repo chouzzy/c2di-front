@@ -12,7 +12,7 @@ export function HeaderInvestorProjectList() {
         <>
             <Flex flexDir={'column'}>
                 <Flex>
-                    <Text fontSize={28} fontWeight={'semibold'}>
+                    <Text fontSize={[24,24,24,28,28]} fontWeight={'semibold'}>
                         Projetos
                     </Text>
                 </Flex>

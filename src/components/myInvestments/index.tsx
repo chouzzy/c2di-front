@@ -27,7 +27,7 @@ export function MyInvestmentsList({ userInvestmentsData, projectsData, page, set
 
             <Flex flexDir={'column'}>
                 <Flex flexDir={'column'} gap={4}>
-                    
+
                     <Text fontSize={18} fontWeight={'semibold'}>
                         Total de investimentos: {projectsData.length}
                     </Text>
@@ -46,7 +46,7 @@ export function MyInvestmentsList({ userInvestmentsData, projectsData, page, set
                     </Text>
                 </Flex>
                 {/* MENU COM PROJETOS */}
-                <SimpleGrid columns={2} w='100%' gap={16}>
+                <SimpleGrid columns={[1, 1, 2, 2, 2]} w='100%' gap={16}>
 
                     {projectsData.map((project) => {
 
@@ -75,7 +75,7 @@ export function MyInvestmentsList({ userInvestmentsData, projectsData, page, set
                                 </Flex>
 
                                 {/* DADOS DO PROJETO */}
-                                <Flex flexDir={'row'} justifyContent={'space-between'}>
+                                <Flex flexDir={['column', 'column', 'row', 'row', 'row']} gap={[4,4,4,0,0]} justifyContent={'space-between'}>
 
                                     <Flex flexDir={'column'}>
 

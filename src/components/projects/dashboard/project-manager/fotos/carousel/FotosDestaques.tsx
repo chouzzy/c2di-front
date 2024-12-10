@@ -1,4 +1,4 @@
-import { Button, Flex, Image, Modal, ModalBody, ModalCloseButton, ModalContent, ModalOverlay, Spinner, Text, useDisclosure } from "@chakra-ui/react";
+import { Button, Flex, Image, Modal, ModalBody, ModalCloseButton, ModalContent, ModalOverlay, Spinner, Text, useBreakpointValue, useDisclosure } from "@chakra-ui/react";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { Swiper, SwiperSlide, useSwiper } from 'swiper/react';
 import { Navigation, Scrollbar, Pagination, A11y } from 'swiper/modules';
@@ -28,6 +28,8 @@ export function FotosDestaques({ projectData, openImage }: FotosDestaquesProps) 
         setDeletingImageID(imageID)
         setIsDeletingImage(true)
     }
+
+    const slidesResponsive = useBreakpointValue({ base: 1, sm: 1, md: 3, lg: 4, xl: 5 })
 
     // DELETE IMAGE DESTAQUES
     useEffect(() => {
@@ -101,7 +103,7 @@ export function FotosDestaques({ projectData, openImage }: FotosDestaquesProps) 
                 <Swiper
                     modules={[Navigation, Pagination, Scrollbar, A11y]}
                     spaceBetween={50}
-                    slidesPerView={destaques.length  < 4 ? destaques.length : 4}
+                    slidesPerView={destaques.length < (slidesResponsive??4) ? destaques.length : slidesResponsive}
                     navigation
                     loop
                     // pagination

@@ -1,4 +1,4 @@
-import { Button, Flex, Image, Text } from "@chakra-ui/react";
+import { Button, Flex, Image, Text, useBreakpointValue } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Scrollbar, Pagination, A11y } from 'swiper/modules';
@@ -28,6 +28,9 @@ export function FotosExterno({ projectData, openImage }: FotosExternoProps) {
         setDeletingImageID(imageID)
         setIsDeletingImage(true)
     }
+
+    const slidesResponsive = useBreakpointValue({ base: 1, sm: 1, md: 3, lg: 4, xl: 5 })
+
 
     // DELETE IMAGE EXTERNO
     useEffect(() => {
@@ -98,7 +101,7 @@ export function FotosExterno({ projectData, openImage }: FotosExternoProps) {
                 <Swiper
                     modules={[Navigation, Pagination, Scrollbar, A11y]}
                     spaceBetween={50}
-                    slidesPerView={externo.length < 4 ? externo.length : 4}
+                    slidesPerView={externo.length < (slidesResponsive??4) ? externo.length : slidesResponsive}
                     navigation
                     loop
                     // pagination

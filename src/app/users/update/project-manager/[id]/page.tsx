@@ -79,7 +79,7 @@ export default function Users() {
 
     return (
         <>
-            <Container maxW={'1440px'} mx='auto' h='100vh'>
+            <Flex maxW={'1440px'} mx='auto' h='100vh'>
                 {!pageLoaded ?
                     <Flex h='100%' w='100%' alignItems={'center'} justifyContent={'center'}>
                         <Spinner
@@ -89,16 +89,19 @@ export default function Users() {
                     </Flex>
                     :
 
-                    <Flex h='100%'>
+                    <Flex h='100%' flexDir={['column', 'column', 'row', 'row', 'row']} >
+
                         <Flex>
-                            <Flex w={64}></Flex>
-                            <SideBar userData={userAdminData} />
+                            <Flex w={[0, 0, 0, 64, 64]}></Flex>
+                            <SideBar userData={userData} />
                         </Flex>
 
-                        <Flex h='100%' flexDir={'column'} w='100%' px={12} py={12} gap={6}>
+
+                        {/* MAIN */}
+                        <Flex h='100%' flexDir={'column'} w='100%' px={[4, 4, 4, 12, 12]} py={[6, 6, 6, 12, 12]} gap={[4, 4, 4, 6, 6]}>
 
                             {/* HEADER */}
-                            <Flex
+                            < Flex
                                 justifyContent={'space-between'}
                                 alignItems={'center'}
                                 borderBottom={'1px solid #E5E7EB'}
@@ -130,7 +133,7 @@ export default function Users() {
                         </Flex>
                     </Flex>
                 }
-            </Container >
+            </Flex >
         </>
     )
 }

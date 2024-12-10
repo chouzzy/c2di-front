@@ -17,7 +17,7 @@ export function ProjectGallery({ userData, projectData }: ProjectDataProps) {
         <Flex flexDir={'column'} py={4} gap={8}>
 
             <Flex flexDir={'column'} w='100%'>
-                <Flex w='100%' gap={16}>
+                <Flex w='100%' gap={16} flexDir={['column', 'column', 'column', 'row', 'row']}>
 
                     {/* CAPA */}
                     <CapaGaleria userData={userData} projectData={projectData} />
@@ -31,15 +31,15 @@ export function ProjectGallery({ userData, projectData }: ProjectDataProps) {
 
 
             <Flex flexDir={'column'} w='100%'>
-                <Flex w='100%' gap={16}>
+                <Flex w='100%' gap={16} flexDir={['column', 'column', 'column', 'row', 'row']}>
 
                     {/* PLANTAS */}
-                    <PlantasGaleria projectData={projectData}/>
+                    <PlantasGaleria projectData={projectData} />
 
 
                     {/* 360 GALERIA */}
-                    <Galeria360 projectData={projectData}/>
-                    
+                    <Galeria360 projectData={projectData} />
+
                 </Flex>
             </Flex>
         </Flex>

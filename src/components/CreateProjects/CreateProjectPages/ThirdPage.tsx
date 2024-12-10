@@ -17,7 +17,7 @@ interface PersonalDataAndGoalsProps {
 export function ThirdPage({ register, userData }: PersonalDataAndGoalsProps) {
 
     return (
-        <>
+        <Flex flexDir={'column'}>
             <Flex mb={-4} w='100%' justifyContent={'center'}>
                 <Text fontSize={18} fontWeight={'medium'} borderBottom='1px' borderColor={'darkSide'} textTransform={'uppercase'}>
                     Fotos e Documentos
@@ -25,8 +25,8 @@ export function ThirdPage({ register, userData }: PersonalDataAndGoalsProps) {
             </Flex>
 
 
-            {/* CEP, Estado e Cidade */}
-            <Flex mt={4} alignItems={'center'} gap={8} w='100%' flexDir={'column'}>
+            {/* Documentos */}
+            <Flex mt={4} alignItems={'center'} gap={8} w='100%' flexDir={['column']}>
 
                 <Flex w='100%'>
                     <ProjectFileInput
@@ -40,7 +40,7 @@ export function ThirdPage({ register, userData }: PersonalDataAndGoalsProps) {
                 </Flex>
 
 
-                <Flex w='100%'>
+                <Flex w='100%' flexDir={['column', 'row', 'row', 'row', 'row']}>
 
                     <Flex w='100%' gap={8}>
                         <ProjectFileInput
@@ -66,7 +66,7 @@ export function ThirdPage({ register, userData }: PersonalDataAndGoalsProps) {
                     </Flex>
                 </Flex>
 
-                <Flex w='100%'>
+                <Flex w='100%' flexDir={['column', 'row', 'row', 'row', 'row']}>
                     <Flex w='100%' gap={8}>
                         <ProjectFileInput
                             key={"PLANTAS"}
@@ -91,7 +91,7 @@ export function ThirdPage({ register, userData }: PersonalDataAndGoalsProps) {
                     </Flex>
                 </Flex>
 
-                <Flex w='100%'>
+                <Flex w='100%' flexDir={['column', 'row', 'row', 'row', 'row']}>
                     <Flex w='100%' gap={8}>
                         <ProjectFileInput
                             key={"INTERNO"}
@@ -103,7 +103,7 @@ export function ThirdPage({ register, userData }: PersonalDataAndGoalsProps) {
                             register={register("image.INTERNO")}
                         />
                     </Flex>
-                    <Flex w='100%' gap={8}>
+                    <Flex w='100%' gap={8} flexDir={['column', 'row', 'row', 'row', 'row']} >
                         <ProjectFileInput
                             key={"PANORAMICAS"}
                             isRequired={true}
@@ -118,7 +118,7 @@ export function ThirdPage({ register, userData }: PersonalDataAndGoalsProps) {
 
 
             </Flex>
-        </>
+        </Flex>
     )
 
 }

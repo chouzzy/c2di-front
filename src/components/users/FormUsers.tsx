@@ -186,7 +186,7 @@ function FormUsers({ userData }: FormUsersProps) {
 
 
                 {/* Profissão, Data de nascimento e CPF */}
-                <Flex mt={4} alignItems={'center'} gap={6}>
+                <Flex mt={4} alignItems={['start','start','start','center','center']} gap={6} flexDir={['column','column','column','row','row']}>
 
                     {/* Profissão */}
                     {editMode ?
@@ -232,7 +232,7 @@ function FormUsers({ userData }: FormUsersProps) {
                 </Flex>
 
                 {/* CEP, Estado e Cidade */}
-                <Flex mt={4} alignItems={'center'} gap={8}>
+                <Flex mt={4} alignItems={['start','start','start','center','center']} gap={8} flexDir={['column', 'column', 'column', 'row', 'row']}>
 
                     <Flex maxW={72} gap={8}>
                         {editMode ?

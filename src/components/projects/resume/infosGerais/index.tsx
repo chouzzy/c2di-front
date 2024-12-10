@@ -1,4 +1,4 @@
-import { Button, Flex, Image, Modal, ModalBody, ModalCloseButton, ModalContent, ModalHeader, ModalOverlay, Spinner, Text, useDisclosure } from "@chakra-ui/react";
+import { Button, Flex, Image, Modal, ModalBody, ModalCloseButton, ModalContent, ModalHeader, ModalOverlay, Spinner, Text, useBreakpointValue, useDisclosure } from "@chakra-ui/react";
 import { XAxis, YAxis, BarChart, Bar, Legend, Tooltip, Area, AreaChart } from 'recharts';
 import { createPrismaNotification } from "@/app/services/createNotification";
 import { getPrismaNotification } from "@/app/services/getNotification";
@@ -30,6 +30,14 @@ export function InfosGerais({ userData, projectData }: ProjectDataProps) {
 
     const minCost = financialTotalProgress[0].previsto
     const maxCost = financialTotalProgress[financialTotalProgress.length - 1].previsto
+
+    const graphWidth = useBreakpointValue({
+        base: 320,
+        sm: 320,
+        md: 400,
+        lg: 600,
+        xl: 600
+    })
 
     const { register, handleSubmit } = useForm()
     const { isOpen, onOpen, onClose } = useDisclosure() // Adiciona o hook useDisclosure
@@ -154,16 +162,16 @@ export function InfosGerais({ userData, projectData }: ProjectDataProps) {
 
 
     return (
-        <Flex w='100%' py={8} flexDir={'row'} gap={12}>
+        <Flex w='100%' py={8} flexDir={['column', 'column', 'column', 'row', 'row']} gap={12}>
             {/* IMAGEM GIGANTE */}
             <Flex>
-                <Image src={`/assets/projects/${projectData.images[0].url}`} h={'100%'} minW={440} objectFit={'cover'} objectPosition={'center'} borderRadius={2} boxShadow={'2xl'} />
+                <Image src={`/assets/projects/${projectData.images[0].url}`} h={[300, 300, 300, '100%', '100%']} minW={['100%', '100%', '100%', 440, 440]} objectFit={'cover'} objectPosition={'center'} borderRadius={2} boxShadow={'2xl'} />
             </Flex>
 
             <Flex gap={8} flexDir={'column'} justifyContent={'space-between'}>
 
                 {/* GRAFICOS */}
-                <Flex w='100%' flexDir={'column'} gap={2}>
+                <Flex w='100%' flexDir={'column'} gap={2} alignItems={'center'}>
                     <Flex flexDir={'column'}>
                         <Flex gap={8} fontSize={12} py={2} flexDir={'column'}>
 
@@ -173,7 +181,7 @@ export function InfosGerais({ userData, projectData }: ProjectDataProps) {
                                     Financeiro (previsto x realizado):
                                 </Text>
                                 <AreaChart
-                                    width={600}
+                                    width={graphWidth}
                                     height={200}
                                     data={financialTotalProgress}
                                     margin={{
@@ -206,7 +214,7 @@ export function InfosGerais({ userData, projectData }: ProjectDataProps) {
                                     Obra (previsto x realizado):
                                 </Text>
                                 <AreaChart
-                                    width={600}
+                                    width={graphWidth}
                                     height={200}
                                     data={buildingTotalProgress}
                                     margin={{
@@ -239,7 +247,7 @@ export function InfosGerais({ userData, projectData }: ProjectDataProps) {
                         <Text fontSize={16} fontWeight={'semibold'}>
                             Acompanhamento de obra:
                         </Text>
-                        <BarChart width={580} height={160} data={data}>
+                        <BarChart width={graphWidth} height={160} data={data}>
                             <XAxis dataKey="etapa" />
                             <YAxis type='number' domain={([0, 120])} hide />
                             <Tooltip />

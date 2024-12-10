@@ -78,7 +78,7 @@ export function UsersListHeader() {
     };
 
     return (
-        <>
+        <Flex flexDir={['column', 'column', 'column', 'row', 'row']} w='100%' justifyContent={'space-between'}>
             <Flex flexDir={'column'}>
                 <Flex>
                     <Text fontSize={28} fontWeight={'semibold'}>
@@ -93,7 +93,7 @@ export function UsersListHeader() {
             </Flex>
 
             <Flex>
-                <Button onClick={createUserByAdmin} _hover={{ bgColor: 'redSide', transition: '300ms' }} color={'lightSide'} bgColor={'darkSide'} mt={4}>
+                <Button onClick={createUserByAdmin} _hover={{ bgColor: 'redSide', transition: '300ms' }} size={['sm','sm','sm','md']} color={'lightSide'} bgColor={'darkSide'} mt={4}>
                     Criar usuário
                 </Button>
             </Flex>
@@ -102,7 +102,7 @@ export function UsersListHeader() {
             {/* Modal */}
             <Modal isOpen={isOpen} onClose={onClose} size={"xl"}>
                 <ModalOverlay />
-                <ModalContent p={4}>
+                <ModalContent p={[0,0,0,4,4]} m={2}>
                     <ModalHeader>
                         <Flex gap={2} alignItems={'start'} flexDir={'column'} pt={4}>
                             <Text>
@@ -191,7 +191,7 @@ export function UsersListHeader() {
                     </ModalFooter> */}
                 </ModalContent>
             </Modal>
-        </>
+        </Flex>
 
 
     )
