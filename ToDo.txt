@@ -18,11 +18,11 @@ Considerações da C2DI:
 - exportável ficha técnica
 - menu atualizou, voltar para o estado anterior ok
 - trocar destaques por fachada ok 
-- área externa virar área comum, área interna como 
-- trocar área interna por decorado
+- área externa virar área comum ok
+- trocar área interna por decorado ok
 - investidor só pode ver mídia 360 do projeto dele
-- deixar a foto do prédio em pé ao invés de deitada na capa do projeto
-- quebrar gráfico horizontal na metade
+- deixar a foto do prédio em pé ao invés de deitada na capa do projeto ok
+- quebrar gráfico horizontal na metade ok
 
 - mandar prints
 - peso do perfil do investidor
