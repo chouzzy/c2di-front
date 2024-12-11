@@ -18,14 +18,17 @@ Considerações da C2DI:
 - trocar área interna por decorado ok
 - deixar a foto do prédio em pé ao invés de deitada na capa do projeto ok
 - quebrar gráfico horizontal na metade ok
+- mandar prints ok
+- peso do perfil do investidor ok
 - ícone de notificação lida
 - notificações lista suspensa
 - notificações automáticas para atualização de documento e mídia
 - exportável ficha técnica
 - investidor só pode ver mídia 360 do projeto dele
+- clicar na notificação de documentos, abrir na aba docs
+- adicionar data na tabela de documentos
+- colocar icone de lista suspensa no menu do project[id]
 
-- mandar prints
-- peso do perfil do investidor
 
 
 Considerações 27/11

@@ -31,7 +31,7 @@ export function CreateProjectForm({ user, router, userData }: CreateInvestorAcco
 
     const pages = [0, 1, 2]
 
-    const [page, setPage] = useState(2)
+    const [page, setPage] = useState(0)
 
     // SUBMIT FORM
     const onSubmit = async (data: any) => {
@@ -74,23 +74,6 @@ export function CreateProjectForm({ user, router, userData }: CreateInvestorAcco
     const previousPage = async () => {
         setPage(page - 1)
     }
-
-    if (!user) {
-        return (
-            <Flex h='100%' w='100%' alignItems={'center'} justifyContent={'center'}>
-                <Spinner boxSize={32} />
-            </Flex>
-        )
-    }
-    if (!user.email) {
-        return (
-            <Flex h='100%' w='100%' alignItems={'center'} justifyContent={'center'}>
-                <Spinner boxSize={32} />
-            </Flex>
-        )
-    }
-
-
 
     return (
         <Flex w='100%'>

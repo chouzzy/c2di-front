@@ -17,15 +17,7 @@ export default function CreateProject() {
     const { user, isLoading } = useUser()
 
     const [userData, setUserData] = useState<User | null>(null);
-    const [projectsData, setProjectsData] = useState<Investment[] | null>(null);
 
-    const [pageLoaded, setPageLoaded] = useState(false);
-
-    const redirectNotFound = async () => {
-        // router.push("/404")
-    }
-
-    // GET USER
     useEffect(() => {
 
         const fetchUserData = async (user: UserProfile) => {
@@ -35,72 +27,20 @@ export default function CreateProject() {
                 setUserData(userResponse)
 
             } catch (error) {
-
                 console.error('Erro ao buscar dados do usuário:', error);
-                await redirectNotFound()
-
             }
         }
 
-        const fetchProjectData = async (id: User["id"]) => {
-            try {
-
-                const projectResponse = await getProjectManagerProjectsList({ projectManagerID: id })
-                setProjectsData(projectResponse)
-                setPageLoaded(true)
-
-            } catch (error) {
-
-                console.error('Erro ao buscar dados do projeto:', error);
-                await redirectNotFound()
-
-            }
+        if (!userData && user) {
+            fetchUserData(user);
         }
 
-        if (!isLoading) {
-
-            if (user) {
-                fetchUserData(user);
-                if (userData) {
-                    fetchProjectData(userData.id);
-                }
-
-            } else {
-                router.push('/authentication')
-            }
-        }
-
-    }, [user])
-
-    if (!user) {
-        return (
-            <SpinnerFullScreen />
-        )
-    }
-    if (!projectsData) {
-        return (
-            <SpinnerFullScreen />
-        )
-    }
-    if (!userData) {
-        return (
-            <SpinnerFullScreen />
-        )
-    }
-
+    }, [isLoading])
 
     return (
         <>
-            <Flex maxW={'1440px'} h='100vh'>
-                {!pageLoaded ?
-                    <Flex h='100%' w='100%' alignItems={'center'} justifyContent={'center'}>
-                        <Spinner
-                            boxSize={40}
-                            color='redSide'
-                        />
-                    </Flex>
-                    :
-
+            <Flex maxW={'1440px'} mx='auto'>
+                {userData && user ?
                     <Flex h='100%' flexDir={['column', 'column', 'column', 'column', 'row']} w='100%'>
 
                         <Flex>
@@ -139,6 +79,13 @@ export default function CreateProject() {
                             }
 
                         </Flex>
+                    </Flex>
+                    :
+                    <Flex h='100%' w='100%' alignItems={'center'} justifyContent={'center'}>
+                        <Spinner
+                            boxSize={40}
+                            color='redSide'
+                        />
                     </Flex>
                 }
             </Flex >
