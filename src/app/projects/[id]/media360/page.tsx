@@ -72,10 +72,10 @@ export default function ProjectMedia360() {
             <Container maxW={'1440px'} mx='auto' h='100vh'>
                 {userData && projectData ?
 
-                    <Flex h='100%' flexDir={['column', 'column', 'row', 'row', 'row']} >
+                    <Flex h='100%' flexDir={['column', 'column', 'column', 'column', 'row']} >
 
                         <Flex>
-                            <Flex w={[0, 0, 0, 64, 64]}></Flex>
+                            <Flex w={[0, 0, 0, 0, 60]}></Flex>
                             <SideBar userData={userData} />
                         </Flex>
 

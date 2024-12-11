@@ -71,16 +71,16 @@ export default function ProjectPlantas() {
             <Container maxW={'1440px'} mx='auto' h='100vh'>
                 {userData && projectData ?
 
-                    <Flex h='100%' flexDir={['column', 'column', 'row', 'row', 'row']} >
+                    <Flex h='100%' flexDir={['column', 'column', 'column', 'column', 'row']} >
 
                         <Flex>
-                            <Flex w={[0, 0, 0, 64, 64]}></Flex>
+                            <Flex w={[0, 0, 0, 64, 60]}></Flex>
                             <SideBar userData={userData} />
                         </Flex>
 
 
                         {/* MAIN */}
-                        <Flex h='100%' flexDir={'column'} w='100%' px={[4, 4, 4, 12, 12]} py={[6, 6, 6, 12, 12]} gap={[4, 4, 4, 6, 6]}>
+                        <Flex h='100%' flexDir={'column'} w='100%' px={[4, 4, 4, 4, 12]} py={[6, 6, 6, 12, 12]} gap={[4, 4, 4, 6, 6]}>
 
                             {/* HEADER */}
                             < Flex

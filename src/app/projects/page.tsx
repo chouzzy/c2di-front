@@ -85,13 +85,13 @@ export default function ProjectInvestorProjects() {
 
     return (
         <>
-            <Flex maxW={'1440px'} >
+            <Flex maxW={'1440px'} mx='auto'>
                 {userData && user && projectsData ?
 
-                    <Flex h='100%' flexDir={['column', 'column', 'row', 'row', 'row']} >
+                    <Flex h='100%' flexDir={['column', 'column', 'column', 'column', 'row']} w='100%'>
 
                         <Flex>
-                            <Flex w={[0, 0, 0, 64, 64]}></Flex>
+                            <Flex w={[0, 0, 0, 0, 60]}></Flex>
                             <SideBar userData={userData} />
                         </Flex>
 

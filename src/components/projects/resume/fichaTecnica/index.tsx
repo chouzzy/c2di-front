@@ -22,6 +22,8 @@ export function FichaTecnica({ userData, projectData }: ProjectDataProps) {
     const { register, handleSubmit, formState: { errors } } = useForm({});
     const [yupError, setYupError] = useState<string>("")
     const [editMode, setEditMode] = useState(false); // Estado para controlar o modo de edição
+    const [floorPlanTypesAdapted, setFloorPlanTypesAdapted] = useState(projectData.floorPlanTypes.map((floorPlan) => { return ' ' + floorPlan + ' m²' }))
+
     const projectTypesDict = {
         RESIDENCIAL_MULTIFAMILIAR: "Residencial Multifamiliar",
         RESIDENCIAL_VERTICAL: "Residencial vertical",
@@ -32,7 +34,6 @@ export function FichaTecnica({ userData, projectData }: ProjectDataProps) {
     const handleEditClick = () => {
         setEditMode(true); // Ativa o modo de edição
     };
-
 
     const onSubmit = async (data: any) => {
 
@@ -63,8 +64,8 @@ export function FichaTecnica({ userData, projectData }: ProjectDataProps) {
                 <Flex gap={8} flexDir={'column'} w='100%'>
 
                     {/* Dates */}
-                    <Flex gap={12} w='100%' flexDir={['column','column','column','row','row']}>
-                        <Flex w='100%'>
+                    <Flex gap={12} w='100%' flexDir={['column', 'column', 'row', 'row', 'row']} >
+                        <Flex w='100%' textAlign={['center','center','center','center','start']}>
                             {/* Title */}
                             {editMode ?
                                 <ProjectInput
@@ -81,7 +82,7 @@ export function FichaTecnica({ userData, projectData }: ProjectDataProps) {
                             }
                         </Flex>
 
-                        <Flex w='100%'>
+                        <Flex w='100%' textAlign={['center','center','center','center','start']}>
                             {/* Description */}
                             {editMode ?
                                 <TextAreaInput
@@ -97,7 +98,7 @@ export function FichaTecnica({ userData, projectData }: ProjectDataProps) {
                             }
                         </Flex>
 
-                        <Flex w='100%'>
+                        <Flex w='100%' textAlign={['center','center','center','center','start']}>
 
                             {/* Status da construção */}
                             {editMode ?
@@ -121,8 +122,8 @@ export function FichaTecnica({ userData, projectData }: ProjectDataProps) {
                     </Flex>
 
                     {/* Dates */}
-                    <Flex gap={12} w='100%' flexDir={['column','column','column','row','row']}>
-                        <Flex w='100%'>
+                    <Flex gap={12} w='100%' flexDir={['column', 'column', 'row', 'row', 'row']}>
+                        <Flex w='100%' textAlign={['center','center','center','center','start']}>
                             {/* Data de início da obra */}
                             {editMode ?
                                 <ProjectInput
@@ -137,7 +138,7 @@ export function FichaTecnica({ userData, projectData }: ProjectDataProps) {
                                 <StaticProject type='Data de início da obra' data={new Date(projectData.constructionStartDate).toLocaleDateString("pt-br")} />
                             }
                         </Flex>
-                        <Flex w='100%'>
+                        <Flex w='100%' textAlign={['center','center','center','center','start']}>
                             {/* Data de entrega da obra */}
                             {editMode ?
                                 <ProjectInput
@@ -153,7 +154,7 @@ export function FichaTecnica({ userData, projectData }: ProjectDataProps) {
                             }
                         </Flex>
 
-                        <Flex w='100%'>
+                        <Flex w='100%' textAlign={['center','center','center','center','start']}>
 
                             {/* Data de lançamento launchDate */}
                             {editMode ?
@@ -172,9 +173,9 @@ export function FichaTecnica({ userData, projectData }: ProjectDataProps) {
                     </Flex>
 
                     {/* Tipo e nome da construtora */}
-                    <Flex gap={12} w='100%' flexDir={['column','column','column','row','row']}>
+                    <Flex gap={12} w='100%' flexDir={['column', 'column', 'row', 'row', 'row']}>
 
-                        <Flex w='100%'>
+                        <Flex w='100%' textAlign={['center','center','center','center','start']}>
                             {/* Tipo de projeto */}
                             {editMode ?
                                 <ProjectSelectInput
@@ -189,7 +190,7 @@ export function FichaTecnica({ userData, projectData }: ProjectDataProps) {
                                 <StaticProject type='Tipo do projeto' data={projectTypesDict[projectData.projectType]} />
                             }
                         </Flex>
-                        <Flex w='100%'>
+                        <Flex w='100%' textAlign={['center','center','center','center','start']}>
                             {/* Nome da construtora */}
                             {editMode ?
                                 <AuthInput
@@ -206,7 +207,7 @@ export function FichaTecnica({ userData, projectData }: ProjectDataProps) {
                             }
                         </Flex>
 
-                        <Flex w='100%'>
+                        <Flex w='100%' textAlign={['center','center','center','center','start']}>
                             {/* Tipologia das plantas */}
                             {editMode ?
                                 <ProjectInput
@@ -214,21 +215,21 @@ export function FichaTecnica({ userData, projectData }: ProjectDataProps) {
                                     defaultValue={String(projectData.floorPlanTypes)}
                                     isRequired={true}
                                     type='string'
-                                    placeholder={'Ex: 40,50,100'}
-                                    label_top='Tipologia das plantas'
+                                    placeholder={'Ex: 40;50;100 (Separado por ponto e vírgula)'}
+                                    label_top="Tipologia das plantas (Sepdo. por ' ; ')"
                                     register={register("floorPlanTypes")}
                                 />
                                 :
-                                <StaticProject type='Tipologia das plantas' data={String(projectData.floorPlanTypes)} />
+                                <StaticProject type='Tipologia das plantas' data={String(floorPlanTypesAdapted)} />
                             }
                         </Flex>
 
 
                     </Flex>
 
-                    <Flex gap={12} w='100%' flexDir={['column','column','column','row','row']}>
+                    <Flex gap={12} w='100%' flexDir={['column', 'column', 'row', 'row', 'row']}>
 
-                        <Flex w='100%'>
+                        <Flex w='100%' textAlign={['center','center','center','center','start']}>
                             {/* Número de unidade por pavimento */}
                             {editMode ?
                                 < ProjectInput
@@ -243,7 +244,7 @@ export function FichaTecnica({ userData, projectData }: ProjectDataProps) {
                                 <StaticProject type='Unidades por pavimento' data={String(projectData.unitsPerFloor)} />
                             }
                         </Flex>
-                        <Flex w='100%'>
+                        <Flex w='100%' textAlign={['center','center','center','center','start']}>
                             {/* Total de unidades */}
                             {editMode ?
                                 <ProjectInput
@@ -260,7 +261,7 @@ export function FichaTecnica({ userData, projectData }: ProjectDataProps) {
                             }
                         </Flex>
 
-                        <Flex w='100%'>
+                        <Flex w='100%' textAlign={['center','center','center','center','start']}>
                             {/* Número de pavimentos */}
                             {editMode ?
                                 <ProjectInput
@@ -279,9 +280,9 @@ export function FichaTecnica({ userData, projectData }: ProjectDataProps) {
 
                     </Flex>
 
-                    <Flex gap={12} w='100%' flexDir={['column','column','column','row','row']}>
+                    <Flex gap={12} w='100%' flexDir={['column', 'column', 'row', 'row', 'row']}>
 
-                        <Flex w='100%'>
+                        <Flex w='100%' textAlign={['center','center','center','center','start']}>
                             {/* 'Custo da fundação'*/}
                             {editMode ?
                                 <ProjectInput
@@ -291,13 +292,13 @@ export function FichaTecnica({ userData, projectData }: ProjectDataProps) {
                                     type='number'
                                     placeholder={'Ex: 73.422,00'}
                                     label_top='Custo estimado da fundação'
-                                    register={register("predictedCost.foundation",{valueAsNumber:true})}
+                                    register={register("predictedCost.foundation", { valueAsNumber: true })}
                                 />
                                 :
                                 <StaticProject dataType='MONEY' type='Custo estimado da fundação' data={String(projectData.predictedCost.foundation)} />
                             }
                         </Flex>
-                        <Flex w='100%'>
+                        <Flex w='100%' textAlign={['center','center','center','center','start']}>
                             {/* 'Custo da estrutura'*/}
                             {editMode ?
                                 < ProjectInput
@@ -307,14 +308,14 @@ export function FichaTecnica({ userData, projectData }: ProjectDataProps) {
                                     type='number'
                                     placeholder={'R$ 1.200,00/m²'}
                                     label_top='Custo estrutural estimado por [m²]'
-                                    register={register("predictedCost.structure",{valueAsNumber:true})}
+                                    register={register("predictedCost.structure", { valueAsNumber: true })}
                                 />
                                 :
                                 <StaticProject dataType='AREA' type='Custo estrutural estimado por [m²]' data={String(projectData.predictedCost.structure)} />
                             }
                         </Flex>
 
-                        <Flex w='100%'>
+                        <Flex w='100%' textAlign={['center','center','center','center','start']}>
                             {/* 'Custo da implantação'*/}
                             {editMode ?
                                 <ProjectInput
@@ -324,7 +325,7 @@ export function FichaTecnica({ userData, projectData }: ProjectDataProps) {
                                     type='number'
                                     placeholder={'R$ 2.300/m²'}
                                     label_top='Custo estimado da implantação [m²]'
-                                    register={register("predictedCost.implantation",{valueAsNumber:true})}
+                                    register={register("predictedCost.implantation", { valueAsNumber: true })}
                                 />
                                 :
                                 <StaticProject dataType='AREA' type='Custo estimado da implantação [m²]' data={String(projectData.predictedCost.implantation)} />
@@ -332,7 +333,7 @@ export function FichaTecnica({ userData, projectData }: ProjectDataProps) {
                         </Flex>
 
                     </Flex>
-                    <Flex w={['100%','100%','100%',80,80]}>
+                    <Flex w={['100%', '100%', '100%', 80, 80]}>
                         {/* 'Custo da mão de obra'*/}
                         {editMode ?
                             < ProjectInput
@@ -342,7 +343,7 @@ export function FichaTecnica({ userData, projectData }: ProjectDataProps) {
                                 type='number'
                                 placeholder={'R$ 80.135,00'}
                                 label_top='Custo estimado da mão de obra'
-                                register={register("predictedCost.workmanship",{valueAsNumber:true})}
+                                register={register("predictedCost.workmanship", { valueAsNumber: true })}
                             />
                             :
                             <StaticProject dataType='MONEY' type='Custo estimado da fundação' data={String(projectData.predictedCost.workmanship)} />

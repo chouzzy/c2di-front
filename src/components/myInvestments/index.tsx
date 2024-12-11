@@ -75,7 +75,7 @@ export function MyInvestmentsList({ userInvestmentsData, projectsData, page, set
                                 </Flex>
 
                                 {/* DADOS DO PROJETO */}
-                                <Flex flexDir={['column', 'column', 'row', 'row', 'row']} gap={[4,4,4,0,0]} justifyContent={'space-between'}>
+                                <Flex flexDir={['column', 'column', 'column', 'column', 'row']} gap={[4,4,4,4,0]} justifyContent={'space-between'}>
 
                                     <Flex flexDir={'column'}>
 

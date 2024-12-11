@@ -31,7 +31,7 @@ function ProjectResumeAdmin({ userData, user, projectData }: ProjectDataProps) {
     const [page, SetPage] = useState(0)
     const menuList = ['Informações gerais', 'Ficha Técnica', 'Parceiros', 'Documentos', 'Mídias', 'Status', 'Investidores']
 
-    const isMobile = useBreakpointValue({ base: true, sm: true, md: false, lg: false, xl: false })
+    const isMobile = useBreakpointValue({ base: true, sm: true, md: true, lg: true, xl: false })
 
     const [partnerList, setPartnerList] = useState<Investment["partners"] | undefined>(projectData.partners)
     const [documentList, setDocumentList] = useState<Investment["documents"] | undefined>(projectData.documents)

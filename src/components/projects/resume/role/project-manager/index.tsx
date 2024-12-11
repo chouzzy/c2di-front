@@ -10,7 +10,7 @@ import {
     useBreakpointValue,
 } from '@chakra-ui/react';
 import { FichaTecnica } from '../../fichaTecnica';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Partners from '../../partners';
 import { UserProfile } from '@auth0/nextjs-auth0/client';
 import { SpinnerFullScreen } from '@/components/Loading/SpinnerFullScreen';
@@ -34,7 +34,19 @@ function ProjectResumeProjectManager({ userData, user, projectData }: ProjectDat
     const isMobile = useBreakpointValue({ base: true, sm: true, md: false, lg: false, xl: false })
     const [menuLabel, setMenuLabel] = useState(menuList[page])
 
+    // Armazena a página atual no localStorage
+    const saveCurrentPage = (currentPage: number) => {
+        localStorage.setItem('currentPage', currentPage.toString());
+    };
 
+    useEffect(() => {
+        // Recupera a página atual do localStorage ao carregar a página
+        const savedPage = localStorage.getItem('currentPage');
+        if (savedPage) {
+            SetPage(parseInt(savedPage, 10));
+        }
+
+    }, []);
 
     if (!user) {
         return <SpinnerFullScreen />

@@ -29,7 +29,7 @@ export function FotosExterno({ projectData, openImage }: FotosExternoProps) {
         setIsDeletingImage(true)
     }
 
-    const slidesResponsive = useBreakpointValue({ base: 1, sm: 1, md: 3, lg: 4, xl: 5 })
+    const slidesResponsive = useBreakpointValue({ base: 1, sm: 1, md: 3, lg: 3, xl: 4 })
 
 
     // DELETE IMAGE EXTERNO
@@ -66,7 +66,7 @@ export function FotosExterno({ projectData, openImage }: FotosExternoProps) {
 
                 {/* LABEL */}
                 <Text fontSize={20} fontWeight={'medium'} mt={2}>
-                    Área externa ({externo.length})
+                    Área comum ({externo.length})
                 </Text>
 
             </Flex>

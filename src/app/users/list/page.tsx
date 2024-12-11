@@ -61,14 +61,14 @@ export default function Users() {
 
   return (
     <>
-      <Container maxW={'1440px'} mx='auto' h='100vh'>
+      <Container maxW={'1440px'} mx='auto' p={0}>
 
         {userData && user ?
 
-          <Flex h='100%' flexDir={['column', 'column', 'row', 'row', 'row']} >
+          <Flex h='100%' flexDir={['column', 'column', 'column', 'column', 'row']} >
 
             <Flex>
-              <Flex w={[0, 0, 0, 64, 64]}></Flex>
+              <Flex w={[0, 0, 0, 0, 64]}></Flex>
               <SideBar userData={userData} />
             </Flex>
 

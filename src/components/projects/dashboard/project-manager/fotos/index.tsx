@@ -33,7 +33,7 @@ export function ProjectFotosProjectManager({ projectData }: ProjectFotosProjectM
     }
 
     return (
-        <Flex flexDir={'column'} w='100%' gap={4} >
+        <Flex flexDir={'column'} w={['100%','100%','100%','100%','100%', '100%']} gap={4} >
 
             <FotosDestaques
                 projectData={projectData}

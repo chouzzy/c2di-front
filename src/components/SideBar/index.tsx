@@ -27,8 +27,8 @@ export function SideBar({ userData, projectData }: SideBarProps) {
     const isMobile = useBreakpointValue({
         base: true,
         sm: true,
-        md: false,
-        lg: false,
+        md: true,
+        lg: true,
         xl: false
     })
 
@@ -132,6 +132,7 @@ export function SideBar({ userData, projectData }: SideBarProps) {
                                         bgColor="beigeSide"
                                         color="darkSide"
                                         borderRadius={0}
+                                        p={[4,4,4,8,8]}
                                     >
                                         <Flex flexDir={'column'} w='100%' gap={12}>
                                             {userData ?

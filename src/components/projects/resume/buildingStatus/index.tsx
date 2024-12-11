@@ -46,7 +46,7 @@ export function BuildingStatus({ userData, projectData }: ProjectDataProps) {
     const graphWidth = useBreakpointValue({
         base: 320,
         sm: 320,
-        md: 320,
+        md: 600,
         lg: 800,
         xl: 1100
     })

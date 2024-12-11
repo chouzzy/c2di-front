@@ -31,7 +31,7 @@ export function ProjectPlantasInvestor({ projectData }: ProjectPlantasProjectMan
     }
 
     return (
-        <Flex flexDir={'column'} w='100%' gap={4} >
+        <Flex flexDir={'column'} w={['100%','100%','100%','40em','64em', '100%']} gap={4} >
 
             <FotosPlanta
                 projectData={projectData}

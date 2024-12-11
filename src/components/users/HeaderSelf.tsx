@@ -90,7 +90,7 @@ export function HeaderSelf({ userData, user }: HeaderSelfProps) {
 
     return (
         <>
-            <Flex flexDir={['column','column','column','row','row']} w='100%' justifyContent={'space-between'}>
+            <Flex flexDir={['column','column','column','column','row']} w='100%' justifyContent={'space-between'}>
                 <Flex flexDir={'column'}>
                     <Flex>
                         <Text fontSize={[24, 24, 24, 28, 28]} fontWeight={'semibold'}>

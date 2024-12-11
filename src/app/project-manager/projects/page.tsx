@@ -83,16 +83,16 @@ export default function ProjectManagersProjects() {
 
     return (
         <>
-            <Flex maxW={'1440px'} >
+            <Flex maxW={'1440px'}>
                 {userData && user && projectsData ?
-                    <Flex h='100%' flexDir={['column', 'column', 'row', 'row', 'row']} >
+                    <Flex h='100%' w='100%' flexDir={['column', 'column', 'column', 'column', 'row']} >
 
                         <Flex>
-                            <Flex w={[0, 0, 0, 64, 64]}></Flex>
+                            <Flex w={[0, 0, 0, 64, 60]}></Flex>
                             <SideBar userData={userData} />
                         </Flex>
 
-                        <Flex h='100%' flexDir={'column'} w='100%' px={[4, 4, 4, 12, 12]} py={[4, 4, 4, 12, 12]} gap={[0, 0, 0, 6, 6]}>
+                        <Flex h='100%' flexDir={'column'} w='100%' px={[4, 4, 8, 8, 12]} py={[4, 4, 4, 12, 12]} gap={[0, 0, 0, 6, 6]}>
 
                             {/* HEADER */}
                             < Flex

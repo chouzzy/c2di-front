@@ -69,7 +69,7 @@ function FormUsers({ userData }: FormUsersProps) {
 
 
     if (!userData) {
-        return <SpinnerFullScreen/>
+        return <SpinnerFullScreen />
     }
 
     // SUBMIT FORM
@@ -84,11 +84,11 @@ function FormUsers({ userData }: FormUsersProps) {
 
             data.birth = new Date(data.birth)
 
-            
+
 
 
             const response = await api.put(`users/update/${userData.id}`, data, {
-                withCredentials:true,
+                withCredentials: true,
                 headers: {
                     'Content-Type': 'application/json' // Define o header Content-Type
                 }
@@ -186,7 +186,7 @@ function FormUsers({ userData }: FormUsersProps) {
 
 
                 {/* Profissão, Data de nascimento e CPF */}
-                <Flex mt={4} alignItems={['start','start','start','center','center']} gap={6} flexDir={['column','column','column','row','row']}>
+                <Flex mt={4} alignItems={['start', 'start', 'start', 'center', 'center']} gap={6} flexDir={['column', 'column', 'row', 'row', 'row']}>
 
                     {/* Profissão */}
                     {editMode ?
@@ -232,7 +232,7 @@ function FormUsers({ userData }: FormUsersProps) {
                 </Flex>
 
                 {/* CEP, Estado e Cidade */}
-                <Flex mt={4} alignItems={['start','start','start','center','center']} gap={8} flexDir={['column', 'column', 'column', 'row', 'row']}>
+                <Flex mt={4} alignItems={['start', 'start', 'start', 'center', 'center']} gap={8} flexDir={['column', 'column', 'row', 'row', 'row']}>
 
                     <Flex maxW={72} gap={8}>
                         {editMode ?
@@ -241,7 +241,7 @@ function FormUsers({ userData }: FormUsersProps) {
                                 type='text'
                                 placeholder={'XXXXX-XXX'}
                                 label_top='CEP'
-                                defaultValue={(userData.address && userData.address.zipCode)?? ""}
+                                defaultValue={(userData.address && userData.address.zipCode) ?? ""}
                                 register={register("address.zipCode")}
                             />
                             :

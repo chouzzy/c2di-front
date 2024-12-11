@@ -9,7 +9,7 @@ export function NotificationsHeaderAdmin({createNotification}:NotificationsHeade
 
     return (
 
-        < Flex >
+        < Flex justifyContent={'space-between'}>
 
             <Flex flexDir={'column'}>
                 <Text fontSize={16} fontWeight={'semibold'}>

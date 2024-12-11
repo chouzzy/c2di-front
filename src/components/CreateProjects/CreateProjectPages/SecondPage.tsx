@@ -144,7 +144,7 @@ export function SecondPage({ register, userData }: PersonalDataAndGoalsProps) {
             <Flex mt={4} alignItems={'center'} gap={8} w='100%' flexDir={['column', 'column', 'row', 'row', 'row']}>
 
                 {/* Valor investido */}
-                <Flex w={['100%','100%','100%',72, 72]} gap={8}>
+                {/* <Flex w={['100%','100%','100%',72, 72]} gap={8}>
                     <AuthInput
                         key={"investmentValue"}
                         isRequired={true}
@@ -153,7 +153,7 @@ export function SecondPage({ register, userData }: PersonalDataAndGoalsProps) {
                         label_top='Valor investido'
                         register={register("investmentValue")}
                     />
-                </Flex>
+                </Flex> */}
 
                 {/* Nome da construtora */}
                 <Flex w={['100%','100%','100%',72, 72]} gap={8}>

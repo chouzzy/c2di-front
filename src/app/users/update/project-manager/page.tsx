@@ -75,16 +75,16 @@ export default function Users() {
             />
           </Flex>
           :
-          <Flex h='100%' flexDir={['column', 'column', 'row', 'row', 'row']} >
+          <Flex h='100%' flexDir={['column', 'column', 'column', 'column', 'row']} w='100%'>
 
             <Flex>
-              <Flex w={[0, 0, 0, 64, 64]}></Flex>
+              <Flex w={[0, 0, 0, 0, 60]}></Flex>
               <SideBar userData={userData} />
             </Flex>
 
 
             {/* MAIN */}
-            <Flex h='100%' flexDir={'column'} w='100%' px={[4, 4, 4, 12, 12]} py={[6, 6, 6, 12, 12]} gap={[4, 4, 4, 6, 6]}>
+            <Flex h='100%' flexDir={'column'} w='100%' px={[4, 4, 20, 12, 12]} py={[6, 6, 6, 12, 12]} gap={[4, 4, 4, 6, 6]}>
 
               {/* HEADER */}
               < Flex

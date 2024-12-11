@@ -29,7 +29,7 @@ export function FotosPlanta({ projectData, openImage }: FotosPlantaProps) {
         setDeletingImageID(imageID)
         setIsDeletingImage(true)
     }
-    const slidesResponsive = useBreakpointValue({ base: 1, sm: 1, md: 3, lg: 4, xl: 5 })
+    const slidesResponsive = useBreakpointValue({ base: 1, sm: 1, md: 3, lg: 3, xl: 4 })
 
 
     // DELETE IMAGE PLANTAS

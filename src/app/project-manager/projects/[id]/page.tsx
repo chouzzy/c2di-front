@@ -68,15 +68,15 @@ export default function ProjectManagerProject() {
 
   return (
 
-    <Flex maxW={'1440px'} h='100vh'>
+    <Flex maxW={'1440px'}>
 
       {/* SPINNER */}
       {userData && user && projectData ?
 
-        <Flex h='100%' flexDir={['column', 'column', 'row', 'row', 'row']} >
+        <Flex h='100%' flexDir={['column', 'column', 'column', 'column', 'row']} w='100%'>
 
           <Flex>
-            <Flex w={[0, 0, 0, 64, 64]}></Flex>
+            <Flex w={[0, 0, 0, 0, 64]}></Flex>
             <SideBar userData={userData} />
           </Flex>
 

@@ -69,13 +69,13 @@ export default function ProjectInvestorProject() {
 
   return (
 
-    <Flex maxW={'1440px'} h='100vh'>
+    <Flex maxW={'1440px'} mx='auto'>
 
 
       {/* SPINNER */}
       {userData && user && projectData ?
 
-        <Flex h='100%' flexDir={['column', 'column', 'row', 'row', 'row']} >
+        <Flex h='100%' flexDir={['column', 'column', 'column', 'column', 'row']} w='100%'>
 
           <Flex>
             <Flex w={[0, 0, 0, 64, 64]}></Flex>

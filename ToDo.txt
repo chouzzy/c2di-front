@@ -1,23 +1,23 @@
 Considerações para semana que vem:
-- Notificações para o usuário
-- Gráficos de status de obra
-- Gráficos de custo previsto/realizado
+- Notificações para o usuário ok
+- Gráficos de status de obra ok
+- Gráficos de custo previsto/realizado ok 
 - Dashboard
-- Deploy
+- Deploy ok
 - Banco de imagens online
-- Autenticação em produção
+- Autenticação em produção ok
 
 
 
 Considerações da C2DI:
-- Separação em ponto e virgula. 
-- retirar Valor investido do form criação de projeto
+- Separação em ponto e virgula da tipologia. ok
+- retirar Valor investido do form criação de projeto ok
 - ícone de notificação lida
 - notificações lista suspensa
 - notificações automáticas para atualização de documento e mídia
 - exportável ficha técnica
-- menu atualizou, voltar para o estado anterior
-- trocar destaques por fachada
+- menu atualizou, voltar para o estado anterior ok
+- trocar destaques por fachada ok 
 - área externa virar área comum, área interna como 
 - trocar área interna por decorado
 - investidor só pode ver mídia 360 do projeto dele

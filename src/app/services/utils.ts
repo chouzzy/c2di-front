@@ -133,7 +133,7 @@ async function projectTypeReverseAdapter(data: any) {
 async function floorPlanTypesAdapter(data: any) {
 
     try {
-        data.floorPlanTypes = data.floorPlanTypes.split(",")
+        data.floorPlanTypes = data.floorPlanTypes.split(";")
 
         return data
 

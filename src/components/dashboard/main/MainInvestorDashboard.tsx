@@ -50,7 +50,7 @@ export function MainInvestorDashboard({ projectsData, userInvestmentsData }: Inv
                 <Flex w='100%' flexDir={'column'} gap={16} pb={48}>
 
                     {/* PRMEIRA LINHA */}
-                    <Flex justifyContent={'space-between'} w='100%'  flexDir={['column', 'column', 'row', 'row', 'row']} mt={8}>
+                    <Flex justifyContent={'space-between'}  alignItems={['center','center','center','center','start']}  w='100%'  flexDir={['column', 'column', 'column', 'row', 'row']} mt={8}>
 
                         {/* GRAFICO 1 */}
                         <Flex flexDir={'column'} gap={2}>
@@ -102,7 +102,7 @@ export function MainInvestorDashboard({ projectsData, userInvestmentsData }: Inv
                     </Flex>
 
                     {/* SEGUNDA LINHA */}
-                    <Flex justifyContent={'space-between'} w='100%' alignItems={['center','center','center','start','start']} flexDir={['column', 'column', 'row', 'row', 'row']} gap={4}>
+                    <Flex justifyContent={'space-between'} w='100%' alignItems={['center','center','center','center','start']} flexDir={['column', 'column', 'column', 'row', 'row']} gap={4}>
 
                         {/* GRAFICO DE BARRAS */}
                         <Flex flexDir={'column'} gap={2}>

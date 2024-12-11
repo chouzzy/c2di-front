@@ -34,8 +34,8 @@ export function InfosGerais({ userData, projectData }: ProjectDataProps) {
     const graphWidth = useBreakpointValue({
         base: 320,
         sm: 320,
-        md: 400,
-        lg: 600,
+        md: 700,
+        lg: 900,
         xl: 600
     })
 
@@ -162,10 +162,10 @@ export function InfosGerais({ userData, projectData }: ProjectDataProps) {
 
 
     return (
-        <Flex w='100%' py={8} flexDir={['column', 'column', 'column', 'row', 'row']} gap={12}>
+        <Flex w='100%' py={8} flexDir={['column', 'column', 'column', 'column', 'row']} gap={12}>
             {/* IMAGEM GIGANTE */}
             <Flex>
-                <Image src={`/assets/projects/${projectData.images[0].url}`} h={[300, 300, 300, '100%', '100%']} minW={['100%', '100%', '100%', 440, 440]} objectFit={'cover'} objectPosition={'center'} borderRadius={2} boxShadow={'2xl'} />
+                <Image src={`/assets/projects/${projectData.images[0].url}`} h={[300, 300, 300, 300, '100%']} minW={['100%', '100%', '100%', '100%', 440]} objectFit={'cover'} objectPosition={'center'} borderRadius={2} boxShadow={'2xl'} />
             </Flex>
 
             <Flex gap={8} flexDir={'column'} justifyContent={'space-between'}>

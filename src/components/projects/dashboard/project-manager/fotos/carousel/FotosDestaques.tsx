@@ -29,7 +29,7 @@ export function FotosDestaques({ projectData, openImage }: FotosDestaquesProps) 
         setIsDeletingImage(true)
     }
 
-    const slidesResponsive = useBreakpointValue({ base: 1, sm: 1, md: 3, lg: 4, xl: 5 })
+    const slidesResponsive = useBreakpointValue({ base: 1, sm: 1, md: 3, lg: 3, xl: 4 })
 
     // DELETE IMAGE DESTAQUES
     useEffect(() => {
@@ -68,7 +68,7 @@ export function FotosDestaques({ projectData, openImage }: FotosDestaquesProps) 
 
                 {/* LABEL */}
                 <Text fontSize={20} fontWeight={'medium'} mt={2}>
-                    Destaques ({destaques.length})
+                    Fachada ({destaques.length})
                 </Text>
 
                 {/* EDIT MODE */}

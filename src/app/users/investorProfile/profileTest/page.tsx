@@ -18,7 +18,7 @@ export default function ProfileTest() {
 
     const [userData, setUserData] = useState<User | undefined>()
 
-    const isMobile = useBreakpointValue({ base: true, sm: true, md: false, lg: false, xl: false })
+    const isMobile = useBreakpointValue({ base: true, sm: true, md: true, lg: true, xl: false })
 
 
     // VALIDAR SÓ INVESTIDOR PODE ACESSAR ESSA ROTA
@@ -85,7 +85,7 @@ export default function ProfileTest() {
                 </Flex>
                 :
 
-                <Flex h='100%'>
+                <Flex h='100%' w='100%'>
                     <>
                         {/* BEM VINDO DE VOLTA CARD */}
                         < ProfileTestForm user={user} router={router} userData={userData} />
