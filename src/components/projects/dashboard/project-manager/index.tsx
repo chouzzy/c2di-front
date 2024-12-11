@@ -33,7 +33,7 @@ export function ProjectDashboardProjectManager({ projectsData, page, setPage, to
                         return (
 
                             // CARD DO PROJETO
-                            <Flex key={project.id} flexDir={'column'} gap={4} w={['100%', '100%', '100%', 440, 440]} mt={6}>
+                            <Flex key={project.id} flexDir={'column'} gap={6} w={['100%', '100%', '100%', 440, 440]} mt={6}>
 
                                 {/* IMAGEM E STATUS */}
                                 <Flex>

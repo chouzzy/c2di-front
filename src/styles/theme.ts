@@ -96,6 +96,8 @@ export const theme = extendTheme({
         color: 'eerie',
         scrollBehavior: 'smooth',
         maxWidth: '100%',
+        padding:0,
+        margin:0
       },
     },
   },

@@ -81,12 +81,7 @@ export default function CreateProject() {
                         </Flex>
                     </Flex>
                     :
-                    <Flex h='100%' w='100%' alignItems={'center'} justifyContent={'center'}>
-                        <Spinner
-                            boxSize={40}
-                            color='redSide'
-                        />
-                    </Flex>
+                    <SpinnerFullScreen />
                 }
             </Flex >
         </>

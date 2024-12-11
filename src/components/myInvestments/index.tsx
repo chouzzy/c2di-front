@@ -46,14 +46,14 @@ export function MyInvestmentsList({ userInvestmentsData, projectsData, page, set
                     </Text>
                 </Flex>
                 {/* MENU COM PROJETOS */}
-                <SimpleGrid columns={[1, 1, 2, 2, 2]} w='100%' gap={16}>
+                <SimpleGrid columns={[1, 1, 2, 2, 2]} w='100%' gap={8}>
 
                     {projectsData.map((project) => {
 
                         return (
 
                             // CARD DO PROJETO
-                            <Flex key={project.id} flexDir={'column'} gap={2} w={'100%'} border='1px' borderColor={'grayDivisor'} p={4} borderRadius={8} boxShadow={'md'}>
+                            <Flex key={project.id} flexDir={'column'} gap={2} w={'100%'} borderColor={'grayDivisor'} p={4} borderRadius={8} boxShadow={'md'}>
 
                                 {/* IMAGEM E STATUS */}
                                 <Flex>

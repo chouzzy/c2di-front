@@ -100,8 +100,7 @@ export default function MyInvestments() {
     }, [userData, page])
 
     return (
-        <>
-            <Flex maxW={'1440px'} mx='auto' h='100vh'>
+            <Flex maxW={'1440px'} mx='auto'>
                 {userData && user && projectsData && userInvestmentsData ?
                     <Flex h='100%' flexDir={['column', 'column', 'column', 'column', 'row']} >
 
@@ -112,7 +111,7 @@ export default function MyInvestments() {
 
 
                         {/* MAIN */}
-                        <Flex h='100%' flexDir={'column'} w='100%' px={[4, 4, 4, 12, 12]} py={[6, 6, 6, 12, 12]} gap={[4, 4, 4, 6, 6]}>
+                        <Flex h='100%' w='100%' flexDir={'column'} px={[4, 4, 4, 4, 12]} py={[6, 6, 6, 12, 12]} gap={[4, 4, 4, 6, 6]} >
 
                             {/* HEADER */}
                             < Flex
@@ -138,7 +137,6 @@ export default function MyInvestments() {
                     :
                     <SpinnerFullScreen />
                 }
-            </Flex >
-        </>
+            </Flex>
     )
 }

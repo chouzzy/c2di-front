@@ -72,7 +72,7 @@ export function MainInvestorDashboard({ projectsData, userInvestmentsData }: Inv
                                     }}
                                 >
                                     <XAxis dataKey="date" fontSize={12} />
-                                    <YAxis domain={([menorValor.value - (evolution / 2), maiorValor.value])} fontSize={12} />
+                                    <YAxis domain={([menorValor.value, maiorValor.value])} fontSize={12} />
                                     <Tooltip />
                                     <Area type="monotone" dataKey="value" stroke="#0F172A" fill="#0F172A" />
                                     {/* <Area type="monotone" dataKey="pv" stroke="#0F172A" fill="#475569" /> */}

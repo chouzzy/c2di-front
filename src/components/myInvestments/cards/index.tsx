@@ -16,7 +16,7 @@ interface MyInvestmentCardsProps {
 
 export function MyInvestmentCards({ userInvestmentsData, projectsData }: MyInvestmentCardsProps) {
 
-    const isMobile = useBreakpointValue({ base: true, sm: true, md: false, lg: false, xl: false })
+    const isMobile = useBreakpointValue({ base: true, sm: true, md: true, lg: false, xl: false })
 
     const formatador = new Intl.NumberFormat('pt-BR', {
         style: 'currency',
@@ -52,26 +52,26 @@ export function MyInvestmentCards({ userInvestmentsData, projectsData }: MyInves
 
             {isMobile ?
 
-                <Container gap={4} maxW={'95vw'} color={'lightSide'} alignItems={'center'} justifyContent={'center'}>
+                <Container gap={4} maxW={'90vw'} color={'lightSide'} alignItems={'center'} justifyContent={'center'}>
 
                     <Swiper
                         modules={[Navigation, Pagination, Scrollbar, A11y]}
                         spaceBetween={50}
-                        slidesPerView={1}
+                        slidesPerView={2}
                         loop
                         // pagination
                         scrollbar={{ draggable: true }}
                     >
                         <SwiperSlide key={'1'}>
                             {/* CARD 1 */}
-                            <Flex flexDir={'column'} gap={4} w='100%' bgColor={'darkSide'} px={8} py={4} borderRadius={12}>
+                            <Flex minH={40} flexDir={'column'} gap={4} w='100%' bgColor={'darkSide'} px={8} py={4} borderRadius={12}>
 
                                 <Flex flexDir={'column'} justifyContent={'space-between'} gap={4}>
 
                                     <Flex fontSize={12}>Valor médio investido</Flex>
                                     <Flex justifyContent={'space-between'}>
-                                        <Flex fontSize={22} fontWeight={'medium'} letterSpacing={2}> <Text> {formatador.format(mediaInvestmentValue)}</Text></Flex>
-                                        <Flex fontSize={14} alignItems={'center'} color={totalProjectsProfit > 0 ? 'green.300' : 'red.300'} gap={1} px={2}> <Text> {totalUserProfitString}  </Text> <IoIosTrendingUp /> </Flex>
+                                        <Flex fontSize={22} fontWeight={'medium'} letterSpacing={2}> <Text> {formatador.format(59400)}</Text></Flex>
+                                        <Flex fontSize={14} alignItems={'center'} color={18 > 0 ? 'green.300' : 'red.300'} gap={1} px={2}> <Text> {'18,173 %'}  </Text> <IoIosTrendingUp /> </Flex>
                                     </Flex>
                                     <Flex fontSize={10}>Somatória dos valores investidos dividido pela quantidade de investimentos aplicados.</Flex>
 
@@ -83,14 +83,14 @@ export function MyInvestmentCards({ userInvestmentsData, projectsData }: MyInves
 
                         <SwiperSlide key={'2'}>
                             {/* CARD 2 */}
-                            <Flex flexDir={'column'} gap={4} w='100%' bgColor={'darkSide'} px={8} py={4} borderRadius={12}>
+                            <Flex minH={40} flexDir={'column'} gap={4} w='100%' bgColor={'darkSide'} px={8} py={4} borderRadius={12}>
 
                                 <Flex flexDir={'column'} justifyContent={'space-between'} gap={4}>
 
                                     <Flex fontSize={12}>Total investido</Flex>
                                     <Flex justifyContent={'space-between'}>
-                                        <Flex fontSize={26} fontWeight={'medium'} letterSpacing={2}> <Text> {formatador.format(sumInvestmentValue)} </Text></Flex>
-                                        <Flex fontSize={14} alignItems={'center'} color={totalProjectsProfit > 0 ? 'green.300' : 'red.300'} gap={1} px={2}> <Text> {totalUserProfitString} </Text> <IoIosTrendingUp /> </Flex>
+                                        <Flex fontSize={22} fontWeight={'medium'} letterSpacing={2}> <Text> {formatador.format(87400)} </Text></Flex>
+                                        <Flex fontSize={14} alignItems={'center'} color={18 > 0 ? 'green.300' : 'red.300'} gap={1} px={2}> <Text> {'18,173 %'} </Text> <IoIosTrendingUp /> </Flex>
                                     </Flex>
                                     <Flex fontSize={10}>O total investido na plataforma até a data atual.</Flex>
 
@@ -101,14 +101,14 @@ export function MyInvestmentCards({ userInvestmentsData, projectsData }: MyInves
 
                         <SwiperSlide key={'3'}>
                             {/* CARD 3 */}
-                            <Flex flexDir={'column'} gap={4} w='100%' bgColor={'darkSide'} px={8} py={4} borderRadius={12}>
+                            <Flex minH={40} flexDir={'column'} gap={4} w='100%' bgColor={'darkSide'} px={8} py={4} borderRadius={12}>
 
                                 <Flex flexDir={'column'} justifyContent={'space-between'} gap={4}>
 
                                     <Flex fontSize={12}>Valor total dos imóveis</Flex>
                                     <Flex justifyContent={'space-between'}>
-                                        <Flex fontSize={26} fontWeight={'medium'} letterSpacing={2}> <Text> {formatador.format(sumValorCorrente)} </Text></Flex>
-                                        <Flex fontSize={14} alignItems={'center'} color={totalProjectsProfit > 0 ? 'green.300' : 'red.300'} gap={1} px={2}> <Text> {totalProjectsProfitString} </Text> <IoIosTrendingUp /> </Flex>
+                                        <Flex fontSize={22} fontWeight={'medium'} letterSpacing={2}> <Text> {formatador.format(2730000)} </Text></Flex>
+                                        <Flex fontSize={14} alignItems={'center'} color={18 > 0 ? 'green.300' : 'red.300'} gap={1} px={2}> <Text> {'25,904 %'} </Text> <IoIosTrendingUp /> </Flex>
                                     </Flex>
                                     <Flex fontSize={10}>Somatória dos valores correntes de cada imóvel no qual você possui investimentos aplicados.</Flex>
 
@@ -124,7 +124,7 @@ export function MyInvestmentCards({ userInvestmentsData, projectsData }: MyInves
 
                 </Container >
                 :
-                <Flex gap={4} minW={360} color={'lightSide'}>
+                <Flex gap={4} w='100%' color={'lightSide'}>
 
                     {/* CARD 1 */}
                     <Flex flexDir={'column'} gap={4} w='100%' bgColor={'darkSide'} px={8} py={4} borderRadius={12}>
@@ -133,8 +133,9 @@ export function MyInvestmentCards({ userInvestmentsData, projectsData }: MyInves
 
                             <Flex fontSize={12}>Valor médio investido</Flex>
                             <Flex justifyContent={'space-between'}>
-                                <Flex fontSize={22} fontWeight={'medium'} letterSpacing={2}> <Text> {formatador.format(mediaInvestmentValue)}</Text></Flex>
-                                <Flex fontSize={14} alignItems={'center'} color={totalProjectsProfit > 0 ? 'green.300' : 'red.300'} gap={1} px={2}> <Text> {totalUserProfitString}  </Text> <IoIosTrendingUp /> </Flex>
+                                <Flex fontSize={22} fontWeight={'medium'} letterSpacing={2}> <Text> {formatador.format(59400)}</Text></Flex>
+                                <Flex fontSize={14} alignItems={'center'} color={18 > 0 ? 'green.300' : 'red.300'} gap={1} px={2}> <Text> {'18,173 %'}  </Text> <IoIosTrendingUp /> </Flex>
+                                {/* <Flex fontSize={14} alignItems={'center'} color={totalProjectsProfit > 0 ? 'green.300' : 'red.300'} gap={1} px={2}> <Text> {totalUserProfitString}  </Text> <IoIosTrendingUp /> </Flex> */}
                             </Flex>
                             <Flex fontSize={10}>Somatória dos valores investidos dividido pela quantidade de investimentos aplicados.</Flex>
 
@@ -149,8 +150,9 @@ export function MyInvestmentCards({ userInvestmentsData, projectsData }: MyInves
 
                             <Flex fontSize={12}>Total investido</Flex>
                             <Flex justifyContent={'space-between'}>
-                                <Flex fontSize={26} fontWeight={'medium'} letterSpacing={2}> <Text> {formatador.format(sumInvestmentValue)} </Text></Flex>
-                                <Flex fontSize={14} alignItems={'center'} color={totalProjectsProfit > 0 ? 'green.300' : 'red.300'} gap={1} px={2}> <Text> {totalUserProfitString} </Text> <IoIosTrendingUp /> </Flex>
+                                <Flex fontSize={22} fontWeight={'medium'} letterSpacing={2}> <Text> {formatador.format(87400)} </Text></Flex>
+                                <Flex fontSize={14} alignItems={'center'} color={18 > 0 ? 'green.300' : 'red.300'} gap={1} px={2}> <Text> {'18,173 %'} </Text> <IoIosTrendingUp /> </Flex>
+                                {/* <Flex fontSize={14} alignItems={'center'} color={totalProjectsProfit > 0 ? 'green.300' : 'red.300'} gap={1} px={2}> <Text> {totalUserProfitString} </Text> <IoIosTrendingUp /> </Flex> */}
                             </Flex>
                             <Flex fontSize={10}>O total investido na plataforma até a data atual.</Flex>
 
@@ -165,8 +167,9 @@ export function MyInvestmentCards({ userInvestmentsData, projectsData }: MyInves
 
                             <Flex fontSize={12}>Valor total dos imóveis</Flex>
                             <Flex justifyContent={'space-between'}>
-                                <Flex fontSize={26} fontWeight={'medium'} letterSpacing={2}> <Text> {formatador.format(sumValorCorrente)} </Text></Flex>
-                                <Flex fontSize={14} alignItems={'center'} color={totalProjectsProfit > 0 ? 'green.300' : 'red.300'} gap={1} px={2}> <Text> {totalProjectsProfitString} </Text> <IoIosTrendingUp /> </Flex>
+                                <Flex fontSize={22} fontWeight={'medium'} letterSpacing={2}> <Text> {formatador.format(273000)} </Text></Flex>
+                                <Flex fontSize={14} alignItems={'center'} color={18 > 0 ? 'green.300' : 'red.300'} gap={1} px={2}> <Text> {'25,904 %'} </Text> <IoIosTrendingUp /> </Flex>
+                                {/* <Flex fontSize={14} alignItems={'center'} color={totalProjectsProfit > 0 ? 'green.300' : 'red.300'} gap={1} px={2}> <Text> {totalProjectsProfitString} </Text> <IoIosTrendingUp /> </Flex> */}
                             </Flex>
                             <Flex fontSize={10}>Somatória dos valores correntes de cada imóvel no qual você possui investimentos aplicados.</Flex>
 

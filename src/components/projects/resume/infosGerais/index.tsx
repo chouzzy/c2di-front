@@ -165,7 +165,7 @@ export function InfosGerais({ userData, projectData }: ProjectDataProps) {
         <Flex w='100%' py={8} flexDir={['column', 'column', 'column', 'column', 'row']} gap={12}>
             {/* IMAGEM GIGANTE */}
             <Flex>
-                <Image src={`/assets/projects/${projectData.images[0].url}`} h={[300, 300, 300, 300, '100%']} minW={['100%', '100%', '100%', '100%', 440]} objectFit={'cover'} objectPosition={'center'} borderRadius={2} boxShadow={'2xl'} />
+                <Image src={`/assets/projects/${projectData.images[0].url}`} h={[300, 300, 300, 300, '100%']} minW={['100%', '100%', '100%', '100%', 440]} objectFit={'cover'} objectPosition={'center'} borderRadius={2} boxShadow={'md'} />
             </Flex>
 
             <Flex gap={8} flexDir={'column'} justifyContent={'space-between'}>

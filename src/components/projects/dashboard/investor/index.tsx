@@ -30,7 +30,7 @@ export function ProjectDashboardInvestor({ projectsData, page, setPage, totalPag
                         return (
 
                             // CARD DO PROJETO
-                            <Flex key={project.id} flexDir={'column'} gap={4} w={['100%', '100%', '100%', 440, 440]} mt={6}>
+                            <Flex key={project.id} flexDir={'column'} gap={6} w={['100%', '100%', '100%', 440, 440]} mt={6} p={4} border='1px' borderColor={'grayDivisor'} boxShadow={'md'}>
 
                                 {/* IMAGEM E STATUS */}
                                 <Flex>
@@ -52,7 +52,7 @@ export function ProjectDashboardInvestor({ projectsData, page, setPage, totalPag
                                 </Flex>
 
                                 {/* DADOS DO PROJETO */}
-                                <Flex flexDir={'column'} gap={[0, 0, 0, 2, 2]} h={[12,12,12,16,16]}>
+                                <Flex flexDir={'column'} gap={[0, 0, 0, 2, 2]}>
 
                                     <Text fontSize={[20]} fontWeight={'semibold'}>
                                         {project.title}
@@ -63,15 +63,15 @@ export function ProjectDashboardInvestor({ projectsData, page, setPage, totalPag
                                 </Flex>
 
                                 {/* ACTION BUTTONS */}
-                                <Flex justifyContent={['space-between','space-between','space-between','start','start']} gap={8}>
+                                <Flex justifyContent={['space-between', 'space-between', 'space-between', 'start', 'start']} gap={8}>
                                     <Link href={`/projects/${project.id}`}>
-                                        <Button _hover={{ bgColor: 'graySide' }} size={['sm','sm','sm','md']} color={'lightSide'} bgColor={'darkSide'} fontSize={14}>
+                                        <Button _hover={{ bgColor: 'graySide' }} size={['sm', 'sm', 'sm', 'md']} color={'lightSide'} bgColor={'darkSide'} fontSize={14}>
                                             <Flex alignItems={'center'} justifyContent={'center'}>
                                                 <Text>Ver projeto</Text>
                                             </Flex>
                                         </Button>
                                     </Link>
-                                    <Button _hover={{ bgColor: 'graySide' }} size={['sm','sm','sm','md']} color={'lightSide'} bgColor={'darkSide'} fontSize={14}>
+                                    <Button _hover={{ bgColor: 'graySide' }} size={['sm', 'sm', 'sm', 'md']} color={'lightSide'} bgColor={'darkSide'} fontSize={14}>
                                         <Flex alignItems={'center'} justifyContent={'center'}>
                                             <Text>Entrar em contato</Text>
                                         </Flex>
@@ -87,7 +87,7 @@ export function ProjectDashboardInvestor({ projectsData, page, setPage, totalPag
             </Flex>
 
             {/* FOOTER */}
-            <Flex w='100%'  gap={4} >
+            <Flex w='100%' gap={4} >
                 <Flex gap={4} w='100%' alignItems={'center'} justifyContent={'space-between'}>
 
                     <Button
