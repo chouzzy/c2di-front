@@ -83,7 +83,7 @@ export default function ProjectManagersProjects() {
 
     return (
         <>
-            <Flex maxW={'1440px'}>
+            <Flex maxW={'1440px'} mx='auto'>
                 {userData && user && projectsData ?
                     <Flex h='100%' w='100%' flexDir={['column', 'column', 'column', 'column', 'row']} >
 

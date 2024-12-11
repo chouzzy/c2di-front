@@ -68,7 +68,7 @@ export default function ProjectManagerProject() {
 
   return (
 
-    <Flex maxW={'1440px'}>
+    <Flex maxW={'1440px'} mx='auto'>
 
       {/* SPINNER */}
       {userData && user && projectData ?

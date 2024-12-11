@@ -44,7 +44,6 @@ export function FichaTecnica({ userData, projectData }: ProjectDataProps) {
 
 
             const response = await updateProjectFicha(projectData.id, data)
-            console.log(response)
 
             window.location.href = `${window.location.pathname}`
 

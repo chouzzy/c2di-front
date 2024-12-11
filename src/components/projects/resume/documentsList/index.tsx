@@ -8,6 +8,7 @@ import { ProjectFileInput } from '@/components/CreateProjects/Inputs/FileInput';
 import { useForm } from 'react-hook-form';
 import { documentsArrayAdapter } from '@/app/services/utils';
 import { changePrismaProjectDoc } from '@/app/services/changeDoc';
+import { createPrismaNotification } from '@/app/services/createNotification';
 
 interface FormUsersProps {
     user: UserProfile | undefined
@@ -83,6 +84,16 @@ function DocumentsList({ user, userData, projectData, documentList, setDocumentL
             data = await documentsArrayAdapter(data)
             projectData.documents = projectData.documents.concat(data.documents)
             const response: Investment = await changePrismaProjectDoc(projectData.id, projectData)
+            
+            const newNotification = {
+                title: 'Houve uma nova atualização em seu projeto',
+                message:"Um documento foi atualizado! Verifique na aba de documentos",
+                investmentId: projectData.id
+            }
+
+            const newNote = await createPrismaNotification(newNotification)
+            console.log('newNote')
+            console.log(newNote)
             setDocumentList(response.documents)
             setAddMode(false)
 

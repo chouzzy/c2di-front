@@ -12,17 +12,17 @@ Considerações para semana que vem:
 Considerações da C2DI:
 - Separação em ponto e virgula da tipologia. ok
 - retirar Valor investido do form criação de projeto ok
-- ícone de notificação lida
-- notificações lista suspensa
-- notificações automáticas para atualização de documento e mídia
-- exportável ficha técnica
 - menu atualizou, voltar para o estado anterior ok
 - trocar destaques por fachada ok 
 - área externa virar área comum ok
 - trocar área interna por decorado ok
-- investidor só pode ver mídia 360 do projeto dele
 - deixar a foto do prédio em pé ao invés de deitada na capa do projeto ok
 - quebrar gráfico horizontal na metade ok
+- ícone de notificação lida
+- notificações lista suspensa
+- notificações automáticas para atualização de documento e mídia
+- exportável ficha técnica
+- investidor só pode ver mídia 360 do projeto dele
 
 - mandar prints
 - peso do perfil do investidor
@@ -37,6 +37,6 @@ Considerações 27/11
 -pensar em validações para que o gerente de projetos não altere custos importantes da obra (gerente de obra não pode alterar ficha)
 -mostrar cotação das moedas principais, selic, e outras coisas
 -ver chances de graficos em fullScreen
-- pensar na role morador
+-pensar na role morador
 
 - PARA SEXTA: MEMPHIS DEPLOY
