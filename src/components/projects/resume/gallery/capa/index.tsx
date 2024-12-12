@@ -37,7 +37,7 @@ export function CapaGaleria({ userData, projectData }: ProjectDataProps) {
 
             {/* IMAGE */}
             <Flex>
-                <Image src={`/assets/projects/${projectData.images[0].url}`} h={32} w='100%' objectFit={'cover'} objectPosition={'center'} />
+                <Image src={`${projectData.images[0].url}`} h={32} w='100%' objectFit={'cover'} objectPosition={'center'} />
             </Flex>
         </Flex>
     )

@@ -33,7 +33,7 @@ export function FotosGaleria({ projectData }: ProjectDataProps) {
                             if (i > 1) { return }
 
                             return (
-                                <Image key={i+image.url} src={`/assets/projects/${image.url}`} h={32} w={[28, 28, '100%', '100%', 40]} objectFit={'cover'} objectPosition={'center'} />
+                                <Image key={i+image.url} src={`${image.url}`} h={32} w={[28, 28, '100%', '100%', 40]} objectFit={'cover'} objectPosition={'center'} />
                             )
                         })}
                     <Flex onClick={() => { redirectToFotos() }} w='100%' bgColor={'grayBox'} justifyContent={'center'} alignItems={'center'} cursor={'pointer'} _hover={{ bgColor: 'darkSide', color: 'lightSide', transition: '600ms' }}>

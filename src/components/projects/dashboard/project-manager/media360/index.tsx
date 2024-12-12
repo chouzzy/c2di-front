@@ -46,7 +46,7 @@ export function ProjectMedia360ProjectManager({ projectData }: ProjectMedia360Pr
                         {imageOnView ?
                             <Flex maxW={'100%'} gap={2}>
                                 <ReactPhotoSphereViewer
-                                    src={`/assets/projects/${imageOnView.url}`}
+                                    src={`${imageOnView.url}`}
                                     height={"500px"}
                                     width={"100%"}
                                 ></ReactPhotoSphereViewer>

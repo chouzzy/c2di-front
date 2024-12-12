@@ -31,7 +31,7 @@ export function Galeria360({ projectData }: ProjectDataProps) {
                                 return
                             }
                             return (
-                                <Image key={i+image.url} src={`/assets/projects/${image.url}`} h={32} w={[28, 28, '100%', '100%', 40]} objectFit={'cover'} objectPosition={'center'} />
+                                <Image key={i+image.url} src={`${image.url}`} h={32} w={[28, 28, '100%', '100%', 40]} objectFit={'cover'} objectPosition={'center'} />
                             )
                         })
                     }

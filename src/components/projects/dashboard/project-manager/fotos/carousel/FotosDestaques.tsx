@@ -9,6 +9,7 @@ import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
 import { deletePrismaProjectImage } from "@/app/services/deleteInvestmentImage";
 import { FotosDestaquesInput } from "@/components/CreateProjects/Inputs/FotosDestaquesInput";
+import axios from "axios";
 
 
 interface FotosDestaquesProps {
@@ -36,6 +37,17 @@ export function FotosDestaques({ projectData, openImage }: FotosDestaquesProps) 
 
         const deleteImage = async (imageID: Investment["images"][0]["id"]) => {
             try {
+
+                const imageToDelete = destaques.find((image) => image.id === imageID);
+
+                if (!imageToDelete) {
+                    console.warn(`Imagem com ID ${imageID} não encontrada no array destaques`);
+                    return;
+                }
+
+                const responseImgDeleted = await axios.post('/api/delete-image', {
+                    imageUrl: imageToDelete.url
+                });
 
                 const response = await deletePrismaProjectImage(projectData.id, imageID)
                 // Salvando alterações no estado
@@ -103,7 +115,7 @@ export function FotosDestaques({ projectData, openImage }: FotosDestaquesProps) 
                 <Swiper
                     modules={[Navigation, Pagination, Scrollbar, A11y]}
                     spaceBetween={50}
-                    slidesPerView={destaques.length < (slidesResponsive??4) ? destaques.length : slidesResponsive}
+                    slidesPerView={destaques.length < (slidesResponsive ?? 4) ? destaques.length : slidesResponsive}
                     navigation
                     loop
                     // pagination
@@ -123,7 +135,7 @@ export function FotosDestaques({ projectData, openImage }: FotosDestaquesProps) 
                                 >
                                     <Image
                                         cursor={editMode ? 'pointer' : 'grabbing'}
-                                        src={`/assets/projects/${img.url}`}
+                                        src={`${img.url}`}
                                         h={190}
                                         w='100%'
                                         objectFit={'cover'}

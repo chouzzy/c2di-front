@@ -96,7 +96,7 @@ export function FotosExterno({ projectData, openImage }: FotosExternoProps) {
                                 >
                                     <Image
                                         cursor={editMode ? 'pointer' : 'grabbing'}
-                                        src={`/assets/projects/${img.url}`}
+                                        src={`${img.url}`}
                                         h={190}
                                         w='100%'
                                         objectFit={'cover'}

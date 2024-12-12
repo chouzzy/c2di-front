@@ -89,7 +89,7 @@ export function FotosMedia360({ projectData, openImage }: FotosMedia360Props) {
                             >
                                 <Image
                                     cursor={editMode ? 'pointer' : 'grabbing'}
-                                    src={`/assets/projects/${img.url}`}
+                                    src={`${img.url}`}
                                     h={190}
                                     w='100%'
                                     objectFit={'cover'}

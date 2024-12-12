@@ -10,8 +10,10 @@ const createPrismaInvestment = async (data:any) => {
             }
         });
 
+        
         if (response.status == 200 || response.status == 202) {
-            return response
+            const investment: Investment = response.data.investment
+            return investment
         } else {
             throw Error("Ocorreu um erro inesperado")
         }

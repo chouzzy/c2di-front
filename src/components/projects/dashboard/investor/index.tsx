@@ -35,7 +35,7 @@ export function ProjectDashboardInvestor({ projectsData, page, setPage, totalPag
                                 {/* IMAGEM E STATUS */}
                                 <Flex>
                                     <Flex w='100%' flexDir={'column'} gap={1}>
-                                        <Image src={`/assets/projects/${project.images[0].url}`} h={160} w={['100%', '100%', '100%', 440, 440]} objectFit={'cover'} objectPosition={'center'} />
+                                        <Image src={`${project.images[0].url}`} h={160} w={['100%', '100%', '100%', 440, 440]} objectFit={'cover'} objectPosition={'center'} />
 
                                         <Flex
                                             w={'min'}

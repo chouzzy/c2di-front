@@ -44,8 +44,6 @@ async function imagesArrayAdapter(data: any) {
             }
         }
 
-        delete data.image
-
         return data
 
     } catch (error) {

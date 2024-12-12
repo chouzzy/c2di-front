@@ -2,6 +2,7 @@ import { Flex, FormControl, Input } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { ErrorInputComponent } from "@/components/ErrorInputComponent";
 import { changePrismaProjectFotos } from "@/app/services/changeFotos";
+import axios from "axios";
 
 
 
@@ -22,11 +23,35 @@ export function FotosDestaquesInput({ allowedTypes, accept, projectData }: Fotos
 
     useEffect(() => {
 
-        const uploadFotos = async (updateData: Investment) => {
+        const uploadFotos = async (updateData: Investment, selectedFiles: FileList) => {
 
             try {
-                console.log('updateData')
-                console.log(updateData)
+
+                const formData = new FormData();
+
+                for (let i = 0; i < selectedFiles.length; i++) {
+                    formData.append('file', selectedFiles[i]);
+                }
+
+                formData.append('projectId', projectData.id); 
+
+                // Faz a requisição POST usando Axios
+                const responseFiles = await axios.post('/api/upload', formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data', // Define o Content-Type para upload de arquivos
+                    },
+                });
+
+                const imageUrls = responseFiles.data.imageUrls;
+    
+                for (let index = 0; index < imageUrls.length; index++) {
+                    projectData.images.push({
+                        id: 'newimage',
+                        label: 'DESTAQUES',
+                        url: imageUrls[index],
+                        description: selectedFiles[index].name
+                    })
+                }
 
                 const response = await changePrismaProjectFotos(projectData.id, updateData)
                 window.location.reload()
@@ -40,23 +65,14 @@ export function FotosDestaquesInput({ allowedTypes, accept, projectData }: Fotos
 
         if (selectedFiles && updatingFile) {
 
-            for (let index = 0; index < selectedFiles.length; index++) {
-                projectData.images.push({
-                    id: 'newimage',
-                    label: 'DESTAQUES',
-                    url: selectedFiles[index].name,
-                    description: selectedFiles[index].name
-                })
-            }
-
-            uploadFotos(projectData)
+            uploadFotos(projectData, selectedFiles)
             setUpdatingFile(false)
         }
 
     }, [updatingFile])
 
     const handleFileChange = (event: any) => {
-        
+
         setSelectedFiles(undefined)
         setError("")
 

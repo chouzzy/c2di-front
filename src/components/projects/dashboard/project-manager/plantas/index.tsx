@@ -45,7 +45,7 @@ export function ProjectPlantasProjectManager({ projectData }: ProjectPlantasProj
                     <ModalBody p={0}>
                         {imageOnView ?
                             <Flex flexDir={'column'} alignItems={'center'} justifyContent={'center'} gap={4} w='100%'>
-                                <Image w='100%' src={`/assets/projects/${imageOnView.url}`} objectFit={'cover'} objectPosition={'center'} />
+                                <Image w='100%' src={`${imageOnView.url}`} objectFit={'cover'} objectPosition={'center'} />
                             </Flex>
                             :
                             <Spinner boxSize={32} />}

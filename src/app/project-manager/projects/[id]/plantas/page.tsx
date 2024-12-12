@@ -74,7 +74,7 @@ export default function ProjectPlantas() {
                     <Flex h='100%' flexDir={['column', 'column', 'column', 'column', 'row']} >
 
                         <Flex>
-                            <Flex w={[0, 0, 0, 64, 60]}></Flex>
+                            <Flex w={[0, 0, 0, 0, 60]}></Flex>
                             <SideBar userData={userData} />
                         </Flex>
 

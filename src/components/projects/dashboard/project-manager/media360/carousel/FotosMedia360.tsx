@@ -11,6 +11,7 @@ import 'swiper/css/scrollbar';
 import { PiGoogleCardboardLogoFill } from "react-icons/pi";
 import { Md360 } from "react-icons/md";
 import { TbView360Number } from "react-icons/tb";
+import axios from "axios";
 
 
 
@@ -38,7 +39,20 @@ export function FotosMedia360({ projectData, openImage }: FotosMedia360Props) {
     useEffect(() => {
 
         const deleteImage = async (imageID: Investment["images"][0]["id"]) => {
+
             try {
+
+                const imageToDelete = media360.find((image) => image.id === imageID);
+
+                if (!imageToDelete) {
+                    console.warn(`Imagem com ID ${imageID} não encontrada no array destaques`);
+                    return;
+                }
+
+                const responseImgDeleted = await axios.post('/api/delete-image', { 
+                    imageUrl: imageToDelete.url 
+                  });
+
 
                 const response = await deletePrismaProjectImage(projectData.id, imageID)
                 // Salvando alterações no estado
@@ -116,7 +130,7 @@ export function FotosMedia360({ projectData, openImage }: FotosMedia360Props) {
                             >
                                 <Image
                                     cursor={editMode ? 'pointer' : 'grabbing'}
-                                    src={`/assets/projects/${img.url}`}
+                                    src={`${img.url}`}
                                     h={190}
                                     w='100%'
                                     objectFit={'cover'}

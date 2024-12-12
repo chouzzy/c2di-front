@@ -4,6 +4,7 @@ import { UseFormRegisterReturn } from "react-hook-form";
 import { ErrorInputComponent } from "@/components/ErrorInputComponent";
 import { ArrowArcLeft } from "phosphor-react";
 import { changePrismaProjectCapa } from "@/app/services/changeCapa";
+import axios from "axios";
 
 
 
@@ -24,9 +25,39 @@ export function CapaInput({ allowedTypes, accept, projectData }: UsersInputProps
 
     useEffect(() => {
 
-        const updateCapa = async (updateData: Investment) => {
+        const updateCapa = async (updateData: Investment, selectedFile: File) => {
 
             try {
+
+                const formData = new FormData();
+
+                formData.append('file', selectedFile);
+
+                formData.append('projectId', projectData.id);
+
+                // Faz a requisição POST usando Axios
+                const responseFiles = await axios.post('/api/upload', formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data', // Define o Content-Type para upload de arquivos
+                    },
+                });
+
+                const imageToDelete = projectData.images[0]
+
+                if (!imageToDelete) {
+                    console.warn(`Imagem de capa não encontrada no array destaques`);
+                    return;
+                }
+
+                const responseImgDeleted = await axios.post('/api/delete-image', { 
+                    imageUrl: imageToDelete.url 
+                  });
+                const imageUrls = responseFiles.data.imageUrls;
+
+                projectData.images[0].label = 'DESTAQUES'
+                projectData.images[0].url = imageUrls[0]
+                projectData.images[0].description = selectedFile.name
+
                 const response = await changePrismaProjectCapa(projectData.id, updateData)
 
                 window.location.reload()
@@ -37,12 +68,10 @@ export function CapaInput({ allowedTypes, accept, projectData }: UsersInputProps
 
         }
 
-        if (selectedFile) {
-            projectData.images[0].label = 'DESTAQUES'
-            projectData.images[0].url = selectedFile.name
-            projectData.images[0].description = selectedFile.name
+        if (selectedFile && updatingFile) {
 
-            updateCapa(projectData)
+
+            updateCapa(projectData, selectedFile)
             setUpdatingFile(false)
         }
 
@@ -54,7 +83,7 @@ export function CapaInput({ allowedTypes, accept, projectData }: UsersInputProps
 
         const files = event.target.files;
 
-        
+
         if (!files) {
             return
         }

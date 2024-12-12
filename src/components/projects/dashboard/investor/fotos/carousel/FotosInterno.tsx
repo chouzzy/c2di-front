@@ -97,7 +97,7 @@ export function FotosInterno({ projectData, openImage }: FotosDestaquesProps) {
                                 >
                                     <Image
                                         cursor={editMode ? 'pointer' : 'grabbing'}
-                                        src={`/assets/projects/${img.url}`}
+                                        src={`${img.url}`}
                                         h={190}
                                         w='100%'
                                         objectFit={'cover'}
