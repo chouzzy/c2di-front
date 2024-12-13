@@ -1,8 +1,7 @@
 import { Flex, FormControl, FormLabel, Input, Text } from "@chakra-ui/react";
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import { UseFormRegisterReturn } from "react-hook-form";
 import { ErrorInputComponent } from "@/components/ErrorInputComponent";
-import { ArrowArcLeft } from "phosphor-react";
 
 
 
@@ -10,6 +9,7 @@ interface UsersInputProps {
     label_top: string,
     allowedTypes: string[],
     accept: string,
+    setSelectedFiles?: Dispatch<SetStateAction<FileList | undefined>>
     multiple?: boolean
     className?: string
     icon?: any,
@@ -23,17 +23,22 @@ interface UsersInputProps {
 
 
 
-export function ProjectFileInput({ label_top, allowedTypes, accept, className, multiple=true, icon, isRequired, disabled = false, register, maxWidth, label_bottom }: UsersInputProps
+export function ProjectFileInput({ label_top, allowedTypes, accept, setSelectedFiles, className, multiple = true, icon, isRequired, disabled = false, register, maxWidth, label_bottom }: UsersInputProps
 ) {
     const [selectedFile, setSelectedFile] = useState(null);
+
     const [error, setError] = useState('');
 
     const handleFileChange = (event: any) => {
 
         setError("")
 
+        if (setSelectedFiles) {
+            setSelectedFiles(undefined)
+        }
+
         const files = event.target.files;
-        
+
         if (!files) {
             return
         }
@@ -66,6 +71,10 @@ export function ProjectFileInput({ label_top, allowedTypes, accept, className, m
             };
 
         }
+
+        if (setSelectedFiles) {
+            setSelectedFiles(files)
+        }
     }
 
     return (
@@ -86,7 +95,7 @@ export function ProjectFileInput({ label_top, allowedTypes, accept, className, m
 
             <Input
                 {...register}
-                className={className?? ''}
+                className={className ?? ''}
                 type={'file'}
                 onChange={handleFileChange}
                 bgColor={'white'}

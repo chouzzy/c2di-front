@@ -1,4 +1,4 @@
-import { Button, Flex, Input, Link, Table, TableCaption, TableContainer, Tbody, Td, Tfoot, Th, Thead, Tr } from '@chakra-ui/react';
+import { Button, Flex, Input, Link, Spinner, Table, TableCaption, TableContainer, Tbody, Td, Text, Tfoot, Th, Thead, Tr } from '@chakra-ui/react';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { UserProfile } from '@auth0/nextjs-auth0/client';
 import { SpinnerFullScreen } from '@/components/Loading/SpinnerFullScreen';
@@ -9,6 +9,8 @@ import { useForm } from 'react-hook-form';
 import { documentsArrayAdapter } from '@/app/services/utils';
 import { changePrismaProjectDoc } from '@/app/services/changeDoc';
 import { createPrismaNotification } from '@/app/services/createNotification';
+import axios from 'axios';
+import { ErrorInputComponent } from '@/components/ErrorInputComponent';
 
 interface FormUsersProps {
     user: UserProfile | undefined
@@ -31,6 +33,11 @@ function DocumentsList({ user, userData, projectData, documentList, setDocumentL
     const [addMode, setAddMode] = useState(false); // Estado para controlar o modo de edição
 
     const [saveDocumentConfirmed, setSaveDocumentConfirmed] = useState(false)
+
+    const [selectedFiles, setSelectedFiles] = useState<FileList | undefined>();
+    const [isUploading, setIsUploading] = useState(false)
+    const [totalUploading, setTotalUploading] = useState(0)
+    const [progressUploading, setProgressUploading] = useState(0)
 
     const deleteDocumentTrigger = (id: string) => {
 
@@ -60,7 +67,24 @@ function DocumentsList({ user, userData, projectData, documentList, setDocumentL
         const deleteDocument = async (documentID: Investment["documents"][0]["id"]) => {
 
             try {
+
+                const docToDelete = projectData.documents.find((doc) => doc.id === documentID);
+
+                if (!docToDelete) {
+                    console.warn(`Documento com ID ${documentID} não encontrada no array destaques`);
+                    return;
+                }
+
+                console.log('docToDelete')
+                console.log(docToDelete)
+
+                const responseImgDeleted = await axios.post('/api/delete-image', {
+                    imageUrl: docToDelete.url
+                });
+
+
                 const response = await deletePrismaProjectDocument(projectData.id, documentID)
+                projectData.documents = response.documents
                 setDocumentList(response.documents)
             } catch (error) {
                 console.error(error)
@@ -80,29 +104,83 @@ function DocumentsList({ user, userData, projectData, documentList, setDocumentL
     const onSubmit = async (data: any) => {
 
         try {
+            const formData = new FormData();
+            setIsUploading(true)
 
-            data = await documentsArrayAdapter(data)
-            projectData.documents = projectData.documents.concat(data.documents)
-            const response: Investment = await changePrismaProjectDoc(projectData.id, projectData)
-            
-            const newNotification = {
-                title: 'Houve uma nova atualização em seu projeto',
-                message:"Um documento foi atualizado! Verifique na aba de documentos",
-                investmentId: projectData.id
+            // Verifica se há arquivos selecionados
+            if (!selectedFiles) {
+                console.warn(`Nenhum arquivo selecionado`);
+                return; // Se não houver arquivos, interrompe a função
             }
 
-            const newNote = await createPrismaNotification(newNotification)
-            console.log('newNote')
-            console.log(newNote)
-            setDocumentList(response.documents)
-            setAddMode(false)
+            setTotalUploading(selectedFiles.length);
 
+            // Adiciona os arquivos ao FormData
+            for (let i = 0; i < selectedFiles.length; i++) {
+                formData.append('file', selectedFiles[i]);
+                setProgressUploading((prevProgress) => prevProgress + 1); // Corrigido
+            }
 
+            // Adiciona o ID do projeto ao FormData
+            formData.append('projectId', projectData.title);
+
+            // Faz a requisição POST usando Axios para enviar os arquivos
+            const responseFiles = await axios.post('/api/upload', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
+            });
+
+            // Extrai as URLs dos documentos da resposta
+            const docUrls = responseFiles.data.imageUrls;
+            const docs: Investment["documents"] = [];
+
+            // Processa as URLs dos documentos
+            for (let index = 0; index < docUrls.length; index++) {
+                const parts = docUrls[index].split('-'); // Divide a URL em partes usando o hífen
+                let lastPart = parts.pop(); // Obtém a última parte da URL (nome do arquivo)
+                lastPart = decodeURIComponent(lastPart); // Decodifica os caracteres especiais da URL
+
+                // Adiciona o documento ao array docs
+                docs.push({
+                    id: 'newDoc',
+                    title: lastPart,
+                    url: decodeURIComponent(docUrls[index]),
+                    description: lastPart,
+                });
+            }
+
+            // Remove o campo 'document' do objeto data (se existir)
+            delete data.document;
+
+            // Atualiza o campo 'documents' do objeto data com o array de documentos
+            data.documents = docs;
+
+            // Adiciona os novos documentos ao array de documentos do projeto
+            projectData.documents = projectData.documents.concat(data.documents);
+
+            // Atualiza os documentos do projeto no banco de dados
+            const response: Investment = await changePrismaProjectDoc(projectData.id, projectData);
+            projectData.documents = response.documents
+
+            // Cria uma nova notificação para o projeto
+            const newNotification = {
+                title: 'Houve uma nova atualização em seu projeto',
+                message: "Um documento foi atualizado! Verifique na aba de documentos",
+                investmentId: projectData.id,
+            };
+
+            // Cria a notificação no banco de dados
+            const newNote = await createPrismaNotification(newNotification);
+
+            // Atualiza o estado com a nova lista de documentos
+            setDocumentList(response.documents);
+            setAddMode(false);
+            setIsUploading(false)
         } catch (error: any) {
-            console.error(error)
+            console.error(error);
         }
     };
-
 
 
     if (!documentList) {
@@ -140,76 +218,86 @@ function DocumentsList({ user, userData, projectData, documentList, setDocumentL
                 : ''
             }
 
-
-
-            <Flex w={['90vw', '90vw', '90vw', '100%', '100%']}>
-                <TableContainer w={'100%'}>
-                    <Table variant={'simple'}>
-                        <Thead>
-                            <Tr>
-                                <Th>Título</Th>
-                                {/* <Th>Descrição</Th> */}
-                                <Th>URL</Th>
-                            </Tr>
-                        </Thead>
-                        <Tbody>
-
-                            {documentList?.map((partner, index) => {
-                                return (
-                                    <Tr key={'name' + index}>
-                                        <Td>{partner.title}</Td>
-                                        {/* <Td>{partner.description}</Td> */}
-                                        <Td>
-                                            <Flex gap={2} justifyContent={'space-between'}>
-                                                <Link href={`${partner.url}`} target='_blank' _hover={{ color: 'blue.400' }}>
-                                                    {partner.url.length > 64 ? partner.url.slice(0, 64) + '...' : partner.url}
-                                                </Link>
-                                                {editMode ?
-
-                                                    <Flex
-                                                        onClick={() => {
-                                                            deleteDocumentTrigger(partner.id)
-                                                        }}
-                                                        _hover={{ color: 'redSide' }}
-                                                        fontWeight={'medium'}
-                                                        cursor={'pointer'}
-                                                        alignItems={'center'}
-                                                        fontSize={16}
-                                                        pr={2}
-                                                    >
-                                                        <Trash />
-                                                    </Flex>
-                                                    :
-                                                    ''
-                                                }
-                                            </Flex>
-                                        </Td>
-                                    </Tr>
-                                )
-                            })}
-
-                        </Tbody>
-                    </Table>
-                </TableContainer>
-            </Flex>
-            <form onSubmit={handleSubmit(onSubmit)}>
-                {addMode ?
-                    <Flex w='100%' flexDir={'column'}>
-                        <ProjectFileInput
-                            key={"documents"}
-                            isRequired={true}
-                            allowedTypes={['application/pdf']}
-                            accept="application/pdf"
-                            label_top='Documentos (PDF)'
-                            register={register("document")}
-                        />
-                        <Button ml={4} _hover={{ bgColor: 'redSide' }} size={'md'} borderRadius={8} type='submit' color={'lightSide'} fontWeight={'light'} bgColor={'graySide'} maxW={32} mt={4}>
-                            Salvar dados
-                        </Button>
+            {isUploading ?
+                <Flex w='100%' h='100%' alignItems={'center'} justifyContent={'center'} flexDir={'column'}>
+                    <Flex alignItems={'center'} p={8} justifyContent={'center'} gap={4}>
+                        <Text> Fazendo o upload de {totalUploading} documentos</Text>
+                        <Spinner boxSize={6} />
                     </Flex>
-                    : ''
-                }
-            </form>
+                </Flex>
+                :
+                <>
+                    <Flex w={['90vw', '90vw', '90vw', '100%', '100%']}>
+                        <TableContainer w={'100%'}>
+                            <Table variant={'simple'}>
+                                <Thead>
+                                    <Tr>
+                                        <Th>Título</Th>
+                                        {/* <Th>Descrição</Th> */}
+                                        <Th>URL</Th>
+                                    </Tr>
+                                </Thead>
+                                <Tbody>
+
+                                    {documentList?.map((partner, index) => {
+                                        return (
+                                            <Tr key={'name' + index}>
+                                                <Td>{partner.title.length > 32 ? partner.title.slice(0, 32) + '...' : partner.title}</Td>
+                                                {/* <Td>{partner.description}</Td> */}
+                                                <Td>
+                                                    <Flex gap={2} justifyContent={'space-between'}>
+                                                        <Link href={`${partner.url}`} target='_blank' _hover={{ color: 'blue.400' }}>
+                                                            {partner.url.length > 64 ? partner.url.slice(0, 64) + '...' : partner.url}
+                                                        </Link>
+                                                        {editMode ?
+
+                                                            <Flex
+                                                                onClick={() => {
+                                                                    deleteDocumentTrigger(partner.id)
+                                                                }}
+                                                                _hover={{ color: 'redSide' }}
+                                                                fontWeight={'medium'}
+                                                                cursor={'pointer'}
+                                                                alignItems={'center'}
+                                                                fontSize={16}
+                                                                pr={2}
+                                                            >
+                                                                <Trash />
+                                                            </Flex>
+                                                            :
+                                                            ''
+                                                        }
+                                                    </Flex>
+                                                </Td>
+                                            </Tr>
+                                        )
+                                    })}
+
+                                </Tbody>
+                            </Table>
+                        </TableContainer>
+                    </Flex>
+                    <form onSubmit={handleSubmit(onSubmit)}>
+                        {addMode ?
+                            <Flex w='100%' flexDir={'column'}>
+                                <ProjectFileInput
+                                    key={"documents"}
+                                    isRequired={true}
+                                    allowedTypes={['application/pdf']}
+                                    accept="application/pdf"
+                                    label_top='Documentos (PDF)'
+                                    setSelectedFiles={setSelectedFiles}
+                                    register={register("document")}
+                                />
+                                <Button ml={4} _hover={{ bgColor: 'redSide' }} size={'md'} borderRadius={8} type='submit' color={'lightSide'} fontWeight={'light'} bgColor={'graySide'} maxW={32} mt={4}>
+                                    Salvar dados
+                                </Button>
+                            </Flex>
+                            : ''
+                        }
+                    </form>
+                </>
+            }
 
 
         </Flex>
