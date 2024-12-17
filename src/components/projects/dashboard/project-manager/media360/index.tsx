@@ -56,9 +56,6 @@ export function ProjectMedia360ProjectManager({ projectData }: ProjectMedia360Pr
                                 yaw={180}
                                 hfov={110}
                                 autoLoad
-                                onLoad={() => {
-                                    console.log("panorama loaded");
-                                }}
                             >
                             </Pannellum>
 

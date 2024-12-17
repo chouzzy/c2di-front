@@ -1,12 +1,12 @@
 import { Flex, Image, Modal, ModalBody, ModalCloseButton, ModalContent, ModalOverlay, Spinner, useDisclosure } from "@chakra-ui/react";
 import { useState } from "react";
+import { Pannellum, PannellumVideo } from "pannellum-react";
 
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
 import { FotosMedia360 } from "./carousel/FotosMedia360";
-import { Pannellum } from "pannellum-react";
 // import { ReactPhotoSphereViewer } from "react-photo-sphere-viewer";
 // import 'react-photo-sphere-viewer/dist/styles.css'; // Importe styles.css
 
@@ -59,9 +59,6 @@ export function ProjectMedia360Investor({ projectData }: ProjectMedia360ProjectM
                                 yaw={180}
                                 hfov={110}
                                 autoLoad
-                                onLoad={() => {
-                                    console.log("panorama loaded");
-                                }}
                             >
                             </Pannellum>
 
