@@ -33,7 +33,7 @@ export function CapaInput({ allowedTypes, accept, projectData }: UsersInputProps
 
                 formData.append('file', selectedFile);
 
-                formData.append('projectId', projectData.id);
+                formData.append('projectId', projectData.title);
 
                 // Faz a requisição POST usando Axios
                 const responseFiles = await axios.post('/api/upload', formData, {

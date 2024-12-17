@@ -14,6 +14,9 @@ import { createPrismaInvestment } from "@/app/services/createInvestment";
 import axios, { AxiosError } from "axios";
 import { SpinnerFullScreen } from "../Loading/SpinnerFullScreen";
 import { changePrismaProjectFotos } from "@/app/services/changeFotos";
+import { changePrismaProjectDoc } from "@/app/services/changeDoc";
+import { UploadDocuments } from "@/app/services/uploadDocuments";
+import { UploadImages } from "@/app/services/uploadImages";
 
 interface CreateInvestorAccountCardProps {
     user: UserProfile
@@ -46,9 +49,11 @@ export function CreateProjectForm({ user, router, userData }: CreateInvestorAcco
                 return
             }
 
+            // INICIA CARREGAMENTO
             setIsUploading(true)
             let totalFiles = 0;
 
+            // LÊ CADA IMAGEM DO ARRAY DATA.IMAGE
             for (const label in data.image) {
                 if (data.image.hasOwnProperty(label)) {
                     totalFiles += data.image[label].length;
@@ -56,61 +61,30 @@ export function CreateProjectForm({ user, router, userData }: CreateInvestorAcco
             }
             setTotalUploading(totalFiles); // Define o total de arquivos
 
-            console.log('data.image')
-            console.log(data.image)
-
+            // TRANSFORMA O ARRAY DE IMAGENS NO FORMATO DO BANCO DE DADOS
             data = await createInvestorUtils(data, userData.id)
 
-            const { image } = data
+            const { image, document } = data
 
+            // Deleta array antigo de imagens, o novo formatado se chama data.images
             delete data.image
+            delete data.document
 
             await createInvestmentSchema.validate(data);
 
+            // Cria o investimento antes de cadastrar imagens no banco de imagens
             const investment = await createPrismaInvestment(data)
 
-            const images: Investment["images"] = []
-
-            for (const label in image) {
-
-                if (image.hasOwnProperty(label)) {
-
-                    const files = image[label];
-
-                    const formData = new FormData();
-
-                    for (let i = 0; i < files.length; i++) {
-                        formData.append('file', files[i]);
-                        setProgressUploading((prevProgress) => prevProgress + 1); // Corrigido
-                    }
-
-                    formData.append('projectId', data.title);
-
-                    const responseFiles = await axios.post('/api/upload', formData, {
-                        headers: {
-                            'Content-Type': 'multipart/form-data', // Define o Content-Type para upload de arquivos
-                        },
-                    });
-
-                    const imageUrls = responseFiles.data.imageUrls;
-
-                    for (let index = 0; index < imageUrls.length; index++) {
-
-                        console.log('imageUrls[index]')
-                        console.log(imageUrls[index])
-                        images.push({
-                            id: 'newimage',
-                            label: label,
-                            url: imageUrls[index],
-                            description: imageUrls[index].replace('https://c2di-space.nyc3.digitaloceanspaces.com/', '')
-                        })
-                    }
-                }
-            }
+            const docs = await UploadDocuments(document, investment.title);
+            const images = await UploadImages({image, folderTitle: investment.title, setProgressUploading});
+            
+            
 
             investment.images = images
+            investment.documents = docs
 
             await changePrismaProjectFotos(investment.id, investment)
+            await changePrismaProjectDoc(investment.id, investment)
 
             setIsUploading(false)
 

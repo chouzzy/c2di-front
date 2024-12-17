@@ -33,7 +33,7 @@ export function FotosInternoInput({ allowedTypes, accept, projectData }: FotosIn
                     formData.append('file', selectedFiles[i]);
                 }
 
-                formData.append('projectId', projectData.id); 
+                formData.append('projectId', projectData.title); 
 
                 // Faz a requisição POST usando Axios
                 const responseFiles = await axios.post('/api/upload', formData, {

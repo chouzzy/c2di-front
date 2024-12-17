@@ -33,7 +33,7 @@ export function FotosPlantaInput({ allowedTypes, accept, projectData }: FotosInp
                     formData.append('file', selectedFiles[i]);
                 }
 
-                formData.append('projectId', projectData.id); 
+                formData.append('projectId', projectData.title); 
 
                 // Faz a requisição POST usando Axios
                 const responseFiles = await axios.post('/api/upload', formData, {

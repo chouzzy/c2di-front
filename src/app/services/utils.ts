@@ -70,7 +70,6 @@ async function documentsArrayAdapter(data: any) {
                 description: data.document[index].name
             })
         }
-        delete data.document
 
         return data
 
