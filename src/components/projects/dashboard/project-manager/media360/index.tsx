@@ -1,5 +1,8 @@
 import { Flex, Image, Modal, ModalBody, ModalCloseButton, ModalContent, ModalOverlay, Spinner, useDisclosure } from "@chakra-ui/react";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
+import { Pannellum, PannellumVideo } from "pannellum-react";
+
+
 
 import 'swiper/css';
 import 'swiper/css/navigation';
@@ -10,6 +13,7 @@ import { FotosMedia360 } from "./carousel/FotosMedia360";
 interface ProjectMedia360ProjectManager {
     projectData: Investment
 }
+
 
 export function ProjectMedia360ProjectManager({ projectData }: ProjectMedia360ProjectManager) {
 
@@ -42,7 +46,25 @@ export function ProjectMedia360ProjectManager({ projectData }: ProjectMedia360Pr
                 <ModalContent>
                     <ModalCloseButton color={'white'} bgColor={'#EF3A5D'} />
                     <ModalBody p={0}>
+                        {imageOnView ? (
+
+                            <Pannellum
+                                width="100%"
+                                height="500px"
+                                image={imageOnView.url}
+                                pitch={10}
+                                yaw={180}
+                                hfov={110}
+                                autoLoad
+                                onLoad={() => {
+                                    console.log("panorama loaded");
+                                }}
+                            >
+                            </Pannellum>
+
+                        ) : (
                             <Spinner boxSize={32} />
+                        )}
                     </ModalBody>
                 </ModalContent>
             </Modal >

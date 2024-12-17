@@ -70,12 +70,12 @@ export function FotosMedia360({ projectData, openImage }: FotosMedia360Props) {
                     <Flex alignItems={'center'} gap={1}>Fotos 360º<BsBadgeVrFill size={20} /></Flex>  ({media360.length})
                 </Flex>
 
-                
+
             </Flex>
 
             {/* 360 IMAGES */}
             <Flex maxW={'100%'} gap={2}>
-                <SimpleGrid columns={[1,1,1,2,2]} gap={2} w='100%'>
+                <SimpleGrid columns={[1, 1, 1, 2, 2]} gap={2} w='100%'>
                     {media360.map((img) => {
                         return (
                             <Flex
@@ -86,16 +86,22 @@ export function FotosMedia360({ projectData, openImage }: FotosMedia360Props) {
                                 justifyContent={'center'}
                                 alignItems={'center'}
                             >
-                                <Image
-                                    cursor={editMode ? 'pointer' : 'grabbing'}
-                                    src={`${img.url}`}
-                                    h={190}
-                                    w='100%'
-                                    objectFit={'cover'}
-                                    objectPosition={'center'}
-                                    opacity={editMode ? 0.2 : ''}
-                                    _hover={{ opacity: 0.2, transition: '500ms' }}
-                                />
+                                <Flex flexDir={'column'} w='100%'>
+                                    <Image
+                                        cursor={editMode ? 'pointer' : 'grabbing'}
+                                        src={`${img.url}`}
+                                        h={190}
+                                        w='100%'
+                                        objectFit={'cover'}
+                                        objectPosition={'center'}
+                                        opacity={editMode ? 0.2 : ''}
+                                        _hover={{ opacity: 0.2, transition: '500ms' }}
+                                    />
+                                    {img.description ?
+                                        <Text fontSize={'xs'}> {decodeURIComponent(img.description).replace('https://c2di-space.nyc3.digitaloceanspaces.com/', '')} </Text>
+                                        : ''
+                                    }
+                                </Flex>
                                 {editMode ?
                                     <Text position={'absolute'} cursor='pointer'>Clique para apagar</Text>
                                     :
