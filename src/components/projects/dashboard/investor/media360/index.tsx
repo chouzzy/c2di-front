@@ -6,8 +6,8 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
 import { FotosMedia360 } from "./carousel/FotosMedia360";
-import { ReactPhotoSphereViewer } from "react-photo-sphere-viewer";
-import 'react-photo-sphere-viewer/dist/styles.css'; // Importe styles.css
+// import { ReactPhotoSphereViewer } from "react-photo-sphere-viewer";
+// import 'react-photo-sphere-viewer/dist/styles.css'; // Importe styles.css
 
 
 
@@ -48,7 +48,7 @@ export function ProjectMedia360Investor({ projectData }: ProjectMedia360ProjectM
                 <ModalContent>
                     <ModalCloseButton color={'white'} bgColor={'#EF3A5D'} />
                     <ModalBody p={0}>
-                        {imageOnView ?
+                        {/* {imageOnView ?
                             <Flex maxW={'100%'} gap={2}>
                                 <ReactPhotoSphereViewer
                                     // src={`https://www.lindacortintas.com.br/static/img/fachada.png`}
@@ -57,9 +57,9 @@ export function ProjectMedia360Investor({ projectData }: ProjectMedia360ProjectM
                                     width={"100%"}
                                 ></ReactPhotoSphereViewer>
                             </Flex>
-                            :
+                            : */}
                             <Spinner boxSize={32} />
-                        }
+                            {/* } */}
                     </ModalBody>
                 </ModalContent>
             </Modal >
