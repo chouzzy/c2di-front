@@ -6,7 +6,7 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
 import { FotosMedia360 } from "./carousel/FotosMedia360";
-import { ReactPhotoSphereViewer } from "react-photo-sphere-viewer";
+// import { ReactPhotoSphereViewer } from "react-photo-sphere-viewer";
 
 interface ProjectMedia360ProjectManager {
     projectData: Investment
@@ -43,7 +43,7 @@ export function ProjectMedia360ProjectManager({ projectData }: ProjectMedia360Pr
                 <ModalContent>
                     <ModalCloseButton color={'white'} bgColor={'#EF3A5D'} />
                     <ModalBody p={0}>
-                        {imageOnView ?
+                        {/* {imageOnView ?
                             <Flex maxW={'100%'} gap={2}>
                                 <ReactPhotoSphereViewer
                                     src={`${imageOnView.url}`}
@@ -51,8 +51,9 @@ export function ProjectMedia360ProjectManager({ projectData }: ProjectMedia360Pr
                                     width={"100%"}
                                 ></ReactPhotoSphereViewer>
                             </Flex>
-                            :
-                            <Spinner boxSize={32} />}
+                            : */}
+                            <Spinner boxSize={32} />
+                            {/* } */}
                     </ModalBody>
                 </ModalContent>
             </Modal >
