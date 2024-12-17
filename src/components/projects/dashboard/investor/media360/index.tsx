@@ -21,6 +21,8 @@ export function ProjectMedia360Investor({ projectData }: ProjectMedia360ProjectM
 
 
     const openImage = (img: Investment["images"][0]) => {
+        console.log('img')
+        console.log(img.url)
         setImageOnView(img)
         onOpen()
     }
@@ -46,6 +48,7 @@ export function ProjectMedia360Investor({ projectData }: ProjectMedia360ProjectM
                         {imageOnView ?
                             <Flex maxW={'100%'} gap={2}>
                                 <ReactPhotoSphereViewer
+                                    // src={`https://www.lindacortintas.com.br/static/img/fachada.png`}
                                     src={`${imageOnView.url}`}
                                     height={"500px"}
                                     width={"100%"}

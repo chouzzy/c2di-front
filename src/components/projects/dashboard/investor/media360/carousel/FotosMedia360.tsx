@@ -1,5 +1,4 @@
-import { FotosMedia360Input } from "@/components/CreateProjects/Inputs/FotosMedia360Input";
-import { Button, Flex, Image, SimpleGrid, Text } from "@chakra-ui/react";
+import { Flex, Image, SimpleGrid, Text } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { deletePrismaProjectImage } from "@/app/services/deleteInvestmentImage";
 import { BsBadgeVrFill } from "react-icons/bs";
