@@ -6,7 +6,9 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
 import { FotosMedia360 } from "./carousel/FotosMedia360";
-// import { ReactPhotoSphereViewer } from "react-photo-sphere-viewer";
+import { ReactPhotoSphereViewer } from "react-photo-sphere-viewer";
+import 'react-photo-sphere-viewer/dist/styles.css'; // Importe styles.css
+
 
 
 interface ProjectMedia360ProjectManager {
