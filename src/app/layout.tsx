@@ -6,6 +6,7 @@ import { Global } from '@emotion/react';
 import { theme } from '@/styles/theme'
 import { Providers } from './providers'
 import '../styles/global.css';
+import 'react-photo-sphere-viewer/dist/styles.css'; // Importe aqui
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
