@@ -59,12 +59,28 @@ export default withMiddlewareAuthRequired(async function middleware(req) {
     // ROLE MIDDLEWARES
 
         // UPDATE ROUTES INVESTOR
-        if (role === process.env.INVESTOR && (
+        if (role === process.env.PROPRIETARIO && (
+        req.nextUrl.pathname == '/users/update/investor' || 
         req.nextUrl.pathname == '/users/update/administrator' || 
         req.nextUrl.pathname == '/users/update/project-manager' ||
         req.nextUrl.pathname == '/users/list' ||
         req.nextUrl.pathname.startsWith('/users/update/project-manager/') ||
         req.nextUrl.pathname.startsWith('/users/update/administrator/') ||
+        req.nextUrl.pathname.startsWith('/users/update/investor/') ||
+        req.nextUrl.pathname.startsWith('/users/update/proprietario/')
+        )) {
+        console.log('Acesso negado para PROPRIETARIO.');
+        return NextResponse.redirect(new URL('/users/update/proprietario', req.url)); // Redireciona para a página inicial
+        }
+        // UPDATE ROUTES INVESTOR
+        if (role === process.env.INVESTOR && (
+        req.nextUrl.pathname == '/users/update/proprietario' || 
+        req.nextUrl.pathname == '/users/update/administrator' || 
+        req.nextUrl.pathname == '/users/update/project-manager' ||
+        req.nextUrl.pathname == '/users/list' ||
+        req.nextUrl.pathname.startsWith('/users/update/project-manager/') ||
+        req.nextUrl.pathname.startsWith('/users/update/administrator/') ||
+        req.nextUrl.pathname.startsWith('/users/update/proprietario/') ||
         req.nextUrl.pathname.startsWith('/users/update/investor/')
         )) {
         console.log('Acesso negado para INVESTOR.');
@@ -73,9 +89,11 @@ export default withMiddlewareAuthRequired(async function middleware(req) {
 
         // UPDATE ROUTES PROJECT_MANAGER
         if (role === process.env.PROJECT_MANAGER && (
+        req.nextUrl.pathname == '/users/update/proprietario' || 
         req.nextUrl.pathname == '/users/update/administrator' || 
         req.nextUrl.pathname == '/users/update/investor' ||
         req.nextUrl.pathname == '/users/list' ||
+        req.nextUrl.pathname.startsWith('/users/update/proprietario/') ||
         req.nextUrl.pathname.startsWith('/users/update/project-manager/') ||
         req.nextUrl.pathname.startsWith('/users/update/administrator/') ||
         req.nextUrl.pathname.startsWith('/users/update/investor/')
@@ -86,6 +104,7 @@ export default withMiddlewareAuthRequired(async function middleware(req) {
 
         // UPDATE ROUTES ADMINISTRATOR
         if (role === process.env.ADMINISTRATOR && (
+        req.nextUrl.pathname == '/users/update/proprietario' || 
         req.nextUrl.pathname == '/users/update/investor' || 
         req.nextUrl.pathname == '/users/update/project-manager' ||
         req.nextUrl.pathname == `/users/update/administrator/${id}`
@@ -102,6 +121,23 @@ export default withMiddlewareAuthRequired(async function middleware(req) {
                 req.nextUrl.pathname.startsWith('/create-project')
             ) {
                 return NextResponse.redirect(new URL('/projects', req.url)); // Redireciona para a página inicial
+            }
+        }
+        // PROJECT ROUTES PROPRIETARIO
+        if (role === process.env.PROPRIETARIO) {
+            if (
+                req.nextUrl.pathname.startsWith('/project-manager')||
+                req.nextUrl.pathname.startsWith('/create-project')
+            ) {
+                return NextResponse.redirect(new URL('/projects', req.url)); // Redireciona para a página inicial
+            }
+        }
+        // PROJECT ROUTES PROPRIETARIO
+        if (role === process.env.PROPRIETARIO) {
+            if (
+                req.nextUrl.pathname.startsWith('/myInvestments')
+            ) {
+                return NextResponse.redirect(new URL('/myPropriedades', req.url)); // Redireciona para a página inicial
             }
         }
 

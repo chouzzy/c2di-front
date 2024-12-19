@@ -198,7 +198,7 @@ function DocumentsList({ user, userData, projectData, documentList, setDocumentL
     return (
         <Flex w='100%' flexDirection="column" gap={2}>
 
-            {userData.role != 'INVESTOR' ?
+            {userData.role != 'INVESTOR' && userData.role != 'PROPRIETARIO'?
                 <Flex w='100%' justifyContent={'end'}>
                     {editMode || addMode ?
                         <Button onClick={handleEditCancel} color={'lightSide'} fontWeight={'light'} bgColor={'redSide'} maxW={40}>

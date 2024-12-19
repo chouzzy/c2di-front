@@ -1,30 +1,38 @@
 "use client"
 
-import { HeaderInvestorProjectList } from '@/components/projects/headers/HeaderInvestorProjectList'
-import { HeaderAdminProjectList } from '@/components/projects/headers/HeaderAdminProjectList'
-import { ProjectDashboardInvestor } from '@/components/projects/dashboard/investor'
-import { SpinnerFullScreen } from '@/components/Loading/SpinnerFullScreen'
 import { checkUserByEmail } from '@/app/services/checkUserByEmail'
-import { UserProfile, useUser } from '@auth0/nextjs-auth0/client'
-import { getProjectList } from '@/app/services/getProjectList'
-import { Container, Flex, useBreakpointValue } from '@chakra-ui/react'
+import { SpinnerFullScreen } from '@/components/Loading/SpinnerFullScreen'
 import { SideBar } from '@/components/SideBar'
+import { UserProfile, useUser } from '@auth0/nextjs-auth0/client'
+import { Container, Flex } from '@chakra-ui/react'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
+import { MyInvestmentsList } from '@/components/myInvestments'
+import { HeaderMyInvestments } from '@/components/myInvestments/headers/HeaderMyInvestments'
+import { getUserInvestmentListByUserID, getUserInvestmentListComplete } from '../services/getUserInvestmentListByID'
+import { MyPropriedadesList } from '@/components/myPropriedades'
+import { getUserProprietarioListByUserID, getUserProprietarioListComplete } from '../services/getUserProprietarioListByID'
 
+export default function MyPropriedades() {
 
-
-export default function ProjectInvestorProjects() {
+    const router = useRouter();
 
     const { user, isLoading } = useUser()
 
     const [userData, setUserData] = useState<User | null>(null);
     const [projectsData, setProjectsData] = useState<Investment[] | null>(null);
+    const [userInvestmentsData, setUserInvestmentsData] = useState<UserInvestment[] | null>(null);
 
     const [totalPages, setTotalPages] = useState<number>(0)
     const [elementsPerPage, setElementsPerPage] = useState<number>(4)
 
     const [page, setPage] = useState(1)
+
+
+
+    const redirectNotFound = async () => {
+        router.push("/404")
+    }
 
     // GET USER
     useEffect(() => {
@@ -46,7 +54,7 @@ export default function ProjectInvestorProjects() {
 
     }, [isLoading])
 
-    // GET USER PROJECTS
+    // GET PROJECTS
     useEffect(() => {
 
         const fetchProjectData = async (id: User["id"]) => {
@@ -55,75 +63,82 @@ export default function ProjectInvestorProjects() {
                 let pageString = String(page)
                 let pageRangeString = String(elementsPerPage)
 
-                if (!totalPages) { // FAZ A REQUISIÇÃO DE TOTAL DE ELEMENTOS APENAS 1 VEZ
+                if (!totalPages) {
 
-                    const projectResponseComplete = await getProjectList({ page: undefined, pageRange: undefined })
-                    console.log('projecst COMPLETE')
+                    const projectResponseComplete = await getUserProprietarioListByUserID({ page: undefined, pageRange: undefined, userID: id })
+                    const userInvestments = await getUserProprietarioListComplete()
                     const projectResponseActives = projectResponseComplete.filter((project: Investment) => project.active === true)
+
+                    // const projectResponseActives = projectResponseComplete.filter((project: Investment) => project.active === true)
 
                     if (projectResponseActives) {
                         setTotalPages(projectResponseActives.length)
+                        setProjectsData(projectResponseActives)
                     }
+
+                    if (userInvestments) {
+                        setUserInvestmentsData(userInvestments)
+                    }
+                } else {
+                    const projectResponseComplete = await getUserProprietarioListByUserID({ page: pageString, pageRange: pageRangeString, userID: id })
+                    const projectResponseActives = projectResponseComplete.filter((project: Investment) => project.active === true)
+                    setProjectsData(projectResponseActives)
                 }
 
-                const projectResponse = await getProjectList({ page: pageString, pageRange: pageRangeString, active: true })
-
-                setProjectsData(projectResponse)
 
             } catch (error) {
+
                 console.error('Erro ao buscar dados do projeto:', error);
+                // await redirectNotFound()
 
             }
         }
-
 
         if (userData) {
             fetchProjectData(userData.id);
         }
 
+
     }, [userData, page])
 
     return (
-        <>
             <Flex maxW={'1440px'} mx='auto'>
-                {userData && user && projectsData ?
-
-                    <Flex h='100%' flexDir={['column', 'column', 'column', 'column', 'row']} w='100%'>
+                {userData && user && projectsData && userInvestmentsData ?
+                    <Flex h='100%' flexDir={['column', 'column', 'column', 'column', 'row']} >
 
                         <Flex>
                             <Flex w={[0, 0, 0, 0, 60]}></Flex>
                             <SideBar userData={userData} />
                         </Flex>
 
-                        <Flex h='100%' flexDir={'column'} w='100%' px={[4, 4, 4, 12, 12]} py={[4, 4, 4, 12, 12]} gap={[0, 0, 0, 6, 6]}>
+
+                        {/* MAIN */}
+                        <Flex h='100%' w='100%' flexDir={'column'} px={[4, 4, 4, 4, 12]} py={[6, 6, 6, 12, 12]} gap={[4, 4, 4, 6, 6]} >
 
                             {/* HEADER */}
                             < Flex
                                 justifyContent={'space-between'}
                                 alignItems={'center'}
                                 borderBottom={'1px solid #E5E7EB'}
-                                pb={[4, 4, 4, 8, 8]}
+                                pb={8}
                             >
-                                {userData.role == "INVESTOR" || userData.role == "PROPRIETARIO" ? <HeaderInvestorProjectList /> : ''}
-                                {userData.role != "INVESTOR" && userData.role != "PROPRIETARIO" ? <HeaderAdminProjectList user={user} userData={userData} /> : ''}
+                                {userData.role == "INVESTOR" ? <HeaderMyInvestments /> : ''}
                             </Flex>
 
                             {/* BODY FORMS */}
                             < Flex flexDir={'column'}>
 
                                 <Flex gap={12}>
-                                    <ProjectDashboardInvestor elementsPerPage={elementsPerPage} totalPages={totalPages} page={page} setPage={setPage} projectsData={projectsData} />
+                                    <MyPropriedadesList elementsPerPage={elementsPerPage} totalPages={totalPages} page={page} setPage={setPage} projectsData={projectsData} userInvestmentsData={userInvestmentsData} />
                                 </Flex>
 
                             </Flex>
 
                         </Flex>
                     </Flex>
-
                     :
                     <SpinnerFullScreen />
                 }
-            </Flex >
-        </>
+            </Flex>
     )
 }

@@ -1,5 +1,5 @@
 import { Flex, FormControl, Input } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { ErrorInputComponent } from "@/components/ErrorInputComponent";
 import { changePrismaProjectFotos } from "@/app/services/changeFotos";
 import axios from "axios";
@@ -10,15 +10,17 @@ interface FotosInputProps {
     allowedTypes: string[],
     accept: string,
     projectData: Investment
+    setLoadingFiles: Dispatch<SetStateAction<boolean>>
 }
 
 
 
-export function FotosDestaquesInput({ allowedTypes, accept, projectData }: FotosInputProps
+export function FotosDestaquesInput({ allowedTypes, accept, projectData, setLoadingFiles }: FotosInputProps
 ) {
     const [selectedFiles, setSelectedFiles] = useState<FileList | undefined>();
     const [updatingFile, setUpdatingFile] = useState(false);
     const [error, setError] = useState('');
+    
 
 
     useEffect(() => {
@@ -26,6 +28,7 @@ export function FotosDestaquesInput({ allowedTypes, accept, projectData }: Fotos
         const uploadFotos = async (updateData: Investment, selectedFiles: FileList) => {
 
             try {
+                setLoadingFiles(true)
 
                 const formData = new FormData();
 

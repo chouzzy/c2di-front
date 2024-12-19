@@ -1,5 +1,5 @@
 import { FotosMedia360Input } from "@/components/CreateProjects/Inputs/FotosMedia360Input";
-import { Button, Flex, Image, SimpleGrid, Text } from "@chakra-ui/react";
+import { Button, Flex, Image, SimpleGrid, Spinner, Text } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { deletePrismaProjectImage } from "@/app/services/deleteInvestmentImage";
 import { BsBadgeVrFill, BsHeadsetVr } from "react-icons/bs";
@@ -12,6 +12,7 @@ import { PiGoogleCardboardLogoFill } from "react-icons/pi";
 import { Md360 } from "react-icons/md";
 import { TbView360Number } from "react-icons/tb";
 import axios from "axios";
+import { SpinnerFullScreen } from "@/components/Loading/SpinnerFullScreen";
 
 
 
@@ -28,6 +29,8 @@ export function FotosMedia360({ projectData, openImage }: FotosMedia360Props) {
     const [deletingImageID, setDeletingImageID] = useState<string>()
 
     const [media360, setMedia360] = useState<Investment["images"]>(projectData.images.filter(img => img.label === 'PANORAMICAS'))
+
+    const [loadingFiles, setLoadingFiles] = useState(false);
 
     const deleteImage = (imageID: Investment["images"][0]["id"]) => {
         setDeletingImageID(imageID)
@@ -80,80 +83,90 @@ export function FotosMedia360({ projectData, openImage }: FotosMedia360Props) {
 
         <Flex flexDir={'column'} gap={8}>
 
-            {/* HEADER */}
-            <Flex w='100%' gap={2} justifyContent={'space-between'} alignItems={'center'} minH={16} flexDir={['column', 'column', 'column', 'row', 'row']}>
-
-                {/* LABEL */}
-                <Flex fontSize={20} fontWeight={'medium'} mt={2} alignItems={'center'} gap={2}>
-                    <Flex alignItems={'center'} gap={1}>Fotos 360º<BsBadgeVrFill size={20} /></Flex>  ({media360.length})
+            {loadingFiles ?
+                <Flex w='100%' justifyContent={'center'}>
+                    <Flex gap={4} h='100%' alignItems={'center'}>
+                        <Text>Fazendo upload dos arquivos...</Text>
+                        <Spinner boxSize={4} />
+                    </Flex>
                 </Flex>
+                :
+                <>
+                    <Flex w='100%' gap={2} justifyContent={'space-between'} alignItems={'center'} minH={16} flexDir={['column', 'column', 'column', 'row', 'row']}>
 
-                {/* EDIT MODE */}
-                <Flex gap={4} alignItems={'center'}>
+                        <Flex fontSize={20} fontWeight={'medium'} mt={2} alignItems={'center'} gap={2}>
+                            <Flex alignItems={'center'} gap={1}>Fotos 360º<BsBadgeVrFill size={20} /></Flex>  ({media360.length})
+                        </Flex>
 
-                    {editMode ?
-                        <FotosMedia360Input
-                            key={"FOTOS"}
-                            allowedTypes={['image/png', 'image/jpeg', 'image/jpg']}
-                            accept="image/*"
-                            projectData={projectData}
-                        />
-                        :
-                        ''
-                    }
+                        {/* EDIT MODE */}
+                        <Flex gap={4} alignItems={'center'}>
 
-                    <Button
-                        onClick={() => { setEditMode(!editMode) }}
-                        mt={2}
-                        size={'md'}
-                        _hover={editMode ? { bgColor: 'darkSide' } : { bgColor: 'redSide' }}
-                        color={'lightSide'}
-                        bgColor={editMode ? 'redSide' : 'darkSide'}>
-                        {editMode ? 'Cancelar' : 'Editar'}
-                    </Button>
+                            {editMode ?
+                                <FotosMedia360Input
+                                    key={"FOTOS"}
+                                    allowedTypes={['image/png', 'image/jpeg', 'image/jpg']}
+                                    accept="image/*"
+                                    projectData={projectData}
+                                    setLoadingFiles={setLoadingFiles}
+                                />
+                                :
+                                ''
+                            }
 
-                </Flex>
-            </Flex>
+                            <Button
+                                onClick={() => { setEditMode(!editMode) }}
+                                mt={2}
+                                size={'md'}
+                                _hover={editMode ? { bgColor: 'darkSide' } : { bgColor: 'redSide' }}
+                                color={'lightSide'}
+                                bgColor={editMode ? 'redSide' : 'darkSide'}>
+                                {editMode ? 'Cancelar' : 'Editar'}
+                            </Button>
 
-            {/* 360 IMAGES */}
-            <Flex maxW={'100%'} gap={2}>
-                <SimpleGrid columns={[1, 1, 1, 2, 2]} gap={2} w='100%'>
-                    {media360.map((img) => {
-                        return (
-                            <Flex
-                                key={img.id}
-                                onClick={editMode ? () => { deleteImage(img.id) } : () => { openImage(img) }}
-                                _hover={editMode ? { bgColor: 'redSide', transition: '500ms' } : { bgColor: 'white', transition: '500ms' }}
-                                position={'relative'}
-                                justifyContent={'center'}
-                                alignItems={'center'}
-                            >
-                                <Flex flexDir={'column'} w='100%'>
-                                    <Image
-                                        cursor={editMode ? 'pointer' : 'grabbing'}
-                                        src={`${img.url}`}
-                                        h={190}
-                                        w='100%'
-                                        objectFit={'cover'}
-                                        objectPosition={'center'}
-                                        opacity={editMode ? 0.2 : ''}
-                                        _hover={{ opacity: 0.2, transition: '500ms' }}
-                                    />
-                                    {img.description ?
-                                        <Text fontSize={'xs'}> {decodeURIComponent(img.description).replace('https://c2di-space.nyc3.digitaloceanspaces.com/', '')} </Text>
-                                        : ''
-                                    }
-                                </Flex>
-                                {editMode ?
-                                    <Text position={'absolute'} cursor='pointer'>Clique para apagar</Text>
-                                    :
-                                    ''
-                                }
-                            </Flex>
-                        )
-                    })}
-                </SimpleGrid>
-            </Flex>
+                        </Flex>
+                    </Flex>
+
+                    {/* 360 IMAGES */}
+                    <Flex maxW={'100%'} gap={2}>
+                        <SimpleGrid columns={[1, 1, 1, 2, 2]} gap={2} w='100%'>
+                            {media360.map((img) => {
+                                return (
+                                    <Flex
+                                        key={img.id}
+                                        onClick={editMode ? () => { deleteImage(img.id) } : () => { openImage(img) }}
+                                        _hover={editMode ? { bgColor: 'redSide', transition: '500ms' } : { bgColor: 'white', transition: '500ms' }}
+                                        position={'relative'}
+                                        justifyContent={'center'}
+                                        alignItems={'center'}
+                                    >
+                                        <Flex flexDir={'column'} w='100%'>
+                                            <Image
+                                                cursor={editMode ? 'pointer' : 'grabbing'}
+                                                src={`${img.url}`}
+                                                h={190}
+                                                w='100%'
+                                                objectFit={'cover'}
+                                                objectPosition={'center'}
+                                                opacity={editMode ? 0.2 : ''}
+                                                _hover={{ opacity: 0.2, transition: '500ms' }}
+                                            />
+                                            {img.description ?
+                                                <Text fontSize={'xs'}> {decodeURIComponent(img.description).replace('https://c2di-space.nyc3.digitaloceanspaces.com/', '')} </Text>
+                                                : ''
+                                            }
+                                        </Flex>
+                                        {editMode ?
+                                            <Text position={'absolute'} cursor='pointer'>Clique para apagar</Text>
+                                            :
+                                            ''
+                                        }
+                                    </Flex>
+                                )
+                            })}
+                        </SimpleGrid>
+                    </Flex>
+                </>
+            }
 
         </Flex>
     )

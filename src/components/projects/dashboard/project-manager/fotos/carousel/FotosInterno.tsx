@@ -1,5 +1,5 @@
 import { Button, Flex, Image, Text, useBreakpointValue } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Scrollbar, Pagination, A11y } from 'swiper/modules';
 
@@ -15,9 +15,11 @@ import axios from "axios";
 interface FotosDestaquesProps {
     projectData: Investment
     openImage: (img: Investment["images"][0]) => void
+    setLoadingFiles: Dispatch<SetStateAction<boolean>>
+
 }
 
-export function FotosInterno({ projectData, openImage }: FotosDestaquesProps) {
+export function FotosInterno({ projectData, openImage, setLoadingFiles }: FotosDestaquesProps) {
 
     const [editMode, setEditMode] = useState(false)
     const [isDeletingImage, setIsDeletingImage] = useState(false)
@@ -45,9 +47,9 @@ export function FotosInterno({ projectData, openImage }: FotosDestaquesProps) {
                     return;
                 }
 
-                const responseImgDeleted = await axios.post('/api/delete-image', { 
-                    imageUrl: imageToDelete.url 
-                  });
+                const responseImgDeleted = await axios.post('/api/delete-image', {
+                    imageUrl: imageToDelete.url
+                });
 
                 const response = await deletePrismaProjectImage(projectData.id, imageID)
                 // Salvando alterações no estado
@@ -90,6 +92,7 @@ export function FotosInterno({ projectData, openImage }: FotosDestaquesProps) {
                             allowedTypes={['image/png', 'image/jpeg', 'image/jpg']}
                             accept="image/*"
                             projectData={projectData}
+                            setLoadingFiles={setLoadingFiles}
                         />
                         :
                         ''
@@ -113,7 +116,7 @@ export function FotosInterno({ projectData, openImage }: FotosDestaquesProps) {
                 <Swiper
                     modules={[Navigation, Pagination, Scrollbar, A11y]}
                     spaceBetween={50}
-                    slidesPerView={interno.length < (slidesResponsive??4) ? interno.length : slidesResponsive}
+                    slidesPerView={interno.length < (slidesResponsive ?? 4) ? interno.length : slidesResponsive}
                     navigation
                     loop
                     // pagination

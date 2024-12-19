@@ -22,7 +22,7 @@ export function CapaGaleria({ userData, projectData }: ProjectDataProps) {
                     <Flex> <Text fontSize={16} fontWeight={'semibold'}> Capa </Text></Flex>
                     <Flex> <Text fontSize={14}> Imagem que aparecerá como capa do projeto. </Text></Flex>
                 </Flex>
-                {userData.role != 'INVESTOR' ?
+                {userData.role != 'INVESTOR' && userData.role != 'PROPRIETARIO'?
 
                     <Flex>
                         <CapaInput

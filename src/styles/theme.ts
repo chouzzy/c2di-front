@@ -59,8 +59,6 @@ export const theme = extendTheme({
     greenGraph: '#51c25d',
     greenProfit: '#46cb18',
 
-
-
     santaFe: '#B16E51',
     brass: '#CB8762',
     whiskey: '#D49671',

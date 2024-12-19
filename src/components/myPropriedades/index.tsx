@@ -12,7 +12,7 @@ interface ProjectDashboardInvestorProps {
     elementsPerPage: number
 }
 
-export function MyInvestmentsList({ userInvestmentsData, projectsData, page, setPage, totalPages, elementsPerPage }: ProjectDashboardInvestorProps) {
+export function MyPropriedadesList({ userInvestmentsData, projectsData, page, setPage, totalPages, elementsPerPage }: ProjectDashboardInvestorProps) {
 
     const nextPage = async () => {
         setPage(page + 1)
@@ -25,18 +25,6 @@ export function MyInvestmentsList({ userInvestmentsData, projectsData, page, set
     return (
         <Flex flexDir={'column'} w='100%' gap={16} pb={20}>
 
-            <Flex flexDir={'column'}>
-                <Flex flexDir={'column'} gap={4}>
-
-                    <Text fontSize={18} fontWeight={'semibold'}>
-                        Total de investimentos: {projectsData.length}
-                    </Text>
-
-                    {/* CARDS */}
-                    <MyInvestmentCards userInvestmentsData={userInvestmentsData} projectsData={projectsData} />
-
-                </Flex>
-            </Flex>
 
             {/* PROJECT LIST */}
             <Flex flexDir={'column'} gap={2}>
@@ -75,7 +63,7 @@ export function MyInvestmentsList({ userInvestmentsData, projectsData, page, set
                                 </Flex>
 
                                 {/* DADOS DO PROJETO */}
-                                <Flex flexDir={['column', 'column', 'column', 'column', 'row']} gap={[4,4,4,4,0]} justifyContent={'space-between'}>
+                                <Flex flexDir={['column', 'column', 'column', 'column', 'row']} gap={[4,4,4,4,4]} justifyContent={'space-between'}>
 
                                     <Flex flexDir={'column'}>
 

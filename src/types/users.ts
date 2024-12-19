@@ -30,6 +30,19 @@ interface UserInvestment {
   createdAt: Date;
   updatedAt: Date;
 }
+interface UserProprietario {
+  id: string;
+  user: User;
+  userID: string;
+  investment: Investment;
+  investmentID: string;
+  investedValue: number
+  valorCorrente: number
+  documents: ProjectDocuments[];
+  dataInvestimento: Date
+  createdAt: Date;
+  updatedAt: Date;
+}
 
 interface Notification {
   id: string;
@@ -63,6 +76,7 @@ interface User {
   investorProfileDescription?: string;
   role: Role;
   userInvestments: UserInvestment[];
+  userProprietarios: UserProprietario[];
   investorProfile: InvestorProfile;
   userNotifications: UserNotifications[];
   createdAt: Date;
@@ -92,7 +106,8 @@ interface Address {
 enum Role {
   INVESTOR = 'INVESTOR',
   PROJECT_MANAGER = 'PROJECT_MANAGER',
-  ADMINISTRATOR = 'ADMINISTRATOR'
+  ADMINISTRATOR = 'ADMINISTRATOR',
+  PROPRIETARIO = 'PROPRIETARIO',
 }
 
 interface Investment {
@@ -120,6 +135,7 @@ interface Investment {
   realizedCost: RealizedCost;
   notifications: Notification[];
   userInvestments: UserInvestment[];
+  userProprietarios: UserProprietario[];
   projectManagerID: string
   buildingProgress: BuildingProgress
   valorOriginal: number

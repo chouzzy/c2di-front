@@ -38,7 +38,7 @@ export function CreateProjectForm({ user, router, userData }: CreateInvestorAcco
     };
     const pages = [0, 1, 2]
 
-    const [page, setPage] = useState(0)
+    const [page, setPage] = useState(2)
 
     // SUBMIT FORM
     const onSubmit = async (data: any) => {

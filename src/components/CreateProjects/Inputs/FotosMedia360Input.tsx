@@ -1,20 +1,17 @@
 import { Flex, FormControl, Input } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { ErrorInputComponent } from "@/components/ErrorInputComponent";
 import { changePrismaProjectFotos } from "@/app/services/changeFotos";
 import axios from "axios";
 
-
-
 interface FotosInputProps {
     allowedTypes: string[],
     accept: string,
-    projectData: Investment
+    projectData: Investment,
+    setLoadingFiles: Dispatch<SetStateAction<boolean>>
 }
 
-
-
-export function FotosMedia360Input({ allowedTypes, accept, projectData }: FotosInputProps
+export function FotosMedia360Input({ allowedTypes, accept, projectData, setLoadingFiles }: FotosInputProps
 ) {
     const [selectedFiles, setSelectedFiles] = useState<FileList | undefined>();
     const [updatingFile, setUpdatingFile] = useState(false);
@@ -26,6 +23,8 @@ export function FotosMedia360Input({ allowedTypes, accept, projectData }: FotosI
         const uploadFotos = async (updateData: Investment, selectedFiles: FileList) => {
 
             try {
+
+                setLoadingFiles(true)
 
                 const formData = new FormData();
 

@@ -8,7 +8,8 @@ import {
     SignOut,
     Users,
     House,
-    List
+    List,
+    HouseLine
 } from 'phosphor-react';
 import { MenuItem } from './MenuItem';
 import { Header } from './Header';
@@ -16,6 +17,7 @@ import { usePathname, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { BsBuildings } from 'react-icons/bs';
 import { UserNotificationsModal } from './Header/userNotificationsModal';
+import { PiBuilding } from 'react-icons/pi';
 
 interface SideBarProps {
     userData: User | null
@@ -54,6 +56,10 @@ export function SideBar({ userData, projectData }: SideBarProps) {
                     break
                 case 'ADMINISTRATOR':
                     setPathRoleState('administrator')
+                    setLoadingRole(false)
+                    break
+                case 'PROPRIETARIO':
+                    setPathRoleState('proprietario')
                     setLoadingRole(false)
                     break
             }
@@ -132,7 +138,7 @@ export function SideBar({ userData, projectData }: SideBarProps) {
                                         bgColor="beigeSide"
                                         color="darkSide"
                                         borderRadius={0}
-                                        p={[4,4,4,8,8]}
+                                        p={[4, 4, 4, 8, 8]}
                                     >
                                         <Flex flexDir={'column'} w='100%' gap={12}>
                                             {userData ?
@@ -174,6 +180,14 @@ export function SideBar({ userData, projectData }: SideBarProps) {
                                                 {userData?.role == "INVESTOR" ?
                                                     <>
                                                         <MenuItem href={`myInvestments`} isActive={pathName == `/myInvestments`} icon={BookOpen} title='Meus investimentos' />
+                                                        <MenuItem href={`projects`} icon={ChartLineUp} isActive={pathName.startsWith(`/projects`)} title='Investir' />
+                                                    </>
+                                                    :
+                                                    ''
+                                                }
+                                                {userData?.role == "PROPRIETARIO" ?
+                                                    <>
+                                                        <MenuItem href={`myPropriedades`} isActive={pathName == `/myPropriedades`} icon={HouseLine} title='Minhas propriedades' />
                                                         <MenuItem href={`projects`} icon={ChartLineUp} isActive={pathName.startsWith(`/projects`)} title='Investir' />
                                                     </>
                                                     :
@@ -228,7 +242,7 @@ export function SideBar({ userData, projectData }: SideBarProps) {
                         <Flex flexDirection="column" alignItems="flex-start" w="100%">
 
 
-                            {(userData?.role != 'PROJECT_MANAGER') ?
+                            {(userData?.role != 'PROJECT_MANAGER') && (userData?.role != 'PROPRIETARIO') ?
                                 <MenuItem href={`dashboard`} isActive={pathName == "/dashboard"} icon={SquaresFour} title='Dashboard' />
                                 :
                                 ''
@@ -253,6 +267,14 @@ export function SideBar({ userData, projectData }: SideBarProps) {
                                 <>
                                     <MenuItem href={`myInvestments`} isActive={pathName == `/myInvestments`} icon={BookOpen} title='Meus investimentos' />
                                     <MenuItem href={`projects`} icon={ChartLineUp} isActive={pathName.startsWith(`/projects`)} title='Investir' />
+                                </>
+                                :
+                                ''
+                            }
+                            {userData?.role == "PROPRIETARIO" ?
+                                <>
+                                    <MenuItem href={`myPropriedades`} isActive={pathName == `/myPropriedades`} icon={HouseLine} title='Minhas propriedades' />
+                                    <MenuItem href={`projects`} icon={PiBuilding} isActive={pathName.startsWith(`/projects`)} title='Empreendimentos' />
                                 </>
                                 :
                                 ''

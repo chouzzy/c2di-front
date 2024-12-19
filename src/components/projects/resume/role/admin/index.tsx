@@ -19,6 +19,7 @@ import { InfosGerais } from '../../infosGerais';
 import { ProjectGallery } from '../../gallery';
 import { BuildingStatus } from '../../buildingStatus';
 import InvestorList from '../../investorList';
+import ProprietarioList from '../../proprietarioList';
 
 interface ProjectDataProps {
     userData: User
@@ -83,6 +84,7 @@ function ProjectResumeAdmin({ userData, user, projectData }: ProjectDataProps) {
                             <Flex onClick={() => { SetPage(4); setMenuLabel(menuList[4]) }} w='100%' fontWeight={'medium'} bgColor={page == 4 ? 'white' : 'inherit'}> <MenuItem> Mídias </MenuItem></Flex>
                             <Flex onClick={() => { SetPage(5); setMenuLabel(menuList[5]) }} w='100%' fontWeight={'medium'} bgColor={page == 5 ? 'white' : 'inherit'}> <MenuItem> Status </MenuItem></Flex>
                             <Flex onClick={() => { SetPage(6); setMenuLabel(menuList[6]) }} w='100%' fontWeight={'medium'} bgColor={page == 6 ? 'white' : 'inherit'} > <MenuItem> Investidores </MenuItem></Flex>
+                            <Flex onClick={() => { SetPage(7); setMenuLabel(menuList[7]) }} w='100%' fontWeight={'medium'} bgColor={page == 7 ? 'white' : 'inherit'} > <MenuItem> Proprietários </MenuItem></Flex>
 
                         </MenuList>
                     </Menu>
@@ -97,6 +99,7 @@ function ProjectResumeAdmin({ userData, user, projectData }: ProjectDataProps) {
                     <Flex onClick={() => { SetPage(4); saveCurrentPage(4) }} minW={'max-content'} borderRadius={4} py={2} px={1} as='button' fontWeight={'medium'} bgColor={page == 4 ? 'white' : 'inherit'} >Mídias</Flex>
                     <Flex onClick={() => { SetPage(5); saveCurrentPage(5) }} minW={'max-content'} borderRadius={4} py={2} px={1} as='button' fontWeight={'medium'} bgColor={page == 5 ? 'white' : 'inherit'} >Status</Flex>
                     <Flex onClick={() => { SetPage(6); saveCurrentPage(6) }} minW={'max-content'} borderRadius={4} py={2} px={1} as='button' fontWeight={'medium'} bgColor={page == 6 ? 'white' : 'inherit'} >Investidores</Flex>
+                    <Flex onClick={() => { SetPage(7); saveCurrentPage(7) }} minW={'max-content'} borderRadius={4} py={2} px={1} as='button' fontWeight={'medium'} bgColor={page == 7 ? 'white' : 'inherit'} >Proprietários</Flex>
                 </Flex>
             }
 
@@ -107,6 +110,7 @@ function ProjectResumeAdmin({ userData, user, projectData }: ProjectDataProps) {
             {page == 4 ? (<ProjectGallery userData={userData} projectData={projectData} />) : ('')}
             {page == 5 ? (<BuildingStatus userData={userData} projectData={projectData} />) : ('')}
             {page == 6 ? (<InvestorList userData={userData} documentList={documentList} setDocumentList={setDocumentList} user={user} projectData={projectData} />) : ('')}
+            {page == 7 ? (<ProprietarioList userData={userData} documentList={documentList} setDocumentList={setDocumentList} user={user} projectData={projectData} />) : ('')}
 
 
         </Flex>

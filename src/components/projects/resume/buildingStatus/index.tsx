@@ -134,7 +134,7 @@ export function BuildingStatus({ userData, projectData }: ProjectDataProps) {
                 {/* HEADER ANDAMENTO */}
                 <Flex flexDir={'column'} gap={2}>
 
-                    {userData.role != 'INVESTOR' ?
+                    {userData.role != 'INVESTOR' && userData.role != 'PROPRIETARIO'?
 
                         <Flex justifyContent={'end'}>
                             <Button color='lightSide' bgColor="darkSide" onClick={editAndamento} size={'sm'}>
@@ -223,7 +223,7 @@ export function BuildingStatus({ userData, projectData }: ProjectDataProps) {
                 {/* ANDAMENTOS TITULO E IMPORT */}
                 <Flex flexDir={'column'} gap={4}>
 
-                    {userData.role != 'INVESTOR' ?
+                    {userData.role != 'INVESTOR' && userData.role != 'PROPRIETARIO'?
                         <Flex justifyContent={'space-between'}>
 
                             <Flex justifyContent={'end'} w='100%'>

@@ -64,7 +64,7 @@ const createUsersSchema = yup.object({
   investorProfileName: yup.string().optional(),
   investorProfileDescription: yup.string().optional(),
   
-  role: yup.mixed().oneOf(["INVESTOR", "PROJECT_MANAGER", "ADMINISTRATOR"]).required("A role é obrigatória")
+  role: yup.mixed().oneOf(["INVESTOR", "PROJECT_MANAGER", "ADMINISTRATOR","PROPRIETARIO"]).required("A role é obrigatória")
   
 }).noUnknown(true, "Campos desconhecidos no corpo da requisição.").strict();
 
@@ -77,7 +77,7 @@ const createUsersByAdminSchema = yup.object({
   email: yup.string().email("Formato de email inválido").required("O e-mail é obrigatório").min(3, "O email precisa ter no mínimo três caracteres"),
   username: yup.string().required("O username é obrigatório").min(3, "O username precisa conter no mínimo 3 caracteres"),
   cpf: yup.string().min(11, "CPF inválido").max(11, "CPF inválido.").required("O CPF é obrigatório"),
-  role: yup.mixed().oneOf(["INVESTOR", "PROJECT_MANAGER", "ADMINISTRATOR"]).required("A role é obrigatória")
+  role: yup.mixed().oneOf(["INVESTOR", "PROJECT_MANAGER", "ADMINISTRATOR","PROPRIETARIO"]).required("A role é obrigatória")
   
 }).noUnknown(true, "Campos desconhecidos no corpo da requisição.").strict();
 

@@ -1,12 +1,13 @@
 'use client'
 // app/page.tsx
-import { Container, Flex, Spinner, Text } from "@chakra-ui/react";
+import { Button, Container, Flex, Spinner, Text } from "@chakra-ui/react";
 import { UserProfile, useUser } from "@auth0/nextjs-auth0/client";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { checkUserByEmail } from "./services/checkUserByEmail";
 import { api } from "./services/axios";
 import axios, { AxiosError } from "axios";
+import { SpinnerFullScreen } from "@/components/Loading/SpinnerFullScreen";
 
 const setAccessTokenCookie = async () => {
   try {
@@ -25,6 +26,8 @@ export default function Home() {
   console.log(user)
   const [loginStatus, setLoginStatus] = useState('Aguarde, estamos te redirecionando...')
   const router = useRouter()
+  const [userDB, setUserDB] = useState<User>()
+  const [loadingUser, setLoadingUser] = useState(true)
 
   // MANAGE LOGIN
   useEffect(() => {
@@ -34,6 +37,7 @@ export default function Home() {
         await setAccessTokenCookie()
 
         const userResponse = await checkUserByEmail(user)
+        
 
         if (userResponse) {
 
@@ -47,18 +51,23 @@ export default function Home() {
             case 'ADMINISTRATOR':
               router.push(`/projects`)
               break
+            case 'PROPRIETARIO':
+              router.push(`/projects`)
+              break
           }
         } else {
-          router.push(`/authentication/create/investor`)
+          setLoadingUser(false)
         }
 
 
       } catch (error) {
 
+        setLoadingUser(false)
+
         if (error instanceof AxiosError) {
 
           if (error.status == 404) {
-            router.push(`/authentication/create/investor`)
+            // router.push(`/authentication/create/investor`)
           } else {
             console.error('Erro ao buscar dados do usuário:', error);
             setLoginStatus("Ocorreu um erro ao buscar seus dados. Por favor, tente novamente mais tarde.");
@@ -79,12 +88,33 @@ export default function Home() {
 
   return (
     <Container maxW={'1440px'} mx='auto'>
-      <Flex flexDir={'column'}>
-        <Flex gap={2} p={4} alignItems={'center'}>
-          {/* <Text>
-            {loginStatus}
-          </Text> */}
-          <Spinner boxSize={4} />
+      <Flex flexDir={'column'} w='100%' h='100vh' alignItems={'center'} justifyContent={'center'}>
+        <Flex gap={2} p={4} >
+
+          {loadingUser ?
+            <SpinnerFullScreen/>
+
+            :
+            <Flex flexDirection={'column'} w='100%' alignItems={'center'} justifyContent={'center'} gap={4}>
+              <Flex>
+                <Text fontWeight={'semibold'}>
+                  Como deseja se cadastrar?
+                </Text>
+              </Flex>
+              <Flex gap={8}>
+                <Flex>
+                  <Button onClick={() => { router.push(`/authentication/create/investor`) }} bgColor={'darkSide'} color='white'>
+                    Investidor
+                  </Button>
+                </Flex>
+                <Flex>
+                  <Button onClick={() => { router.push(`/authentication/create/proprietario`) }} bgColor={'redSide'} color='white'>
+                    Proprietário
+                  </Button>
+                </Flex>
+              </Flex>
+            </Flex>
+          }
         </Flex>
       </Flex>
     </Container>

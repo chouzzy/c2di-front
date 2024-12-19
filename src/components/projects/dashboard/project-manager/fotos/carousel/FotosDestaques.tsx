@@ -15,9 +15,10 @@ import axios from "axios";
 interface FotosDestaquesProps {
     projectData: Investment
     openImage: (img: Investment["images"][0]) => void
+    setLoadingFiles: Dispatch<SetStateAction<boolean>>
 }
 
-export function FotosDestaques({ projectData, openImage }: FotosDestaquesProps) {
+export function FotosDestaques({ projectData, openImage, setLoadingFiles }: FotosDestaquesProps) {
 
     const [editMode, setEditMode] = useState(false)
     const [isDeletingImage, setIsDeletingImage] = useState(false)
@@ -92,6 +93,7 @@ export function FotosDestaques({ projectData, openImage }: FotosDestaquesProps) 
                             allowedTypes={['image/png', 'image/jpeg', 'image/jpg']}
                             accept="image/*"
                             projectData={projectData}
+                            setLoadingFiles={setLoadingFiles}
                         />
                         :
                         ''

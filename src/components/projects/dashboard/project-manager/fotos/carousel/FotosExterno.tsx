@@ -1,5 +1,5 @@
 import { Button, Flex, Image, Text, useBreakpointValue } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Scrollbar, Pagination, A11y } from 'swiper/modules';
 
@@ -15,9 +15,11 @@ import axios from "axios";
 interface FotosExternoProps {
     projectData: Investment
     openImage: (img: Investment["images"][0]) => void
+    setLoadingFiles: Dispatch<SetStateAction<boolean>>
+
 }
 
-export function FotosExterno({ projectData, openImage }: FotosExternoProps) {
+export function FotosExterno({ projectData, openImage, setLoadingFiles }: FotosExternoProps) {
 
     const [editMode, setEditMode] = useState(false)
     const [isDeletingImage, setIsDeletingImage] = useState(false)
@@ -91,6 +93,7 @@ export function FotosExterno({ projectData, openImage }: FotosExternoProps) {
                             allowedTypes={['image/png', 'image/jpeg', 'image/jpg']}
                             accept="image/*"
                             projectData={projectData}
+                            setLoadingFiles={setLoadingFiles}
                         />
                         :
                         ''

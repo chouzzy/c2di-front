@@ -41,5 +41,3 @@ Considerações 27/11
 -mostrar cotação das moedas principais, selic, e outras coisas
 -ver chances de graficos em fullScreen
 -pensar na role morador
-
-- PARA SEXTA: MEMPHIS DEPLOY

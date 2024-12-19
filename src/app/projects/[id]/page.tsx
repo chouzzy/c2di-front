@@ -5,6 +5,7 @@ import { getProjectByID } from '@/app/services/getProject'
 import { SpinnerFullScreen } from '@/components/Loading/SpinnerFullScreen'
 import ProjectResumeAdmin from '@/components/projects/resume/role/admin'
 import ProjectResumeInvestor from '@/components/projects/resume/role/investor'
+import ProjectResumeProprietario from '@/components/projects/resume/role/proprietario'
 import { SideBar } from '@/components/SideBar'
 import { HeaderAdminProject } from '@/components/users/HeaderAdminProject'
 import { HeaderInvestorProject } from '@/components/users/HeaderInvestorProject'
@@ -93,8 +94,8 @@ export default function ProjectInvestorProject() {
               borderBottom={'1px solid #E5E7EB'}
               pb={8}
             >
-              {userData.role == "INVESTOR" ? <HeaderInvestorProject projectData={projectData} /> : ""}
-              {userData.role != "INVESTOR" ? <HeaderAdminProject projectData={projectData} userData={userData} user={user} /> : ""}
+              {userData.role == "INVESTOR" || userData.role == "PROPRIETARIO"? <HeaderInvestorProject projectData={projectData} /> : ""}
+              {userData.role != "INVESTOR" && userData.role != "PROPRIETARIO" ? <HeaderAdminProject projectData={projectData} userData={userData} user={user} /> : ""}
             </Flex>
 
 
@@ -102,6 +103,7 @@ export default function ProjectInvestorProject() {
             <Flex flexDir={'column'}>
 
               <Flex gap={12}>
+                {userData.role == "PROPRIETARIO" ? <ProjectResumeProprietario userData={userData} user={user} projectData={projectData} /> : ""}
                 {userData.role == "INVESTOR" ? <ProjectResumeInvestor userData={userData} user={user} projectData={projectData} /> : ""}
                 {userData.role == "ADMINISTRATOR" ? <ProjectResumeAdmin userData={userData} user={user} projectData={projectData} /> : ""}
 

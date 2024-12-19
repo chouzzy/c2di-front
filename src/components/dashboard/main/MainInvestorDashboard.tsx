@@ -32,17 +32,17 @@ export function MainInvestorDashboard({ projectsData, userInvestmentsData }: Inv
 
     if (projectsData.length > 0) {
 
-        const historicoDeValorizacao = projectsData[0].historicoDeValorizacao
+        // const historicoDeValorizacao = projectsData[0].historicoDeValorizacao
 
-        const maiorValor = historicoDeValorizacao.reduce((maior, item) => (item.value > maior.value ? item : maior), historicoDeValorizacao[0]);
-        const menorValor = historicoDeValorizacao.reduce((menor, item) => (item.value < menor.value ? item : menor), historicoDeValorizacao[0]);
-        const evolution = maiorValor.value - menorValor.value
+        // const maiorValor = historicoDeValorizacao.reduce((maior, item) => (item.value > maior.value ? item : maior), historicoDeValorizacao[0]);
+        // const menorValor = historicoDeValorizacao.reduce((menor, item) => (item.value < menor.value ? item : menor), historicoDeValorizacao[0]);
+        // const evolution = maiorValor.value - menorValor.value
 
-        const historicoFormatado = historicoDeValorizacao.map(item => {
-            const data = new Date(item.date);
-            const mesAno = data.toLocaleDateString('pt-BR', { month: '2-digit', year: '2-digit' });
-            return { ...item, date: mesAno }; // Retorna um novo objeto com a data formatada
-        });
+        // const historicoFormatado = historicoDeValorizacao.map(item => {
+        //     const data = new Date(item.date);
+        //     const mesAno = data.toLocaleDateString('pt-BR', { month: '2-digit', year: '2-digit' });
+        //     return { ...item, date: mesAno }; // Retorna um novo objeto com a data formatada
+        // });
 
 
         return (
@@ -53,7 +53,7 @@ export function MainInvestorDashboard({ projectsData, userInvestmentsData }: Inv
                     <Flex justifyContent={'space-between'}  alignItems={['center','center','center','center','start']}  w='100%'  flexDir={['column', 'column', 'column', 'row', 'row']} mt={8}>
 
                         {/* GRAFICO 1 */}
-                        <Flex flexDir={'column'} gap={2}>
+                        {/* <Flex flexDir={'column'} gap={2}>
                             <Flex flexDir={'column'}>
                                 <Text fontWeight={'semibold'} fontSize={20}>Valorização do imóvel</Text>
                                 <Text fontSize={12}>Gráfico mensal</Text>
@@ -63,7 +63,7 @@ export function MainInvestorDashboard({ projectsData, userInvestmentsData }: Inv
                                 <AreaChart
                                     width={620}
                                     height={272}
-                                    data={historicoFormatado}
+                                    data={data}
                                     margin={{
                                         top: 10,
                                         right: 30,
@@ -74,11 +74,11 @@ export function MainInvestorDashboard({ projectsData, userInvestmentsData }: Inv
                                     <XAxis dataKey="date" fontSize={12} />
                                     <YAxis domain={([menorValor.value, maiorValor.value])} fontSize={12} />
                                     <Tooltip />
-                                    <Area type="monotone" dataKey="value" stroke="#0F172A" fill="#0F172A" />
+                                    <Area type="monotone" dataKey="value" stroke="#0F172A" fill="#0F172A" /> */}
                                     {/* <Area type="monotone" dataKey="pv" stroke="#0F172A" fill="#475569" /> */}
-                                </AreaChart>
+                                {/* </AreaChart>
                             </Flex>
-                        </Flex>
+                        </Flex> */}
 
                         {/* GRAFICO 2 */}
                         <Flex flexDir={'column'} gap={2}>

@@ -18,7 +18,7 @@ interface CreateInvestorAccountCardProps {
 }
 
 
-export function CreateInvestorAccountCard({ user, router }: CreateInvestorAccountCardProps) {
+export function CreateProprietarioAccount({ user, router }: CreateInvestorAccountCardProps) {
 
     const { register, handleSubmit, formState: { errors } } = useForm({});
     const [yupError, setYupError] = useState<string>("")
@@ -28,8 +28,6 @@ export function CreateInvestorAccountCard({ user, router }: CreateInvestorAccoun
 
     const [state, setState] = useState<string>("SP")
     const [city, setCity] = useState<string>("São Paulo")
-
-    const [handleProfileTestButton, setHandleProfileTestButton] = useState(false)
 
     const [isLoading, setIsLoading] = useState<boolean>(false)
 
@@ -57,12 +55,7 @@ export function CreateInvestorAccountCard({ user, router }: CreateInvestorAccoun
 
     const handleSaveClick = () => {
         setIsLoading(false)
-
-        if (handleProfileTestButton) {
-            router.push(`/users/investorProfile/profileTest`)
-        } else {
-            router.push(`/users/update/investor`)
-        }
+        router.push(`/users/update/investor`)
 
     };
 
@@ -77,16 +70,14 @@ export function CreateInvestorAccountCard({ user, router }: CreateInvestorAccoun
                 delete data.address
             }
 
-            data.role = "INVESTOR"
+            data.role = "PROPRIETARIO"
             data.email = user?.email
 
             await createUsersSchema.validate(data);
 
             data.birth = new Date(data.birth)
 
-            console.log('é aqui')
             const response = await createPrismaUser(data)
-
 
             if (response.status === 200 || response.status === 202) {
                 handleSaveClick()
@@ -95,9 +86,6 @@ export function CreateInvestorAccountCard({ user, router }: CreateInvestorAccoun
                 alert('Ocorreu um problema no cadastro, entre em contato com o suporte.')
                 throw Error("Ocorreu um problema ao cadastrar")
             }
-
-
-
 
         } catch (error: any) {
             if (error instanceof AxiosError) {
@@ -132,10 +120,11 @@ export function CreateInvestorAccountCard({ user, router }: CreateInvestorAccoun
             <Flex w='100%' bgColor={'lightSide'} alignItems={'center'} justifyContent={'center'}>
 
                 <Flex flexDir={'column'} gap={8} px={8}>
+
                     {/* BEM VINDO E INSTRUÇÃO */}
                     <Flex flexDir={'column'} alignItems={'center'} justifyContent={'center'} gap={4}>
                         <Flex>
-                            <Tag colorScheme='blackAlpha'>Investidor</Tag>
+                            <Tag colorScheme='red'>Proprietário</Tag>
                         </Flex>
                         <Flex flexDir={'column'} alignItems={'center'}>
                             <Flex fontSize={28} fontWeight={'semibold'}>
@@ -366,26 +355,12 @@ export function CreateInvestorAccountCard({ user, router }: CreateInvestorAccoun
                             <Flex w='100%' gap={4}>
                                 <Button
                                     type="submit"
-                                    w='100%'
-                                    onClick={() => { setHandleProfileTestButton(true) }}
-                                    fontSize={14}
-                                    color={'lightSide'}
-                                    fontWeight={'light'}
-                                    bgColor={'redSide'}
-                                    mt={4}
-                                    _hover={{ bgColor: "graySide", transition: '300ms' }}
-                                >
-                                    Salvar e descobrir seu perfil de investidor
-                                </Button>
-                                <Button
-                                    type="submit"
-                                    onClick={() => { setHandleProfileTestButton(false) }}
                                     fontSize={14}
                                     color={'lightSide'}
                                     fontWeight={'light'}
                                     bgColor={'darkSide'}
                                     mt={4}
-                                    minW={48}
+                                    w='100%'
                                     _hover={{ bgColor: "graySide", transition: '300ms' }}
                                 >
                                     {isLoading ?

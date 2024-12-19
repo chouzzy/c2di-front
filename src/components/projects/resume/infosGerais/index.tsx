@@ -260,7 +260,7 @@ export function InfosGerais({ userData, projectData }: ProjectDataProps) {
                 {/* QUADRO DE AVISOS */}
                 <Flex w='100%' flexDir={'column'} gap={8}>
 
-                    {userData.role == 'INVESTOR' ?
+                    {userData.role == 'INVESTOR' || userData.role == 'PROPRIETARIO'?
                         <NotificationsHeaderInvestor createNotification={createNotification} />
                         :
                         <NotificationsHeaderAdmin createNotification={createNotification} />
