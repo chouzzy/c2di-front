@@ -9,6 +9,7 @@ import { InfosGerais } from '../../infosGerais';
 import { ProjectGallery } from '../../gallery';
 import { BuildingStatus } from '../../buildingStatus';
 import { List } from 'phosphor-react';
+import { Unidades } from '../../unidades';
 
 interface ProjectDataProps {
     userData: User
@@ -66,6 +67,7 @@ function ProjectResumeInvestor({ userData, user, projectData }: ProjectDataProps
                             <Flex onClick={() => { SetPage(3); setMenuLabel(menuList[3]) }} w='100%' fontWeight={'medium'} bgColor={page == 3 ? 'white' : 'inherit'}> <MenuItem> Documentos </MenuItem></Flex>
                             <Flex onClick={() => { SetPage(4); setMenuLabel(menuList[4]) }} w='100%' fontWeight={'medium'} bgColor={page == 4 ? 'white' : 'inherit'}> <MenuItem> Mídias </MenuItem></Flex>
                             <Flex onClick={() => { SetPage(5); setMenuLabel(menuList[5]) }} w='100%' fontWeight={'medium'} bgColor={page == 5 ? 'white' : 'inherit'}> <MenuItem> Status </MenuItem></Flex>
+                            <Flex onClick={() => { SetPage(6); setMenuLabel(menuList[6]) }} w='100%' fontWeight={'medium'} bgColor={page == 6 ? 'white' : 'inherit'}> <MenuItem> Unidades </MenuItem></Flex>
                         </MenuList>
                     </Menu>
                 </Flex>
@@ -77,6 +79,7 @@ function ProjectResumeInvestor({ userData, user, projectData }: ProjectDataProps
                     <Flex onClick={() => { SetPage(3) }} minW={'max-content'} borderRadius={4} py={2} px={1} as='button' fontWeight={'medium'} bgColor={page == 3 ? 'white' : 'inherit'} >Documentos</Flex>
                     <Flex onClick={() => { SetPage(4) }} minW={'max-content'} borderRadius={4} py={2} px={1} as='button' fontWeight={'medium'} bgColor={page == 4 ? 'white' : 'inherit'} >Mídias</Flex>
                     <Flex onClick={() => { SetPage(5) }} minW={'max-content'} borderRadius={4} py={2} px={1} as='button' fontWeight={'medium'} bgColor={page == 5 ? 'white' : 'inherit'} >Status</Flex>
+                    <Flex onClick={() => { SetPage(6) }} minW={'max-content'} borderRadius={4} py={2} px={1} as='button' fontWeight={'medium'} bgColor={page == 6 ? 'white' : 'inherit'} >Unidades</Flex>
                 </Flex>
             }
 
@@ -86,6 +89,7 @@ function ProjectResumeInvestor({ userData, user, projectData }: ProjectDataProps
             {page == 3 ? (<DocumentsList userData={userData} documentList={documentList} setDocumentList={setDocumentList} user={user} projectData={projectData} />) : ('')}
             {page == 4 ? (<ProjectGallery userData={userData} projectData={projectData} />) : ('')}
             {page == 5 ? (<BuildingStatus userData={userData} projectData={projectData} />) : ('')}
+            {page == 6 ? (<Unidades userData={userData} projectData={projectData} />) : ('')}
 
 
         </Flex>

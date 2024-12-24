@@ -2,7 +2,7 @@ import { Button, Flex, FormControl, Input, InputGroup, InputLeftAddon, Link, Sel
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { UserProfile } from '@auth0/nextjs-auth0/client';
 import { SpinnerFullScreen } from '@/components/Loading/SpinnerFullScreen';
-import { Trash } from 'phosphor-react';
+import { Door, Trash } from 'phosphor-react';
 import { ProjectFileInput } from '@/components/CreateProjects/Inputs/FileInput';
 import { useForm } from 'react-hook-form';
 import { documentsArrayAdapter, formatadorMoedaReal } from '@/app/services/utils';
@@ -15,6 +15,9 @@ import { getUsersResumed } from '@/app/services/getUsersResumed';
 import { filterUserProprietariosByInvestmentID } from '@/app/services/getUserProprietarioListByID';
 import { deletePrismaUserProprietario } from '@/app/services/deleteUserProprietario';
 import { createPrismaUserProprietario } from '@/app/services/createUserProprietario';
+import { PiElevator } from 'react-icons/pi';
+import { ErrorInputComponent } from '@/components/ErrorInputComponent';
+import { changeApartmentUserID } from '@/app/services/changeApartmentUserID';
 
 interface FormUsersProps {
     user: UserProfile | undefined
@@ -34,6 +37,7 @@ function ProprietarioList({ userData, projectData }: FormUsersProps) {
 
     const [editMode, setEditMode] = useState(false); // Estado para controlar o modo de edição
     const [addMode, setAddMode] = useState(false); // Estado para controlar o modo de edição
+    const [yupError, setYupError] = useState('')
 
     const [usersList, setUsersList] = useState<User[]>()
     const [userProprietariosList, setUserProprietariosList] = useState<UserProprietario[]>()
@@ -44,6 +48,27 @@ function ProprietarioList({ userData, projectData }: FormUsersProps) {
     const [userProprietarioID, setUserProprietarioID] = useState('')
 
     const [investor, setInvestor] = useState<User>()
+
+    const [apartamentos, setApartamentos] = useState<any[]>(
+        (projectData.apartaments
+            .map(apartament => apartament.final)
+            .reduce((unique: string[], final: string) => {
+                if (!unique.includes(final)) {
+                    unique.push(final);
+                }
+                return unique;
+            }, []))
+    )
+
+
+    const [andares, setAndares] = useState<string[]>(projectData.apartaments
+        .map(apartament => apartament.andar)
+        .reduce((unique: string[], andar: string) => {
+            if (!unique.includes(andar)) {
+                unique.push(andar);
+            }
+            return unique;
+        }, []))
 
     const deleteUserProprietarioTrigger = (id: string) => {
 
@@ -128,12 +153,25 @@ function ProprietarioList({ userData, projectData }: FormUsersProps) {
 
         try {
 
+            console.log(data)
+
             if (!investor) { return alert('Selecione um investidor') }
+
+            const apartamentIndex = projectData.apartaments.findIndex(apartament => apartament.andar === data.andar && apartament.final === data.final);
+
+            if (apartamentIndex === -1) {
+                console.error('Apartamento não encontrado, verifique novamente');
+                setYupError("Apartamento não encontrado, verifique novamente");
+                return;
+            }
+
+            projectData.apartaments[apartamentIndex].userId = investor.id; // Substitua pelo ID do usuário
 
             data = await documentsArrayAdapter(data)
             const createUserProprietarioData = {
                 userID: investor.id,
                 investmentID: projectData.id,
+                apartamentID: projectData.apartaments[apartamentIndex].id,
                 investedValue: data.investedValue,
                 valorCorrente: projectData.valorCorrente,
                 documents: data.documents,
@@ -141,6 +179,9 @@ function ProprietarioList({ userData, projectData }: FormUsersProps) {
             }
 
             const userProprietarioCreated = await createPrismaUserProprietario(createUserProprietarioData)
+
+            await changeApartmentUserID(projectData.id, projectData)
+
 
             userProprietariosList?.push(userProprietarioCreated)
 
@@ -155,7 +196,9 @@ function ProprietarioList({ userData, projectData }: FormUsersProps) {
     return (
         <Flex w='100%' flexDirection="column" gap={2}>
 
-            {userData.role != 'INVESTOR' && userData.role != 'PROPRIETARIO'  ?
+            <ErrorInputComponent error={yupError} />
+
+            {userData.role != 'INVESTOR' && userData.role != 'PROPRIETARIO' ?
                 <Flex w='100%' justifyContent={'end'}>
                     {editMode || addMode ?
                         <Button onClick={handleEditCancel} color={'lightSide'} fontWeight={'light'} bgColor={'redSide'} maxW={40}>
@@ -163,10 +206,10 @@ function ProprietarioList({ userData, projectData }: FormUsersProps) {
                         </Button>
                         :
                         <Flex gap={4}>
-                            <Button color='lightSide' bgColor="graySide" onClick={handleAddClick} maxW={[24,24,24,40,40]}>
+                            <Button color='lightSide' bgColor="graySide" onClick={handleAddClick} maxW={[24, 24, 24, 40, 40]}>
                                 Adicionar
                             </Button>
-                            <Button color='lightSide' bgColor="darkSide" onClick={handleEditClick} maxW={[20,20,20,40,40]}>
+                            <Button color='lightSide' bgColor="darkSide" onClick={handleEditClick} maxW={[20, 20, 20, 40, 40]}>
                                 Editar
                             </Button>
                         </Flex>
@@ -184,6 +227,7 @@ function ProprietarioList({ userData, projectData }: FormUsersProps) {
                                 <Th>Proprietário</Th>
                                 <Th>E-mail</Th>
                                 <Th>Perfil</Th>
+                                <Th>Andar - Final</Th>
                                 <Th>Valor investido</Th>
                                 <Th>Data do investimento</Th>
                             </Tr>
@@ -195,11 +239,18 @@ function ProprietarioList({ userData, projectData }: FormUsersProps) {
                                 const user = usersList?.filter((user: User) => { return user.id === userProprietario.userID })[0]
                                 const date = `${new Date(userProprietario.dataInvestimento).toLocaleDateString("pt-br")}`
 
+                                const userApartament = projectData.apartaments.find(apartament => apartament.id === userProprietario.apartamentID)
+                                // if (!userApartament) {
+                                //     return
+                                // }
+
+
                                 return (
                                     <Tr key={'name' + index}>
                                         <Td>{user?.name}</Td>
                                         <Td>{user?.email}</Td>
                                         <Td>{user?.investorProfileName ?? 'Não informado'}</Td>
+                                        <Td>{userApartament?.andar} - {userApartament?.final}</Td>
                                         <Td>{formatadorMoedaReal.format(userProprietario.investedValue)}</Td>
                                         <Td>{date}</Td>
                                         {/* <Td>{user.description}</Td> */}
@@ -237,7 +288,7 @@ function ProprietarioList({ userData, projectData }: FormUsersProps) {
                 {addMode && usersList ?
                     <form onSubmit={handleSubmit(onSubmitInvestor)}>
 
-                        <Flex flexDir={'column'} p={[0,0,0,4,4]} mt={8} bgColor={'darkSide'} borderRadius={'md'} color={'lightSide'}>
+                        <Flex flexDir={'column'} p={[0, 0, 0, 4, 4]} mt={8} bgColor={'darkSide'} borderRadius={'md'} color={'lightSide'}>
 
                             <Flex pt={4} textAlign={'center'}>
                                 <Text fontSize={24} mx='auto' fontWeight={'semibold'}> NOVO PROPRIETÁRIO </Text>
@@ -257,8 +308,20 @@ function ProprietarioList({ userData, projectData }: FormUsersProps) {
                                     </Select>
                                 </InputGroup>
                                 <InputGroup>
-                                    <InputLeftAddon color='grayHoverSide' justifyContent={'center'} w={14} border={'none'} bgColor={'redSide'}> <LiaMoneyBillWaveAltSolid size={24} />  </InputLeftAddon>
-                                    <Input required bgColor={'lightSide'} type='number' placeholder='Valor investido' {...register('investedValue', { valueAsNumber: true })} />
+                                    <InputLeftAddon color='grayHoverSide' justifyContent={'center'} w={14} border={'none'} bgColor={'redSide'}> <PiElevator size={20} /> </InputLeftAddon>
+                                    <Select required borderRadius={'0px 8px 8px 0px'} bgColor={'lightSide'} placeholder='Andar' {...register('andar')}>
+                                        {andares.map((andar, index) => {
+                                            return <option key={andar + index} value={andar}>{andar}</option>
+                                        })}
+                                    </Select>
+                                </InputGroup>
+                                <InputGroup>
+                                    <InputLeftAddon color='grayHoverSide' justifyContent={'center'} w={14} border={'none'} bgColor={'redSide'}> <Door size={20} /> </InputLeftAddon>
+                                    <Select required borderRadius={'0px 8px 8px 0px'} bgColor={'lightSide'} placeholder='Final' {...register('final')}>
+                                        {apartamentos.map((apartament, index) => {
+                                            return <option key={apartament + index} value={apartament}>{apartament}</option>
+                                        })}
+                                    </Select>
                                 </InputGroup>
                                 <InputGroup>
                                     <InputLeftAddon color='grayHoverSide' justifyContent={'center'} w={14} border={'none'} bgColor={'redSide'}> <BiSolidUserCircle size={24} /> </InputLeftAddon>
@@ -267,6 +330,10 @@ function ProprietarioList({ userData, projectData }: FormUsersProps) {
                                 <InputGroup>
                                     <InputLeftAddon color='grayHoverSide' justifyContent={'center'} w={14} border={'none'} bgColor={'redSide'}> <FaMoneyCheckAlt size={24} /> </InputLeftAddon>
                                     <Input required bgColor={'lightSide'} disabled placeholder='Perfil' value={investor?.investorProfileName ?? 'Não informado'} />
+                                </InputGroup>
+                                <InputGroup>
+                                    <InputLeftAddon color='grayHoverSide' justifyContent={'center'} w={14} border={'none'} bgColor={'redSide'}> <LiaMoneyBillWaveAltSolid size={24} />  </InputLeftAddon>
+                                    <Input required bgColor={'lightSide'} type='number' placeholder='Valor investido' {...register('investedValue', { valueAsNumber: true })} />
                                 </InputGroup>
                                 <InputGroup>
                                     <InputLeftAddon color='grayHoverSide' justifyContent={'center'} w={14} border={'none'} bgColor={'redSide'}> <BsCalendarDateFill size={24} /> </InputLeftAddon>

@@ -117,6 +117,7 @@ export function FotosDestaques({ projectData, openImage, setLoadingFiles }: Foto
                 <Swiper
                     modules={[Navigation, Pagination, Scrollbar, A11y]}
                     spaceBetween={50}
+                    // slidesPerView={}
                     slidesPerView={destaques.length < (slidesResponsive ?? 4) ? destaques.length : slidesResponsive}
                     navigation
                     loop

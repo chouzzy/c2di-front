@@ -36,6 +36,7 @@ interface UserProprietario {
   userID: string;
   investment: Investment;
   investmentID: string;
+  apartamentID: string;
   investedValue: number
   valorCorrente: number
   documents: ProjectDocuments[];
@@ -143,9 +144,30 @@ interface Investment {
   historicoDeValorizacao: HistoricoDeValorizacao[]
   financialTotalProgress: FinancialTotalProgress[]
   buildingTotalProgress: BuildingTotalProgress[]
+
+  apartamentTypes: ApartamentTypes[]
+  apartaments: Apartaments[]
+
   active?: boolean
   createdAt: Date;
   updatedAt: Date;
+}
+
+interface ApartamentTypes {
+  id: string
+  metragem: string
+  description: string
+  fotos: string[]
+  plantas: string[]
+}
+
+interface Apartaments {
+  id: string
+  andar: string
+  final: string
+  metragem: string
+  userId?: string
+  tipoId: string // Adiciona o campo tipoId para referenciar o ApartamentTypes
 }
 
 interface FinancialTotalProgress {
