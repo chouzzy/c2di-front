@@ -166,7 +166,7 @@ export function Unidades({ userData, projectData }: ProjectDataProps) {
                                 Total de apartamentos: {projectData.apartaments.length}
                             </Text>
                         </Flex>
-                        <SimpleGrid gap={4} border='1px' columns={[3,3,6,6,7]}>
+                        <SimpleGrid gap={4} columns={[3,3,6,6,7]}>
                             {projectData.apartamentTypes.map((type, index) => {
                                 return (
                                     <Flex key={type.id} mx='auto'>
