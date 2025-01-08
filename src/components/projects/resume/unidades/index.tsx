@@ -166,7 +166,7 @@ export function Unidades({ userData, projectData }: ProjectDataProps) {
                                 Total de apartamentos: {projectData.apartaments.length}
                             </Text>
                         </Flex>
-                        <SimpleGrid gap={4} columns={[3,3,6,6,7]}>
+                        <SimpleGrid gap={4} columns={[3, 3, 6, 6, 7]}>
                             {projectData.apartamentTypes.map((type, index) => {
                                 return (
                                     <Flex key={type.id} mx='auto'>
@@ -178,20 +178,26 @@ export function Unidades({ userData, projectData }: ProjectDataProps) {
                             })}
                         </SimpleGrid>
 
-                        <FotosGerais
-                            unidadeInView={unidadeInView}
-                            projectData={projectData}
-                            openImage={openImage}
-                            setLoadingFiles={setLoadingFiles}
-                            userData={userData}
-                        />
-                        <FotosPlanta
-                            unidadeInView={unidadeInView}
-                            projectData={projectData}
-                            openImage={openImage}
-                            setLoadingFiles={setLoadingFiles}
-                            userData={userData}
-                        />
+                        {projectData.apartamentTypes[0] ?
+
+                            <>
+                                <FotosGerais
+                                    unidadeInView={unidadeInView}
+                                    projectData={projectData}
+                                    openImage={openImage}
+                                    setLoadingFiles={setLoadingFiles}
+                                    userData={userData}
+                                />
+                                <FotosPlanta
+                                    unidadeInView={unidadeInView}
+                                    projectData={projectData}
+                                    openImage={openImage}
+                                    setLoadingFiles={setLoadingFiles}
+                                    userData={userData}
+                                />
+                            </>
+                            : ""
+                        }
 
                         <Modal isOpen={isOpen} onClose={closeImage} size={'6xl'} isCentered={true}>
                             <ModalOverlay />

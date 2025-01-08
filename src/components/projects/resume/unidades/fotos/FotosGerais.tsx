@@ -134,7 +134,7 @@ export function FotosGerais({ userData, projectData, openImage, setLoadingFiles,
                             }
 
                             {userData.role != 'INVESTOR' && userData.role != 'PROPRIETARIO' ?
-                            
+
                                 <Button
                                     onClick={() => { setEditMode(!editMode) }}
                                     mt={2}
@@ -199,9 +199,6 @@ export function FotosGerais({ userData, projectData, openImage, setLoadingFiles,
                         <Flex w={0}>.</Flex>
                     </Swiper>
                     : ''}
-            </Flex>
-            <Flex>
-
             </Flex>
 
         </Flex >
