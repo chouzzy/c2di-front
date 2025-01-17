@@ -83,6 +83,8 @@ export function Unidades({ userData, projectData }: ProjectDataProps) {
                         imageUrl: decodeURIComponent(projectData.apartamentTypes[apTypeIndex].plantas[plantasIndex])
                     });
                 }
+
+                // FAZER PARA TODOS OS 360 (map do map)
             }
 
 
