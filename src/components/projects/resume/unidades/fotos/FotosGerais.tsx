@@ -18,10 +18,11 @@ interface FotosGeraisProps {
     openImage: (img: Investment["apartamentTypes"][0]["fotos"][0]) => void
     setLoadingFiles: Dispatch<SetStateAction<boolean>>
     unidadeInView?: number
+    setFotoType: Dispatch<SetStateAction<string>>
 }
 
 
-export function FotosGerais({ userData, projectData, openImage, setLoadingFiles, unidadeInView }: FotosGeraisProps) {
+export function FotosGerais({ userData, projectData, openImage, setLoadingFiles, unidadeInView, setFotoType }: FotosGeraisProps) {
 
     const [editMode, setEditMode] = useState(false)
     const [isDeletingImage, setIsDeletingImage] = useState(false)
@@ -171,7 +172,7 @@ export function FotosGerais({ userData, projectData, openImage, setLoadingFiles,
                                 <SwiperSlide key={img + index}>
                                     <Flex
                                         key={img + index}
-                                        onClick={editMode ? () => { deleteImage(img) } : () => { openImage(img) }}
+                                        onClick={editMode ? () => { deleteImage(img) } : () => { openImage(img); setFotoType('2d') }}
                                         _hover={editMode ? { bgColor: 'redSide', transition: '500ms' } : { bgColor: 'white', transition: '500ms' }}
                                         position={'relative'}
                                         justifyContent={'center'}

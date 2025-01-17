@@ -153,12 +153,28 @@ interface Investment {
   updatedAt: Date;
 }
 
+interface ApartamentMedia360 {
+  salaDeEstar: string[]
+  salaDeJantar: string[]
+  cozinha: string[]
+  quarto1: string[]
+  quarto2: string[]
+  quarto3: string[]
+  banheiro1: string[]
+  banheiro2: string[]
+  banheiro3: string[]
+  sacada: string[]
+  lavanderia: string[]
+  hall: string[]
+}
+
 interface ApartamentTypes {
   id: string
   metragem: string
   description: string
   fotos: string[]
   plantas: string[]
+  media360: ApartamentMedia360
 }
 
 interface Apartaments {

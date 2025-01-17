@@ -2,12 +2,15 @@ import { Button, Container, Flex, Image, Link, Modal, ModalBody, ModalCloseButto
 import { ProjectFileInput } from "@/components/CreateProjects/Inputs/FileInput";
 import { ErrorInputComponent } from "@/components/ErrorInputComponent";
 import { useForm } from "react-hook-form";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { importExcelUnidades } from "@/app/services/importExcelUnidades";
 import { FotosGerais } from "./fotos/FotosGerais";
 import { FotosPlanta } from "./plantas/FotosPlanta";
 import { SpinnerFullScreen } from "@/components/Loading/SpinnerFullScreen";
 import axios from "axios";
+import { Fotos360 } from "./media360/Fotos360";
+import { Pannellum } from "pannellum-react";
+import { Media360Carousels } from "./media360/Media360Carousels";
 
 interface ProjectDataProps {
     projectData: Investment
@@ -36,6 +39,8 @@ export function Unidades({ userData, projectData }: ProjectDataProps) {
 
     const [activeButton, setActiveButton] = useState('')
 
+    const [fotoType, setFotoType] = useState('')
+
     const openImage = (img: Investment["apartamentTypes"][0]["fotos"][0]) => {
         setImageOnView(img)
         onOpen()
@@ -54,7 +59,6 @@ export function Unidades({ userData, projectData }: ProjectDataProps) {
     }
 
     const onSubmitImport = async (data: any) => {
-
         setYupError("")
 
         try {
@@ -182,6 +186,7 @@ export function Unidades({ userData, projectData }: ProjectDataProps) {
 
                             <>
                                 <FotosGerais
+                                    setFotoType={setFotoType}
                                     unidadeInView={unidadeInView}
                                     projectData={projectData}
                                     openImage={openImage}
@@ -189,12 +194,22 @@ export function Unidades({ userData, projectData }: ProjectDataProps) {
                                     userData={userData}
                                 />
                                 <FotosPlanta
+                                    setFotoType={setFotoType}
                                     unidadeInView={unidadeInView}
                                     projectData={projectData}
                                     openImage={openImage}
                                     setLoadingFiles={setLoadingFiles}
                                     userData={userData}
                                 />
+                                <Media360Carousels
+                                    setFotoType={setFotoType}
+                                    unidadeInView={unidadeInView}
+                                    projectData={projectData}
+                                    openImage={openImage}
+                                    setLoadingFiles={setLoadingFiles}
+                                    userData={userData}
+                                />
+
                             </>
                             : ""
                         }
@@ -205,9 +220,22 @@ export function Unidades({ userData, projectData }: ProjectDataProps) {
                                 <ModalCloseButton color={'white'} bgColor={'#EF3A5D'} />
                                 <ModalBody p={0}>
                                     {imageOnView ?
-                                        <Flex flexDir={'column'} alignItems={'center'} justifyContent={'center'} gap={4} w='100%'>
-                                            <Image w='100%' src={`${imageOnView}`} objectFit={'cover'} objectPosition={'center'} />
-                                        </Flex>
+                                        fotoType == '2d' ?
+
+                                            <Flex flexDir={'column'} alignItems={'center'} justifyContent={'center'} gap={4} w='100%'>
+                                                <Image w='100%' src={`${imageOnView}`} objectFit={'cover'} objectPosition={'center'} />
+                                            </Flex>
+                                            :
+                                            <Pannellum
+                                                width="100%"
+                                                height="500px"
+                                                image={imageOnView}
+                                                pitch={10}
+                                                yaw={180}
+                                                hfov={110}
+                                                autoLoad
+                                            >
+                                            </Pannellum>
                                         :
                                         <Spinner boxSize={32} />}
                                 </ModalBody>
