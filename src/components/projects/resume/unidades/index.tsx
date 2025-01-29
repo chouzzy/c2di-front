@@ -22,6 +22,8 @@ export interface listNotificationsResponse {
     totalDocuments: number
 }
 
+type Comodo = 'salaDeEstar' | 'salaDeJantar' | 'cozinha' | 'quarto1' | 'quarto2' | 'quarto3' | 'banheiro1' | 'banheiro2' | 'banheiro3' | 'sacada' | 'lavanderia' | 'hall';
+
 export function Unidades({ userData, projectData }: ProjectDataProps) {
 
 
@@ -59,51 +61,111 @@ export function Unidades({ userData, projectData }: ProjectDataProps) {
     }
 
     const onSubmitImport = async (data: any) => {
-        setYupError("")
-
+        setYupError("");
+      
         try {
-            setLoadingFiles(true)
-
-            // Deleta todas as imagens cadastradas nos apartamentos
-            for (let apTypeIndex = 0; apTypeIndex < projectData.apartamentTypes.length; apTypeIndex++) {
-
-
-                // Deleta as fotos gerais no banco de imagens
-                for (let fotosIndex = 0; fotosIndex < projectData.apartamentTypes[apTypeIndex].fotos.length; fotosIndex++) {
-
-                    const responseImgDeleted = await axios.post('/api/delete-image', {
-                        imageUrl: decodeURIComponent(projectData.apartamentTypes[apTypeIndex].fotos[fotosIndex])
-                    });
-                }
-
-                // Deleta as plantas no banco de imagens
-                for (let plantasIndex = 0; plantasIndex < projectData.apartamentTypes[apTypeIndex].plantas.length; plantasIndex++) {
-
-                    const responseImgDeleted = await axios.post('/api/delete-image', {
-                        imageUrl: decodeURIComponent(projectData.apartamentTypes[apTypeIndex].plantas[plantasIndex])
-                    });
-                }
-
-                // FAZER PARA TODOS OS 360 (map do map)
+          setLoadingFiles(true);
+      
+          // Deleta todas as imagens cadastradas nos apartamentos
+          for (
+            let apTypeIndex = 0;
+            apTypeIndex < projectData.apartamentTypes.length;
+            apTypeIndex++
+          ) {
+            const currentApType = projectData.apartamentTypes[apTypeIndex];
+      
+            // Deleta as fotos gerais no banco de imagens
+            for (let fotosIndex = 0; fotosIndex < currentApType.fotos.length; fotosIndex++) {
+              const responseImgDeleted = await axios.post("/api/delete-image", {
+                imageUrl: decodeURIComponent(currentApType.fotos[fotosIndex]),
+              });
             }
-
-
-            const file = data.document[0]
-
-            const formData = new FormData();
-            formData.append('file', file); // Adiciona o arquivo ao FormData
-
-            const investment = await importExcelUnidades(formData, projectData.id)
-
-            window.location.reload()
-
+      
+            // Deleta as plantas no banco de imagens
+            for (let plantasIndex = 0; plantasIndex < currentApType.plantas.length; plantasIndex++) {
+              const responseImgDeleted = await axios.post("/api/delete-image", {
+                imageUrl: decodeURIComponent(currentApType.plantas[plantasIndex]),
+              });
+            }
+      
+            // Deleta as imagens 360
+            if (currentApType.media360) {
+                for (const comodo in currentApType.media360) {
+                
+                  const imagens360 = currentApType.media360[comodo as Comodo];
+                  if (Array.isArray(imagens360)) {
+                    for (let i = 0; i < imagens360.length; i++) {
+                      const responseImg360Deleted = await axios.post('/api/delete-image', {
+                        imageUrl: decodeURIComponent(imagens360[i]),
+                      });
+                    }
+                  }
+                }
+            }
+          }
+      
+          const file = data.document[0];
+      
+          const formData = new FormData();
+          formData.append("file", file); // Adiciona o arquivo ao FormData
+      
+          const investment = await importExcelUnidades(formData, projectData.id);
+      
+          window.location.reload();
+      
         } catch (error) {
-
-            console.error('Erro no update do building progress')
-            console.error(error)
-            setYupError(String(error))
+          console.error("Erro no update do building progress");
+          console.error(error);
+          setYupError(String(error));
         }
-    }
+      };
+
+    // const onSubmitImport = async (data: any) => {
+    //     setYupError("")
+
+    //     try {
+    //         setLoadingFiles(true)
+
+    //         // Deleta todas as imagens cadastradas nos apartamentos
+    //         for (let apTypeIndex = 0; apTypeIndex < projectData.apartamentTypes.length; apTypeIndex++) {
+
+
+    //             // Deleta as fotos gerais no banco de imagens
+    //             for (let fotosIndex = 0; fotosIndex < projectData.apartamentTypes[apTypeIndex].fotos.length; fotosIndex++) {
+
+    //                 const responseImgDeleted = await axios.post('/api/delete-image', {
+    //                     imageUrl: decodeURIComponent(projectData.apartamentTypes[apTypeIndex].fotos[fotosIndex])
+    //                 });
+    //             }
+
+    //             // Deleta as plantas no banco de imagens
+    //             for (let plantasIndex = 0; plantasIndex < projectData.apartamentTypes[apTypeIndex].plantas.length; plantasIndex++) {
+
+    //                 const responseImgDeleted = await axios.post('/api/delete-image', {
+    //                     imageUrl: decodeURIComponent(projectData.apartamentTypes[apTypeIndex].plantas[plantasIndex])
+    //                 });
+    //             }
+
+    //             // FAZER PARA TODOS OS 360 (map do map)
+    //         }
+
+
+    //         const file = data.document[0]
+
+    //         const formData = new FormData();
+    //         formData.append('file', file); // Adiciona o arquivo ao FormData
+
+    //         const investment = await importExcelUnidades(formData, projectData.id)
+
+    //         window.location.reload()
+
+    //     } catch (error) {
+
+    //         console.error('Erro no update do building progress')
+    //         console.error(error)
+    //         setYupError(String(error))
+    //     }
+    // }
 
 
 

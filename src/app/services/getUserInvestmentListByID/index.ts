@@ -104,4 +104,28 @@ const filterUserInvestmentsByInvestmentID = async ({page, pageRange, investmentI
     }
 };
 
-export { getUserInvestmentListByUserID, getUserInvestmentListByInvestmentID, getUserInvestmentListComplete, filterUserInvestmentsByInvestmentID }
+const filterUserInvestmentsByUserID = async ({page, pageRange, userID}:getUserInvestmentListByUserIDProps) => {
+    try {
+
+        const response = await api.get(`usersInvestments/byUser`, { 
+            params: {
+                userID: userID,
+                page: page,
+                pageRange: pageRange,
+            },
+            withCredentials: true 
+        })
+
+        if (response.status == 200 || response.status == 202) {
+            const users: UserInvestment[] = response.data.list
+            return users
+        } else {
+            throw Error("Ocorreu um erro inesperado")
+        }
+
+    } catch (error) {
+        throw error
+    }
+};
+
+export { getUserInvestmentListByUserID, getUserInvestmentListByInvestmentID, getUserInvestmentListComplete, filterUserInvestmentsByUserID, filterUserInvestmentsByInvestmentID }

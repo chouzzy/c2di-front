@@ -10,7 +10,7 @@ import { useEffect, useState } from 'react'
 import { HeaderInvestorDashboard } from '@/components/dashboard/headers/HeaderInvestorDashboard'
 import { HeaderAdminDashboard } from '@/components/dashboard/headers/HeaderAdminDashboard'
 import { MainInvestorDashboard } from '@/components/dashboard/main/MainInvestorDashboard'
-import { getUserInvestmentListByUserID, getUserInvestmentListComplete } from '../services/getUserInvestmentListByID'
+import { filterUserInvestmentsByUserID, getUserInvestmentListByUserID, getUserInvestmentListComplete } from '../services/getUserInvestmentListByID'
 
 export default function Dashboard() {
 
@@ -24,6 +24,8 @@ export default function Dashboard() {
     const [totalPages, setTotalPages] = useState<number>(0)
 
     const [elementsPerPage, setElementsPerPage] = useState<number>(4)
+
+    const [userInvestmentsComplete, setUserInvestmentsComplete] = useState<UserInvestment[] | null>(null);
 
     const [userInvestmentsData, setUserInvestmentsData] = useState<UserInvestment[] | null>(null);
 
@@ -67,7 +69,8 @@ export default function Dashboard() {
                 if (!totalPages) {
 
                     const projectResponseComplete = await getUserInvestmentListByUserID({ page: undefined, pageRange: undefined, userID: id })
-                    const userInvestments = await getUserInvestmentListComplete()
+                    const userInvestmentsComplete = await getUserInvestmentListComplete()
+                    const userInvestments = await filterUserInvestmentsByUserID({ page: '0', pageRange: '9999', userID: id })
                     const projectResponseActives = projectResponseComplete.filter((project: Investment) => project.active === true)
 
                     // const projectResponseActives = projectResponseComplete.filter((project: Investment) => project.active === true)
@@ -77,6 +80,9 @@ export default function Dashboard() {
                         setProjectsData(projectResponseActives)
                     }
 
+                    if (userInvestmentsComplete) {
+                        setUserInvestmentsComplete(userInvestmentsComplete)
+                    }
                     if (userInvestments) {
                         setUserInvestmentsData(userInvestments)
                     }
@@ -122,9 +128,9 @@ export default function Dashboard() {
                                 justifyContent={'space-between'}
                                 alignItems={'center'}
                                 borderBottom={'1px solid #E5E7EB'}
-                                pb={[4, 4, 4, 8, 8]}
+                                pb={[4, 4, 4, 8, 2]}
                             >
-                                {userData.role == "INVESTOR" ? <HeaderInvestorDashboard /> : ''}
+                                {userData.role == "INVESTOR" ? <HeaderInvestorDashboard user={user} userData={userData}  /> : ''}
                                 {userData.role != "INVESTOR" ? <HeaderAdminDashboard user={user} userData={userData} /> : ''}
                             </Flex>
 
