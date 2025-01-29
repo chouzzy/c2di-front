@@ -104,7 +104,7 @@ export function HeaderInvestorDashboard({ userData, user }: HeaderInvestorProjec
 
     return (
         <>
-            <Flex flexDir={['column', 'column', 'row', 'row', 'row']} justifyContent={'space-between'} w='100%' alignItems={['start','start','center','center','end']} gap={4}>
+            <Flex flexDir={['column', 'column', 'row', 'row', 'row']} justifyContent={'space-between'} w='100%' alignItems={['start', 'start', 'center', 'center', 'end']} gap={4}>
                 <Flex flexDir={'column'}>
                     <Flex>
                         <Text fontSize={28} fontWeight={'semibold'}>
@@ -174,32 +174,32 @@ export function HeaderInvestorDashboard({ userData, user }: HeaderInvestorProjec
                                         </MenuButton>
                                         <MenuList color='lightSide' bgColor={'grayCardSide'} border='1px solid #FFFFFF33' borderRadius={8} p={1}>
 
-                                            {userInvestments?.map((userInvestment) => {
+                                            {userInvestments?.map((userInvestment, index) => {
                                                 const investmentMatched = investments?.find(investment => investment.id === userInvestment.investmentID)
 
                                                 if (!investmentMatched) { return }
 
                                                 return (
 
-                                                    <MenuItem fontWeight={'semibold'} bgColor={'grayCardSide'} _hover={{ color: 'green.300', transition: '360ms' }}>
+                                                    <MenuItem key={userInvestment.id + index} fontWeight={'semibold'} bgColor={'grayCardSide'} _hover={{ color: 'green.300', transition: '360ms' }}>
                                                         <Link href={`/projects/${userInvestment.investmentID}`} target="_blank">
-                                                        <Flex justifyContent={'space-between'} w='100%' alignItems={'center'}>
-                                                            <Flex flexDir={'column'} justifyContent={'center'}>
-                                                                <Text fontSize={12} fontWeight={'light'}>
-                                                                    {investmentMatched.title}
-                                                                </Text>
-                                                                <Flex justifyContent={'space-between'} alignItems={'end'}>
-                                                                    <Flex>
-                                                                        <Text>
-                                                                            R${userInvestment.investedValue.toLocaleString('pt-BR')}
-                                                                        </Text>
-                                                                    </Flex>
-                                                                    <Flex pb={1} fontSize={12} alignItems={'center'} color={'green.300'}>
-                                                                        <Text> +11.01% </Text> <IoIosTrendingUp />
+                                                            <Flex justifyContent={'space-between'} w='100%' alignItems={'center'}>
+                                                                <Flex flexDir={'column'} justifyContent={'center'}>
+                                                                    <Text fontSize={12} fontWeight={'light'}>
+                                                                        {investmentMatched.title}
+                                                                    </Text>
+                                                                    <Flex justifyContent={'space-between'} alignItems={'end'}>
+                                                                        <Flex>
+                                                                            <Text>
+                                                                                R${userInvestment.investedValue.toLocaleString('pt-BR')}
+                                                                            </Text>
+                                                                        </Flex>
+                                                                        <Flex pb={1} fontSize={12} alignItems={'center'} color={'green.300'}>
+                                                                            <Text> +11.01% </Text> <IoIosTrendingUp />
+                                                                        </Flex>
                                                                     </Flex>
                                                                 </Flex>
                                                             </Flex>
-                                                        </Flex>
                                                         </Link>
                                                     </MenuItem>
 
