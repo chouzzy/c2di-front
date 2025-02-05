@@ -21,6 +21,7 @@ export function ProjectDashboardInvestor({ projectsData, page, setPage, totalPag
     return (
         <Flex flexDir={'column'} w='100%' gap={16} >
 
+            {/* CARDS */}
             <Flex>
                 {/* MENU COM PROJETOS */}
                 <SimpleGrid columns={[1, 1, 1, 2, 2]} w='100%' gap={4}>
@@ -28,7 +29,7 @@ export function ProjectDashboardInvestor({ projectsData, page, setPage, totalPag
                     {projectsData.map((project) => {
 
                         return (
-
+                            
                             // CARD DO PROJETO
                             <Flex key={project.id} flexDir={'column'} gap={6} w={['100%', '100%', '100%', 440, 440]} mt={6} p={4} border='1px' borderColor={'grayDivisor'} boxShadow={'md'}>
 

@@ -1,7 +1,5 @@
-import { StaticProject } from '@/components/users/StaticProject';
 import {
     Flex,
-    Button,
     useBreakpointValue,
     Menu,
     MenuButton,
@@ -13,7 +11,6 @@ import { FichaTecnica } from '../../fichaTecnica';
 import { useEffect, useState } from 'react';
 import Partners from '../../partners';
 import { UserProfile } from '@auth0/nextjs-auth0/client';
-import { SpinnerFullScreen } from '@/components/Loading/SpinnerFullScreen';
 import DocumentsList from '../../documentsList';
 import { InfosGerais } from '../../infosGerais';
 import { ProjectGallery } from '../../gallery';

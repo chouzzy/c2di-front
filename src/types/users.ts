@@ -24,6 +24,7 @@ interface UserInvestment {
   investment: Investment;
   investmentID: string;
   investedValue: number
+  apartament?: Apartaments
   valorCorrente: number
   documents: ProjectDocuments[];
   dataInvestimento: Date
@@ -147,6 +148,7 @@ interface Investment {
 
   apartamentTypes: ApartamentTypes[]
   apartaments: Apartaments[]
+  valorMetroQuadrado?: ValorMetroQuadrado[]
 
   active?: boolean
   createdAt: Date;
@@ -175,6 +177,11 @@ interface ApartamentTypes {
   fotos: string[]
   plantas: string[]
   media360: ApartamentMedia360
+}
+interface ValorMetroQuadrado {
+  id: string
+  valor: number
+  data: Date
 }
 
 interface Apartaments {

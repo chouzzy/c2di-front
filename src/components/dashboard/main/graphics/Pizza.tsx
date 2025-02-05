@@ -1,8 +1,6 @@
-import { Flex, Text } from "@chakra-ui/react";
-import { BarChart, XAxis, YAxis, Tooltip, Legend, Bar, PieChart, Pie, Cell } from "recharts";
-import { data } from "../data/dashData";
-import { formatDataFinanceiro, formatDataPizza, userBarGraphics } from "../utils";
-import { formattedDataProps } from "./Financeiro";
+import { Flex, Text, useBreakpointValue } from "@chakra-ui/react";
+import { Tooltip, PieChart, Pie, Cell } from "recharts";
+import { formatDataPizza, userBarGraphics } from "../utils";
 
 interface PizzaProps {
     userInvestmentResumed: userBarGraphics[]
@@ -23,12 +21,13 @@ export interface formattedDataPizzaProps {
 
 export function Pizza({ userInvestmentResumed, userInvestmentsData }: PizzaProps) {
 
-    const sliceColors = ['#64748B','#64748BBB','#64748BAA','#64748B99','#64748B77']
+    const sliceColors = ['#64748B', '#64748BBB', '#64748BAA', '#64748B99', '#64748B77']
 
     const formattedData: formattedDataPizzaProps[] = formatDataPizza(userInvestmentResumed, userInvestmentsData);
 
-    console.log('formattedData')
-    console.log(formattedData)
+    const graphHeight = useBreakpointValue({ base: 288, sm: 288, md: 288, lg: 400, xl: 400 })
+
+
 
     // Função para customizar o Tooltip
     const CustomTooltip = ({ active, payload, label }: any) => {
@@ -57,7 +56,7 @@ export function Pizza({ userInvestmentResumed, userInvestmentsData }: PizzaProps
                 <Text fontSize={12}>Gráfico de pizza</Text>
             </Flex>
             <Flex>
-                <PieChart width={288} height={288}>
+                <PieChart width={288} height={graphHeight}>
                     <Pie
                         dataKey="Investido"
                         isAnimationActive={false}

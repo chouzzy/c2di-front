@@ -5,8 +5,10 @@ export interface userBarGraphics {
     title: Investment["title"]
     financialTotalProgressPrevisto: Investment["financialTotalProgress"][0]["previsto"]
     financialTotalProgressRealizado: Investment["financialTotalProgress"][0]["realizado"]
+    financialTotalProgressDate: Investment["financialTotalProgress"][0]["data"]
     buildingTotalProgressPrevisto: Investment["buildingTotalProgress"][0]["previsto"]
     buildingTotalProgressRealizado: Investment["buildingTotalProgress"][0]["realizado"]
+    buildingTotalProgressDate: Investment["buildingTotalProgress"][0]["data"]
 }
 
 
@@ -47,6 +49,9 @@ export function resumeUserInvestment(userInvestmentsData: UserInvestment[], proj
                     ? investmentMatched.financialTotalProgress[investmentMatched.financialTotalProgress.length - 1].realizado
                     : 0,
 
+            // Data de atualização                    
+            financialTotalProgressDate: investmentMatched.financialTotalProgress[investmentMatched.financialTotalProgress.length - 1].data,
+
             // Acessando o último elemento de buildingTotalProgress
             buildingTotalProgressPrevisto:
                 investmentMatched.buildingTotalProgress.length > 0
@@ -57,6 +62,10 @@ export function resumeUserInvestment(userInvestmentsData: UserInvestment[], proj
                 investmentMatched.buildingTotalProgress.length > 0
                     ? investmentMatched.buildingTotalProgress[investmentMatched.buildingTotalProgress.length - 1].realizado
                     : 0,
+
+
+            // Data de atualização                    
+            buildingTotalProgressDate: investmentMatched.buildingTotalProgress[investmentMatched.buildingTotalProgress.length - 1].data
 
         })
 
@@ -82,6 +91,7 @@ export const formatDataFinanceiro = (investments: userBarGraphics[]) => {
         ...investment,
         Previsto: investment.financialTotalProgressPrevisto,
         Realizado: investment.financialTotalProgressRealizado,
+        Ref: investment.financialTotalProgressDate,
     }));
 };
 export const formatDataConstrucao = (investments: userBarGraphics[]) => {
@@ -89,6 +99,7 @@ export const formatDataConstrucao = (investments: userBarGraphics[]) => {
         ...investment,
         Previsto: investment.buildingTotalProgressPrevisto,
         Realizado: investment.buildingTotalProgressRealizado,
+        Ref: investment.buildingTotalProgressDate,
     }));
 };
 
@@ -99,6 +110,12 @@ export const CustomTooltipFinanceiro = ({ active, payload, label }: any) => {
         return (
             <div className="custom-tooltip" style={{ fontWeight: '400', backgroundColor: '#fff', padding: '10px', border: '1px solid #ccc', borderRadius: '5px' }}>
                 <p className="label">{label}</p>
+                <p style={{ color: 'black' }}>
+                    Atualização: {`${(new Date(data.Ref).getMonth() + 1).toString().padStart(2, '0')}/${new Date(data.Ref).getFullYear()}`}
+                </p>
+                <p style={{ color: 'black' }}>
+                    Unidades: {data.Unidades.toLocaleString('pt-BR', { maximumFractionDigits: 0 })}
+                </p>
                 <p style={{ color: 'black' }}>
                     Previsto: R$ {data.Previsto.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                 </p>
@@ -118,6 +135,12 @@ export const CustomTooltipConstrucao = ({ active, payload, label }: any) => {
         return (
             <div className="custom-tooltip" style={{ fontWeight: '400', backgroundColor: '#fff', padding: '10px', border: '1px solid #ccc', borderRadius: '5px' }}>
                 <p className="label">{label}</p>
+                <p style={{ color: 'black' }}>
+                    Atualização: {`${(new Date(data.Ref).getMonth() + 1).toString().padStart(2, '0')}/${new Date(data.Ref).getFullYear()}`}
+                </p>
+                <p style={{ color: 'black' }}>
+                    Unidades: {data.Unidades.toLocaleString('pt-BR', { maximumFractionDigits: 0 })}
+                </p>
                 <p style={{ color: 'black' }}>
                     Previsto: {Number(data.Previsto) * 100}%
                 </p>

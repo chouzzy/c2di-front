@@ -8,6 +8,7 @@ interface createPrismaUserInvestmentProps {
     valorCorrente: UserInvestment["valorCorrente"]
     documents?: UserInvestment["documents"]
     dataInvestimento?: UserInvestment["dataInvestimento"]
+    apartament?:UserInvestment["apartament"]
 }
 
 const createPrismaUserInvestment = async (data:createPrismaUserInvestmentProps) => {

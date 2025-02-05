@@ -7,10 +7,9 @@ import { SpinnerFullScreen } from '@/components/Loading/SpinnerFullScreen'
 import { checkUserByEmail } from '@/app/services/checkUserByEmail'
 import { UserProfile, useUser } from '@auth0/nextjs-auth0/client'
 import { getProjectList } from '@/app/services/getProjectList'
-import { Container, Flex, useBreakpointValue } from '@chakra-ui/react'
 import { SideBar } from '@/components/SideBar'
-import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
+import { Flex } from '@chakra-ui/react'
 
 
 
@@ -58,7 +57,7 @@ export default function ProjectInvestorProjects() {
                 if (!totalPages) { // FAZ A REQUISIÇÃO DE TOTAL DE ELEMENTOS APENAS 1 VEZ
 
                     const projectResponseComplete = await getProjectList({ page: undefined, pageRange: undefined })
-                    console.log('projecst COMPLETE')
+
                     const projectResponseActives = projectResponseComplete.filter((project: Investment) => project.active === true)
 
                     if (projectResponseActives) {
@@ -72,7 +71,6 @@ export default function ProjectInvestorProjects() {
 
             } catch (error) {
                 console.error('Erro ao buscar dados do projeto:', error);
-
             }
         }
 

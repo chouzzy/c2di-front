@@ -1,7 +1,7 @@
 import { getProjectList } from "@/app/services/getProjectList";
 import { filterUserInvestmentsByUserID, getUserInvestmentListByUserID } from "@/app/services/getUserInvestmentListByID";
 import { UserProfile } from "@auth0/nextjs-auth0/client";
-import { Button, Flex, Link, Menu, MenuButton, MenuItem, MenuList, Stat, StatArrow, StatGroup, StatHelpText, StatLabel, StatNumber, Text, useBreakpointValue } from "@chakra-ui/react";
+import { Button, Divider, Flex, Link, Menu, MenuButton, MenuItem, MenuList, Stat, StatArrow, StatGroup, StatHelpText, StatLabel, StatNumber, Text, useBreakpointValue } from "@chakra-ui/react";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { IoIosArrowForward, IoIosTrendingUp } from "react-icons/io";
@@ -39,6 +39,7 @@ export function HeaderInvestorDashboard({ userData, user }: HeaderInvestorProjec
     const [userInvestments, setUserInvestments] = useState<UserInvestment[]>()
     const [investments, setInvestments] = useState<Investment[]>()
     const [totalInvested, setTotalInvested] = useState<number>()
+    const [valorMedioQuadradoTotal, setValorMedioQuadradoTotal] = useState<number>()
     const [totalCount, setTotalCount] = useState<number>()
 
 
@@ -65,6 +66,7 @@ export function HeaderInvestorDashboard({ userData, user }: HeaderInvestorProjec
             try {
                 const investments = await getProjectList({ page: '0', pageRange: '9999' })
                 setInvestments(investments)
+                setValorMedioQuadradoTotal(await calculateMediaMetroQuadrado(investments))
 
 
             } catch (error) {
@@ -101,6 +103,29 @@ export function HeaderInvestorDashboard({ userData, user }: HeaderInvestorProjec
     }, [])
 
     const isMobile = useBreakpointValue({ base: true, sm: true, md: false, lg: false, xl: false })
+
+    const calculateMediaMetroQuadrado = async (investments: Investment[]) => {
+
+        let metroQuadradoListado: number[] = []
+        investments.forEach((investment) => {
+
+            const { valorMetroQuadrado } = investment
+
+            if (!valorMetroQuadrado) { return }
+
+            const last = valorMetroQuadrado.length - 1
+            metroQuadradoListado.push(valorMetroQuadrado[last].valor)
+        })
+
+        // Calcular a média
+        if (metroQuadradoListado.length > 0) {
+            const soma = metroQuadradoListado.reduce((acc, valor) => acc + valor, 0);
+            const media = soma / metroQuadradoListado.length;
+            return media;
+        } else {
+            return 0; // Retorna 0 se não houver valores para calcular a média
+        }
+    }
 
     return (
         <>
@@ -158,19 +183,50 @@ export function HeaderInvestorDashboard({ userData, user }: HeaderInvestorProjec
                 <Flex flexDir={['column', 'column', 'column', 'column', 'row']} gap={4} color={'lightSide'}>
 
                     {/* CARD 1 */}
-                    <Flex flexDir={'column'} gap={2} w='100%' bgColor={'grayCardSide'} px={4} py={4} borderRadius={12}>
+                    <Flex flexDir={'column'} gap={2} w='100%' bgColor={'grayCardSide'} px={2} borderRadius={12} >
 
                         <Flex flexDir={'column'} justifyContent={'space-between'}>
 
-                            <Flex fontSize={12}>Total investido</Flex>
+
 
                             <Flex justifyContent={'space-between'} gap={4}>
-                                <Flex fontSize={20} fontWeight={'medium'} letterSpacing={1}>
+                                <Flex letterSpacing={1}>
                                     <Menu>
-                                        <MenuButton as={Button} borderRadius={'none'} bg='none' color={'lightSide'} p={0} fontSize={20} _hover={{ color: 'green.300' }} _active={{ bg: 'none' }} rightIcon={<MdArrowDropDownCircle />}>
-                                            <Text>
-                                                R${totalInvested?.toLocaleString('pt-BR')}
-                                            </Text>
+                                        <MenuButton as={Button} borderRadius={'none'} bg='none' color={'lightSide'} py={10} px={2} _hover={{ color: 'green.300' }} _active={{ bg: 'none' }} rightIcon={<MdArrowDropDownCircle size={32} />}>
+
+                                            <Flex justifyContent={'start'} w='100%' p={2} gap={[1,1,1,2,2]} alignItems={['start', 'start', 'start', 'center', 'center']} >
+
+                                                <Flex flexDir={'column'} alignItems={'start'} gap={1}>
+
+                                                    <Text fontSize={[10,10,10,13,13]} fontWeight={'light'}> Total investido </Text>
+
+                                                    <Text fontSize={[12,12,12,18,18]}>
+                                                        R${totalInvested?.toLocaleString('pt-BR', { maximumFractionDigits: 0 })}
+                                                    </Text>
+                                                </Flex>
+
+                                                <Divider orientation="vertical" h={8} w={1} />
+
+                                                <Flex flexDir={'column'} alignItems={'center'} gap={1}>
+
+                                                    <Text fontSize={[10,10,10,13,13]} fontWeight={'light'}> Unidades </Text>
+
+                                                    <Text fontSize={[12,12,12,18,18]}> {totalCount} </Text>
+                                                </Flex>
+
+                                                <Divider orientation="vertical" h={8} w={1} />
+
+                                                <Flex flexDir={'column'} alignItems={'center'} gap={1} >
+
+                                                    <Text fontSize={[10,10,10,13,13]} fontWeight={'light'}> Valor médio do m² </Text>
+
+                                                    <Flex alignItems={'center'} gap={1} color={'green.300'}>
+                                                        <Text fontSize={[12,12,12,18,18]}> R${valorMedioQuadradoTotal?.toLocaleString('pt-BR', { maximumFractionDigits: 0 })} </Text>
+                                                    </Flex>
+
+                                                </Flex>
+                                            </Flex>
+
                                         </MenuButton>
                                         <MenuList color='lightSide' bgColor={'grayCardSide'} border='1px solid #FFFFFF33' borderRadius={8} p={1}>
 
@@ -179,27 +235,40 @@ export function HeaderInvestorDashboard({ userData, user }: HeaderInvestorProjec
 
                                                 if (!investmentMatched) { return }
 
+                                                const { valorMetroQuadrado } = investmentMatched
+
+                                                if (!valorMetroQuadrado) { return }
+                                                const last = valorMetroQuadrado.length - 1
+
                                                 return (
 
-                                                    <MenuItem key={userInvestment.id + index} fontWeight={'semibold'} bgColor={'grayCardSide'} _hover={{ color: 'green.300', transition: '360ms' }}>
-                                                        <Link href={`/projects/${userInvestment.investmentID}`} target="_blank">
+                                                    <MenuItem key={userInvestment.id + index} fontWeight={'semibold'} bgColor={'grayCardSide'} _hover={{ color: 'green.300', transition: '360ms' }} >
+
+                                                        <Link href={`/projects/${userInvestment.investmentID}`} _hover={{ textDecor: 'none' }} target="_blank" w='100%'>
+
                                                             <Flex justifyContent={'space-between'} w='100%' alignItems={'center'}>
-                                                                <Flex flexDir={'column'} justifyContent={'center'}>
-                                                                    <Text fontSize={12} fontWeight={'light'}>
+
+                                                                <Flex flexDir={'column'} justifyContent={'end'} borderBottom={'1px solid #FFFFFF44'} py={1} w='100%'>
+
+                                                                    <Text fontSize={14} fontWeight={'light'}>
                                                                         {investmentMatched.title}
                                                                     </Text>
-                                                                    <Flex justifyContent={'space-between'} alignItems={'end'}>
+
+                                                                    <Flex justifyContent={'space-between'} alignItems={'end'} gap={4} w='100%' >
                                                                         <Flex>
-                                                                            <Text>
+                                                                            <Text p={0}>
                                                                                 R${userInvestment.investedValue.toLocaleString('pt-BR')}
                                                                             </Text>
                                                                         </Flex>
-                                                                        <Flex pb={1} fontSize={12} alignItems={'center'} color={'green.300'}>
-                                                                            <Text> +11.01% </Text> <IoIosTrendingUp />
+                                                                        <Flex fontSize={14}  color={'green.300'} w='100%'>
+                                                                            <Text> R${valorMetroQuadrado[last].valor.toLocaleString('pt-BR', { maximumFractionDigits: 0 })}/m² </Text>
                                                                         </Flex>
                                                                     </Flex>
+
                                                                 </Flex>
+
                                                             </Flex>
+
                                                         </Link>
                                                     </MenuItem>
 
@@ -208,22 +277,6 @@ export function HeaderInvestorDashboard({ userData, user }: HeaderInvestorProjec
                                         </MenuList>
                                     </Menu>
                                 </Flex>
-                                <Flex fontSize={12} alignItems={'center'} color={'green.300'}> <Text> +11.01% </Text> <IoIosTrendingUp /> </Flex>
-                            </Flex>
-
-                        </Flex>
-
-                    </Flex>
-
-                    {/* CARD 2 */}
-                    <Flex flexDir={'column'} gap={2} w='100%' bgColor={'grayCardSide'} px={4} py={4} borderRadius={12}>
-
-                        <Flex flexDir={'column'} justifyContent={'space-between'}>
-
-                            <Flex fontSize={12}>Total</Flex>
-                            <Flex justifyContent={'space-between'} gap={4}>
-                                <Flex fontSize={20} fontWeight={'medium'} letterSpacing={1} > <Text> {totalCount} </Text></Flex>
-                                <Flex fontSize={12} alignItems={'center'} color={'green.300'}> <Text> +24.16% </Text> <IoIosTrendingUp /> </Flex>
                             </Flex>
 
                         </Flex>

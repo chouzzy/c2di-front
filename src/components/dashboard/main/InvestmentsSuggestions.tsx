@@ -17,6 +17,9 @@ export function InvestmentsSuggestions({ projectsData }: InvestmentsSuggestionsP
     useEffect(() => {
 
         const getInvestmentsComplete = async () => {
+            try {
+                
+            
             const projectsCompleteList = getProjectList({ page: '0', pageRange: '999', active: true })
 
             // 1. Criar um Set com os IDs dos investimentos que o usuário já possui
@@ -30,6 +33,10 @@ export function InvestmentsSuggestions({ projectsData }: InvestmentsSuggestionsP
             );
 
             setSuggestions(filteredProjects)
+
+        } catch (error) {
+            console.error('Erro ao buscar os investimentos:', error)       
+        }
         }
 
         getInvestmentsComplete()
