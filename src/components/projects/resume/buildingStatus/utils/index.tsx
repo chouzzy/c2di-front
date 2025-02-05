@@ -320,7 +320,6 @@ export function ValorMetroQuadrado({ graphWidth, graphHeight, valorMetroQuadrado
     if (!valorMetroQuadrado) {
         return (<></>)
     } else {
-        console.log(valorMetroQuadrado[0])
 
         const minCost = valorMetroQuadrado[0].valor
         const maxCost = valorMetroQuadrado[valorMetroQuadrado.length - 1].valor

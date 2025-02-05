@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 export interface formattedDataProps {
     Previsto: number;
     Realizado: number;
-    Ref: Date
+    Ref: Date | null
     investmentID: Investment["id"];
     title: Investment["title"];
     financialTotalProgressPrevisto: Investment["financialTotalProgress"][0]["previsto"];
@@ -16,7 +16,7 @@ export interface formattedDataProps {
 }
 
 export interface DataWithUnitsProps {
-    Ref: Date
+    Ref: Date | null
     Unidades: number;
     Previsto: number;
     Realizado: number;
@@ -71,6 +71,8 @@ export function GraficoConstrucao({ userInvestmentResumed, userInvestments }: Gr
 
 
 
+
+
     useEffect(() => {
 
         if (userInvestments) {
@@ -102,7 +104,7 @@ export function GraficoConstrucao({ userInvestmentResumed, userInvestments }: Gr
 
                 <BarChart width={graphWidth} height={300} data={financeiroData} barGap={20} layout="vertical"> {/* Alteração aqui! Adicionado layout vertical */}
                     <YAxis type="category" dataKey="etapa" width={2} tickFormatter={(tick) => `${tick}`} /> {/* YAxis agora é categórico e usa 'etapa' */}
-                    <XAxis type="number" fontSize={12} domain={[0, 'dataMax']} tickFormatter={(tick) => `${(tick*100).toLocaleString('pt-BR', { maximumFractionDigits: 0 })}%`} />
+                    <XAxis type="number" fontSize={12} domain={[0, 'dataMax']} tickFormatter={(tick) => `${(tick * 100).toLocaleString('pt-BR', { maximumFractionDigits: 0 })}%`} />
                     <Tooltip content={<CustomTooltipConstrucao />} />
                     <Legend
                         verticalAlign="bottom" // Alinha a legenda na parte inferior
@@ -124,7 +126,7 @@ export function GraficoConstrucao({ userInvestmentResumed, userInvestments }: Gr
                         dataKey="Realizado"
                         fill="#46cb18"
                     >
-                        <LabelList fontSize={fontSizeGraph} dataKey="title" position="insideRight" fill="#FFFFFF" fontWeight={'500'} />
+                        {/* <LabelList fontSize={fontSizeGraph} dataKey="title" position="insideRight" fill="#FFFFFF" fontWeight={'500'} /> */}
                     </Bar>
                 </BarChart>
 

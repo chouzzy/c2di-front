@@ -27,7 +27,6 @@ export function ValorMetroQuadrado({ projectsData }: valorMetroQuadradoProps) {
             // 3. Atualizar o estado do componente com os dados do Investment encontrado
             // Exemplo: (Supondo que você queira usar o valorMetroQuadrado do investimento selecionado)
             setActiveGraphic(selectedInvestment);
-            console.log("Investimento encontrado:", selectedInvestment);
         } else {
             console.error("Investimento não encontrado para o ID:", id);
             // Tratar o caso em que o investimento não é encontrado (ex: exibir uma mensagem de erro)

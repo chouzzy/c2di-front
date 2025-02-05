@@ -126,7 +126,7 @@ export function GraficoFinanceiro({ userInvestmentResumed, userInvestments }: Gr
                         dataKey="Realizado"
                         fill="#46cb18"
                     >
-                        <LabelList fontSize={fontSizeGraph} dataKey="title" position="insideRight" fill="#FFFFFF" fontWeight={'500'} />
+                        {/* <LabelList fontSize={8} dataKey="title" position="insideRight" fill="#FFFFFF" fontWeight={'500'} /> */}
                     </Bar>
                 </BarChart>
 

@@ -83,11 +83,13 @@ export function BuildingStatus({ userData, projectData }: ProjectDataProps) {
 
             const investment = await importExcelValorMetroQuadrado(formData, projectData.id)
 
-            setEditModeCusto(!editModeCusto)
+            projectData.valorMetroQuadrado = investment.valorMetroQuadrado
+
+            setEditModeMetroQuadrado(!editModeMetroQuadrado)
 
         } catch (error) {
 
-            console.error('Erro no update do building progress')
+            console.error('Erro no update do valor metro quadrado')
             console.error(error)
             setYupError(String(error))
         }

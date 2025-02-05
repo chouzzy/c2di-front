@@ -45,28 +45,28 @@ export function HeaderInvestorDashboard({ userData, user }: HeaderInvestorProjec
 
     useEffect(() => {
 
-        const getUserInvestments = async (userData: User) => {
+        const getInvestments = async (userData: User) => {
             try {
+                const investments = await getProjectList({ page: '0', pageRange: '9999' })
+
+                // Requisitando os invstimentos do usuário
                 const userInvestments = await filterUserInvestmentsByUserID({ page: '0', pageRange: '9999', userID: userData.id })
                 setUserInvestments(userInvestments)
 
-                // Calcular o total investedValue
+                // Calcular o total investido e a contagem
                 const total = userInvestments.reduce((sum: number, investment: UserInvestment) => {
                     return sum + investment.investedValue;
                 }, 0);
                 setTotalInvested(total);
                 setTotalCount(userInvestments.length);
 
-            } catch (error) {
-                console.error('Erro ao obter a cotação do dólar:', error);
-            }
-        }
+                // Filtrando os investimentos para calcular a média do metro quadrado
+                const investmentsFiltrados = investments.filter(investment => {
+                    return userInvestments.some(userInvestment => userInvestment.investmentID === investment.id);
+                });
 
-        const getInvestments = async () => {
-            try {
-                const investments = await getProjectList({ page: '0', pageRange: '9999' })
-                setInvestments(investments)
-                setValorMedioQuadradoTotal(await calculateMediaMetroQuadrado(investments))
+                setInvestments(investmentsFiltrados);
+                setValorMedioQuadradoTotal(await calculateMediaMetroQuadrado(investmentsFiltrados))
 
 
             } catch (error) {
@@ -75,8 +75,8 @@ export function HeaderInvestorDashboard({ userData, user }: HeaderInvestorProjec
         }
 
         if (userData) {
-            getUserInvestments(userData)
-            getInvestments()
+            // getUserInvestments(userData)
+            getInvestments(userData)
         }
 
     }, [])
@@ -116,7 +116,7 @@ export function HeaderInvestorDashboard({ userData, user }: HeaderInvestorProjec
             const last = valorMetroQuadrado.length - 1
             metroQuadradoListado.push(valorMetroQuadrado[last].valor)
         })
-
+        
         // Calcular a média
         if (metroQuadradoListado.length > 0) {
             const soma = metroQuadradoListado.reduce((acc, valor) => acc + valor, 0);
@@ -194,13 +194,13 @@ export function HeaderInvestorDashboard({ userData, user }: HeaderInvestorProjec
                                     <Menu>
                                         <MenuButton as={Button} borderRadius={'none'} bg='none' color={'lightSide'} py={10} px={2} _hover={{ color: 'green.300' }} _active={{ bg: 'none' }} rightIcon={<MdArrowDropDownCircle size={32} />}>
 
-                                            <Flex justifyContent={'start'} w='100%' p={2} gap={[1,1,1,2,2]} alignItems={['start', 'start', 'start', 'center', 'center']} >
+                                            <Flex justifyContent={'start'} w='100%' p={2} gap={[1, 1, 1, 2, 2]} alignItems={['start', 'start', 'start', 'center', 'center']} >
 
                                                 <Flex flexDir={'column'} alignItems={'start'} gap={1}>
 
-                                                    <Text fontSize={[10,10,10,13,13]} fontWeight={'light'}> Total investido </Text>
+                                                    <Text fontSize={[10, 10, 10, 13, 13]} fontWeight={'light'}> Total investido </Text>
 
-                                                    <Text fontSize={[12,12,12,18,18]}>
+                                                    <Text fontSize={[12, 12, 12, 18, 18]}>
                                                         R${totalInvested?.toLocaleString('pt-BR', { maximumFractionDigits: 0 })}
                                                     </Text>
                                                 </Flex>
@@ -209,19 +209,19 @@ export function HeaderInvestorDashboard({ userData, user }: HeaderInvestorProjec
 
                                                 <Flex flexDir={'column'} alignItems={'center'} gap={1}>
 
-                                                    <Text fontSize={[10,10,10,13,13]} fontWeight={'light'}> Unidades </Text>
+                                                    <Text fontSize={[10, 10, 10, 13, 13]} fontWeight={'light'}> Unidades </Text>
 
-                                                    <Text fontSize={[12,12,12,18,18]}> {totalCount} </Text>
+                                                    <Text fontSize={[12, 12, 12, 18, 18]}> {totalCount} </Text>
                                                 </Flex>
 
                                                 <Divider orientation="vertical" h={8} w={1} />
 
                                                 <Flex flexDir={'column'} alignItems={'center'} gap={1} >
 
-                                                    <Text fontSize={[10,10,10,13,13]} fontWeight={'light'}> Valor médio do m² </Text>
+                                                    <Text fontSize={[10, 10, 10, 13, 13]} fontWeight={'light'}> Valor médio do m² </Text>
 
                                                     <Flex alignItems={'center'} gap={1} color={'green.300'}>
-                                                        <Text fontSize={[12,12,12,18,18]}> R${valorMedioQuadradoTotal?.toLocaleString('pt-BR', { maximumFractionDigits: 0 })} </Text>
+                                                        <Text fontSize={[12, 12, 12, 18, 18]}> R${valorMedioQuadradoTotal?.toLocaleString('pt-BR', { maximumFractionDigits: 0 })} </Text>
                                                     </Flex>
 
                                                 </Flex>
@@ -260,7 +260,7 @@ export function HeaderInvestorDashboard({ userData, user }: HeaderInvestorProjec
                                                                                 R${userInvestment.investedValue.toLocaleString('pt-BR')}
                                                                             </Text>
                                                                         </Flex>
-                                                                        <Flex fontSize={14}  color={'green.300'} w='100%'>
+                                                                        <Flex fontSize={14} color={'green.300'} w='100%'>
                                                                             <Text> R${valorMetroQuadrado[last].valor.toLocaleString('pt-BR', { maximumFractionDigits: 0 })}/m² </Text>
                                                                         </Flex>
                                                                     </Flex>

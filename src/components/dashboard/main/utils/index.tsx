@@ -5,10 +5,10 @@ export interface userBarGraphics {
     title: Investment["title"]
     financialTotalProgressPrevisto: Investment["financialTotalProgress"][0]["previsto"]
     financialTotalProgressRealizado: Investment["financialTotalProgress"][0]["realizado"]
-    financialTotalProgressDate: Investment["financialTotalProgress"][0]["data"]
+    financialTotalProgressDate: Investment["financialTotalProgress"][0]["data"] | null
     buildingTotalProgressPrevisto: Investment["buildingTotalProgress"][0]["previsto"]
     buildingTotalProgressRealizado: Investment["buildingTotalProgress"][0]["realizado"]
-    buildingTotalProgressDate: Investment["buildingTotalProgress"][0]["data"]
+    buildingTotalProgressDate: Investment["buildingTotalProgress"][0]["data"] | null
 }
 
 
@@ -26,54 +26,46 @@ function removeDuplicatesByInvestmentID(
 }
 
 export function resumeUserInvestment(userInvestmentsData: UserInvestment[], projectsData: Investment[]) {
-
-    let userInvestmentResumed: userBarGraphics[] = []
+    let userInvestmentResumed: userBarGraphics[] = [];
 
     userInvestmentsData.forEach((userInv) => {
+        const investmentMatched = projectsData.find(investment => investment.id === userInv.investmentID);
+        if (!investmentMatched) { return; }
 
-        const investmentMatched = projectsData.find(investment => investment.id === userInv.investmentID)
-        if (!investmentMatched) { return }
+        // Encontra o último elemento com valor no realizado (financeiro)
+        let lastFinancialIndex = investmentMatched.financialTotalProgress.length - 1;
+        while (lastFinancialIndex >= 0 && investmentMatched.financialTotalProgress[lastFinancialIndex].realizado === 0) {
+            lastFinancialIndex--;
+        }
+
+        // Encontra o último elemento com valor no realizado (construção)
+        let lastBuildingIndex = investmentMatched.buildingTotalProgress.length - 1;
+        while (lastBuildingIndex >= 0 && investmentMatched.buildingTotalProgress[lastBuildingIndex].realizado === 0) {
+            lastBuildingIndex--;
+        }
+
+        const financialLength = investmentMatched.financialTotalProgress.length
+        const buildingLength = investmentMatched.buildingTotalProgress.length
 
         userInvestmentResumed.push({
-
             title: investmentMatched.title,
             investmentID: userInv.investmentID,
-            // Acessando o último elemento de financialTotalProgress
-            financialTotalProgressPrevisto:
-                investmentMatched.financialTotalProgress.length > 0
-                    ? investmentMatched.financialTotalProgress[investmentMatched.financialTotalProgress.length - 1].previsto
-                    : 0, // Valor padrão se o array estiver vazio
 
-            financialTotalProgressRealizado:
-                investmentMatched.financialTotalProgress.length > 0
-                    ? investmentMatched.financialTotalProgress[investmentMatched.financialTotalProgress.length - 1].realizado
-                    : 0,
+            // Dados financeiros
+            financialTotalProgressPrevisto: investmentMatched.financialTotalProgress[financialLength - 1].previsto,
+            financialTotalProgressRealizado: lastFinancialIndex >= 0 ? investmentMatched.financialTotalProgress[lastFinancialIndex].realizado : 0,
+            financialTotalProgressDate: lastFinancialIndex >= 0 ? investmentMatched.financialTotalProgress[lastFinancialIndex].data : null,
 
-            // Data de atualização                    
-            financialTotalProgressDate: investmentMatched.financialTotalProgress[investmentMatched.financialTotalProgress.length - 1].data,
+            // Dados de construção
+            buildingTotalProgressPrevisto: investmentMatched.buildingTotalProgress[buildingLength - 1].previsto,
+            buildingTotalProgressRealizado: lastBuildingIndex >= 0 ? investmentMatched.buildingTotalProgress[lastBuildingIndex].realizado : 0,
+            buildingTotalProgressDate: lastBuildingIndex >= 0 ? investmentMatched.buildingTotalProgress[lastBuildingIndex].data : null,
+        });
+    });
 
-            // Acessando o último elemento de buildingTotalProgress
-            buildingTotalProgressPrevisto:
-                investmentMatched.buildingTotalProgress.length > 0
-                    ? investmentMatched.buildingTotalProgress[investmentMatched.buildingTotalProgress.length - 1].previsto
-                    : 0,
+    userInvestmentResumed = removeDuplicatesByInvestmentID(userInvestmentResumed);
 
-            buildingTotalProgressRealizado:
-                investmentMatched.buildingTotalProgress.length > 0
-                    ? investmentMatched.buildingTotalProgress[investmentMatched.buildingTotalProgress.length - 1].realizado
-                    : 0,
-
-
-            // Data de atualização                    
-            buildingTotalProgressDate: investmentMatched.buildingTotalProgress[investmentMatched.buildingTotalProgress.length - 1].data
-
-        })
-
-    })
-
-    userInvestmentResumed = removeDuplicatesByInvestmentID(userInvestmentResumed)
-
-    return userInvestmentResumed
+    return userInvestmentResumed;
 }
 
 export const formatDataPizza = (investments: userBarGraphics[], userInvestmentsData: UserInvestment[]) => {
@@ -117,10 +109,10 @@ export const CustomTooltipFinanceiro = ({ active, payload, label }: any) => {
                     Unidades: {data.Unidades.toLocaleString('pt-BR', { maximumFractionDigits: 0 })}
                 </p>
                 <p style={{ color: 'black' }}>
-                    Previsto: R$ {data.Previsto.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                    Previsto: R$ {data.Previsto.toLocaleString('pt-BR', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}
                 </p>
-                <p style={{ color: '#51c25d' }}>
-                    Realizado: R$ {data.Realizado.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                <p style={{ color: '#51c05d' }}>
+                    Realizado: R$ {data.Realizado.toLocaleString('pt-BR', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}
                 </p>
             </div>
         );
@@ -142,10 +134,10 @@ export const CustomTooltipConstrucao = ({ active, payload, label }: any) => {
                     Unidades: {data.Unidades.toLocaleString('pt-BR', { maximumFractionDigits: 0 })}
                 </p>
                 <p style={{ color: 'black' }}>
-                    Previsto: {Number(data.Previsto) * 100}%
+                    Previsto: {(Number(data.Previsto) * 100).toLocaleString('pt-BR', {maximumFractionDigits: 0 })}%
                 </p>
                 <p style={{ color: '#51c25d' }}>
-                    Realizado: {Number(data.Realizado) * 100}%
+                    Realizado: {(Number(data.Realizado) * 100).toLocaleString('pt-BR', {maximumFractionDigits: 0 })}%
                 </p>
             </div>
         );
