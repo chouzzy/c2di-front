@@ -8,6 +8,9 @@ interface ProfileUsersProps {
 
 export function ProfileUserResume({ userData }: ProfileUsersProps) {
 
+    const textColor = useColorModeValue('graySide', 'dark.graySide')
+    const spinnerColor = useColorModeValue('darkSide', 'dark.darkSide')
+
     const router = useRouter()
     const [isRedirecting, setIsRedirecting] = useState(false)
 
@@ -24,7 +27,7 @@ export function ProfileUserResume({ userData }: ProfileUsersProps) {
                     <Flex>
 
                         {/* Título */}
-                        <Text fontWeight={'medium'} color={useColorModeValue('graySide', 'dark.graySide')}>
+                        <Text fontWeight={'medium'} color={textColor}>
                             Seu perfil de investidor
                         </Text>
 
@@ -41,7 +44,7 @@ export function ProfileUserResume({ userData }: ProfileUsersProps) {
                             <Flex boxSize={16} mx='auto'>
                                 <Spinner
                                     boxSize={6}
-                                    color={useColorModeValue('darkSide', 'dark.darkSide')}
+                                    color={spinnerColor}
                                 />
                             </Flex>
                         }
@@ -59,7 +62,7 @@ export function ProfileUserResume({ userData }: ProfileUsersProps) {
                         <Flex boxSize={16} mx='auto'>
                             <Spinner
                                 boxSize={6}
-                                color={useColorModeValue('darkSide', 'dark.darkSide')}
+                                color={spinnerColor}
                             />
                         </Flex>
                     }

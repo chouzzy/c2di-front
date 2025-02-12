@@ -1,6 +1,3 @@
-import { useColorModeValue } from "@chakra-ui/react"
-import { formattedDataPizzaProps } from "../graphics/Pizza"
-
 export interface userBarGraphics {
     investmentID: Investment["id"]
     title: Investment["title"]

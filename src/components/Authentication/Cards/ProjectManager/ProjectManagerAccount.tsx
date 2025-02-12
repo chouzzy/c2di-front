@@ -25,6 +25,8 @@ interface ProjectManagerAccountCardProps {
 
 export function ProjectManagerAccountCard({user, router}: ProjectManagerAccountCardProps) {
 
+    const bgButtonColor = useColorModeValue('darkSide', 'dark.lightSide')
+
     const { register, handleSubmit, formState: { errors } } = useForm({});
     const [yupError, setYupError] = useState<string>("")
 
@@ -384,7 +386,7 @@ export function ProjectManagerAccountCard({user, router}: ProjectManagerAccountC
 
 
                             <Flex w='100%' gap={4}>
-                                <Button onClick={handleSubmit(onSubmit)} fontSize={14} color={'lightSide'} fontWeight={'light'} bgColor={useColorModeValue('darkSide', 'dark.lightSide')} mt={4} w='100%'>
+                                <Button onClick={handleSubmit(onSubmit)} fontSize={14} color={'lightSide'} fontWeight={'light'} bgColor={bgButtonColor} mt={4} w='100%'>
                                     Salvar e ir para o painel
                                 </Button>
                             </Flex>

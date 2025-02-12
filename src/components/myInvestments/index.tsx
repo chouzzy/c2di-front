@@ -14,6 +14,9 @@ interface ProjectDashboardInvestorProps {
 
 export function MyInvestmentsList({ userInvestmentsData, projectsData, page, setPage, totalPages, elementsPerPage }: ProjectDashboardInvestorProps) {
 
+    const textColor = useColorModeValue('graySide', 'dark.graySide')
+    const bgButtonColor = useColorModeValue('darkSide', 'dark.lightSide')
+
     const nextPage = async () => {
         setPage(page + 1)
     }
@@ -83,12 +86,12 @@ export function MyInvestmentsList({ userInvestmentsData, projectsData, page, set
                                         </Text>
 
 
-                                        <Text fontSize={14} fontWeight={'normal'} color={useColorModeValue('graySide', 'dark.graySide')} letterSpacing={'-0.2px'}>
+                                        <Text fontSize={14} fontWeight={'normal'} color={textColor} letterSpacing={'-0.2px'}>
                                             {project.description}
                                         </Text>
                                     </Flex>
                                     <Link href={`/projects/${project.id}`}>
-                                        <Button _hover={{ bgColor: 'graySide' }} color={'lightSide'} bgColor={useColorModeValue('darkSide', 'dark.lightSide')} fontSize={14} borderRadius={2}>
+                                        <Button _hover={{ bgColor: 'graySide' }} color={'lightSide'} bgColor={bgButtonColor} fontSize={14} borderRadius={2}>
                                             <Flex minW={24} alignItems={'center'} justifyContent={'center'}>
                                                 <Text>Ver projeto</Text>
                                             </Flex>
@@ -132,7 +135,7 @@ export function MyInvestmentsList({ userInvestmentsData, projectsData, page, set
                         onClick={nextPage}
                         _hover={{ bgColor: 'graySide' }}
                         color={'lightSide'}
-                        bgColor={useColorModeValue('darkSide', 'dark.lightSide')}
+                        bgColor={bgButtonColor}
                         isDisabled={page >= Math.ceil(totalPages / elementsPerPage)}
                     >
                         <Flex minW={18} alignItems={'center'} justifyContent={'center'}>

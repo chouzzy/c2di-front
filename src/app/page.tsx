@@ -21,6 +21,7 @@ const setAccessTokenCookie = async () => {
 
 export default function Home() {
 
+  const bgButtonColor= useColorModeValue('darkSide', 'dark.lightSide')
   const { user, error, isLoading } = useUser()
   console.log('user')
   console.log(user)
@@ -103,7 +104,7 @@ export default function Home() {
               </Flex>
               <Flex gap={8}>
                 <Flex>
-                  <Button onClick={() => { router.push(`/authentication/create/investor`) }} bgColor={useColorModeValue('darkSide', 'dark.lightSide')} color='white'>
+                  <Button onClick={() => { router.push(`/authentication/create/investor`) }} bgColor={bgButtonColor} color='white'>
                     Investidor
                   </Button>
                 </Flex>

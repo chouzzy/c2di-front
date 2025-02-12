@@ -1,6 +1,4 @@
-import { Flex, Image, useColorModeValue } from "@chakra-ui/react";
-import { register } from "module";
-import { FaFacebook, FaApple } from "react-icons/fa";
+import { Flex, useColorModeValue } from "@chakra-ui/react";
 import { AuthInput } from "../Inputs/AuthInput";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
@@ -8,6 +6,7 @@ import { useState } from "react";
 
 export function RecoverUserCard() {
 
+    const bgButtonColor = useColorModeValue('darkSide', 'dark.lightSide')
     const { register, handleSubmit, formState: { errors } } = useForm({});
 
     const [emailSent, setEmailSent] = useState<boolean>(false)
@@ -53,7 +52,7 @@ export function RecoverUserCard() {
                             as={'button'}
                             onClick={() => {setEmailSent(!emailSent)}}
                             fontSize={'sm'}
-                            bgColor={useColorModeValue('darkSide', 'dark.lightSide')}
+                            bgColor={bgButtonColor}
                             color={"lightSide"}
                             p={2}
                             borderRadius={8}

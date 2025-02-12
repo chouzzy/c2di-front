@@ -28,6 +28,8 @@ interface ProjectDataProps {
 
 function ProjectResumeAdmin({ userData, user, projectData }: ProjectDataProps) {
 
+    const menuColor = useColorModeValue('darkSide', 'dark.lightSide')
+
     const [page, SetPage] = useState(0)
     const menuList = ['Informações gerais', 'Ficha Técnica', 'Parceiros', 'Documentos', 'Mídias', 'Status', 'Investidores']
 
@@ -70,8 +72,8 @@ function ProjectResumeAdmin({ userData, user, projectData }: ProjectDataProps) {
                         </MenuButton>
                         <MenuList
                             w='100vw'
-                            bgColor={useColorModeValue('beigeSide', 'dark.beigeSide')}
-                            color={useColorModeValue('beigeSide', 'dark.beigeSide')}
+                            bgColor={menuColor}
+                            color={menuColor}
                             borderRadius={0}
                             justifyContent={'center'}
                             alignItems={'center'}

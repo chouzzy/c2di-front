@@ -12,6 +12,7 @@ import { useEffect, useState } from "react";
 
 export default function CreateInvestorAccount() {
 
+    const textColor = useColorModeValue('darkSide', 'dark.darkSide')
     const [loadingDBUser, setLoadingDBUser] = useState(true)
     const { user, isLoading } = useUser()
     const router = useRouter()
@@ -85,7 +86,7 @@ export default function CreateInvestorAccount() {
     }
 
     return (
-        <Container maxW={'1440px'} mx='auto' h='100vh' color={useColorModeValue('darkSide', 'dark.darkSide')}>
+        <Container maxW={'1440px'} mx='auto' h='100vh' color={textColor}>
 
             <Flex h='100%'>
                 {loadingDBUser ?

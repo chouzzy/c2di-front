@@ -25,6 +25,8 @@ interface FormUsersProps {
 
 function FormUsers({ userData }: FormUsersProps) {
 
+    const bgButtonColor = useColorModeValue('darkSide', 'dark.lightSide')
+
     const { register, handleSubmit, formState: { errors } } = useForm({});
 
     const [states, setStates] = useState<string[]>()
@@ -303,7 +305,7 @@ function FormUsers({ userData }: FormUsersProps) {
 
 
                 {editMode ?
-                    <Button onClick={handleSubmit(onSubmit)} color={'lightSide'} fontWeight={'light'} bgColor={useColorModeValue('darkSide', 'dark.lightSide')} mt={4} maxW={40}>
+                    <Button onClick={handleSubmit(onSubmit)} color={'lightSide'} fontWeight={'light'} bgColor={bgButtonColor} mt={4} maxW={40}>
                         Salvar dados
                     </Button>
                     :

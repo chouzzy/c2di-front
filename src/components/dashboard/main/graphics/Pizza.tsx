@@ -36,7 +36,10 @@ export function Pizza({ userInvestmentResumed, userInvestmentsData }: PizzaProps
 
     const labelColorPercentual = useColorModeValue('darkSide', 'white'); // ou use suas cores customizadas
 
-
+    const bgPizzaw = (index:number) => {
+        return useColorModeValue(sliceColorsLight[index], sliceColorsDark[index])
+    }
+ 
 
     // Função para customizar o Tooltip
     const CustomTooltip = ({ active, payload, label }: any) => {
@@ -89,7 +92,7 @@ export function Pizza({ userInvestmentResumed, userInvestmentsData }: PizzaProps
                     >
                         {/* Renderização dos Cells (agora feita automaticamente pelo Recharts) */}
                         {formattedData.map((entry, index) => (
-                            <Cell key={`cell-${index}`} fill={useColorModeValue(sliceColorsLight[index], sliceColorsDark[index])} /> // Alterna as cores
+                            <Cell key={`cell-${index}`} fill={bgPizzaw(index)} /> // Alterna as cores
                         ))}
                     </Pie>
                     {/* Tooltip customizado */}

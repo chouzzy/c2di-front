@@ -26,6 +26,8 @@ interface FormUsersProps {
 
 function ProprietarioList({ userData, projectData }: FormUsersProps) {
 
+    const bgButtonColor = useColorModeValue('darkSide', 'dark.lightSide')
+
     const { isOpen, onOpen, onClose } = useDisclosure();
     const cancelRef = useRef(null);
 
@@ -168,7 +170,7 @@ function ProprietarioList({ userData, projectData }: FormUsersProps) {
                     {addMode && usersList ?
                         <form onSubmit={handleSubmit((data) => onSubmitProprietario({ data, investor, projectData, setYupError, investorDate, userProprietariosList, setAddMode, onOpen }))}>
 
-                            <Flex flexDir={'column'} p={[0, 0, 0, 4, 4]} mt={8} bgColor={useColorModeValue('darkSide', 'dark.lightSide')} borderRadius={'md'} color={'lightSide'}>
+                            <Flex flexDir={'column'} p={[0, 0, 0, 4, 4]} mt={8} bgColor={bgButtonColor} borderRadius={'md'} color={'lightSide'}>
 
                                 <Flex pt={4} textAlign={'center'}>
                                     <Text fontSize={24} mx='auto' fontWeight={'semibold'}> NOVO PROPRIETÁRIO </Text>

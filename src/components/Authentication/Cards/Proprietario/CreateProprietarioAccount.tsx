@@ -20,6 +20,8 @@ interface CreateInvestorAccountCardProps {
 
 export function CreateProprietarioAccount({ user, router }: CreateInvestorAccountCardProps) {
 
+    const bgButtonColor = useColorModeValue('darkSide', 'dark.lightSide')
+
     const { register, handleSubmit, formState: { errors } } = useForm({});
     const [yupError, setYupError] = useState<string>("")
 
@@ -358,7 +360,7 @@ export function CreateProprietarioAccount({ user, router }: CreateInvestorAccoun
                                     fontSize={14}
                                     color={'lightSide'}
                                     fontWeight={'light'}
-                                    bgColor={useColorModeValue('darkSide', 'dark.lightSide')}
+                                    bgColor={bgButtonColor}
                                     mt={4}
                                     w='100%'
                                     _hover={{ bgColor: "graySide", transition: '300ms' }}

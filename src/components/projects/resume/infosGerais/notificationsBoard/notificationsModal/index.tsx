@@ -12,6 +12,9 @@ interface NotificationsModalProps {
 
 
 export function NotificationsModal({ isOpen, closeNotification, notificationOpened, redirectToProject, deletingNotification }: NotificationsModalProps) {
+
+    const textColor = useColorModeValue('graySide', 'dark.graySide')
+    const bgButtonColor = useColorModeValue('darkSide', 'dark.lightSide')
     return (
 
         <Modal isOpen={isOpen} onClose={closeNotification}>
@@ -19,7 +22,7 @@ export function NotificationsModal({ isOpen, closeNotification, notificationOpen
             <ModalContent py={2} borderRadius={2}>
                 <ModalHeader>
                     <Flex gap={2} alignItems={'center'} flexDir={'row'} pt={4}>
-                        <Flex color={useColorModeValue('graySide', 'dark.graySide')}>
+                        <Flex color={textColor}>
                             <MdCircleNotifications size={28} />
                         </Flex>
                         <Text>
@@ -71,7 +74,7 @@ export function NotificationsModal({ isOpen, closeNotification, notificationOpen
                                     </Flex>
 
                                     <Flex alignItems={'center'} justifyContent={'center'}>
-                                        <Button onClick={closeNotification} w='100%' _hover={{ bgColor: 'redSide' }} color={'lightSide'} bgColor={useColorModeValue('darkSide', 'dark.lightSide')} borderRadius={2}>
+                                        <Button onClick={closeNotification} w='100%' _hover={{ bgColor: 'redSide' }} color={'lightSide'} bgColor={bgButtonColor} borderRadius={2}>
                                             <Flex minW={12} alignItems={'center'} justifyContent={'center'}>
                                                 {deletingNotification ?
                                                     <Spinner boxSize={6} />

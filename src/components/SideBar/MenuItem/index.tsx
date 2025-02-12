@@ -12,6 +12,8 @@ interface MenuItemProps {
 
 export function MenuItem({ href, icon, title, isActive }: MenuItemProps) {
 
+    const menuItemColor = useColorModeValue('grayHoverSide', 'dark.grayHoverSide')
+
     return (
         <Link w='100%' href={`/${href}`} _hover={{ textDecor: 'none' }}>
             <Flex
@@ -21,9 +23,9 @@ export function MenuItem({ href, icon, title, isActive }: MenuItemProps) {
                 pl={2}
                 mb={2}
                 borderRadius="sm"
-                _hover={{ bg: useColorModeValue('grayHoverSide', 'dark.grayHoverSide')  }}
+                _hover={{ bg: menuItemColor }}
                 fontWeight={'normal'}
-                bgColor={isActive ? useColorModeValue('grayHoverSide', 'dark.grayHoverSide') : ""}
+                bgColor={isActive ? menuItemColor : ""}
             >
                 <Icon as={icon} mr={2} /> {/* Ícone do Phosphor React */}
                 <Text>{title}</Text>

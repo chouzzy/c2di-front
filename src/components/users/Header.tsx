@@ -9,6 +9,8 @@ interface UserHeaderProps {
 
 export function UsersHeader({ userData }: UserHeaderProps) {
 
+    const bgButtonColor = useColorModeValue('darkSide', 'dark.lightSide')
+
     const { isOpen, onOpen, onClose } = useDisclosure() // Adiciona o hook useDisclosure
     const [changingPassword, setChangingPassword] = useState(false)
     const [modalMessage, setModalMessage] = useState(''); // Estado para a mensagem do modal
@@ -50,7 +52,7 @@ export function UsersHeader({ userData }: UserHeaderProps) {
             </Flex>
 
             <Flex>
-                <Button onClick={changePassword} _hover={{ bgColor: 'redSide' }} color={'lightSide'} bgColor={useColorModeValue('darkSide', 'dark.lightSide')} mt={4}>
+                <Button onClick={changePassword} _hover={{ bgColor: 'redSide' }} color={'lightSide'} bgColor={bgButtonColor} mt={4}>
                     <Flex minW={32} alignItems={'center'} justifyContent={'center'}>
 
                         {changingPassword ?

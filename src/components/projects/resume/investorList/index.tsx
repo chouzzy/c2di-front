@@ -26,6 +26,8 @@ interface FormUsersProps {
 
 function InvestorList({ userData, projectData }: FormUsersProps) {
 
+    const bgButtonColor = useColorModeValue('darkSide', 'dark.lightSide')
+
     const { isOpen, onOpen, onClose } = useDisclosure();
     const cancelRef = useRef(null);
 
@@ -172,7 +174,7 @@ function InvestorList({ userData, projectData }: FormUsersProps) {
                     {addMode && usersList ?
                         <form onSubmit={handleSubmit((data) => onSubmitInvestor({ data, investor, projectData, setYupError, investorDate, userInvestmentsList, setAddMode, isOpen, onOpen, onClose, cancelRef, setFormData }))}>
 
-                            <Flex flexDir={'column'} p={[0, 0, 0, 4, 4]} mt={8} bgColor={useColorModeValue('darkSide', 'dark.lightSide')} borderRadius={'md'} color={'lightSide'}>
+                            <Flex flexDir={'column'} p={[0, 0, 0, 4, 4]} mt={8} bgColor={bgButtonColor} borderRadius={'md'} color={'lightSide'}>
 
                                 <Flex pt={4} textAlign={'center'}>
                                     <Text fontSize={24} mx='auto' fontWeight={'semibold'}> NOVO INVESTIDOR </Text>

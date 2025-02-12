@@ -11,6 +11,7 @@ interface createUserCardProps {
 
 export function CreateUserCard({ user }: createUserCardProps) {
 
+    const bgButtonColor = useColorModeValue('darkSide', 'dark.lightSide')
     const { register, handleSubmit, formState: { errors } } = useForm({});
 
     return (
@@ -44,7 +45,7 @@ export function CreateUserCard({ user }: createUserCardProps) {
 
                         <Flex
                             as={'button'}
-                            bgColor={useColorModeValue('darkSide', 'dark.lightSide')}
+                            bgColor={bgButtonColor}
                             color={"lightSide"}
                             p={2}
                             borderRadius={8}

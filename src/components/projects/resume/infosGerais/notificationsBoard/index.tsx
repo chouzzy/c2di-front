@@ -19,6 +19,10 @@ interface NotificationsBoard {
 
 export function NotificationsBoard({ totalDocuments, page, pageRange, setPage, notifications, reloadNotifications }: NotificationsBoard) {
 
+    const notificationColorLight = useColorModeValue('darkSide', 'lightSide')
+    const notificationColorDark = useColorModeValue('grayDivisor', 'dark.grayDivisor')
+    const bgButtonColor = useColorModeValue('darkSide', 'dark.lightSide')
+
     const { isOpen, onOpen, onClose } = useDisclosure() // Adiciona o hook useDisclosure
     const [readingNotification, setReadingNotification] = useState(false)
     const [deletingNotification, setDeletingNotification] = useState(false)
@@ -84,7 +88,7 @@ export function NotificationsBoard({ totalDocuments, page, pageRange, setPage, n
                                     key={notification.id}
                                     onClick={() => { openNotification(notification.id) }}
                                     _hover={{ color: 'graySide', transition: '300ms' }}
-                                    color={isRead ? useColorModeValue('darkSide', 'lightSide') : useColorModeValue('grayDivisor', 'dark.grayDivisor')}
+                                    color={isRead ? notificationColorLight : notificationColorDark}
                                     cursor={'pointer'}
                                     py={2}
                                     gap={4}
@@ -131,7 +135,7 @@ export function NotificationsBoard({ totalDocuments, page, pageRange, setPage, n
                         onClick={nextPage}
                         _hover={{ bgColor: 'graySide' }}
                         color={'lightSide'}
-                        bgColor={useColorModeValue('darkSide', 'dark.lightSide')}
+                        bgColor={bgButtonColor}
                         size='xs'
                         isDisabled={page >= Math.ceil(totalDocuments / pageRange)}
                     >

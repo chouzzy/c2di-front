@@ -12,6 +12,8 @@ interface HeaderSelfProps {
 
 export function HeaderSelf({ userData, user }: HeaderSelfProps) {
 
+    const bgButtonColor = useColorModeValue('darkSide', 'dark.lightSide')
+
     const { isOpen, onOpen, onClose } = useDisclosure() // Adiciona o hook useDisclosure
     const [changingPassword, setChangingPassword] = useState(false)
     const [deletingUser, setDeletingUser] = useState(false)
@@ -75,7 +77,7 @@ export function HeaderSelf({ userData, user }: HeaderSelfProps) {
             </Flex>
 
             <Flex gap={8} alignItems={'center'}>
-                <Button onClick={changePassword} _hover={{ bgColor: 'redSide' }} color={'lightSide'} bgColor={useColorModeValue('darkSide', 'dark.lightSide')} mt={4}>
+                <Button onClick={changePassword} _hover={{ bgColor: 'redSide' }} color={'lightSide'} bgColor={bgButtonColor} mt={4}>
                     <Flex minW={32} alignItems={'center'} justifyContent={'center'}>
 
                         {changingPassword ?

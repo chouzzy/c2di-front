@@ -13,6 +13,8 @@ interface HeaderAdminProjectProps {
 
 export function HeaderAdminProjectList({ userData, user }: HeaderAdminProjectProps) {
 
+    const bgButtonColor = useColorModeValue('darkSide', 'dark.lightSide')
+
     const { isOpen, onOpen, onClose } = useDisclosure() // Adiciona o hook useDisclosure
     const [deletingUser, setDeletingUser] = useState(false)
     const [deleteUserConfirm, setDeleteUserConfirm] = useState(false)
@@ -64,7 +66,7 @@ export function HeaderAdminProjectList({ userData, user }: HeaderAdminProjectPro
             </Flex>
 
             <Flex gap={8} alignItems={'center'}>
-                <Button onClick={() => { handleCreateInvestment() }} size={['sm','sm','sm','md']} _hover={{ bgColor: 'graySide' }} color={'lightSide'} bgColor={useColorModeValue('darkSide', 'dark.lightSide')} mt={4}>
+                <Button onClick={() => { handleCreateInvestment() }} size={['sm','sm','sm','md']} _hover={{ bgColor: 'graySide' }} color={'lightSide'} bgColor={bgButtonColor} mt={4}>
                     <Flex alignItems={'center'} justifyContent={'center'}>
                         <Text>Criar imóvel</Text>
                     </Flex>
@@ -95,7 +97,7 @@ export function HeaderAdminProjectList({ userData, user }: HeaderAdminProjectPro
                                     </Text>
                                 </Flex>
                                 <Flex alignItems={'center'} justifyContent={'end'} gap={2}>
-                                    <Button onClick={cancelDeleteUser} _hover={{ bgColor: 'graySide' }} color={'lightSide'} bgColor={useColorModeValue('darkSide', 'dark.lightSide')} mt={4}>
+                                    <Button onClick={cancelDeleteUser} _hover={{ bgColor: 'graySide' }} color={'lightSide'} bgColor={bgButtonColor} mt={4}>
                                         <Flex minW={16} alignItems={'center'} justifyContent={'center'} fontWeight={'normal'}>
                                             <Text>Voltar</Text>
                                         </Flex>

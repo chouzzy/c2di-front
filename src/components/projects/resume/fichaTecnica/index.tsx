@@ -19,6 +19,8 @@ interface ProjectDataProps {
 
 export function FichaTecnica({ userData, projectData }: ProjectDataProps) {
 
+    const bgButtonColor = useColorModeValue('darkSide', 'dark.lightSide')
+
     const { register, handleSubmit, formState: { errors } } = useForm({});
     const [yupError, setYupError] = useState<string>("")
     const [editMode, setEditMode] = useState(false); // Estado para controlar o modo de edição
@@ -352,7 +354,7 @@ export function FichaTecnica({ userData, projectData }: ProjectDataProps) {
                         '' :
                         <>
                             {editMode ?
-                                <Button type='submit' color={'lightSide'} fontWeight={'light'} bgColor={useColorModeValue('darkSide', 'dark.lightSide')} mt={4} maxW={40}>
+                                <Button type='submit' color={'lightSide'} fontWeight={'light'} bgColor={bgButtonColor} mt={4} maxW={40}>
                                     Salvar dados
                                 </Button>
                                 :

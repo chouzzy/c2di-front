@@ -27,6 +27,8 @@ interface CreateInvestorAccountCardProps {
 
 export function CreateProjectForm({ user, router, userData }: CreateInvestorAccountCardProps) {
 
+    const bgButtonColor = useColorModeValue('darkSide', 'dark.lightSide')
+
     const { register, handleSubmit, formState: { errors } } = useForm({});
     const [yupError, setYupError] = useState<string>("")
     const [isUploading, setIsUploading] = useState(false)
@@ -168,7 +170,7 @@ export function CreateProjectForm({ user, router, userData }: CreateInvestorAcco
                                         fontSize={14}
                                         color={'lightSide'}
                                         fontWeight={'light'}
-                                        bgColor={useColorModeValue('darkSide', 'dark.lightSide')}
+                                        bgColor={bgButtonColor}
                                         isDisabled={page == 0}
                                         onClick={previousPage}
                                     >
@@ -185,7 +187,7 @@ export function CreateProjectForm({ user, router, userData }: CreateInvestorAcco
                                                 fontSize={14}
                                                 color={'lightSide'}
                                                 fontWeight={'light'}
-                                                bgColor={useColorModeValue('darkSide', 'dark.lightSide')}
+                                                bgColor={bgButtonColor}
                                                 size={['md', 'md', 'md', 'md', 'md']}
                                                 _hover={{ bgColor: "graySide", transition: '300ms' }}
                                             >
@@ -199,7 +201,7 @@ export function CreateProjectForm({ user, router, userData }: CreateInvestorAcco
                                             fontSize={14}
                                             color={'lightSide'}
                                             fontWeight={'light'}
-                                            bgColor={useColorModeValue('darkSide', 'dark.lightSide')}
+                                            bgColor={bgButtonColor}
                                             isDisabled={page >= (pages.length - 1)}
                                         // onClick={nextPage}
                                         >

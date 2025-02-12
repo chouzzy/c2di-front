@@ -7,8 +7,10 @@ import { Container, Flex, useColorModeValue } from "@chakra-ui/react";
 
 export default function NewPassword() {
 
+    const textColor = useColorModeValue('darkSide', 'dark.darkSide')
+
     return (
-        <Container maxW={'1440px'} mx='auto' h='100vh' color={useColorModeValue('darkSide', 'dark.darkSide')}>
+        <Container maxW={'1440px'} mx='auto' h='100vh' color={textColor}>
 
             <Flex h='100%'>
 

@@ -15,6 +15,8 @@ interface HeaderProjectProps {
 
 export function HeaderAdminProject({ projectData, userData, user }: HeaderProjectProps) {
 
+    const bgButtonColor = useColorModeValue('darkSide', 'dark.lightSide')
+
     const router = useRouter()
     const { isOpen, onOpen, onClose } = useDisclosure() // Adiciona o hook useDisclosure
     const [changingPassword, setChangingPassword] = useState(false)
@@ -88,7 +90,7 @@ export function HeaderAdminProject({ projectData, userData, user }: HeaderProjec
 
     return (
         <>
-            <Flex flexDir={['column','column','column','row','row']} alignItems={['center']} justifyContent={'space-between'} w='100%'>
+            <Flex flexDir={['column', 'column', 'column', 'row', 'row']} alignItems={['center']} justifyContent={'space-between'} w='100%'>
 
                 <Flex flexDir={'column'} w='100%'>
                     <Flex>
@@ -103,15 +105,15 @@ export function HeaderAdminProject({ projectData, userData, user }: HeaderProjec
                     </Flex>
                 </Flex>
 
-                <Flex gap={8} alignItems={'center'} w={['100%','100%','100%','initial','initial']}>
+                <Flex gap={8} alignItems={'center'} w={['100%', '100%', '100%', 'initial', 'initial']}>
                     {projectData.active ?
-                        <Button onClick={archiveProject}  minW={['100%','100%','100%',32,32]} _hover={{ bgColor: 'red' }} color={'lightSide'} bgColor={'redSide'} mt={4}>
+                        <Button onClick={archiveProject} minW={['100%', '100%', '100%', 32, 32]} _hover={{ bgColor: 'red' }} color={'lightSide'} bgColor={'redSide'} mt={4}>
                             <Flex alignItems={'center'} justifyContent={'center'}>
                                 <Text>Arquivar projeto</Text>
                             </Flex>
                         </Button>
                         :
-                        <Button onClick={activateProject}  minW={['100%','100%','100%',32,32]} _hover={{ bgColor: 'green.600' }} color={'lightSide'} bgColor={'green.400'} mt={4}>
+                        <Button onClick={activateProject} minW={['100%', '100%', '100%', 32, 32]} _hover={{ bgColor: 'green.600' }} color={'lightSide'} bgColor={'green.400'} mt={4}>
                             <Flex alignItems={'center'} justifyContent={'center'}>
                                 <Text>Reativar projeto</Text>
                             </Flex>
@@ -154,7 +156,7 @@ export function HeaderAdminProject({ projectData, userData, user }: HeaderProjec
                             </Text>
                         </Flex>
                         <Flex alignItems={'center'} justifyContent={'end'} gap={2}>
-                            <Button onClick={cancelArchiveProject} _hover={{ bgColor: 'graySide' }} color={'lightSide'} bgColor={useColorModeValue('darkSide', 'dark.lightSide')} mt={4}>
+                            <Button onClick={cancelArchiveProject} _hover={{ bgColor: 'graySide' }} color={'lightSide'} bgColor={bgButtonColor} mt={4}>
                                 <Flex minW={16} alignItems={'center'} justifyContent={'center'} fontWeight={'normal'}>
                                     <Text>Voltar</Text>
                                 </Flex>

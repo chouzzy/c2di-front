@@ -25,6 +25,8 @@ export interface listNotificationsResponse {
 
 export function InfosGerais({ userData, projectData }: ProjectDataProps) {
 
+    const bgButtonColor = useColorModeValue('darkSide', 'dark.lightSide')
+
     const { predictedCost, realizedCost, financialTotalProgress, buildingTotalProgress } = projectData
     const { acabamento, alvenaria, estrutura, fundacao, instalacoes, pintura } = projectData.buildingProgress
 
@@ -316,7 +318,7 @@ export function InfosGerais({ userData, projectData }: ProjectDataProps) {
                                         </Flex>
 
                                         <Flex alignItems={'center'} justifyContent={'end'} py={4}>
-                                            <Button type="submit" _hover={{ bgColor: 'redSide' }} color={'lightSide'} bgColor={useColorModeValue('darkSide', 'dark.lightSide')} mt={4}>
+                                            <Button type="submit" _hover={{ bgColor: 'redSide' }} color={'lightSide'} bgColor={bgButtonColor} mt={4}>
                                                 <Flex minW={24} alignItems={'center'} justifyContent={'center'}>
                                                     {createNotificationLoading ?
                                                         <Spinner boxSize={6} />

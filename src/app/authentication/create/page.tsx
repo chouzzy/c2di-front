@@ -9,6 +9,7 @@ import { Container, Flex, Spinner, useColorModeValue } from "@chakra-ui/react";
 
 export default function CreateAccount() {
 
+    const textColor = useColorModeValue('darkSide', 'dark.darkSide')
     const { user, isLoading } = useUser()
 
     if (!user) {
@@ -23,7 +24,7 @@ export default function CreateAccount() {
     }
 
     return (
-        <Container maxW={'1440px'} mx='auto' h='100vh' color={useColorModeValue('darkSide', 'dark.darkSide')}>
+        <Container maxW={'1440px'} mx='auto' h='100vh' color={textColor}>
 
             <Flex h='100%'>
 

@@ -12,6 +12,7 @@ import { useEffect, useState } from "react";
 
 export default function ProfileTest() {
 
+    const textColor = useColorModeValue('darkSide', 'dark.darkSide')
     const [loadingDBUser, setLoadingDBUser] = useState(true)
     const { user, isLoading } = useUser()
     const router = useRouter()
@@ -77,7 +78,7 @@ export default function ProfileTest() {
     }
 
     return (
-        <Flex maxW={'1440px'} mx='auto' color={useColorModeValue('darkSide', 'dark.darkSide')}>
+        <Flex maxW={'1440px'} mx='auto' color={textColor}>
 
             {loadingDBUser ?
                 <Flex alignItems={'center'} justifyContent={'center'} h='100%' w='100%'>

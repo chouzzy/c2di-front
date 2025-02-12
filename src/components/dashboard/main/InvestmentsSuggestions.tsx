@@ -10,6 +10,9 @@ interface InvestmentsSuggestionsProps {
 }
 export function InvestmentsSuggestions({ projectsData }: InvestmentsSuggestionsProps) {
 
+    const textColor = useColorModeValue('graySide', 'dark.graySide')
+    const bgButtonColor = useColorModeValue('darkSide', 'dark.lightSide')
+
     const isMobile = useBreakpointValue({ base: true, sm: true, md: false, lg: false, xl: false })
 
     const [suggestions, setSuggestions] = useState<Investment[]>([])
@@ -97,7 +100,7 @@ export function InvestmentsSuggestions({ projectsData }: InvestmentsSuggestionsP
                                     <Text fontSize={20} fontWeight={'semibold'}>
                                         {project.title}
                                     </Text>
-                                    <Text fontSize={14} fontWeight={'normal'} color={useColorModeValue('graySide', 'dark.graySide')} letterSpacing={'-0.2px'}>
+                                    <Text fontSize={14} fontWeight={'normal'} color={textColor} letterSpacing={'-0.2px'}>
                                         {project.description}
                                     </Text>
                                 </Flex>
@@ -106,7 +109,7 @@ export function InvestmentsSuggestions({ projectsData }: InvestmentsSuggestionsP
                             {/* ACTION BUTTONS */}
                             <Flex justifyContent={'start'} gap={8}>
                                 <Link href={`/projects/${project.id}`}>
-                                    <Button size={'sm'} _hover={{ bgColor: 'graySide' }} color={'lightSide'} bgColor={useColorModeValue('darkSide', 'dark.lightSide')}>
+                                    <Button size={'sm'} _hover={{ bgColor: 'graySide' }} color={'lightSide'} bgColor={bgButtonColor}>
                                         <Flex alignItems={'center'} justifyContent={'center'}>
                                             <Text>Ver projeto</Text>
                                         </Flex>

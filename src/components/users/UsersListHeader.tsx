@@ -12,6 +12,9 @@ import { SelectInput } from "../Authentication/Inputs/SelectInput";
 
 
 export function UsersListHeader() {
+    
+    const bgButtonColor = useColorModeValue('darkSide', 'dark.lightSide')
+    
     const { isOpen, onOpen, onClose } = useDisclosure() // Adiciona o hook useDisclosure
     const { register, handleSubmit } = useForm()
     const [yupError, setYupError] = useState<string>("")
@@ -93,7 +96,7 @@ export function UsersListHeader() {
             </Flex>
 
             <Flex>
-                <Button onClick={createUserByAdmin} _hover={{ bgColor: 'redSide', transition: '300ms' }} size={['sm','sm','sm','md']} color={'lightSide'} bgColor={useColorModeValue('darkSide', 'dark.lightSide')} mt={4}>
+                <Button onClick={createUserByAdmin} _hover={{ bgColor: 'redSide', transition: '300ms' }} size={['sm','sm','sm','md']} color={'lightSide'} bgColor={bgButtonColor} mt={4}>
                     Criar usuário
                 </Button>
             </Flex>
@@ -169,7 +172,7 @@ export function UsersListHeader() {
 
                                 </Flex>
                                 <Flex alignItems={'center'} justifyContent={'end'} py={4}>
-                                    <Button type="submit" _hover={{ bgColor: 'redSide' }} color={'lightSide'} bgColor={useColorModeValue('darkSide', 'dark.lightSide')} mt={4}>
+                                    <Button type="submit" _hover={{ bgColor: 'redSide' }} color={'lightSide'} bgColor={bgButtonColor} mt={4}>
                                         <Flex minW={24} alignItems={'center'} justifyContent={'center'}>
                                             {createUserLoading ?
                                                 <Spinner boxSize={6} />

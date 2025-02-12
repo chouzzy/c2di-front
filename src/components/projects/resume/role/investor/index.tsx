@@ -21,6 +21,10 @@ function ProjectResumeInvestor({ userData, user, projectData }: ProjectDataProps
 
     const menuList = ['Informações gerais', 'Ficha Técnica', 'Parceiros', 'Documentos', 'Mídias', 'Status']
 
+    const menuBgColor = useColorModeValue('grayMenuSide', 'dark.beigeSide')
+    const menuTextColor = useColorModeValue('darkSide', 'lightSide')
+    const menuColor = useColorModeValue('white', 'dark.grayHoverSide')
+
     const [page, SetPage] = useState(0)
     const [partnerList, setPartnerList] = useState<Investment["partners"] | undefined>(projectData.partners)
     const [documentList, setDocumentList] = useState<Investment["documents"] | undefined>(projectData.documents)
@@ -53,39 +57,36 @@ function ProjectResumeInvestor({ userData, user, projectData }: ProjectDataProps
                         >
                             <Flex alignItems={'center'} justifyContent={'center'} gap={4}>
 
-                            {menuLabel} <ArrowFatLinesDown />
+                                {menuLabel} <ArrowFatLinesDown />
                             </Flex>
                         </MenuButton>
                         <MenuList
                             w='100vw'
-                            bgColor={useColorModeValue('grayMenuSide', 'dark.beigeSide')}
-                            color={useColorModeValue('darkSide', 'lightSide')}
+                            bgColor={menuBgColor}
+                            color={menuTextColor}
                             borderRadius={0}
                             justifyContent={'center'}
                             alignItems={'center'}
                         >
-                            <Flex onClick={() => { SetPage(0); setMenuLabel(menuList[0]) }} w='100%' fontWeight={'medium'} bgColor={page == 0 ? useColorModeValue('white', 'dark.grayHoverSide') : 'inherit'} color={page == 0 ? 'white' : 'inherit'}> <MenuItem> Informações gerais </MenuItem></Flex>
-                            <Flex onClick={() => { SetPage(1); setMenuLabel(menuList[1]) }} w='100%' fontWeight={'medium'} bgColor={page == 1 ? useColorModeValue('white', 'dark.grayHoverSide') : 'inherit'} color={page == 1 ? 'white' : 'inherit'}> <MenuItem> Ficha Técnica </MenuItem></Flex>
-                            <Flex onClick={() => { SetPage(2); setMenuLabel(menuList[2]) }} w='100%' fontWeight={'medium'} bgColor={page == 2 ? useColorModeValue('white', 'dark.grayHoverSide') : 'inherit'} color={page == 2 ? 'white' : 'inherit'}> <MenuItem> Parceiros </MenuItem></Flex>
-                            <Flex onClick={() => { SetPage(3); setMenuLabel(menuList[3]) }} w='100%' fontWeight={'medium'} bgColor={page == 3 ? useColorModeValue('white', 'dark.grayHoverSide') : 'inherit'} color={page == 3 ? 'white' : 'inherit'}> <MenuItem> Documentos </MenuItem></Flex>
-                            <Flex onClick={() => { SetPage(4); setMenuLabel(menuList[4]) }} w='100%' fontWeight={'medium'} bgColor={page == 4 ? useColorModeValue('white', 'dark.grayHoverSide') : 'inherit'} color={page == 4 ? 'white' : 'inherit'}> <MenuItem> Mídias </MenuItem></Flex>
-                            <Flex onClick={() => { SetPage(5); setMenuLabel(menuList[5]) }} w='100%' fontWeight={'medium'} bgColor={page == 5 ? useColorModeValue('white', 'dark.grayHoverSide') : 'inherit'} color={page == 5 ? 'white' : 'inherit'}> <MenuItem> Status </MenuItem></Flex>
-                            <Flex onClick={() => { SetPage(6); setMenuLabel(menuList[6]) }} w='100%' fontWeight={'medium'} bgColor={page == 6 ? useColorModeValue('white', 'dark.grayHoverSide') : 'inherit'} color={page == 6 ? 'white' : 'inherit'}> <MenuItem> Unidades </MenuItem></Flex>
+                            <Flex onClick={() => { SetPage(0); setMenuLabel(menuList[0]) }} w='100%' fontWeight={'medium'} bgColor={page == 0 ? menuColor : 'inherit'} color={page == 0 ? 'white' : 'inherit'}> <MenuItem> Informações gerais </MenuItem></Flex>
+                            <Flex onClick={() => { SetPage(1); setMenuLabel(menuList[1]) }} w='100%' fontWeight={'medium'} bgColor={page == 1 ? menuColor : 'inherit'} color={page == 1 ? 'white' : 'inherit'}> <MenuItem> Ficha Técnica </MenuItem></Flex>
+                            <Flex onClick={() => { SetPage(2); setMenuLabel(menuList[2]) }} w='100%' fontWeight={'medium'} bgColor={page == 2 ? menuColor : 'inherit'} color={page == 2 ? 'white' : 'inherit'}> <MenuItem> Parceiros </MenuItem></Flex>
+                            <Flex onClick={() => { SetPage(3); setMenuLabel(menuList[3]) }} w='100%' fontWeight={'medium'} bgColor={page == 3 ? menuColor : 'inherit'} color={page == 3 ? 'white' : 'inherit'}> <MenuItem> Documentos </MenuItem></Flex>
+                            <Flex onClick={() => { SetPage(4); setMenuLabel(menuList[4]) }} w='100%' fontWeight={'medium'} bgColor={page == 4 ? menuColor : 'inherit'} color={page == 4 ? 'white' : 'inherit'}> <MenuItem> Mídias </MenuItem></Flex>
+                            <Flex onClick={() => { SetPage(5); setMenuLabel(menuList[5]) }} w='100%' fontWeight={'medium'} bgColor={page == 5 ? menuColor : 'inherit'} color={page == 5 ? 'white' : 'inherit'}> <MenuItem> Status </MenuItem></Flex>
+                            <Flex onClick={() => { SetPage(6); setMenuLabel(menuList[6]) }} w='100%' fontWeight={'medium'} bgColor={page == 6 ? menuColor : 'inherit'} color={page == 6 ? 'white' : 'inherit'}> <MenuItem> Unidades </MenuItem></Flex>
                         </MenuList>
                     </Menu>
                 </Flex>
                 :
-                <Flex w={'100%'} gap={4} px={[4, 4, 4, 4, 4]} py={2} borderRadius={4} 
-                bgColor={useColorModeValue('grayMenuSide', 'dark.beigeSide')}
-                color={useColorModeValue('darkSide', 'lightSide')}
-                >
-                    <Flex onClick={() => { SetPage(0) }} minW={'max-content'} borderRadius={4} py={2} px={1} as='button' fontWeight={'medium'} bgColor={page == 0 ? useColorModeValue('white', 'dark.grayHoverSide') : 'inherit'} >Informações gerais</Flex>
-                    <Flex onClick={() => { SetPage(1) }} minW={'max-content'} borderRadius={4} py={2} px={1} as='button' fontWeight={'medium'} bgColor={page == 1 ? useColorModeValue('white', 'dark.grayHoverSide') : 'inherit'} >Ficha Técnica</Flex>
-                    <Flex onClick={() => { SetPage(2) }} minW={'max-content'} borderRadius={4} py={2} px={1} as='button' fontWeight={'medium'} bgColor={page == 2 ? useColorModeValue('white', 'dark.grayHoverSide') : 'inherit'} >Parceiros</Flex>
-                    <Flex onClick={() => { SetPage(3) }} minW={'max-content'} borderRadius={4} py={2} px={1} as='button' fontWeight={'medium'} bgColor={page == 3 ? useColorModeValue('white', 'dark.grayHoverSide') : 'inherit'} >Documentos</Flex>
-                    <Flex onClick={() => { SetPage(4) }} minW={'max-content'} borderRadius={4} py={2} px={1} as='button' fontWeight={'medium'} bgColor={page == 4 ? useColorModeValue('white', 'dark.grayHoverSide') : 'inherit'} >Mídias</Flex>
-                    <Flex onClick={() => { SetPage(5) }} minW={'max-content'} borderRadius={4} py={2} px={1} as='button' fontWeight={'medium'} bgColor={page == 5 ? useColorModeValue('white', 'dark.grayHoverSide') : 'inherit'} >Status</Flex>
-                    <Flex onClick={() => { SetPage(6) }} minW={'max-content'} borderRadius={4} py={2} px={1} as='button' fontWeight={'medium'} bgColor={page == 6 ? useColorModeValue('white', 'dark.grayHoverSide') : 'inherit'} >Unidades</Flex>
+                <Flex w={'100%'} gap={4} px={[4, 4, 4, 4, 4]} py={2} borderRadius={4} bgColor={menuBgColor} color={menuTextColor}>
+                    <Flex onClick={() => { SetPage(0) }} minW={'max-content'} borderRadius={4} py={2} px={1} as='button' fontWeight={'medium'} bgColor={page == 0 ? menuColor : 'inherit'} >Informações gerais</Flex>
+                    <Flex onClick={() => { SetPage(1) }} minW={'max-content'} borderRadius={4} py={2} px={1} as='button' fontWeight={'medium'} bgColor={page == 1 ? menuColor : 'inherit'} >Ficha Técnica</Flex>
+                    <Flex onClick={() => { SetPage(2) }} minW={'max-content'} borderRadius={4} py={2} px={1} as='button' fontWeight={'medium'} bgColor={page == 2 ? menuColor : 'inherit'} >Parceiros</Flex>
+                    <Flex onClick={() => { SetPage(3) }} minW={'max-content'} borderRadius={4} py={2} px={1} as='button' fontWeight={'medium'} bgColor={page == 3 ? menuColor : 'inherit'} >Documentos</Flex>
+                    <Flex onClick={() => { SetPage(4) }} minW={'max-content'} borderRadius={4} py={2} px={1} as='button' fontWeight={'medium'} bgColor={page == 4 ? menuColor : 'inherit'} >Mídias</Flex>
+                    <Flex onClick={() => { SetPage(5) }} minW={'max-content'} borderRadius={4} py={2} px={1} as='button' fontWeight={'medium'} bgColor={page == 5 ? menuColor : 'inherit'} >Status</Flex>
+                    <Flex onClick={() => { SetPage(6) }} minW={'max-content'} borderRadius={4} py={2} px={1} as='button' fontWeight={'medium'} bgColor={page == 6 ? menuColor : 'inherit'} >Unidades</Flex>
                 </Flex>
             }
 

@@ -19,6 +19,8 @@ export function ValorMetroQuadrado({ projectsData }: valorMetroQuadradoProps) {
     const graphHeight = useBreakpointValue({ base: 254, sm: 254, md: 254, lg: 400, xl: 400 })
 
     const axisTextColor = useColorModeValue('darkSide', 'white'); // ou use suas cores customizadas
+    const textColor = useColorModeValue('darkSide', 'white')
+    const menuListColor = useColorModeValue('darkSide', 'darkSide')
 
 
     const changeGraphic = (id: string) => {
@@ -59,7 +61,7 @@ export function ValorMetroQuadrado({ projectsData }: valorMetroQuadradoProps) {
 
 
                     <Menu>
-                        <MenuButton as={Button} borderRadius={'none'} bg='none' color={useColorModeValue('darkSide', 'white')} px={0} _hover={{ color: 'green.300' }} _active={{ bg: 'none' }} rightIcon={<MdArrowDropDownCircle size={32} />}>
+                        <MenuButton as={Button} borderRadius={'none'} bg='none' color={textColor} px={0} _hover={{ color: 'green.300' }} _active={{ bg: 'none' }} rightIcon={<MdArrowDropDownCircle size={32} />}>
 
                             <Flex justifyContent={'start'} w='100%' alignItems={'center'} py={2} gap={2}>
 
@@ -70,7 +72,7 @@ export function ValorMetroQuadrado({ projectsData }: valorMetroQuadradoProps) {
                             </Flex>
 
                         </MenuButton>
-                        <MenuList color={useColorModeValue('darkSide', 'darkSide')} bgColor={'lightSidered'} border='1px solid #00000033' borderRadius={8} p={1}>
+                        <MenuList color={menuListColor} bgColor={'lightSidered'} border='1px solid #00000033' borderRadius={8} p={1}>
 
                             {projectsData?.map((project, index) => {
                                 const { valorMetroQuadrado } = project

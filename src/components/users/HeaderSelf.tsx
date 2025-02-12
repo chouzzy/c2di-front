@@ -13,6 +13,8 @@ interface HeaderSelfProps {
 
 export function HeaderSelf({ userData, user }: HeaderSelfProps) {
 
+    const bgButtonColor = useColorModeValue('darkSide', 'dark.lightSide')
+
     const router = useRouter()
     const { isOpen, onOpen, onClose } = useDisclosure() // Adiciona o hook useDisclosure
     const [changingPassword, setChangingPassword] = useState(false)
@@ -106,7 +108,7 @@ export function HeaderSelf({ userData, user }: HeaderSelfProps) {
 
                 <Flex gap={8} alignItems={'center'}>
                     {user.sub?.split('|')[0] === 'auth0' ?
-                        <Button onClick={changePassword} size={['sm','sm','sm','md']} _hover={{ bgColor: 'redSide' }} color={'lightSide'} bgColor={useColorModeValue('darkSide', 'dark.lightSide')} mt={4}>
+                        <Button onClick={changePassword} size={['sm','sm','sm','md']} _hover={{ bgColor: 'redSide' }} color={'lightSide'} bgColor={bgButtonColor} mt={4}>
                             <Flex alignItems={'center'} justifyContent={'center'}>
 
                                 {changingPassword ?
@@ -151,7 +153,7 @@ export function HeaderSelf({ userData, user }: HeaderSelfProps) {
                                     </Text>
                                 </Flex>
                                 <Flex alignItems={'center'} justifyContent={'end'} gap={2}>
-                                    <Button onClick={cancelDeleteUser} _hover={{ bgColor: 'graySide' }} color={'lightSide'} bgColor={useColorModeValue('darkSide', 'dark.lightSide')} mt={4}>
+                                    <Button onClick={cancelDeleteUser} _hover={{ bgColor: 'graySide' }} color={'lightSide'} bgColor={bgButtonColor} mt={4}>
                                         <Flex minW={16} alignItems={'center'} justifyContent={'center'} fontWeight={'normal'}>
                                             <Text>Voltar</Text>
                                         </Flex>

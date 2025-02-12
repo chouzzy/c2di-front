@@ -1,5 +1,5 @@
-import { Flex, Text, useColorMode, useColorModeValue, useDisclosure } from "@chakra-ui/react";
-import { Bell, Moon, Sun } from "phosphor-react";
+import { Flex, Text, useColorMode } from "@chakra-ui/react";
+import { Moon, Sun } from "phosphor-react";
 import { useState } from "react";
 import { UserNotificationsModal } from "./userNotificationsModal";
 

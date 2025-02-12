@@ -7,6 +7,9 @@ interface NotificationsHeaderProps {
 
 export function NotificationsHeaderAdmin({createNotification}:NotificationsHeaderProps) {
 
+    const textColor = useColorModeValue('graySide', 'lightSide')
+    const bgButtonColor = useColorModeValue('darkSide', 'dark.lightSide')
+
     return (
 
         < Flex justifyContent={'space-between'}>
@@ -15,14 +18,14 @@ export function NotificationsHeaderAdmin({createNotification}:NotificationsHeade
                 <Text fontSize={16} fontWeight={'semibold'}>
                     Quadro de avisos
                 </Text>
-                <Text fontSize={14} fontWeight={'normal'} color={useColorModeValue('graySide', 'lightSide')} letterSpacing={'-0.2px'}>
+                <Text fontSize={14} fontWeight={'normal'} color={textColor} letterSpacing={'-0.2px'}>
                     Avisos enviados para os investidores da obra, para informá-los sobre algo.
                 </Text>
             </Flex>
 
             <Flex alignItems={'end'}>
 
-                <Button onClick={createNotification} _hover={{ bgColor: 'graySide' }} color={'lightSide'} bgColor={useColorModeValue('darkSide', 'dark.lightSide')} fontSize={12}>
+                <Button onClick={createNotification} _hover={{ bgColor: 'graySide' }} color={'lightSide'} bgColor={bgButtonColor} fontSize={12}>
                     <Flex alignItems={'center'} justifyContent={'center'}>
                         <Text>Adicionar aviso</Text>
                     </Flex>

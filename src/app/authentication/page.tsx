@@ -12,6 +12,8 @@ import { useForm } from "react-hook-form";
 
 export default function WelcomeBack() {
 
+    const textColor = useColorModeValue('darkSide', 'dark.darkSide')
+
     const { register } = useForm();
 
     const { user, isLoading } = useUser()
@@ -39,7 +41,7 @@ export default function WelcomeBack() {
 
     return (
 
-        <Container maxW={'1440px'} mx='auto' h='100vh' color={useColorModeValue('darkSide', 'dark.darkSide')}>
+        <Container maxW={'1440px'} mx='auto' h='100vh' color={textColor}>
 
             {loading ?
                 <SpinnerFullScreen />

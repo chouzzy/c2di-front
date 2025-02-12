@@ -1,10 +1,8 @@
 "use client"
-import { Flex, Image, Link, Spinner, useColorModeValue } from "@chakra-ui/react";
-import { FaFacebook, FaApple } from "react-icons/fa";
-import { AuthInput } from "../Inputs/AuthInput";
+import { Flex, Spinner, useColorModeValue } from "@chakra-ui/react";
 import { FieldValues, UseFormRegister } from "react-hook-form";
 import { UserProfile } from "@auth0/nextjs-auth0/client";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 
 
@@ -15,6 +13,8 @@ interface WelcomeCardProps {
 }
 
 export function WelcomeCard({ user, isLoading, register }: WelcomeCardProps) {
+
+    const bgButtonColor = useColorModeValue('darkSide', 'dark.lightSide')
 
     const router = useRouter()
     const [loading, setLoading] = useState(false)
@@ -63,7 +63,7 @@ export function WelcomeCard({ user, isLoading, register }: WelcomeCardProps) {
                             <Flex
                                 as={'button'}
                                 onClick={() => { LoginCallback() }}
-                                bgColor={useColorModeValue('darkSide', 'dark.lightSide')}
+                                bgColor={bgButtonColor}
                                 color={"lightSide"}
                                 p={2}
                                 borderRadius={8}

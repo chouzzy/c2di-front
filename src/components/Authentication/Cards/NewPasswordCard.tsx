@@ -1,13 +1,11 @@
-import { Flex, Image, useColorModeValue } from "@chakra-ui/react";
-import { register } from "module";
-import { FaFacebook, FaApple } from "react-icons/fa";
+import { Flex, useColorModeValue } from "@chakra-ui/react";
 import { AuthInput } from "../Inputs/AuthInput";
 import { useForm } from "react-hook-form";
-import { useState } from "react";
 
 
 export function NewPasswordCard() {
 
+    const bgButtonColor = useColorModeValue('darkSide', 'dark.lightSide')
     const { register, handleSubmit, formState: { errors } } = useForm({});
 
     return (
@@ -59,7 +57,7 @@ export function NewPasswordCard() {
                         <Flex
                             as={'button'}
                             fontSize={'sm'}
-                            bgColor={useColorModeValue('darkSide', 'dark.lightSide')}
+                            bgColor={bgButtonColor}
                             color={"lightSide"}
                             p={2}
                             borderRadius={8}

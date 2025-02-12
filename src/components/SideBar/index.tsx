@@ -36,7 +36,9 @@ export function SideBar({ userData, projectData }: SideBarProps) {
 
     const bgColor = useColorModeValue('beigeSide', 'dark.beigeSide'); // Pega a cor 'bg' do objeto 'light' ou 'dark'
     const textColor = useColorModeValue('darkSide', 'dark.darkSide'); // Pega a cor 'text' do objeto 'light' ou 'dark'
+    const textMenuColor = useColorModeValue('beigeSide', 'lightSide')
     const logoSrc = useColorModeValue('/assets/logo_c2di.png', '/assets/logo_c2di_white.png'); // Caminhos para as duas versões do logo
+    const textSpinnerColor = useColorModeValue('darkSide', 'dark.darkSide')
 
 
     const pathName = usePathname()
@@ -135,8 +137,8 @@ export function SideBar({ userData, projectData }: SideBarProps) {
                                     />
                                     <MenuList
                                         w='100vw'
-                                        bgColor={useColorModeValue('beigeSide', 'dark.beigeSide')}
-                                        color={useColorModeValue('beigeSide', 'lightSide')}
+                                        bgColor={bgColor}
+                                        color={textMenuColor}
                                         borderRadius={0}
                                         p={[4, 4, 4, 8, 8]}
                                     >
@@ -148,7 +150,7 @@ export function SideBar({ userData, projectData }: SideBarProps) {
                                                 <Flex boxSize={16} mx='auto'>
                                                     <Spinner
                                                         boxSize={8}
-                                                        color={useColorModeValue('darkSide', 'dark.darkSide')}
+                                                        color={textSpinnerColor}
                                                     />
                                                 </Flex>
                                             }
@@ -233,7 +235,7 @@ export function SideBar({ userData, projectData }: SideBarProps) {
                             <Flex boxSize={16} mx='auto'>
                                 <Spinner
                                     boxSize={8}
-                                    color={useColorModeValue('darkSide', 'dark.darkSide')}
+                                    color={textSpinnerColor}
                                 />
                             </Flex>
                         }
