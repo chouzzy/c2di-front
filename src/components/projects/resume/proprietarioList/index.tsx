@@ -1,4 +1,4 @@
-import { AlertDialog, AlertDialogBody, AlertDialogContent, AlertDialogFooter, AlertDialogHeader, AlertDialogOverlay, Button, Flex, Input, InputGroup, InputLeftAddon, Select, Table, TableContainer, Tbody, Td, Text, Th, Thead, Tr, useDisclosure } from '@chakra-ui/react';
+import { AlertDialog, AlertDialogBody, AlertDialogContent, AlertDialogFooter, AlertDialogHeader, AlertDialogOverlay, Button, Flex, Input, InputGroup, InputLeftAddon, Select, Table, TableContainer, Tbody, Td, Text, Th, Thead, Tr, useColorModeValue, useDisclosure } from '@chakra-ui/react';
 import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
 import { UserProfile } from '@auth0/nextjs-auth0/client';
 import { Door, Trash } from 'phosphor-react';
@@ -168,7 +168,7 @@ function ProprietarioList({ userData, projectData }: FormUsersProps) {
                     {addMode && usersList ?
                         <form onSubmit={handleSubmit((data) => onSubmitProprietario({ data, investor, projectData, setYupError, investorDate, userProprietariosList, setAddMode, onOpen }))}>
 
-                            <Flex flexDir={'column'} p={[0, 0, 0, 4, 4]} mt={8} bgColor={'darkSide'} borderRadius={'md'} color={'lightSide'}>
+                            <Flex flexDir={'column'} p={[0, 0, 0, 4, 4]} mt={8} bgColor={useColorModeValue('darkSide', 'dark.lightSide')} borderRadius={'md'} color={'lightSide'}>
 
                                 <Flex pt={4} textAlign={'center'}>
                                     <Text fontSize={24} mx='auto' fontWeight={'semibold'}> NOVO PROPRIETÁRIO </Text>

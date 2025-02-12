@@ -1,4 +1,4 @@
-import { Flex, Box, Text, Icon, Link, Image, Button, Spinner, useBreakpointValue, IconButton, Menu, MenuButton, MenuList, MenuItem as ChakraMenuItem } from '@chakra-ui/react';
+import { Flex, Box, Text, Icon, Link, Image, Button, Spinner, useBreakpointValue, IconButton, Menu, MenuButton, MenuList, MenuItem as ChakraMenuItem, useColorModeValue } from '@chakra-ui/react';
 import {
     CaretDown,
     SquaresFour,
@@ -34,13 +34,16 @@ export function SideBar({ userData, projectData }: SideBarProps) {
         xl: false
     })
 
+    const bgColor = useColorModeValue('beigeSide', 'dark.beigeSide'); // Pega a cor 'bg' do objeto 'light' ou 'dark'
+    const textColor = useColorModeValue('darkSide', 'dark.darkSide'); // Pega a cor 'text' do objeto 'light' ou 'dark'
+    const logoSrc = useColorModeValue('/assets/logo_c2di.png', '/assets/logo_c2di_white.png'); // Caminhos para as duas versões do logo
+
+
     const pathName = usePathname()
 
     const [pathRoleState, setPathRoleState] = useState('')
 
     const [loadingRole, setLoadingRole] = useState(true)
-
-
 
     useEffect(() => {
         const getRolePath = async (userData: User) => {
@@ -81,8 +84,8 @@ export function SideBar({ userData, projectData }: SideBarProps) {
                 h="100%" // Altura total da tela
                 px={4}
                 py={8}
-                bg="beigeSide"
-                color="darkSide"
+                bg={bgColor}
+                color={textColor}
 
             >
                 <Flex flexDir={'column'} w='100%' gap={12} alignItems={'center'} my='auto'>
@@ -91,10 +94,8 @@ export function SideBar({ userData, projectData }: SideBarProps) {
 
 
                 {/* Rodapé */}
-
-
                 <Flex flexDir={'column'} gap={8} >
-                    <Image src="/assets/logo_c2di.svg" alt="logo" />
+                    <Image src={logoSrc} alt="logo" objectFit={'contain'} maxW={36} />
                 </Flex>
             </Flex>
         )
@@ -106,7 +107,6 @@ export function SideBar({ userData, projectData }: SideBarProps) {
         <>
             {isMobile ?
 
-
                 // MOBILE
                 <Flex w='100%' alignItems={'center'}>
 
@@ -114,7 +114,7 @@ export function SideBar({ userData, projectData }: SideBarProps) {
 
                         <Link _hover={{ textDecor: 'none' }} href='/'>
                             <Flex>
-                                <Image src='/assets/logo_c2di.png' objectFit={'contain'} maxW={24} />
+                                <Image src={logoSrc} alt="logo" objectFit={'contain'} maxW={24}/>
                             </Flex>
                         </Link>
 
@@ -135,8 +135,8 @@ export function SideBar({ userData, projectData }: SideBarProps) {
                                     />
                                     <MenuList
                                         w='100vw'
-                                        bgColor="beigeSide"
-                                        color="darkSide"
+                                        bgColor={useColorModeValue('beigeSide', 'dark.beigeSide')}
+                                        color={useColorModeValue('beigeSide', 'lightSide')}
                                         borderRadius={0}
                                         p={[4, 4, 4, 8, 8]}
                                     >
@@ -148,7 +148,7 @@ export function SideBar({ userData, projectData }: SideBarProps) {
                                                 <Flex boxSize={16} mx='auto'>
                                                     <Spinner
                                                         boxSize={8}
-                                                        color='darkSide'
+                                                        color={useColorModeValue('darkSide', 'dark.darkSide')}
                                                     />
                                                 </Flex>
                                             }
@@ -218,8 +218,8 @@ export function SideBar({ userData, projectData }: SideBarProps) {
                     w={64}
                     px={4}
                     py={8}
-                    bg="beigeSide"
-                    color="darkSide"
+                    bg={bgColor}
+                    color={textColor}
                 >
                     <Flex flexDir={'column'} w='100%' gap={12}>
 
@@ -233,7 +233,7 @@ export function SideBar({ userData, projectData }: SideBarProps) {
                             <Flex boxSize={16} mx='auto'>
                                 <Spinner
                                     boxSize={8}
-                                    color='darkSide'
+                                    color={useColorModeValue('darkSide', 'dark.darkSide')}
                                 />
                             </Flex>
                         }
@@ -288,8 +288,8 @@ export function SideBar({ userData, projectData }: SideBarProps) {
 
 
                     {/* Rodapé */}
-                    <Flex flexDir={'column'} gap={8}>
-                        <Image src="/assets/logo_c2di.svg" alt="logo" />
+                    <Flex flexDir={'column'} gap={8} w='100%' justifyContent={'center'} alignItems={'center'} borderTop={'1px'} borderColor={'grayDivisor'}>
+                        <Image src={logoSrc} alt="logo" objectFit={'contain'} maxW={32} pt={4}/>
                     </Flex>
                 </Flex>
             }

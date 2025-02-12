@@ -1,7 +1,7 @@
 import { changePrismaProjectBuildingProgress } from "@/app/services/changeBuildingProgress";
 import { formataData, formataDataMonthShort, formatarMoeda, formatarPercentual } from "@/app/services/utils";
 import { data } from "@/components/dashboard/main/data/dashData";
-import { Flex, FormLabel, InputGroup, Input, InputRightAddon, Button, Text, Spinner } from "@chakra-ui/react";
+import { Flex, FormLabel, InputGroup, Input, InputRightAddon, Button, Text, Spinner, useColorModeValue } from "@chakra-ui/react";
 import { register } from "module";
 import { Dispatch, SetStateAction } from "react";
 import { FieldValues, useForm, UseFormHandleSubmit, UseFormRegister } from "react-hook-form";
@@ -45,6 +45,8 @@ export function GraficoAndamento({
     setEditModeAndamento,
     projectData,
     userData }: GraficoAndamentoProps) {
+
+    const axisTextColor = useColorModeValue('darkSide', 'white'); // ou use suas cores customizadas
 
     const { acabamento, alvenaria, estrutura, fundacao, instalacoes, pintura }: Investment["buildingProgress"] = data
 
@@ -152,8 +154,8 @@ export function GraficoAndamento({
                     : ''
                 }
                 <BarChart width={graphWidth} height={graphHeight} data={data}>
-                    <XAxis dataKey="etapa" />
-                    <YAxis type='number' domain={([0, 120])} hide />
+                    <XAxis dataKey="etapa" tick={{ fill: axisTextColor }} />
+                    <YAxis type='number' domain={([0, 120])} hide tick={{ fill: axisTextColor }} />
                     <Tooltip />
                     <Legend />
                     <Bar radius={8} barSize={barWidth} dataKey="Evolução" fill="#64748B" label={renderCustomBarLabel} activeBar={{ stroke: 'cyan', strokeWidth: 2, }} />
@@ -202,6 +204,7 @@ interface AcompanhamentoFinanceiroProps {
 }
 export function AcompanhamentoFinanceiro({ graphWidth, graphHeight, financialTotalProgress }: AcompanhamentoFinanceiroProps) {
 
+    const axisTextColor = useColorModeValue('darkSide', 'white'); // ou use suas cores customizadas
     const minCost = financialTotalProgress[0].previsto
     const maxCost = financialTotalProgress[financialTotalProgress.length - 1].previsto
 
@@ -232,8 +235,8 @@ export function AcompanhamentoFinanceiro({ graphWidth, graphHeight, financialTot
                         top: 50,
                     }}
                 >
-                    <XAxis dataKey="data" fontSize={12} tickFormatter={formataData} />
-                    <YAxis domain={([minCost, maxCost])} fontSize={12} tickFormatter={formatarMoeda} />
+                    <XAxis dataKey="data" fontSize={12} tickFormatter={formataData} tick={{ fill: axisTextColor }} />
+                    <YAxis domain={([minCost, maxCost])} fontSize={12} tickFormatter={formatarMoeda} tick={{ fill: axisTextColor }} />
                     <Legend />
                     <Tooltip
                         formatter={(value: number, name: string, props) => {
@@ -244,7 +247,7 @@ export function AcompanhamentoFinanceiro({ graphWidth, graphHeight, financialTot
                         }}
                         labelFormatter={formataDataMonthShort}
                     />
-                    <Area type="monotone" dataKey="previsto" stroke="#0F172A" fill="#0F172A44" />
+                    <Area type="monotone" dataKey="previsto" stroke="#425066" fill="#42506644" />
                     <Area type="monotone" dataKey="realizado" stroke="#1591ea" fill="#1591eabb" />
                 </AreaChart>
             </Flex>
@@ -262,6 +265,8 @@ interface AcompanhamentoDeObrasProps {
     buildingTotalProgress: BuildingTotalProgress[]
 }
 export function AcompanhamentoDeObra({ graphWidth, graphHeight, buildingTotalProgress }: AcompanhamentoDeObrasProps) {
+
+    const axisTextColor = useColorModeValue('darkSide', 'white'); // ou use suas cores customizadas
 
     return (
         <Flex flexDir={'column'} alignItems={'center'}>
@@ -287,8 +292,8 @@ export function AcompanhamentoDeObra({ graphWidth, graphHeight, buildingTotalPro
                         top: 50,
                     }}
                 >
-                    <XAxis dataKey="data" fontSize={12} tickFormatter={formataData} />
-                    <YAxis domain={([0, 1])} fontSize={12} tickFormatter={formatarPercentual} />
+                    <XAxis dataKey="data" fontSize={12} tickFormatter={formataData} tick={{ fill: axisTextColor }} />
+                    <YAxis domain={([0, 1])} fontSize={12} tickFormatter={formatarPercentual} tick={{ fill: axisTextColor }} />
                     <Legend />
                     <Tooltip
                         formatter={(value: number, name: string, props) => {
@@ -299,7 +304,7 @@ export function AcompanhamentoDeObra({ graphWidth, graphHeight, buildingTotalPro
                         }}
                         labelFormatter={formataDataMonthShort}
                     />
-                    <Area type="monotone" dataKey="previsto" stroke="#0F172A" fill="#0F172A44" />
+                    <Area type="monotone" dataKey="previsto" stroke="#425066" fill="#42506644" />
                     <Area type="monotone" dataKey="realizado" stroke="#1591ea" fill="#1591ea44" />
                 </AreaChart>
             </Flex>
@@ -321,6 +326,7 @@ export function ValorMetroQuadrado({ graphWidth, graphHeight, valorMetroQuadrado
         return (<></>)
     } else {
 
+        const axisTextColor = useColorModeValue('darkSide', 'white'); // ou use suas cores customizadas
         const minCost = valorMetroQuadrado[0].valor
         const maxCost = valorMetroQuadrado[valorMetroQuadrado.length - 1].valor
 
@@ -351,8 +357,8 @@ export function ValorMetroQuadrado({ graphWidth, graphHeight, valorMetroQuadrado
                             top: 50,
                         }}
                     >
-                        <XAxis dataKey="data" fontSize={12} tickFormatter={formataData} />
-                        <YAxis domain={([minCost, maxCost])} fontSize={12} tickFormatter={formatarMoeda} />
+                        <XAxis dataKey="data" fontSize={12} tickFormatter={formataData} tick={{ fill: axisTextColor }} />
+                        <YAxis domain={([minCost, maxCost])} fontSize={12} tickFormatter={formatarMoeda} tick={{ fill: axisTextColor }} />
                         <Legend />
                         <Tooltip
                             formatter={(value: number, name: string, props) => {
@@ -363,7 +369,7 @@ export function ValorMetroQuadrado({ graphWidth, graphHeight, valorMetroQuadrado
                             }}
                             labelFormatter={formataDataMonthShort}
                         />
-                        <Area type="monotone" dataKey="valor" stroke="#1591ea" fill="#1591ea44" />
+                        <Area type="monotone" dataKey="valor" stroke="#1591ea" fill="#1591eaAA" />
                     </AreaChart>
                 </Flex>
             </Flex>

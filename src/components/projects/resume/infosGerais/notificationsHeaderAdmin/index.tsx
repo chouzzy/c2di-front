@@ -1,4 +1,4 @@
-import { Flex, Button, Text } from "@chakra-ui/react"
+import { Flex, Button, Text, useColorModeValue } from "@chakra-ui/react"
 
 
 interface NotificationsHeaderProps {
@@ -15,7 +15,7 @@ export function NotificationsHeaderInvestor({createNotification}:NotificationsHe
                 <Text fontSize={16} fontWeight={'semibold'}>
                     Quadro de avisos
                 </Text>
-                <Text fontSize={14} fontWeight={'normal'} color='graySide' letterSpacing={'-0.2px'}>
+                <Text fontSize={14} fontWeight={'normal'} color={useColorModeValue('graySide', 'lightSide')} letterSpacing={'-0.2px'}>
                     Avisos enviados para os investidores da obra, para informá-los sobre algo.
                 </Text>
             </Flex>

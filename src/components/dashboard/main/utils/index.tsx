@@ -1,3 +1,4 @@
+import { useColorModeValue } from "@chakra-ui/react"
 import { formattedDataPizzaProps } from "../graphics/Pizza"
 
 export interface userBarGraphics {
@@ -96,6 +97,7 @@ export const formatDataConstrucao = (investments: userBarGraphics[]) => {
 };
 
 export const CustomTooltipFinanceiro = ({ active, payload, label }: any) => {
+    
     if (active && payload && payload.length) {
         const data = payload[0].payload; // Dados do ponto/barra atual
 

@@ -3,7 +3,7 @@ import { InvestmentsSuggestions } from "./InvestmentsSuggestions";
 import { MyInvestmentsResume } from "./MyInvestmentsResume";
 import { GraficoFinanceiro } from "./graphics/Financeiro";
 import { GraficoConstrucao } from "./graphics/Construcao";
-import { Flex, Link, Text } from "@chakra-ui/react";
+import { Flex, Link, Text, useColorModeValue } from "@chakra-ui/react";
 import { Pizza } from "./graphics/Pizza";
 import { ValorMetroQuadrado } from "./graphics/ValorMetroQuadrado";
 
@@ -18,7 +18,7 @@ export function MainInvestorDashboard({ projectsData, userInvestmentsData }: Inv
     if (projectsData.length == 0) {
         return (
             <Flex h={500} w='100%' alignItems={'center'} justifyContent={'center'}>
-                <Flex flexDir={'column'} borderRadius={8} bgColor={'darkSide'} color={'lightSide'} p={8} alignItems={'center'} justifyContent={'center'} gap={8} fontWeight={600}>
+                <Flex flexDir={'column'} borderRadius={8} bgColor={useColorModeValue('darkSide', 'dark.lightSide')} color={'lightSide'} p={8} alignItems={'center'} justifyContent={'center'} gap={8} fontWeight={600}>
 
                     <Text >Você não possui nenhum projeto ainda, clique abaixo para ver os projetos disponíveis</Text>
                     <Link href='projects' _hover={{ textDecor: 'none' }}>

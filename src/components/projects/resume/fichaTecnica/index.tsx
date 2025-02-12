@@ -6,7 +6,7 @@ import { ProjectSelectInput } from '@/components/CreateProjects/Inputs/SelectInp
 import { TextAreaInput } from '@/components/CreateProjects/Inputs/TextAreaInput';
 import { StaticProject } from '@/components/users/StaticProject';
 import { updateInvestmentSchema } from '@/schemas/investmentSchema';
-import { Button, Flex } from '@chakra-ui/react';
+import { Button, Flex, useColorModeValue } from '@chakra-ui/react';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { ValidationError } from 'yup';
@@ -352,7 +352,7 @@ export function FichaTecnica({ userData, projectData }: ProjectDataProps) {
                         '' :
                         <>
                             {editMode ?
-                                <Button type='submit' color={'lightSide'} fontWeight={'light'} bgColor={'darkSide'} mt={4} maxW={40}>
+                                <Button type='submit' color={'lightSide'} fontWeight={'light'} bgColor={useColorModeValue('darkSide', 'dark.lightSide')} mt={4} maxW={40}>
                                     Salvar dados
                                 </Button>
                                 :

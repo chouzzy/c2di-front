@@ -1,7 +1,7 @@
 import { resetPassword } from "@/app/services/changePassword";
 import { deletePrismaAndAuth0User } from "@/app/services/deletePrismaAndAuth0User";
 import { UserProfile } from "@auth0/nextjs-auth0/client";
-import { Button, Flex, Spinner, Text, useDisclosure, Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, ModalFooter } from "@chakra-ui/react";
+import { Button, Flex, Spinner, Text, useDisclosure, Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, ModalFooter, useColorModeValue } from "@chakra-ui/react";
 import { Envelope, Key } from "phosphor-react";
 import { useEffect, useState } from "react";
 
@@ -75,7 +75,7 @@ export function HeaderSelf({ userData, user }: HeaderSelfProps) {
             </Flex>
 
             <Flex gap={8} alignItems={'center'}>
-                <Button onClick={changePassword} _hover={{ bgColor: 'redSide' }} color={'lightSide'} bgColor={'darkSide'} mt={4}>
+                <Button onClick={changePassword} _hover={{ bgColor: 'redSide' }} color={'lightSide'} bgColor={useColorModeValue('darkSide', 'dark.lightSide')} mt={4}>
                     <Flex minW={32} alignItems={'center'} justifyContent={'center'}>
 
                         {changingPassword ?

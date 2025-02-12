@@ -1,4 +1,4 @@
-import { Button, Flex, Spinner, Text } from "@chakra-ui/react";
+import { Button, Flex, Spinner, Text, useColorModeValue } from "@chakra-ui/react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
@@ -24,7 +24,7 @@ export function ProfileUserResume({ userData }: ProfileUsersProps) {
                     <Flex>
 
                         {/* Título */}
-                        <Text fontWeight={'medium'} color='graySide'>
+                        <Text fontWeight={'medium'} color={useColorModeValue('graySide', 'dark.graySide')}>
                             Seu perfil de investidor
                         </Text>
 
@@ -41,7 +41,7 @@ export function ProfileUserResume({ userData }: ProfileUsersProps) {
                             <Flex boxSize={16} mx='auto'>
                                 <Spinner
                                     boxSize={6}
-                                    color='darkSide'
+                                    color={useColorModeValue('darkSide', 'dark.darkSide')}
                                 />
                             </Flex>
                         }
@@ -59,7 +59,7 @@ export function ProfileUserResume({ userData }: ProfileUsersProps) {
                         <Flex boxSize={16} mx='auto'>
                             <Spinner
                                 boxSize={6}
-                                color='darkSide'
+                                color={useColorModeValue('darkSide', 'dark.darkSide')}
                             />
                         </Flex>
                     }

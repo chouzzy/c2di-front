@@ -1,4 +1,4 @@
-import { Flex, Button, Link, Text, useBreakpointValue, Image } from "@chakra-ui/react"
+import { Flex, Button, Link, Text, useBreakpointValue, Image, useColorModeValue } from "@chakra-ui/react"
 import { IoIosArrowForward } from "react-icons/io"
 import { MdKeyboardDoubleArrowRight } from "react-icons/md"
 
@@ -63,7 +63,7 @@ export function MyInvestmentsResume({projectsData}: MyInvestmentsResumeProps) {
                                 <Text fontSize={20} fontWeight={'semibold'}>
                                     {project.title}
                                 </Text>
-                                <Text fontSize={14} fontWeight={'normal'} color='graySide' letterSpacing={'-0.2px'}>
+                                <Text fontSize={14} fontWeight={'normal'} color={useColorModeValue('graySide', 'dark.graySide')} letterSpacing={'-0.2px'}>
                                     {project.description}
                                 </Text>
                             </Flex>
@@ -71,7 +71,7 @@ export function MyInvestmentsResume({projectsData}: MyInvestmentsResumeProps) {
                             {/* ACTION BUTTONS */}
                             <Flex justifyContent={'start'} gap={8}>
                                 <Link href={`/projects/${project.id}`}>
-                                    <Button size={'sm'} _hover={{ bgColor: 'graySide' }} color={'lightSide'} bgColor={'darkSide'}>
+                                    <Button size={'sm'} _hover={{ bgColor: 'graySide' }} color={'lightSide'} bgColor={useColorModeValue('darkSide', 'dark.lightSide')}>
                                         <Flex alignItems={'center'} justifyContent={'center'}>
                                             <Text>Ver projeto</Text>
                                         </Flex>

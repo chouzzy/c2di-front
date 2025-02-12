@@ -4,7 +4,7 @@ import { BlackCard } from "@/components/Authentication/Cards/BlackCard";
 import { ProfileTestForm } from "@/components/InvestorProfile/ProfileTest/ProfileTestForm";
 import { SpinnerFullScreen } from "@/components/Loading/SpinnerFullScreen";
 import { UserProfile, useUser } from "@auth0/nextjs-auth0/client";
-import { Container, Flex, Spinner, useBreakpointValue } from "@chakra-ui/react";
+import { Container, Flex, Spinner, useBreakpointValue, useColorModeValue } from "@chakra-ui/react";
 import { AxiosError } from "axios";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -77,7 +77,7 @@ export default function ProfileTest() {
     }
 
     return (
-        <Flex maxW={'1440px'} mx='auto' color='darkSide'>
+        <Flex maxW={'1440px'} mx='auto' color={useColorModeValue('darkSide', 'dark.darkSide')}>
 
             {loadingDBUser ?
                 <Flex alignItems={'center'} justifyContent={'center'} h='100%' w='100%'>

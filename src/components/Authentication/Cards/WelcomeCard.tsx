@@ -1,5 +1,5 @@
 "use client"
-import { Flex, Image, Link, Spinner } from "@chakra-ui/react";
+import { Flex, Image, Link, Spinner, useColorModeValue } from "@chakra-ui/react";
 import { FaFacebook, FaApple } from "react-icons/fa";
 import { AuthInput } from "../Inputs/AuthInput";
 import { FieldValues, UseFormRegister } from "react-hook-form";
@@ -63,7 +63,7 @@ export function WelcomeCard({ user, isLoading, register }: WelcomeCardProps) {
                             <Flex
                                 as={'button'}
                                 onClick={() => { LoginCallback() }}
-                                bgColor={'darkSide'}
+                                bgColor={useColorModeValue('darkSide', 'dark.lightSide')}
                                 color={"lightSide"}
                                 p={2}
                                 borderRadius={8}

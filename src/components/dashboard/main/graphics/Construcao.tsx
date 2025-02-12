@@ -1,4 +1,4 @@
-import { Flex, Text, useBreakpointValue } from "@chakra-ui/react";
+import { Flex, Text, useBreakpointValue, useColorModeValue } from "@chakra-ui/react";
 import { BarChart, YAxis, XAxis, Tooltip, Legend, Bar, LabelList } from "recharts";
 import { CustomTooltipConstrucao, formatDataConstrucao, userBarGraphics } from "../utils";
 import { useEffect, useState } from "react";
@@ -43,9 +43,10 @@ export function GraficoConstrucao({ userInvestmentResumed, userInvestments }: Gr
 
     const formattedData: formattedDataProps[] = formatDataConstrucao(userInvestmentResumed);
     const graphWidth = useBreakpointValue({ base: 300, sm: 400, md: 680, lg: 800, xl: 500 })
-    const fontSizeGraph = useBreakpointValue({ base: 10, sm: 12, md: 12, lg: 12, xl: 16 })
+    const fontSizeGraph = useBreakpointValue({ base: 10, sm: 12, md: 12, lg: 12, xl: 12 })
 
     const [financeiroData, setFinanceiroData] = useState<DataWithUnitsProps[]>()
+    const axisTextColor = useColorModeValue('darkSide', 'white'); // ou use suas cores customizadas
 
 
     const countUserUnits = (userInvestments: UserInvestment[]): UserUnits[] => {
@@ -103,8 +104,8 @@ export function GraficoConstrucao({ userInvestmentResumed, userInvestments }: Gr
             <Flex>
 
                 <BarChart width={graphWidth} height={300} data={financeiroData} barGap={20} layout="vertical"> {/* Alteração aqui! Adicionado layout vertical */}
-                    <YAxis type="category" dataKey="etapa" width={2} tickFormatter={(tick) => `${tick}`} /> {/* YAxis agora é categórico e usa 'etapa' */}
-                    <XAxis type="number" fontSize={12} domain={[0, 'dataMax']} tickFormatter={(tick) => `${(tick * 100).toLocaleString('pt-BR', { maximumFractionDigits: 0 })}%`} />
+                    <YAxis type="category" dataKey="etapa" width={2} tickFormatter={(tick) => `${tick}`} tick={{ fill: axisTextColor }}/> {/* YAxis agora é categórico e usa 'etapa' */}
+                    <XAxis type="number" fontSize={12} domain={[0, 'dataMax']} tickFormatter={(tick) => `${(tick * 100).toLocaleString('pt-BR', { maximumFractionDigits: 0 })}%`} tick={{ fill: axisTextColor }}/>
                     <Tooltip content={<CustomTooltipConstrucao />} />
                     <Legend
                         verticalAlign="bottom" // Alinha a legenda na parte inferior

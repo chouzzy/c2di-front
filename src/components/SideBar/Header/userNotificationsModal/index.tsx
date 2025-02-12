@@ -1,5 +1,5 @@
 import { listUserNotifications } from "@/app/services/listUserNotifications"
-import { Modal, ModalOverlay, ModalContent, ModalHeader, Flex, ModalCloseButton, ModalBody, Button, Text, Spinner, Menu, MenuButton, MenuItem, MenuList, Avatar, HStack, LightMode, Spacer, VStack, useDisclosure } from "@chakra-ui/react"
+import { Modal, ModalOverlay, ModalContent, ModalHeader, Flex, ModalCloseButton, ModalBody, Button, Text, Spinner, Menu, MenuButton, MenuItem, MenuList, Avatar, HStack, LightMode, Spacer, VStack, useDisclosure, useColorModeValue } from "@chakra-ui/react"
 import { ArrowDown, Bell, BellRinging } from "phosphor-react"
 import { useEffect, useState } from "react"
 import { GoProjectRoadmap } from "react-icons/go"
@@ -137,7 +137,7 @@ export function UserNotificationsModal({ userData }: NotificationsModalProps) {
                 </MenuButton>
 
                 <Flex>
-                    <MenuList color='darkSide' w={['100vw', '100vw', '100vw', '400px', '400px']} mt={2}>
+                    <MenuList color={useColorModeValue('darkSide', 'dark.darkSide')} w={['100vw', '100vw', '100vw', '400px', '400px']} mt={2}>
 
                         {/* TITULO */}
                         <Flex w='100%' textAlign={'center'} p={4}>
@@ -164,7 +164,7 @@ export function UserNotificationsModal({ userData }: NotificationsModalProps) {
                                     key={notification.id}
                                     onClick={() => { openNotification(notification) }}
                                     _hover={{ bgColor: 'blue.100' }}
-                                    bgColor={isRead ? 'white.100' : 'gray.100'}
+                                    bgColor={isRead ? useColorModeValue('lightSide', 'none') : useColorModeValue('grayHoverSide', 'dark.grayHoverSide')}
                                     my={1}
                                     cursor={'pointer'}
                                 >
@@ -223,7 +223,7 @@ export function UserNotificationsModal({ userData }: NotificationsModalProps) {
                                 onClick={nextPage}
                                 _hover={{ bgColor: 'graySide' }}
                                 color={'lightSide'}
-                                bgColor={'darkSide'}
+                                bgColor={useColorModeValue('darkSide', 'dark.lightSide')}
                                 size='xs'
                                 isDisabled={page >= Math.ceil(totalDocuments / pageRange)}
                             >
@@ -246,7 +246,7 @@ export function UserNotificationsModal({ userData }: NotificationsModalProps) {
                 <ModalContent py={2} borderRadius={2}>
                     <ModalHeader>
                         <Flex gap={2} alignItems={'center'} flexDir={'row'} pt={4}>
-                            <Flex color='graySide'>
+                            <Flex color={useColorModeValue('graySide', 'dark.graySide')}>
                                 <MdCircleNotifications size={28} />
                             </Flex>
                             <Text>
@@ -292,7 +292,7 @@ export function UserNotificationsModal({ userData }: NotificationsModalProps) {
                                     </Flex>
 
                                     <Flex alignItems={'center'} justifyContent={'center'}>
-                                        <Button onClick={closeNotification} w='100%' _hover={{ bgColor: 'redSide' }} color={'lightSide'} bgColor={'darkSide'} borderRadius={2}>
+                                        <Button onClick={closeNotification} w='100%' _hover={{ bgColor: 'redSide' }} color={'lightSide'} bgColor={useColorModeValue('darkSide', 'dark.lightSide')} borderRadius={2}>
                                             <Flex minW={12} alignItems={'center'} justifyContent={'center'}>
                                                 Fechar
                                                 {/* {deletingNotification ?

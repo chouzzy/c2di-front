@@ -4,7 +4,7 @@ import { BlackCard } from "@/components/Authentication/Cards/BlackCard";
 import { CreateProprietarioAccount } from "@/components/Authentication/Cards/Proprietario/CreateProprietarioAccount";
 import { SpinnerFullScreen } from "@/components/Loading/SpinnerFullScreen";
 import { UserProfile, useUser } from "@auth0/nextjs-auth0/client";
-import { Container, Flex, Spinner } from "@chakra-ui/react";
+import { Container, Flex, Spinner, useColorModeValue } from "@chakra-ui/react";
 import { AxiosError } from "axios";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -85,7 +85,7 @@ export default function CreateInvestorAccount() {
     }
 
     return (
-        <Container maxW={'1440px'} mx='auto' h='100vh' color='darkSide'>
+        <Container maxW={'1440px'} mx='auto' h='100vh' color={useColorModeValue('darkSide', 'dark.darkSide')}>
 
             <Flex h='100%'>
                 {loadingDBUser ?

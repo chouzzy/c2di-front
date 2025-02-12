@@ -1,5 +1,5 @@
 import { ErrorInputComponent } from "@/components/ErrorInputComponent";
-import { Flex, Button, Spinner } from "@chakra-ui/react";
+import { Flex, Button, Spinner, useColorModeValue } from "@chakra-ui/react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { UserProfile } from "@auth0/nextjs-auth0/client";
@@ -90,7 +90,7 @@ export function ProfileTestForm({ user, router, userData }: CreateInvestorAccoun
 
 
     return (
-        <Flex w='100%' minH={'100vh'} bgColor={'lightSide'}>
+        <Flex w='100%' minH={'100vh'} bgColor={useColorModeValue('beigeSide', 'dark.beigeSide')}>
             <Flex w='100%' alignItems={'center'} justifyContent={'space-between'} py={20} px={4} flexDir={'column'}>
 
                 <Flex flexDir={'column'} gap={8} px={8} h='100%' w='100%'>
@@ -144,7 +144,7 @@ export function ProfileTestForm({ user, router, userData }: CreateInvestorAccoun
                                             fontSize={14}
                                             color={'lightSide'}
                                             fontWeight={'light'}
-                                            bgColor={'darkSide'}
+                                            bgColor={useColorModeValue('darkSide', 'dark.lightSide')}
                                             mt={4}
                                             minW={48}
                                             _hover={{ bgColor: "graySide", transition: '300ms' }}
@@ -164,7 +164,7 @@ export function ProfileTestForm({ user, router, userData }: CreateInvestorAccoun
                                     fontSize={14}
                                     color={'lightSide'}
                                     fontWeight={'light'}
-                                    bgColor={'darkSide'}
+                                    bgColor={useColorModeValue('darkSide', 'dark.lightSide')}
                                     isDisabled={page == 0}
                                     onClick={previousPage}
                                 >
@@ -176,7 +176,7 @@ export function ProfileTestForm({ user, router, userData }: CreateInvestorAccoun
                                     fontSize={14}
                                     color={'lightSide'}
                                     fontWeight={'light'}
-                                    bgColor={'darkSide'}
+                                    bgColor={useColorModeValue('darkSide', 'dark.lightSide')}
                                     isDisabled={page >= (pages.length - 1)}
                                 // onClick={nextPage}
                                 >

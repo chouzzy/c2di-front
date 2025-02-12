@@ -1,4 +1,4 @@
-import { Flex, IconButton, Menu, MenuButton, MenuItem, MenuList, useBreakpointValue } from '@chakra-ui/react';
+import { Flex, IconButton, Menu, MenuButton, MenuItem, MenuList, useBreakpointValue, useColorModeValue } from '@chakra-ui/react';
 import { FichaTecnica } from '../../fichaTecnica';
 import { useState } from 'react';
 import Partners from '../../partners';
@@ -59,8 +59,8 @@ function ProjectResumeProprietario({ userData, user, projectData }: ProjectDataP
                         </MenuButton>
                         <MenuList
                             w='100vw'
-                            bgColor="beigeSide"
-                            color="darkSide"
+                            bgColor={useColorModeValue('beigeSide', 'dark.beigeSide')}
+                            color={useColorModeValue('beigeSide', 'dark.beigeSide')}
                             borderRadius={0}
                             justifyContent={'center'}
                             alignItems={'center'}

@@ -1,5 +1,5 @@
 import { ErrorInputComponent } from "@/components/ErrorInputComponent";
-import { Flex, Button, Spinner, Text } from "@chakra-ui/react";
+import { Flex, Button, Spinner, Text, useColorModeValue } from "@chakra-ui/react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { UserProfile } from "@auth0/nextjs-auth0/client";
@@ -168,7 +168,7 @@ export function CreateProjectForm({ user, router, userData }: CreateInvestorAcco
                                         fontSize={14}
                                         color={'lightSide'}
                                         fontWeight={'light'}
-                                        bgColor={'darkSide'}
+                                        bgColor={useColorModeValue('darkSide', 'dark.lightSide')}
                                         isDisabled={page == 0}
                                         onClick={previousPage}
                                     >
@@ -185,7 +185,7 @@ export function CreateProjectForm({ user, router, userData }: CreateInvestorAcco
                                                 fontSize={14}
                                                 color={'lightSide'}
                                                 fontWeight={'light'}
-                                                bgColor={'darkSide'}
+                                                bgColor={useColorModeValue('darkSide', 'dark.lightSide')}
                                                 size={['md', 'md', 'md', 'md', 'md']}
                                                 _hover={{ bgColor: "graySide", transition: '300ms' }}
                                             >
@@ -199,7 +199,7 @@ export function CreateProjectForm({ user, router, userData }: CreateInvestorAcco
                                             fontSize={14}
                                             color={'lightSide'}
                                             fontWeight={'light'}
-                                            bgColor={'darkSide'}
+                                            bgColor={useColorModeValue('darkSide', 'dark.lightSide')}
                                             isDisabled={page >= (pages.length - 1)}
                                         // onClick={nextPage}
                                         >

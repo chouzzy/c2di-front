@@ -1,6 +1,6 @@
 'use client'
 // app/page.tsx
-import { Button, Container, Flex, Spinner, Text } from "@chakra-ui/react";
+import { Button, Container, Flex, Spinner, Text, useColorModeValue } from "@chakra-ui/react";
 import { UserProfile, useUser } from "@auth0/nextjs-auth0/client";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
@@ -103,7 +103,7 @@ export default function Home() {
               </Flex>
               <Flex gap={8}>
                 <Flex>
-                  <Button onClick={() => { router.push(`/authentication/create/investor`) }} bgColor={'darkSide'} color='white'>
+                  <Button onClick={() => { router.push(`/authentication/create/investor`) }} bgColor={useColorModeValue('darkSide', 'dark.lightSide')} color='white'>
                     Investidor
                   </Button>
                 </Flex>

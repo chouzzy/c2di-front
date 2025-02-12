@@ -82,7 +82,7 @@ export default function CreateInvestorAccount() {
     }
 
     return (
-        <Container maxW={'1440px'} mx='auto' h='100vh' color='darkSide'>
+        <Container maxW={'1440px'} mx='auto' h='100vh' color={useColorModeValue('darkSide', 'dark.darkSide')}>
 
             <Flex h='100%'>
                 {loadingDBUser ?

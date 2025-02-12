@@ -1,6 +1,6 @@
 
 import { createUsersByAdminSchema } from "@/schemas/usersSchema";
-import { Button, Flex, Spinner, Text, useDisclosure, Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, ModalFooter } from "@chakra-ui/react";
+import { Button, Flex, Spinner, Text, useDisclosure, Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, ModalFooter, useColorModeValue } from "@chakra-ui/react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { ErrorInputComponent } from "../ErrorInputComponent";
@@ -93,7 +93,7 @@ export function UsersListHeader() {
             </Flex>
 
             <Flex>
-                <Button onClick={createUserByAdmin} _hover={{ bgColor: 'redSide', transition: '300ms' }} size={['sm','sm','sm','md']} color={'lightSide'} bgColor={'darkSide'} mt={4}>
+                <Button onClick={createUserByAdmin} _hover={{ bgColor: 'redSide', transition: '300ms' }} size={['sm','sm','sm','md']} color={'lightSide'} bgColor={useColorModeValue('darkSide', 'dark.lightSide')} mt={4}>
                     Criar usuário
                 </Button>
             </Flex>
@@ -169,7 +169,7 @@ export function UsersListHeader() {
 
                                 </Flex>
                                 <Flex alignItems={'center'} justifyContent={'end'} py={4}>
-                                    <Button type="submit" _hover={{ bgColor: 'redSide' }} color={'lightSide'} bgColor={'darkSide'} mt={4}>
+                                    <Button type="submit" _hover={{ bgColor: 'redSide' }} color={'lightSide'} bgColor={useColorModeValue('darkSide', 'dark.lightSide')} mt={4}>
                                         <Flex minW={24} alignItems={'center'} justifyContent={'center'}>
                                             {createUserLoading ?
                                                 <Spinner boxSize={6} />

@@ -1,5 +1,5 @@
 import { getProjectList } from "@/app/services/getProjectList"
-import { Flex, Button, Link, Text, useBreakpointValue, Image } from "@chakra-ui/react"
+import { Flex, Button, Link, Text, useBreakpointValue, Image, useColorModeValue } from "@chakra-ui/react"
 import { useEffect, useState } from "react"
 import { IoIosArrowForward } from "react-icons/io"
 import { MdKeyboardDoubleArrowRight } from "react-icons/md"
@@ -18,25 +18,25 @@ export function InvestmentsSuggestions({ projectsData }: InvestmentsSuggestionsP
 
         const getInvestmentsComplete = async () => {
             try {
-                
-            
-            const projectsCompleteList = getProjectList({ page: '0', pageRange: '999', active: true })
 
-            // 1. Criar um Set com os IDs dos investimentos que o usuário já possui
-            const userInvestmentIds = new Set(
-                projectsData.map((investment) => investment.id)
-            );
 
-            // 2. Filtrar a lista completa de investimentos
-            const filteredProjects = (await projectsCompleteList).filter(
-                (project) => !userInvestmentIds.has(project.id)
-            );
+                const projectsCompleteList = getProjectList({ page: '0', pageRange: '999', active: true })
 
-            setSuggestions(filteredProjects)
+                // 1. Criar um Set com os IDs dos investimentos que o usuário já possui
+                const userInvestmentIds = new Set(
+                    projectsData.map((investment) => investment.id)
+                );
 
-        } catch (error) {
-            console.error('Erro ao buscar os investimentos:', error)       
-        }
+                // 2. Filtrar a lista completa de investimentos
+                const filteredProjects = (await projectsCompleteList).filter(
+                    (project) => !userInvestmentIds.has(project.id)
+                );
+
+                setSuggestions(filteredProjects)
+
+            } catch (error) {
+                console.error('Erro ao buscar os investimentos:', error)
+            }
         }
 
         getInvestmentsComplete()
@@ -68,42 +68,45 @@ export function InvestmentsSuggestions({ projectsData }: InvestmentsSuggestionsP
                     return (
 
                         // CARD DO PROJETO
-                        <Flex key={project.id} flexDir={'column'} gap={2}>
+                        <Flex key={project.id} flexDir={'column'} gap={2} justifyContent={'space-between'} w='100%'>
 
-                            {/* IMAGEM E STATUS */}
-                            <Flex>
-                                <Flex w='100%' flexDir={'column'} gap={1}>
-                                    <Image src={`${project.images[0].url}`} h={120} w={320} objectFit={'cover'} objectPosition={'center'} />
+                            <Flex flexDir={'column'} gap={2}>
 
-                                    <Flex
-                                        w={'min'}
-                                        px={2}
-                                        bgColor={project.active ? 'green.400' : 'orange.200'}
-                                        fontSize={'sm'}
-                                        fontWeight={'semibold'}
-                                        color={project.active ? 'green.800' : 'orange.800'}
-                                        borderRadius={4}
-                                    >
-                                        {project.active ? <Text>Ativo</Text> : <Text>Arquivado</Text>}
+                                {/* IMAGEM E STATUS */}
+                                <Flex>
+                                    <Flex w='100%' flexDir={'column'} gap={1}>
+                                        <Image src={`${project.images[0].url}`} h={120} w={320} objectFit={'cover'} objectPosition={'center'} />
+
+                                        <Flex
+                                            w={'min'}
+                                            px={2}
+                                            bgColor={project.active ? 'green.400' : 'orange.200'}
+                                            fontSize={'sm'}
+                                            fontWeight={'semibold'}
+                                            color={project.active ? 'green.800' : 'orange.800'}
+                                            borderRadius={4}
+                                        >
+                                            {project.active ? <Text>Ativo</Text> : <Text>Arquivado</Text>}
+                                        </Flex>
                                     </Flex>
                                 </Flex>
-                            </Flex>
 
-                            {/* DADOS DO PROJETO */}
-                            <Flex flexDir={'column'}>
+                                {/* DADOS DO PROJETO */}
+                                <Flex flexDir={'column'}>
 
-                                <Text fontSize={20} fontWeight={'semibold'}>
-                                    {project.title}
-                                </Text>
-                                <Text fontSize={14} fontWeight={'normal'} color='graySide' letterSpacing={'-0.2px'}>
-                                    {project.description}
-                                </Text>
+                                    <Text fontSize={20} fontWeight={'semibold'}>
+                                        {project.title}
+                                    </Text>
+                                    <Text fontSize={14} fontWeight={'normal'} color={useColorModeValue('graySide', 'dark.graySide')} letterSpacing={'-0.2px'}>
+                                        {project.description}
+                                    </Text>
+                                </Flex>
                             </Flex>
 
                             {/* ACTION BUTTONS */}
                             <Flex justifyContent={'start'} gap={8}>
                                 <Link href={`/projects/${project.id}`}>
-                                    <Button size={'sm'} _hover={{ bgColor: 'graySide' }} color={'lightSide'} bgColor={'darkSide'}>
+                                    <Button size={'sm'} _hover={{ bgColor: 'graySide' }} color={'lightSide'} bgColor={useColorModeValue('darkSide', 'dark.lightSide')}>
                                         <Flex alignItems={'center'} justifyContent={'center'}>
                                             <Text>Ver projeto</Text>
                                         </Flex>

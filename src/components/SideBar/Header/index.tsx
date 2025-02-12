@@ -1,4 +1,4 @@
-import { Flex, Text, useDisclosure } from "@chakra-ui/react";
+import { Flex, Text, useColorMode, useColorModeValue, useDisclosure } from "@chakra-ui/react";
 import { Bell, Moon, Sun } from "phosphor-react";
 import { useState } from "react";
 import { UserNotificationsModal } from "./userNotificationsModal";
@@ -13,6 +13,9 @@ interface HeaderProps {
 export function Header({ name, userData, isMobile }: HeaderProps) {
 
     const [darkMode, setDarkmode] = useState<boolean>(false)
+
+    const { colorMode, toggleColorMode } = useColorMode(); // Use o hook useColorMode do Chakra UI
+
 
 
     return (
@@ -37,7 +40,6 @@ export function Header({ name, userData, isMobile }: HeaderProps) {
                 ''
                 :
 
-
                 <Flex
                     mt={4}
                     justifyContent={'space-between'}
@@ -46,15 +48,15 @@ export function Header({ name, userData, isMobile }: HeaderProps) {
                     py={1}
                 >
                     <Flex
-                        onClick={() => { setDarkmode(!darkMode) }}
+                        onClick={() => { toggleColorMode(); setDarkmode(!darkMode) }}
                         as="button"
                         borderRadius="md"
                         py={2}
                         _hover={{ color: "redSide", transition: "200ms" }}>
                         {darkMode ?
-                            <Sun size={24} />
+                            <Sun size={24}/>
                             :
-                            <Moon size={24} />
+                            <Moon size={24}/>
 
                         }
                     </Flex>

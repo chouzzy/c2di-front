@@ -27,11 +27,6 @@ export default function MyInvestments() {
     const [page, setPage] = useState(1)
 
 
-
-    const redirectNotFound = async () => {
-        router.push("/404")
-    }
-
     // GET USER
     useEffect(() => {
 

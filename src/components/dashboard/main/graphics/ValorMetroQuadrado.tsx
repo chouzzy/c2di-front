@@ -1,5 +1,5 @@
 import { formataData, formataDataMonthShort, formatarMoeda } from "@/app/services/utils";
-import { Button, Divider, Flex, Link, Menu, MenuButton, MenuItem, MenuList, Text, useBreakpointValue } from "@chakra-ui/react";
+import { Button, Divider, Flex, Link, Menu, MenuButton, MenuItem, MenuList, Text, useBreakpointValue, useColorModeValue } from "@chakra-ui/react";
 import { useState } from "react";
 import { MdArrowDropDownCircle } from "react-icons/md";
 import { XAxis, YAxis, Tooltip, Legend, AreaChart, Area } from "recharts";
@@ -17,6 +17,9 @@ export function ValorMetroQuadrado({ projectsData }: valorMetroQuadradoProps) {
 
     const graphWidth = useBreakpointValue({ base: 320, sm: 400, md: 680, lg: 800, xl: 720 })
     const graphHeight = useBreakpointValue({ base: 254, sm: 254, md: 254, lg: 400, xl: 400 })
+
+    const axisTextColor = useColorModeValue('darkSide', 'white'); // ou use suas cores customizadas
+
 
     const changeGraphic = (id: string) => {
         const selectedInvestment = projectsData.find(
@@ -56,7 +59,7 @@ export function ValorMetroQuadrado({ projectsData }: valorMetroQuadradoProps) {
 
 
                     <Menu>
-                        <MenuButton as={Button} borderRadius={'none'} bg='none' color={'darkSide'} px={0} _hover={{ color: 'green.300' }} _active={{ bg: 'none' }} rightIcon={<MdArrowDropDownCircle size={32} />}>
+                        <MenuButton as={Button} borderRadius={'none'} bg='none' color={useColorModeValue('darkSide', 'white')} px={0} _hover={{ color: 'green.300' }} _active={{ bg: 'none' }} rightIcon={<MdArrowDropDownCircle size={32} />}>
 
                             <Flex justifyContent={'start'} w='100%' alignItems={'center'} py={2} gap={2}>
 
@@ -67,7 +70,7 @@ export function ValorMetroQuadrado({ projectsData }: valorMetroQuadradoProps) {
                             </Flex>
 
                         </MenuButton>
-                        <MenuList color='darkSide' bgColor={'lightSidered'} border='1px solid #00000033' borderRadius={8} p={1}>
+                        <MenuList color={useColorModeValue('darkSide', 'darkSide')} bgColor={'lightSidered'} border='1px solid #00000033' borderRadius={8} p={1}>
 
                             {projectsData?.map((project, index) => {
                                 const { valorMetroQuadrado } = project
@@ -76,7 +79,7 @@ export function ValorMetroQuadrado({ projectsData }: valorMetroQuadradoProps) {
 
                                 return (
 
-                                    <MenuItem key={project.id + index} fontWeight={'semibold'} bgColor={'lightSide'} _hover={{ color: 'green.300', transition: '360ms' }} onClick={() => changeGraphic(project.id)}>
+                                    <MenuItem key={project.id + index} fontWeight={'semibold'} bgColor={'lightSide'}  _hover={{ color: 'green.300', transition: '360ms' }} onClick={() => changeGraphic(project.id)}>
                                         <Flex justifyContent={'space-between'} w='100%' alignItems={'center'}>
 
                                             <Flex flexDir={'column'} justifyContent={'end'} py={1} w='100%'>
@@ -107,8 +110,8 @@ export function ValorMetroQuadrado({ projectsData }: valorMetroQuadradoProps) {
                             top: 50,
                         }}
                     >
-                        <XAxis dataKey="data" fontSize={12} tickFormatter={formataData} />
-                        <YAxis domain={([minCost, maxCost])} fontSize={12} tickFormatter={formatarMoeda} />
+                        <XAxis dataKey="data" fontSize={12} tickFormatter={formataData} tick={{ fill: axisTextColor }}/>
+                        <YAxis domain={([minCost, maxCost])} fontSize={12} tickFormatter={formatarMoeda} tick={{ fill: axisTextColor }}/>
                         <Legend />
                         <Tooltip
                             formatter={(value: number, name: string, props) => {
@@ -119,7 +122,7 @@ export function ValorMetroQuadrado({ projectsData }: valorMetroQuadradoProps) {
                             }}
                             labelFormatter={formataDataMonthShort}
                         />
-                        <Area type="monotone" dataKey="valor" stroke="#51c25d" fill="#51c25d44" />
+                        <Area type="monotone" dataKey="valor" stroke="#51c25d" fill="#51c25dbb" />
                     </AreaChart>
                 </Flex>
             </Flex>

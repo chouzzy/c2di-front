@@ -1,4 +1,4 @@
-import { Button, Flex, Image, Link, SimpleGrid, Text } from "@chakra-ui/react";
+import { Button, Flex, Image, Link, SimpleGrid, Text, useColorModeValue } from "@chakra-ui/react";
 import { Dispatch, SetStateAction } from "react";
 import { IoIosArrowForward, IoIosTrendingUp } from "react-icons/io";
 import { MyInvestmentCards } from "./cards";
@@ -72,12 +72,12 @@ export function MyPropriedadesList({ userInvestmentsData, projectsData, page, se
                                         </Text>
 
 
-                                        <Text fontSize={14} fontWeight={'normal'} color='graySide' letterSpacing={'-0.2px'}>
+                                        <Text fontSize={14} fontWeight={'normal'} color={useColorModeValue('graySide', 'dark.graySide')} letterSpacing={'-0.2px'}>
                                             {project.description}
                                         </Text>
                                     </Flex>
                                     <Link href={`/projects/${project.id}`}>
-                                        <Button _hover={{ bgColor: 'graySide' }} color={'lightSide'} bgColor={'darkSide'} fontSize={14} borderRadius={2}>
+                                        <Button _hover={{ bgColor: 'graySide' }} color={'lightSide'} bgColor={useColorModeValue('darkSide', 'dark.lightSide')} fontSize={14} borderRadius={2}>
                                             <Flex minW={24} alignItems={'center'} justifyContent={'center'}>
                                                 <Text>Ver projeto</Text>
                                             </Flex>
@@ -121,7 +121,7 @@ export function MyPropriedadesList({ userInvestmentsData, projectsData, page, se
                         onClick={nextPage}
                         _hover={{ bgColor: 'graySide' }}
                         color={'lightSide'}
-                        bgColor={'darkSide'}
+                        bgColor={useColorModeValue('darkSide', 'dark.lightSide')}
                         isDisabled={page >= Math.ceil(totalPages / elementsPerPage)}
                     >
                         <Flex minW={18} alignItems={'center'} justifyContent={'center'}>

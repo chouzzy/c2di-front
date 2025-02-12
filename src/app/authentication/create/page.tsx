@@ -4,7 +4,7 @@ import { CreateUserCard } from "@/components/Authentication/Cards/CreateUserCard
 import { WelcomeCard } from "@/components/Authentication/Cards/WelcomeCard";
 import { SpinnerFullScreen } from "@/components/Loading/SpinnerFullScreen";
 import { useUser } from "@auth0/nextjs-auth0/client";
-import { Container, Flex, Spinner } from "@chakra-ui/react";
+import { Container, Flex, Spinner, useColorModeValue } from "@chakra-ui/react";
 
 
 export default function CreateAccount() {
@@ -23,7 +23,7 @@ export default function CreateAccount() {
     }
 
     return (
-        <Container maxW={'1440px'} mx='auto' h='100vh' color='darkSide'>
+        <Container maxW={'1440px'} mx='auto' h='100vh' color={useColorModeValue('darkSide', 'dark.darkSide')}>
 
             <Flex h='100%'>
 

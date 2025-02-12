@@ -3,7 +3,7 @@ import { BlackCard } from "@/components/Authentication/Cards/BlackCard";
 import { WelcomeCard } from "@/components/Authentication/Cards/WelcomeCard";
 import { SpinnerFullScreen } from "@/components/Loading/SpinnerFullScreen";
 import { useUser } from "@auth0/nextjs-auth0/client";
-import { Container, Flex, useBreakpointValue } from "@chakra-ui/react";
+import { Container, Flex, useBreakpointValue, useColorModeValue } from "@chakra-ui/react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -39,7 +39,7 @@ export default function WelcomeBack() {
 
     return (
 
-        <Container maxW={'1440px'} mx='auto' h='100vh' color='darkSide'>
+        <Container maxW={'1440px'} mx='auto' h='100vh' color={useColorModeValue('darkSide', 'dark.darkSide')}>
 
             {loading ?
                 <SpinnerFullScreen />

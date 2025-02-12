@@ -1,6 +1,7 @@
 import {
     Flex,
     Button,
+    useColorModeValue,
 } from '@chakra-ui/react';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
@@ -302,7 +303,7 @@ function FormUsers({ userData }: FormUsersProps) {
 
 
                 {editMode ?
-                    <Button onClick={handleSubmit(onSubmit)} color={'lightSide'} fontWeight={'light'} bgColor={'darkSide'} mt={4} maxW={40}>
+                    <Button onClick={handleSubmit(onSubmit)} color={'lightSide'} fontWeight={'light'} bgColor={useColorModeValue('darkSide', 'dark.lightSide')} mt={4} maxW={40}>
                         Salvar dados
                     </Button>
                     :

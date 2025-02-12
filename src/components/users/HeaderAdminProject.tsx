@@ -2,7 +2,7 @@ import { resetPassword } from "@/app/services/changePassword";
 import { changeProjectStatus } from "@/app/services/changeProjectStatus";
 import { deletePrismaAndAuth0User } from "@/app/services/deletePrismaAndAuth0User";
 import { UserProfile } from "@auth0/nextjs-auth0/client";
-import { Button, Flex, Spinner, Text, useDisclosure, Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, ModalFooter } from "@chakra-ui/react";
+import { Button, Flex, Spinner, Text, useDisclosure, Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, ModalFooter, useColorModeValue } from "@chakra-ui/react";
 import { useRouter } from "next/navigation";
 import { Envelope, Key } from "phosphor-react";
 import { useEffect, useState } from "react";
@@ -154,7 +154,7 @@ export function HeaderAdminProject({ projectData, userData, user }: HeaderProjec
                             </Text>
                         </Flex>
                         <Flex alignItems={'center'} justifyContent={'end'} gap={2}>
-                            <Button onClick={cancelArchiveProject} _hover={{ bgColor: 'graySide' }} color={'lightSide'} bgColor={'darkSide'} mt={4}>
+                            <Button onClick={cancelArchiveProject} _hover={{ bgColor: 'graySide' }} color={'lightSide'} bgColor={useColorModeValue('darkSide', 'dark.lightSide')} mt={4}>
                                 <Flex minW={16} alignItems={'center'} justifyContent={'center'} fontWeight={'normal'}>
                                     <Text>Voltar</Text>
                                 </Flex>

@@ -1,5 +1,5 @@
 import { ErrorInputComponent } from "@/components/ErrorInputComponent";
-import { Flex, Button, Spinner } from "@chakra-ui/react";
+import { Flex, Button, Spinner, useColorModeValue } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { AuthInput } from "../../Inputs/AuthInput";
@@ -384,7 +384,7 @@ export function ProjectManagerAccountCard({user, router}: ProjectManagerAccountC
 
 
                             <Flex w='100%' gap={4}>
-                                <Button onClick={handleSubmit(onSubmit)} fontSize={14} color={'lightSide'} fontWeight={'light'} bgColor={'darkSide'} mt={4} w='100%'>
+                                <Button onClick={handleSubmit(onSubmit)} fontSize={14} color={'lightSide'} fontWeight={'light'} bgColor={useColorModeValue('darkSide', 'dark.lightSide')} mt={4} w='100%'>
                                     Salvar e ir para o painel
                                 </Button>
                             </Flex>

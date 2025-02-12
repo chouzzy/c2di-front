@@ -1,4 +1,4 @@
-import { Button, Spinner, Text, useDisclosure } from "@chakra-ui/react"
+import { Button, Spinner, Text, useColorModeValue, useDisclosure } from "@chakra-ui/react"
 import { PiArrowCircleLeft, PiArrowCircleRight, PiCheckThin } from "react-icons/pi";
 import { Dispatch, SetStateAction, useEffect, useState } from "react"
 import { Flex } from "@chakra-ui/react/flex"
@@ -84,7 +84,7 @@ export function NotificationsBoard({ totalDocuments, page, pageRange, setPage, n
                                     key={notification.id}
                                     onClick={() => { openNotification(notification.id) }}
                                     _hover={{ color: 'graySide', transition: '300ms' }}
-                                    color={isRead ? 'grayDivisor' : 'darkSide'}
+                                    color={isRead ? useColorModeValue('darkSide', 'lightSide') : useColorModeValue('grayDivisor', 'dark.grayDivisor')}
                                     cursor={'pointer'}
                                     py={2}
                                     gap={4}
@@ -131,7 +131,7 @@ export function NotificationsBoard({ totalDocuments, page, pageRange, setPage, n
                         onClick={nextPage}
                         _hover={{ bgColor: 'graySide' }}
                         color={'lightSide'}
-                        bgColor={'darkSide'}
+                        bgColor={useColorModeValue('darkSide', 'dark.lightSide')}
                         size='xs'
                         isDisabled={page >= Math.ceil(totalDocuments / pageRange)}
                     >

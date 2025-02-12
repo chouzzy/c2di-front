@@ -2,13 +2,13 @@
 import { BlackCard } from "@/components/Authentication/Cards/BlackCard";
 import { RecoverUserCard } from "@/components/Authentication/Cards/RecoverUserCard";
 import { WelcomeCard } from "@/components/Authentication/Cards/WelcomeCard";
-import { Container, Flex } from "@chakra-ui/react";
+import { Container, Flex, useColorModeValue } from "@chakra-ui/react";
 
 
 export default function RecoverAccount() {
 
     return (
-        <Container maxW={'1440px'} mx='auto' h='100vh' color='darkSide'>
+        <Container maxW={'1440px'} mx='auto' h='100vh' color={useColorModeValue('darkSide', 'dark.darkSide')}>
 
             <Flex h='100%'>
 

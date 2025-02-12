@@ -1,5 +1,5 @@
 import { ErrorInputComponent } from "@/components/ErrorInputComponent";
-import { Flex, Button, Spinner, Tag } from "@chakra-ui/react";
+import { Flex, Button, Spinner, Tag, useColorModeValue } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { AuthInput } from "../../Inputs/AuthInput";
@@ -358,7 +358,7 @@ export function CreateProprietarioAccount({ user, router }: CreateInvestorAccoun
                                     fontSize={14}
                                     color={'lightSide'}
                                     fontWeight={'light'}
-                                    bgColor={'darkSide'}
+                                    bgColor={useColorModeValue('darkSide', 'dark.lightSide')}
                                     mt={4}
                                     w='100%'
                                     _hover={{ bgColor: "graySide", transition: '300ms' }}

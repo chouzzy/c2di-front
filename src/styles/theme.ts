@@ -19,26 +19,27 @@
 
 // Refresh token é lidado sozinho com o proprio auth0
 
+// styles/theme.ts
+import { extendTheme, ThemeConfig } from '@chakra-ui/react';
 
-
-import { extendTheme, theme as chakraTheme } from '@chakra-ui/react'
-
-const { Button, Radio  } = chakraTheme.components
+const config: ThemeConfig = {
+  initialColorMode: 'light', // ou 'dark', se preferir dark como padrão
+  useSystemColorMode: false, // Comece com false, depois você pode mudar
+};
 
 export const theme = extendTheme({
+  config, // Adicione a configuração aqui
   fonts: {
     heading: 'var(--font-montserrat)',
     body: 'var(--font-montserrat)',
   },
-  components: {
-    Button,
-  },
   colors: {
+    // ... suas cores existentes ...
     darkSide: "#0F172A",
     lightSide: "#fbfbfb",
     graySide: "#64748B",
     darkSideTransparent: "#0F172Aaa",
-    grayCardSide:"#475569",
+    grayCardSide: "#475569",
     grayDivisor: "#E5E7EB",
     grayDivisorTransparent: "#E5E7EBaa",
     inputBorder: "#CBD5E1",
@@ -67,39 +68,53 @@ export const theme = extendTheme({
     siam: '#67705F',
     siamTranslucent: '#67705Fdd',
     eerie: '#202222',
+
+    // Cores para dark mode (ADICIONE ISSO)
+    dark: {
+      bg: "#1A202C", // Exemplo de cor de fundo escura
+      text: "#F7FAFC", // Exemplo de cor de texto clara
+      darkSide: '#fbfbfb',
+      beigeSide: "#2c3e50",
+      grayHoverSide:"#414f63",
+      grayDivisor:"#425066",
+      graySide:"#F5F5F5",
+      lightSide:'#2c3e50'
+      // Adicione outras cores para o dark mode aqui
+    },
+    light: {
+      bg: "#fbfbfb", // Substitui pela sua cor de fundo atual
+      text: '#202222',  // Substitui pela sua cor de texto clara
+      beigeSide: "#f6f6f6",
+    }
   },
   radii: {
-    none: '0',
-    sm: '0.25rem',
-    base: '0.25rem',
-    md: '0.5rem',
-    lg: '1.125rem',
-    full: '9999px',
+    // ... seus radii existentes ...
   },
   fontSizes: {
-    sm: '0.75rem',
-    md: '1rem',
-    lg: '1.25rem',
+    // ... seus fontSizes existentes ...
   },
   lineHeights: {
-    sm: '1.125rem',
-    md: '1.5rem',
-    lg: '1.875rem',
+    // ... seus lineHeights existentes ...
+  },
+  components: {
+    //Button, // Não é necessário importar assim, a não ser que vc queira sobrescrever algo
+    //Radio, // Não é necessário importar assim, a não ser que vc queira sobrescrever algo
   },
   styles: {
-    global: {
+    global: (props: any) => ({ // Use props para acessar o colorMode
       'html, body': {
-        bgColor: 'alabaster',
+        // Aplica as cores de fundo e texto baseadas no modo de cor.
+        bg: props.colorMode === 'dark' ? 'dark.bg' : 'light.bg',
+        color: props.colorMode === 'dark' ? 'dark.text' : 'light.text',
         fontWeight: 'light',
-        color: 'eerie',
         scrollBehavior: 'smooth',
         maxWidth: '100%',
-        padding:0,
-        margin:0
+        padding: 0,
+        margin: 0
       },
-    },
+    }),
   },
   shadows: {
-    default: '15px 15px 50px 0 rgba(0, 0, 0, 0.20)',
+    // ... seus shadows existentes ...
   },
-})
+});

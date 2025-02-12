@@ -6,6 +6,7 @@ import {
     MenuList,
     IconButton,
     MenuItem,
+    useColorModeValue,
 } from '@chakra-ui/react';
 import { FichaTecnica } from '../../fichaTecnica';
 import { useEffect, useState } from 'react';
@@ -69,8 +70,8 @@ function ProjectResumeAdmin({ userData, user, projectData }: ProjectDataProps) {
                         </MenuButton>
                         <MenuList
                             w='100vw'
-                            bgColor="beigeSide"
-                            color="darkSide"
+                            bgColor={useColorModeValue('beigeSide', 'dark.beigeSide')}
+                            color={useColorModeValue('beigeSide', 'dark.beigeSide')}
                             borderRadius={0}
                             justifyContent={'center'}
                             alignItems={'center'}

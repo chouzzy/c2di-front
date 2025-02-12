@@ -1,4 +1,4 @@
-import { Button, Flex, Image, Modal, ModalBody, ModalCloseButton, ModalContent, ModalHeader, ModalOverlay, Spinner, Text, useBreakpointValue, useDisclosure } from "@chakra-ui/react";
+import { Button, Flex, Image, Modal, ModalBody, ModalCloseButton, ModalContent, ModalHeader, ModalOverlay, Spinner, Text, useBreakpointValue, useColorModeValue, useDisclosure } from "@chakra-ui/react";
 import { XAxis, YAxis, BarChart, Bar, Legend, Tooltip, Area, AreaChart } from 'recharts';
 import { createPrismaNotification } from "@/app/services/createNotification";
 import { getPrismaNotification } from "@/app/services/getNotification";
@@ -316,7 +316,7 @@ export function InfosGerais({ userData, projectData }: ProjectDataProps) {
                                         </Flex>
 
                                         <Flex alignItems={'center'} justifyContent={'end'} py={4}>
-                                            <Button type="submit" _hover={{ bgColor: 'redSide' }} color={'lightSide'} bgColor={'darkSide'} mt={4}>
+                                            <Button type="submit" _hover={{ bgColor: 'redSide' }} color={'lightSide'} bgColor={useColorModeValue('darkSide', 'dark.lightSide')} mt={4}>
                                                 <Flex minW={24} alignItems={'center'} justifyContent={'center'}>
                                                     {createNotificationLoading ?
                                                         <Spinner boxSize={6} />

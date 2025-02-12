@@ -1,4 +1,4 @@
-import { Container, Flex, Text, useBreakpointValue } from "@chakra-ui/react";
+import { Container, Flex, Text, useBreakpointValue, useColorModeValue } from "@chakra-ui/react";
 import { IoIosTrendingUp } from "react-icons/io";
 import { Swiper, SwiperSlide, useSwiper } from 'swiper/react';
 import { Navigation, Scrollbar, Pagination, A11y } from 'swiper/modules';
@@ -64,7 +64,7 @@ export function MyInvestmentCards({ userInvestmentsData, projectsData }: MyInves
                     >
                         <SwiperSlide key={'1'}>
                             {/* CARD 1 */}
-                            <Flex minH={40} flexDir={'column'} gap={4} w='100%' bgColor={'darkSide'} px={8} py={4} borderRadius={12}>
+                            <Flex minH={40} flexDir={'column'} gap={4} w='100%' bgColor={useColorModeValue('darkSide', 'dark.lightSide')} px={8} py={4} borderRadius={12}>
 
                                 <Flex flexDir={'column'} justifyContent={'space-between'} gap={4}>
 
@@ -83,7 +83,7 @@ export function MyInvestmentCards({ userInvestmentsData, projectsData }: MyInves
 
                         <SwiperSlide key={'2'}>
                             {/* CARD 2 */}
-                            <Flex minH={40} flexDir={'column'} gap={4} w='100%' bgColor={'darkSide'} px={8} py={4} borderRadius={12}>
+                            <Flex minH={40} flexDir={'column'} gap={4} w='100%' bgColor={useColorModeValue('darkSide', 'dark.lightSide')} px={8} py={4} borderRadius={12}>
 
                                 <Flex flexDir={'column'} justifyContent={'space-between'} gap={4}>
 
@@ -101,7 +101,7 @@ export function MyInvestmentCards({ userInvestmentsData, projectsData }: MyInves
 
                         <SwiperSlide key={'3'}>
                             {/* CARD 3 */}
-                            <Flex minH={40} flexDir={'column'} gap={4} w='100%' bgColor={'darkSide'} px={8} py={4} borderRadius={12}>
+                            <Flex minH={40} flexDir={'column'} gap={4} w='100%' bgColor={useColorModeValue('darkSide', 'dark.lightSide')} px={8} py={4} borderRadius={12}>
 
                                 <Flex flexDir={'column'} justifyContent={'space-between'} gap={4}>
 
@@ -127,7 +127,7 @@ export function MyInvestmentCards({ userInvestmentsData, projectsData }: MyInves
                 <Flex gap={4} w='100%' color={'lightSide'}>
 
                     {/* CARD 1 */}
-                    <Flex flexDir={'column'} gap={4} w='100%' bgColor={'darkSide'} px={8} py={4} borderRadius={12}>
+                    <Flex flexDir={'column'} gap={4} w='100%' bgColor={useColorModeValue('darkSide', 'dark.lightSide')} px={8} py={4} borderRadius={12}>
 
                         <Flex flexDir={'column'} justifyContent={'space-between'} gap={4}>
 
@@ -144,7 +144,7 @@ export function MyInvestmentCards({ userInvestmentsData, projectsData }: MyInves
                     </Flex>
 
                     {/* CARD 2 */}
-                    <Flex flexDir={'column'} gap={4} w='100%' bgColor={'darkSide'} px={8} py={4} borderRadius={12}>
+                    <Flex flexDir={'column'} gap={4} w='100%' bgColor={useColorModeValue('darkSide', 'dark.lightSide')} px={8} py={4} borderRadius={12}>
 
                         <Flex flexDir={'column'} justifyContent={'space-between'} gap={4}>
 
@@ -161,7 +161,7 @@ export function MyInvestmentCards({ userInvestmentsData, projectsData }: MyInves
                     </Flex>
 
                     {/* CARD 3 */}
-                    <Flex flexDir={'column'} gap={4} w='100%' bgColor={'darkSide'} px={8} py={4} borderRadius={12}>
+                    <Flex flexDir={'column'} gap={4} w='100%' bgColor={useColorModeValue('darkSide', 'dark.lightSide')} px={8} py={4} borderRadius={12}>
 
                         <Flex flexDir={'column'} justifyContent={'space-between'} gap={4}>
 

@@ -1,4 +1,4 @@
-import { Modal, ModalOverlay, ModalContent, ModalHeader, Flex, ModalCloseButton, ModalBody, Button, Text, Spinner } from "@chakra-ui/react"
+import { Modal, ModalOverlay, ModalContent, ModalHeader, Flex, ModalCloseButton, ModalBody, Button, Text, Spinner, useColorModeValue } from "@chakra-ui/react"
 import { GoProjectRoadmap } from "react-icons/go"
 import { MdCircleNotifications } from "react-icons/md"
 
@@ -19,7 +19,7 @@ export function NotificationsModal({ isOpen, closeNotification, notificationOpen
             <ModalContent py={2} borderRadius={2}>
                 <ModalHeader>
                     <Flex gap={2} alignItems={'center'} flexDir={'row'} pt={4}>
-                        <Flex color='graySide'>
+                        <Flex color={useColorModeValue('graySide', 'dark.graySide')}>
                             <MdCircleNotifications size={28} />
                         </Flex>
                         <Text>
@@ -71,7 +71,7 @@ export function NotificationsModal({ isOpen, closeNotification, notificationOpen
                                     </Flex>
 
                                     <Flex alignItems={'center'} justifyContent={'center'}>
-                                        <Button onClick={closeNotification} w='100%' _hover={{ bgColor: 'redSide' }} color={'lightSide'} bgColor={'darkSide'} borderRadius={2}>
+                                        <Button onClick={closeNotification} w='100%' _hover={{ bgColor: 'redSide' }} color={'lightSide'} bgColor={useColorModeValue('darkSide', 'dark.lightSide')} borderRadius={2}>
                                             <Flex minW={12} alignItems={'center'} justifyContent={'center'}>
                                                 {deletingNotification ?
                                                     <Spinner boxSize={6} />

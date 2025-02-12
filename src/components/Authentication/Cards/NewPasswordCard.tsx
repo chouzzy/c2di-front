@@ -1,4 +1,4 @@
-import { Flex, Image } from "@chakra-ui/react";
+import { Flex, Image, useColorModeValue } from "@chakra-ui/react";
 import { register } from "module";
 import { FaFacebook, FaApple } from "react-icons/fa";
 import { AuthInput } from "../Inputs/AuthInput";
@@ -59,7 +59,7 @@ export function NewPasswordCard() {
                         <Flex
                             as={'button'}
                             fontSize={'sm'}
-                            bgColor={'darkSide'}
+                            bgColor={useColorModeValue('darkSide', 'dark.lightSide')}
                             color={"lightSide"}
                             p={2}
                             borderRadius={8}

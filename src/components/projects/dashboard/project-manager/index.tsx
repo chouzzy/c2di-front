@@ -1,4 +1,4 @@
-import { Button, Flex, Image, Link, SimpleGrid, Text } from "@chakra-ui/react";
+import { Button, Flex, Image, Link, SimpleGrid, Text, useColorModeValue } from "@chakra-ui/react";
 import { Dispatch, SetStateAction } from "react";
 
 interface ProjectDashboardInvestorProps {
@@ -60,7 +60,7 @@ export function ProjectDashboardProjectManager({ projectsData, page, setPage, to
                                     <Text fontSize={20} fontWeight={'semibold'}>
                                         {project.title}
                                     </Text>
-                                    <Text fontSize={14} fontWeight={'normal'} color='graySide' letterSpacing={'-0.2px'}>
+                                    <Text fontSize={14} fontWeight={'normal'} color={useColorModeValue('graySide', 'dark.graySide')} letterSpacing={'-0.2px'}>
                                         {project.description}
                                     </Text>
                                 </Flex>
@@ -68,13 +68,13 @@ export function ProjectDashboardProjectManager({ projectsData, page, setPage, to
                                 {/* ACTION BUTTONS */}
                                 <Flex justifyContent={['space-between', 'space-between', 'space-between', 'start', 'start']} gap={8}>
                                     <Link href={`/project-manager/projects/${project.id}`}>
-                                        <Button _hover={{ bgColor: 'graySide' }} size={['sm','sm','sm','md','md']} color={'lightSide'} bgColor={'darkSide'} fontSize={14}>
+                                        <Button _hover={{ bgColor: 'graySide' }} size={['sm','sm','sm','md','md']} color={'lightSide'} bgColor={useColorModeValue('darkSide', 'dark.lightSide')} fontSize={14}>
                                             <Flex alignItems={'center'} justifyContent={'center'}>
                                                 <Text>Ver projeto</Text>
                                             </Flex>
                                         </Button>
                                     </Link>
-                                    <Button _hover={{ bgColor: 'graySide' }} size={['sm','sm','sm','md','md']} color={'lightSide'} bgColor={'darkSide'} fontSize={14}>
+                                    <Button _hover={{ bgColor: 'graySide' }} size={['sm','sm','sm','md','md']} color={'lightSide'} bgColor={useColorModeValue('darkSide', 'dark.lightSide')} fontSize={14}>
                                         <Flex alignItems={'center'} justifyContent={'center'}>
                                             <Text>Entrar em contato</Text>
                                         </Flex>
@@ -116,7 +116,7 @@ export function ProjectDashboardProjectManager({ projectsData, page, setPage, to
                         onClick={nextPage}
                         _hover={{ bgColor: 'graySide' }}
                         color={'lightSide'}
-                        bgColor={'darkSide'}
+                        bgColor={useColorModeValue('darkSide', 'dark.lightSide')}
                         isDisabled={page >= Math.ceil(totalPages / elementsPerPage)}
                     >
                         <Flex minW={18} alignItems={'center'} justifyContent={'center'}>

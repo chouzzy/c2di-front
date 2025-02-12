@@ -1,4 +1,4 @@
-import { Button, Flex, Image, Link, SimpleGrid, Text, useBreakpointValue } from "@chakra-ui/react";
+import { Button, Flex, Image, Link, SimpleGrid, Text, useBreakpointValue, useColorModeValue } from "@chakra-ui/react";
 import { AreaChart, CartesianGrid, XAxis, YAxis, Area, Tooltip, Bar, BarChart, Legend, Pie, PieChart, Cell } from "recharts";
 import { data, data01, data02 } from "./data/dashData";
 import { IoIosArrowForward, IoIosTrendingUp } from "react-icons/io";
@@ -20,7 +20,7 @@ export function MainInvestorDashboard({ projectsData, userInvestmentsData }: Inv
     if (projectsData.length == 0) {
         return (
             <Flex h={500} w='100%' alignItems={'center'} justifyContent={'center'}>
-                <Flex flexDir={'column'} borderRadius={8} bgColor={'darkSide'} color={'lightSide'} p={8} alignItems={'center'} justifyContent={'center'} gap={8} fontWeight={600}>
+                <Flex flexDir={'column'} borderRadius={8} bgColor={useColorModeValue('darkSide', 'dark.lightSide')} color={'lightSide'} p={8} alignItems={'center'} justifyContent={'center'} gap={8} fontWeight={600}>
 
                     <Text >Você não possui nenhum projeto ainda, clique abaixo para ver os projetos disponíveis</Text>
                     <Link href='projects' _hover={{ textDecor: 'none' }}>
@@ -267,7 +267,7 @@ export function MainInvestorDashboard({ projectsData, userInvestmentsData }: Inv
                                             <Text fontSize={20} fontWeight={'semibold'}>
                                                 {project.title}
                                             </Text>
-                                            <Text fontSize={14} fontWeight={'normal'} color='graySide' letterSpacing={'-0.2px'}>
+                                            <Text fontSize={14} fontWeight={'normal'} color={useColorModeValue('graySide', 'dark.graySide')} letterSpacing={'-0.2px'}>
                                                 {project.description}
                                             </Text>
                                         </Flex>
@@ -275,7 +275,7 @@ export function MainInvestorDashboard({ projectsData, userInvestmentsData }: Inv
                                         {/* ACTION BUTTONS */}
                                         <Flex justifyContent={'start'} gap={8}>
                                             <Link href={`/projects/${project.id}`}>
-                                                <Button size={'sm'} _hover={{ bgColor: 'graySide' }} color={'lightSide'} bgColor={'darkSide'}>
+                                                <Button size={'sm'} _hover={{ bgColor: 'graySide' }} color={'lightSide'} bgColor={useColorModeValue('darkSide', 'dark.lightSide')}>
                                                     <Flex alignItems={'center'} justifyContent={'center'}>
                                                         <Text>Ver projeto</Text>
                                                     </Flex>
