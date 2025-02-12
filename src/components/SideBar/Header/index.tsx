@@ -1,6 +1,6 @@
 import { Flex, Text, useColorMode } from "@chakra-ui/react";
 import { Moon, Sun } from "phosphor-react";
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import { UserNotificationsModal } from "./userNotificationsModal";
 
 
@@ -8,13 +8,17 @@ interface HeaderProps {
     name: string
     userData: User
     isMobile?: boolean
+    darkMode: boolean
+    setDarkmode: Dispatch<SetStateAction<boolean>>
+    toggleColorMode: () => void
+
 }
 
-export function Header({ name, userData, isMobile }: HeaderProps) {
+export function Header({ name, userData, isMobile, darkMode, setDarkmode, toggleColorMode }: HeaderProps) {
 
-    const [darkMode, setDarkmode] = useState<boolean>(false)
 
-    const { colorMode, toggleColorMode } = useColorMode(); // Use o hook useColorMode do Chakra UI
+
+    // Use o hook useColorMode do Chakra UI
 
 
 
@@ -47,23 +51,23 @@ export function Header({ name, userData, isMobile }: HeaderProps) {
                     borderColor={'grayDivisor'}
                     py={1}
                 >
-                    <Flex
-                        onClick={() => { toggleColorMode(); setDarkmode(!darkMode) }}
-                        as="button"
-                        borderRadius="md"
-                        py={2}
-                        _hover={{ color: "redSide", transition: "200ms" }}>
-                        {darkMode ?
-                            <Sun size={24}/>
-                            :
-                            <Moon size={24}/>
+                        <Flex
+                            onClick={() => { toggleColorMode(); setDarkmode(!darkMode) }}
+                            as="button"
+                            borderRadius="md"
+                            py={2}
+                            _hover={{ color: "redSide", transition: "200ms" }}>
+                            {darkMode ?
+                                <Sun size={24} />
+                                :
+                                <Moon size={24} />
 
-                        }
+                            }
+                        </Flex>
+                        <Flex borderRadius="md" py={2} _hover={{ color: "redSide", transition: "200ms" }} position={'relative'}>
+                            <UserNotificationsModal userData={userData} />
+                        </Flex>
                     </Flex>
-                    <Flex borderRadius="md" py={2} _hover={{ color: "redSide", transition: "200ms" }} position={'relative'}>
-                        <UserNotificationsModal userData={userData} />
-                    </Flex>
-                </Flex>
             }
 
         </Flex>

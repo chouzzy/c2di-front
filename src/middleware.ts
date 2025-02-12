@@ -293,6 +293,8 @@ async function getUserData(req: NextRequest, token: string | undefined) {
     //A URL base precisa ser a do seu app, a que aparece quando você roda `npm run dev`
     //Para funcionar em produção, você precisará usar uma variável de ambiente.
     const baseUrl = 'https://c2diserver.awer.co/'
+    // const baseUrl = 'http://localhost:8081/'
+
     try {
         const apiResponse = await fetch(`${baseUrl}/api/check-user`, {
             method: 'GET', // Ou POST, dependendo da sua API

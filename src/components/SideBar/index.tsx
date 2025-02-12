@@ -1,4 +1,4 @@
-import { Flex, Box, Text, Icon, Link, Image, Button, Spinner, useBreakpointValue, IconButton, Menu, MenuButton, MenuList, MenuItem as ChakraMenuItem, useColorModeValue } from '@chakra-ui/react';
+import { Flex, Box, Text, Icon, Link, Image, Button, Spinner, useBreakpointValue, IconButton, Menu, MenuButton, MenuList, MenuItem as ChakraMenuItem, useColorModeValue, useColorMode } from '@chakra-ui/react';
 import {
     CaretDown,
     SquaresFour,
@@ -9,7 +9,9 @@ import {
     Users,
     House,
     List,
-    HouseLine
+    HouseLine,
+    Sun,
+    Moon
 } from 'phosphor-react';
 import { MenuItem } from './MenuItem';
 import { Header } from './Header';
@@ -25,6 +27,9 @@ interface SideBarProps {
 }
 
 export function SideBar({ userData, projectData }: SideBarProps) {
+
+    const [darkMode, setDarkmode] = useState<boolean>(false)
+    const { colorMode, toggleColorMode } = useColorMode();
 
     const isMobile = useBreakpointValue({
         base: true,
@@ -116,94 +121,112 @@ export function SideBar({ userData, projectData }: SideBarProps) {
 
                         <Link _hover={{ textDecor: 'none' }} href='/'>
                             <Flex>
-                                <Image src={logoSrc} alt="logo" objectFit={'contain'} maxW={24}/>
+                                <Image src={logoSrc} alt="logo" objectFit={'contain'} maxW={24} />
                             </Flex>
                         </Link>
 
-                        {/* MENU E NOTIFICAÇÕES */}
-                        <Flex alignItems={'center'} gap={4}>
+                        <Flex gap={4}>
 
-                            <Flex>
-                                {userData ? <UserNotificationsModal userData={userData} /> : ''}
+                            <Flex
+                                onClick={() => { toggleColorMode(); setDarkmode(!darkMode) }}
+                                as="button"
+                                borderRadius="md"
+                                py={2}
+                                _hover={{ color: "redSide", transition: "200ms" }}>
+                                {darkMode ?
+                                    <Sun size={24} />
+                                    :
+                                    <Moon size={24} />
+
+                                }
                             </Flex>
 
-                            <Flex>
-                                <Menu>
-                                    <MenuButton
-                                        as={IconButton}
-                                        aria-label='Options'
-                                        icon={<List />}
-                                        variant='outline'
-                                    />
-                                    <MenuList
-                                        w='100vw'
-                                        bgColor={bgColor}
-                                        color={textMenuColor}
-                                        borderRadius={0}
-                                        p={[4, 4, 4, 8, 8]}
-                                    >
-                                        <Flex flexDir={'column'} w='100%' gap={12}>
-                                            {userData ?
+                            {/* MENU E NOTIFICAÇÕES */}
+                            <Flex alignItems={'center'} gap={4}>
 
-                                                <Header isMobile={isMobile} name={userData.name} userData={userData} />
-                                                :
-                                                <Flex boxSize={16} mx='auto'>
-                                                    <Spinner
-                                                        boxSize={8}
-                                                        color={textSpinnerColor}
-                                                    />
+
+                                <Flex>
+                                    {userData ? <UserNotificationsModal userData={userData} /> : ''}
+                                </Flex>
+
+                                <Flex>
+                                    <Menu>
+                                        <MenuButton
+                                            as={IconButton}
+                                            aria-label='Options'
+                                            icon={<List />}
+                                            variant='outline'
+                                        />
+                                        <MenuList
+                                            w='100vw'
+                                            bgColor={bgColor}
+                                            color={textMenuColor}
+                                            borderRadius={0}
+                                            p={[4, 4, 4, 8, 8]}
+                                        >
+                                            <Flex flexDir={'column'} w='100%' gap={12}>
+                                                {userData ?
+
+                                                    <Header isMobile={isMobile} name={userData.name} userData={userData} darkMode={darkMode} setDarkmode={setDarkmode} toggleColorMode={toggleColorMode} />
+                                                    :
+                                                    <Flex boxSize={16} mx='auto'>
+                                                        <Spinner
+                                                            boxSize={8}
+                                                            color={textSpinnerColor}
+                                                        />
+                                                    </Flex>
+                                                }
+                                                <Flex flexDirection="column" alignItems="flex-start" w="100%">
+
+
+
+                                                    {(userData?.role != 'PROJECT_MANAGER') ?
+                                                        <MenuItem href={`dashboard`} isActive={pathName == "/dashboard"} icon={SquaresFour} title='Dashboard' />
+                                                        :
+                                                        ''
+                                                    }
+
+                                                    {(userData?.role == "ADMINISTRATOR") ?
+                                                        <MenuItem href={`projects`} isActive={pathName == `/projects/${projectData?.id}` || pathName == `/projects`} icon={House} title='Imóveis' />
+                                                        :
+                                                        ''
+                                                    }
+                                                    {(userData?.role == 'PROJECT_MANAGER') ?
+                                                        <MenuItem href={`projects`} isActive={pathName.startsWith(`/project-manager`)} icon={BsBuildings} title='Projetos' />
+                                                        :
+                                                        ''
+                                                    }
+                                                    {userData?.role == "ADMINISTRATOR" ?
+                                                        <MenuItem href={`users/list`} isActive={pathName == "/users/list" || pathName.startsWith('/users/update/investor') || pathName.startsWith('/users/update/project-manager') || pathName.startsWith('/users/update/administrator/')} icon={Users} title='Usuários' />
+                                                        :
+                                                        ''
+                                                    }
+                                                    {userData?.role == "INVESTOR" ?
+                                                        <>
+                                                            <MenuItem href={`myInvestments`} isActive={pathName == `/myInvestments`} icon={BookOpen} title='Meus investimentos' />
+                                                            <MenuItem href={`projects`} icon={ChartLineUp} isActive={pathName.startsWith(`/projects`)} title='Investir' />
+                                                        </>
+                                                        :
+                                                        ''
+                                                    }
+                                                    {userData?.role == "PROPRIETARIO" ?
+                                                        <>
+                                                            <MenuItem href={`myPropriedades`} isActive={pathName == `/myPropriedades`} icon={HouseLine} title='Minhas propriedades' />
+                                                            <MenuItem href={`projects`} icon={ChartLineUp} isActive={pathName.startsWith(`/projects`)} title='Investir' />
+                                                        </>
+                                                        :
+                                                        ''
+                                                    }
+                                                    <MenuItem href={`users/update/${pathRoleState}`} isActive={pathName == `/users/update/${pathRoleState}`} icon={User} title='Meu perfil' />
+                                                    <MenuItem href={`api/auth/logout`} isActive={pathName == "/api/auth/logout"} icon={SignOut} title='Logout' />
+
                                                 </Flex>
-                                            }
-                                            <Flex flexDirection="column" alignItems="flex-start" w="100%">
-
-
-
-                                                {(userData?.role != 'PROJECT_MANAGER') ?
-                                                    <MenuItem href={`dashboard`} isActive={pathName == "/dashboard"} icon={SquaresFour} title='Dashboard' />
-                                                    :
-                                                    ''
-                                                }
-
-                                                {(userData?.role == "ADMINISTRATOR") ?
-                                                    <MenuItem href={`projects`} isActive={pathName == `/projects/${projectData?.id}` || pathName == `/projects`} icon={House} title='Imóveis' />
-                                                    :
-                                                    ''
-                                                }
-                                                {(userData?.role == 'PROJECT_MANAGER') ?
-                                                    <MenuItem href={`projects`} isActive={pathName.startsWith(`/project-manager`)} icon={BsBuildings} title='Projetos' />
-                                                    :
-                                                    ''
-                                                }
-                                                {userData?.role == "ADMINISTRATOR" ?
-                                                    <MenuItem href={`users/list`} isActive={pathName == "/users/list" || pathName.startsWith('/users/update/investor') || pathName.startsWith('/users/update/project-manager') || pathName.startsWith('/users/update/administrator/')} icon={Users} title='Usuários' />
-                                                    :
-                                                    ''
-                                                }
-                                                {userData?.role == "INVESTOR" ?
-                                                    <>
-                                                        <MenuItem href={`myInvestments`} isActive={pathName == `/myInvestments`} icon={BookOpen} title='Meus investimentos' />
-                                                        <MenuItem href={`projects`} icon={ChartLineUp} isActive={pathName.startsWith(`/projects`)} title='Investir' />
-                                                    </>
-                                                    :
-                                                    ''
-                                                }
-                                                {userData?.role == "PROPRIETARIO" ?
-                                                    <>
-                                                        <MenuItem href={`myPropriedades`} isActive={pathName == `/myPropriedades`} icon={HouseLine} title='Minhas propriedades' />
-                                                        <MenuItem href={`projects`} icon={ChartLineUp} isActive={pathName.startsWith(`/projects`)} title='Investir' />
-                                                    </>
-                                                    :
-                                                    ''
-                                                }
-                                                <MenuItem href={`users/update/${pathRoleState}`} isActive={pathName == `/users/update/${pathRoleState}`} icon={User} title='Meu perfil' />
-                                                <MenuItem href={`api/auth/logout`} isActive={pathName == "/api/auth/logout"} icon={SignOut} title='Logout' />
-
                                             </Flex>
-                                        </Flex>
-                                    </MenuList>
-                                </Menu>
-                            </Flex>
+                                        </MenuList>
+                                    </Menu>
+                                </Flex>
 
+                            </Flex>
                         </Flex>
                     </Flex>
                 </Flex>
@@ -230,7 +253,7 @@ export function SideBar({ userData, projectData }: SideBarProps) {
 
                         {userData ?
 
-                            <Header isMobile={isMobile} name={userData.name} userData={userData} />
+                            <Header isMobile={isMobile} name={userData.name} userData={userData} darkMode={darkMode} setDarkmode={setDarkmode} toggleColorMode={toggleColorMode} />
                             :
                             <Flex boxSize={16} mx='auto'>
                                 <Spinner
@@ -291,7 +314,7 @@ export function SideBar({ userData, projectData }: SideBarProps) {
 
                     {/* Rodapé */}
                     <Flex flexDir={'column'} gap={8} w='100%' justifyContent={'center'} alignItems={'center'} borderTop={'1px'} borderColor={'grayDivisor'}>
-                        <Image src={logoSrc} alt="logo" objectFit={'contain'} maxW={32} pt={4}/>
+                        <Image src={logoSrc} alt="logo" objectFit={'contain'} maxW={32} pt={4} />
                     </Flex>
                 </Flex>
             }
