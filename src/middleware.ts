@@ -4,7 +4,10 @@ import { checkUserByEmail } from './app/services/checkUserByEmail';
 import { UserProfile } from '@auth0/nextjs-auth0/client';
 import { NextResponse } from 'next/server';
 
-
+export const config = {
+    runtime: 'nodejs',
+  };
+  
 // Função para verificar o papel do usuário (pode ser assíncrona)
 async function getUserRole(user: UserProfile) {
     // Faça uma requisição para sua API para obter o papel do usuário
