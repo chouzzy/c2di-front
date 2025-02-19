@@ -289,19 +289,22 @@
 import { withMiddlewareAuthRequired, getSession, updateSession } from '@auth0/nextjs-auth0/edge';
 import { NextRequest, NextResponse } from 'next/server';
 
-async function getUserData(req: NextRequest, token: string | undefined) {
+async function getUserData(req: NextRequest, token: string | undefined, email:string) {
     //A URL base precisa ser a do seu app, a que aparece quando você roda `npm run dev`
     //Para funcionar em produção, você precisará usar uma variável de ambiente.
     const baseUrl = 'https://c2diserver.awer.co/'
     // const baseUrl = 'http://localhost:8081/'
 
     try {
-        const apiResponse = await fetch(`${baseUrl}/api/check-user`, {
+        const apiResponse = await fetch(`${baseUrl}users/findUnique/?email=${email}`, {
             method: 'GET', // Ou POST, dependendo da sua API
             headers: {
                 'Authorization': `Bearer ${token}`, // Passa o token para a API Route
             },
         });
+
+        console.log('apiResponse')
+        console.log(apiResponse.body)
 
         if (!apiResponse.ok) {
             console.error('Erro ao buscar dados do usuário na API:', apiResponse.status);
@@ -326,7 +329,8 @@ export default withMiddlewareAuthRequired(async function middleware(req: NextReq
 
         if (!session.user.userdb) {
             // Chama a função auxiliar, passando o token
-            const user = await getUserData(req, accessToken);
+            const user = await getUserData(req, accessToken, session.user.email);
+
 
             if (user) {
                 // Atualiza a sessão com o objeto user
