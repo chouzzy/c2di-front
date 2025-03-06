@@ -116,7 +116,7 @@ export function HeaderInvestorDashboard({ userData, user }: HeaderInvestorProjec
             const last = valorMetroQuadrado.length - 1
             metroQuadradoListado.push(valorMetroQuadrado[last].valor)
         })
-        
+
         // Calcular a média
         if (metroQuadradoListado.length > 0) {
             const soma = metroQuadradoListado.reduce((acc, valor) => acc + valor, 0);

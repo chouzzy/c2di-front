@@ -1,4 +1,4 @@
-import { Button, Flex, Image, Link, SimpleGrid, Text, useColorModeValue } from "@chakra-ui/react";
+import { Badge, Button, Flex, Image, Link, SimpleGrid, Text, useColorModeValue } from "@chakra-ui/react";
 import { Dispatch, SetStateAction } from "react";
 
 interface ProjectDashboardInvestorProps {
@@ -22,6 +22,13 @@ export function ProjectDashboardInvestor({ projectsData, page, setPage, totalPag
         setPage(page - 1)
     }
 
+    const buildingStatusDict = {
+        LANCAMENTO: { name: "Lançamento", color: "green" },
+        CONSTRUCAO: { name: "Em construção", color: "blue" },
+        FINALIZACAO: { name: "Fase de finalização", color: "cyan" },
+        FINALIZADO: { name: "Finalizado", color: "gray" },
+    };
+
     return (
         <Flex flexDir={'column'} w='100%' gap={16} >
 
@@ -33,7 +40,7 @@ export function ProjectDashboardInvestor({ projectsData, page, setPage, totalPag
                     {projectsData.map((project) => {
 
                         return (
-                            
+
                             // CARD DO PROJETO
                             <Flex key={project.id} flexDir={'column'} gap={6} w={['100%', '100%', '100%', 440, 440]} mt={6} p={4} border='1px' borderColor={borderCMColor} boxShadow={'md'}>
 
@@ -42,16 +49,21 @@ export function ProjectDashboardInvestor({ projectsData, page, setPage, totalPag
                                     <Flex w='100%' flexDir={'column'} gap={1}>
                                         <Image src={`${project.images[0].url}`} h={160} w={['100%', '100%', '100%', 440, 440]} objectFit={'cover'} objectPosition={'center'} />
 
+                                        <Flex gap={2}>
                                         <Flex
                                             w={'min'}
                                             px={2}
                                             bgColor={project.active ? 'green.400' : 'orange.200'}
                                             fontSize={'sm'}
                                             fontWeight={'semibold'}
-                                            color={project.active ? 'green.800' : 'orange.800'}
+                                            color={project.active ? 'white' : 'orange.800'}
                                             borderRadius={4}
                                         >
                                             {project.active ? <Text>Ativo</Text> : <Text>Arquivado</Text>}
+                                        </Flex>
+                                        <Flex>
+                                            <Badge variant='solid' fontSize={'sm'} colorScheme={buildingStatusDict[project.buildingStatus].color}> {buildingStatusDict[project.buildingStatus].name} </Badge>
+                                        </Flex>
                                         </Flex>
                                     </Flex>
                                 </Flex>

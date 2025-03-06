@@ -783,6 +783,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/uuid@npm:^10.0.0":
+  version: 10.0.0
+  resolution: "@types/uuid@npm:10.0.0"
+  checksum: e3958f8b0fe551c86c14431f5940c3470127293280830684154b91dc7eb3514aeb79fe3216968833cf79d4d1c67f580f054b5be2cd562bebf4f728913e73e944
+  languageName: node
+  linkType: hard
+
 "@types/yup@npm:^0.32.0":
   version: 0.32.0
   resolution: "@types/yup@npm:0.32.0"
@@ -1193,6 +1200,7 @@ __metadata:
     "@types/react": ^18.3.12
     "@types/react-dom": ^18
     "@types/react-icons": ^3.0.0
+    "@types/uuid": ^10.0.0
     "@types/yup": ^0.32.0
     aws-sdk: ^2.1692.0
     axios: ^1.7.7
@@ -1217,6 +1225,7 @@ __metadata:
     sitemap: ^8.0.0
     swiper: ^11.1.15
     typescript: ^5
+    uuid: ^11.1.0
     yup: ^1.4.0
   languageName: unknown
   linkType: soft
@@ -3412,6 +3421,15 @@ __metadata:
   bin:
     uuid: dist/bin/uuid
   checksum: 56d4e23aa7ac26fa2db6bd1778db34cb8c9f5a10df1770a27167874bf6705fc8f14a4ac414af58a0d96c7653b2bd4848510b29d1c2ef8c91ccb17429c1872b5e
+  languageName: node
+  linkType: hard
+
+"uuid@npm:^11.1.0":
+  version: 11.1.0
+  resolution: "uuid@npm:11.1.0"
+  bin:
+    uuid: dist/esm/bin/uuid
+  checksum: 840f19758543c4631e58a29439e51b5b669d5f34b4dd2700b6a1d15c5708c7a6e0c3e2c8c4a2eae761a3a7caa7e9884d00c86c02622ba91137bd3deade6b4b4a
   languageName: node
   linkType: hard
 

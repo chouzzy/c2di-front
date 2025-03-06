@@ -94,7 +94,7 @@ export default function ProjectPhotos() {
                             < Flex flexDir={'column'}>
 
                                 <Flex gap={12}>
-                                    <ProjectFotosProjectManager projectData={projectData} />
+                                    <ProjectFotosProjectManager projectData={projectData} setProjectData={setProjectData}/>
                                 </Flex>
 
                             </Flex>

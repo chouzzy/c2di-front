@@ -3,7 +3,9 @@ import { api } from "../axios";
 const updateProjectFicha = async (id: any, updateData: Investment) => {
     try {
 
-
+        console.log('updateData')
+        console.log(updateData)
+        
         const response = await api.put(`investments/update/${id}`,
             updateData,
             {

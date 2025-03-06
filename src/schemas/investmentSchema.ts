@@ -143,6 +143,7 @@ const updateInvestmentSchema = yup.object({
     workmanship: yup.number().required("O custo realizado da mão de obra é obrigatório."),
   }).nullable(),
   projectManagerID: yup.string(),
+  constructionCompany: yup.string(),
   active: yup.boolean()
 
 }).noUnknown(true, "Campos desconhecidos no corpo da requisição.").strict();

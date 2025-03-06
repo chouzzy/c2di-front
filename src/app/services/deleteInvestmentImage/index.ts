@@ -14,7 +14,8 @@ const deletePrismaProjectImage = async (investmentID:Investment["id"], imageID:I
         });
 
         if (response.status == 200 || response.status == 202) {
-            return response.data
+            const investment:Investment = response.data.investment
+            return investment
         } else {
             throw Error("Ocorreu um erro inesperado")
         }

@@ -1,4 +1,4 @@
-import { FormControl, FormLabel, Input, Textarea } from "@chakra-ui/react";
+import { FormControl, FormLabel, Input, Textarea, useColorModeValue } from "@chakra-ui/react";
 import { UseFormRegisterReturn } from "react-hook-form";
 interface UsersInputProps {
     label_top: string,
@@ -17,6 +17,7 @@ interface UsersInputProps {
 export function TextAreaInput({ label_top, placeholder, value, isRequired, disabled = false, defaultValue, register, maxWidth, label_bottom }: UsersInputProps
 ) {
 
+    const color = useColorModeValue('darkSide', 'dark.lightSide')
     return (
 
         <FormControl w='100%'>
@@ -27,8 +28,10 @@ export function TextAreaInput({ label_top, placeholder, value, isRequired, disab
             </FormLabel>
 
             <Textarea {...register}
+                _placeholder={{ color: color }}
                 bgColor={'white'}
-                value={value?? undefined}
+                color={color}
+                value={value ?? undefined}
                 isRequired={isRequired}
                 disabled={disabled}
                 w='100%'

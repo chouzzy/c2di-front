@@ -1,5 +1,5 @@
 import { Flex, Image, Modal, ModalBody, ModalCloseButton, ModalContent, ModalOverlay, Spinner, Text, useDisclosure } from "@chakra-ui/react";
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 
 import 'swiper/css';
 import 'swiper/css/navigation';
@@ -8,23 +8,25 @@ import 'swiper/css/scrollbar';
 import { FotosDestaques } from "./carousel/FotosDestaques";
 import { FotosInterno } from "./carousel/FotosInterno";
 import { FotosExterno } from "./carousel/FotosExterno";
+import { FotosCarousel } from "./carousel/FotosCarousel";
 
 
 interface ProjectFotosProjectManager {
     projectData: Investment
+    setProjectData:Dispatch<SetStateAction<Investment | null>>
 }
 
-export function ProjectFotosProjectManager({ projectData }: ProjectFotosProjectManager) {
+export function ProjectFotosProjectManager({ projectData, setProjectData }: ProjectFotosProjectManager) {
 
 
     const { isOpen, onOpen, onClose } = useDisclosure() // Adiciona o hook useDisclosure
 
-    const [imageOnView, setImageOnView] = useState<Investment["images"][0]>()
+    const [imageOnView, setImageOnView] = useState<Photos>()
 
     const [loadingFiles, setLoadingFiles] = useState(false);
 
 
-    const openImage = (img: Investment["images"][0]) => {
+    const openImage = (img: Photos) => {
         setImageOnView(img)
         onOpen()
     }
@@ -46,18 +48,24 @@ export function ProjectFotosProjectManager({ projectData }: ProjectFotosProjectM
                 </Flex>
                 :
                 <>
-                    <FotosDestaques
+                    <FotosCarousel
+                        label={"FACHADA"}
                         projectData={projectData}
+                        setProjectData={setProjectData}
                         openImage={openImage}
                         setLoadingFiles={setLoadingFiles}
                     />
-                    <FotosInterno
+                    <FotosCarousel
+                        label={"INTERNO"}
                         projectData={projectData}
+                        setProjectData={setProjectData}
                         openImage={openImage}
                         setLoadingFiles={setLoadingFiles}
                     />
-                    <FotosExterno
+                    <FotosCarousel
+                        label={"EXTERNO"}
                         projectData={projectData}
+                        setProjectData={setProjectData}
                         openImage={openImage}
                         setLoadingFiles={setLoadingFiles}
                     />

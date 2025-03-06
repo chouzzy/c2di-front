@@ -48,7 +48,7 @@ export const theme = extendTheme({
     grayBox: "#E2E8F0",
     redSide: "#EF3A5D",
     yellowSide: "#efca1d",
-    beigeSide: "#f6f6f6",
+    beigeSide: "#f1f1f1",
     borderMediaSide: "#E2E8F0cc",
 
     facebook: "#3B5998",
@@ -84,7 +84,7 @@ export const theme = extendTheme({
     light: {
       bg: "#fbfbfb", // Substitui pela sua cor de fundo atual
       text: '#202222',  // Substitui pela sua cor de texto clara
-      beigeSide: "#f6f6f6",
+      beigeSide: "#f0f0f0",
     }
   },
   radii: {

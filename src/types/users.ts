@@ -131,7 +131,7 @@ interface Investment {
   companyName: string;
   partners: Partners[];
   finishDate?: Date;
-  buildingStatus: string;
+  buildingStatus: buildingStatus;
   investmentDate: Date;
   predictedCost: PredictedCost;
   realizedCost: RealizedCost;
@@ -142,6 +142,7 @@ interface Investment {
   buildingProgress: BuildingProgress
   valorOriginal: number
   valorCorrente: number
+  constructionCompany: string
   historicoDeValorizacao: HistoricoDeValorizacao[]
   financialTotalProgress: FinancialTotalProgress[]
   buildingTotalProgress: BuildingTotalProgress[]
@@ -150,9 +151,41 @@ interface Investment {
   apartaments: Apartaments[]
   valorMetroQuadrado?: ValorMetroQuadrado[]
 
+  photos: PhotosGroup[]
   active?: boolean
   createdAt: Date;
   updatedAt: Date;
+}
+
+interface PhotosGroup {
+  category: "CAPA" | "DESTAQUES" | "FACHADA" | "DECORADO" | "INTERNO" | "EXTERNO" | "PLANTAS" | "PANORAMICAS" | "MEDIA360"
+  images: Photos[]
+}
+
+interface Photos {
+  id: string
+  url: string
+  title?: string // Título da imagem (opcional)
+  description?: string // Descrição da imagem (opcional)
+}
+
+enum PhotosLabel {
+  CAPA = "CAPA",
+  DESTAQUES = "DESTAQUES",
+  FACHADA = "FACHADA",
+  DECORADO = "DECORADO",
+  INTERNO = "INTERNO",
+  EXTERNO = "EXTERNO",
+  PLANTAS = "PLANTAS",
+  PANORAMICAS = "PANORAMICAS",
+  MEDIA360 = "MEDIA360"
+}
+
+enum buildingStatus {
+  LANCAMENTO = "LANCAMENTO",
+  CONSTRUCAO = "CONSTRUCAO",
+  FINALIZACAO = "FINALIZACAO",
+  FINALIZADO = "FINALIZADO",
 }
 
 interface ApartamentMedia360 {

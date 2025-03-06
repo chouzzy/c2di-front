@@ -1,4 +1,4 @@
-import { FormControl, FormLabel, Input } from "@chakra-ui/react";
+import { FormControl, FormLabel, Input, useColorModeValue } from "@chakra-ui/react";
 import { UseFormRegisterReturn } from "react-hook-form";
 interface UsersInputProps {
     label_top: string,
@@ -7,7 +7,7 @@ interface UsersInputProps {
     value?: string | number
     isRequired?: boolean,
     disabled?: boolean,
-    defaultValue?: string|number,
+    defaultValue?: string | number,
     // errors: any
     // fieldName: string
     register: UseFormRegisterReturn<any>
@@ -17,6 +17,8 @@ interface UsersInputProps {
 
 export function ProjectInput({ label_top, type, placeholder, value, isRequired, disabled = false, defaultValue, register, maxWidth, label_bottom }: UsersInputProps
 ) {
+
+    const color = useColorModeValue('darkSide', 'dark.lightSide')
 
     return (
 
@@ -28,8 +30,10 @@ export function ProjectInput({ label_top, type, placeholder, value, isRequired, 
             </FormLabel>
 
             <Input {...register}
+                _placeholder={{ color: color }}
+                color={color}
                 bgColor={'white'}
-                value={value?? undefined}
+                value={value ?? undefined}
                 isRequired={isRequired}
                 disabled={disabled}
                 w='100%'

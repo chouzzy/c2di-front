@@ -1,3 +1,11 @@
 const genderOptions = ["Masculino", "Feminino", "Outro"]
 
-export {genderOptions}
+function capitalizeFirstLetter(str: string): string {
+    if (!str) {
+        return ''; // Trata strings vazias ou nulas
+    }
+    return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+}
+
+
+export { genderOptions, capitalizeFirstLetter }

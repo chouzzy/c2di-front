@@ -14,12 +14,13 @@ interface FotosInputProps {
     accept: string,
     projectData: Investment
     setLoadingFiles: Dispatch<SetStateAction<boolean>>
-    label:PhotosGroup["category"]
+    label: PhotosGroup["category"]
+    setProjectData: Dispatch<SetStateAction<Investment | null>>
 }
 
 
 
-export function FotosDestaquesInput({ allowedTypes, accept, projectData, setLoadingFiles, label }: FotosInputProps
+export function FotosCarouselInput({ allowedTypes, accept, projectData, setLoadingFiles, label, setProjectData }: FotosInputProps
 ) {
     const [selectedFiles, setSelectedFiles] = useState<FileList | undefined>();
     const [updatingFile, setUpdatingFile] = useState(false);
@@ -34,8 +35,8 @@ export function FotosDestaquesInput({ allowedTypes, accept, projectData, setLoad
 
             try {
                 setLoadingFiles(true)
-                await uploadFotos(projectData, projectData.id, label, selectedFiles)
-                window.location.reload()
+                const projectUpdated = await uploadFotos(projectData, projectData.id, label, selectedFiles)
+                setProjectData(projectUpdated)
 
             } catch (error) {
                 setError('Erro ao fazer upload das fotos'); // Define uma mensagem de erro para o usuário

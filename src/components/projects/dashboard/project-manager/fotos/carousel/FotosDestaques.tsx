@@ -14,17 +14,19 @@ import axios from "axios";
 
 interface FotosDestaquesProps {
     projectData: Investment
-    openImage: (img: Investment["images"][0]) => void
+    openImage: (img: Photos) => void
     setLoadingFiles: Dispatch<SetStateAction<boolean>>
+    label:PhotosGroup["category"]
 }
 
-export function FotosDestaques({ projectData, openImage, setLoadingFiles }: FotosDestaquesProps) {
+export function FotosDestaques({ projectData, openImage, setLoadingFiles, label }: FotosDestaquesProps) {
 
     const [editMode, setEditMode] = useState(false)
     const [isDeletingImage, setIsDeletingImage] = useState(false)
     const [deletingImageID, setDeletingImageID] = useState<string>()
 
-    const [destaques, setDestaques] = useState<Investment["images"]>(projectData.images.filter(img => img.label === 'DESTAQUES'))
+    const [destaques, setDestaques] = useState<Photos[]>([]); // Inicializa com array vazio
+    const [loading, setLoading] = useState(true); // Estado de loading. Começa true.
 
     const deleteImage = (imageID: Investment["images"][0]["id"]) => {
         setDeletingImageID(imageID)
@@ -53,7 +55,7 @@ export function FotosDestaques({ projectData, openImage, setLoadingFiles }: Foto
                 const response = await deletePrismaProjectImage(projectData.id, imageID)
                 // Salvando alterações no estado
                 projectData.images = response.images
-                setDestaques(response.images.filter((img: Investment["images"][0]) => img.label === 'DESTAQUES'))
+                setDestaques(response.images.filter((img: Investment["images"][0]) => img.label === label))
 
             } catch (error) {
                 console.error(error)
@@ -68,8 +70,23 @@ export function FotosDestaques({ projectData, openImage, setLoadingFiles }: Foto
 
     }, [isDeletingImage])
 
+    useEffect(() => {
+        if (projectData && projectData.photos) {
+            const destaquesGroup = projectData.photos.find(
+                (group) => group.category === label
+            );
 
+            if (destaquesGroup) {
+                setDestaques(destaquesGroup.images);
+            } else {
+                setDestaques([]); // Define como array vazio se não encontrar
+            }
+            setLoading(false); //Muda o status para false, indicando que o componente não está mais no loading
+        } else {
+            setLoading(false); //Caso não encontre, já define o loading como false.
+        }
 
+    }, [projectData]); // Executa o efeito quando projectData mudar
 
 
     return (
@@ -90,6 +107,7 @@ export function FotosDestaques({ projectData, openImage, setLoadingFiles }: Foto
                     {editMode ?
                         <FotosDestaquesInput
                             key={"FOTOS"}
+                            label={label}
                             allowedTypes={['image/png', 'image/jpeg', 'image/jpg']}
                             accept="image/*"
                             projectData={projectData}
@@ -158,10 +176,7 @@ export function FotosDestaques({ projectData, openImage, setLoadingFiles }: Foto
                     <Flex w={0}>.</Flex>
                 </Swiper>
             </Flex>
-            <Flex>
 
-            </Flex>
-
-        </Flex>
+        </Flex >
     )
 }
