@@ -21,9 +21,10 @@ interface FotosCarouselProps {
     setLoadingFiles: Dispatch<SetStateAction<boolean>>
     label: PhotosGroup["category"]
     setProjectData: Dispatch<SetStateAction<Investment | null>>
+    userData: User
 }
 
-export function FotosCarousel({ projectData, openImage, setLoadingFiles, label, setProjectData }: FotosCarouselProps) {
+export function FotosCarousel({ projectData, openImage, setLoadingFiles, label, setProjectData, userData }: FotosCarouselProps) {
 
     const [editMode, setEditMode] = useState(false)
     const [isDeletingImage, setIsDeletingImage] = useState(false)
@@ -36,6 +37,7 @@ export function FotosCarousel({ projectData, openImage, setLoadingFiles, label, 
     const [uploadPhotoTrigger, setUploadPhotoTrigger] = useState<boolean>(false)
 
     const [show, setShow] = useState(false)
+
     const handleClick = () => setShow(!show)
 
     const deleteImage = (imageID: Investment["images"][0]["id"]) => {
@@ -77,7 +79,7 @@ export function FotosCarousel({ projectData, openImage, setLoadingFiles, label, 
         setUploadPhotoTrigger(true)
     }
 
-    const slidesResponsive = useBreakpointValue({ base: 1, sm: 1, md: 3, lg: 3, xl: 4 })
+    const slidesResponsive = useBreakpointValue({ base: 1, sm: 1, md: 3, lg: 3, xl: 3 })
     const bgButtonColor = useColorModeValue("darkSide", "graySide")
 
     // DELETE IMAGE GROUP
@@ -186,25 +188,29 @@ export function FotosCarousel({ projectData, openImage, setLoadingFiles, label, 
                         ''
                     }
 
-                    <Button
-                        onClick={() => { setEditMode(!editMode) }}
-                        mt={2}
-                        size={'md'}
-                        px={12}
-                        _hover={editMode ? { bgColor: bgButtonColor } : { bgColor: 'redSide' }}
-                        color={'lightSide'}
-                        bgColor={editMode ? 'graySide' : bgButtonColor}>
-                        {editMode ?
-                            loading ?
-                                <Flex gap={2} alignItems={'center'} fontSize={'xs'}>
-                                    <Text> Apagando imagem...</Text>
-                                    <Spinner boxSize={2} mx='auto' />
-                                </Flex>
+                    {userData.role === 'PROJECT_MANAGER' || userData.role === 'ADMINISTRATOR' ?
+
+                        <Button
+                            onClick={() => { setEditMode(!editMode) }}
+                            mt={2}
+                            size={'md'}
+                            px={12}
+                            _hover={editMode ? { bgColor: bgButtonColor } : { bgColor: 'redSide' }}
+                            color={'lightSide'}
+                            bgColor={editMode ? 'graySide' : bgButtonColor}>
+                            {editMode ?
+                                loading ?
+                                    <Flex gap={2} alignItems={'center'} fontSize={'xs'}>
+                                        <Text> Apagando imagem...</Text>
+                                        <Spinner boxSize={2} mx='auto' />
+                                    </Flex>
+                                    :
+                                    'Retornar'
                                 :
-                                'Retornar'
-                            :
-                            'Editar'}
-                    </Button>
+                                'Editar'}
+                        </Button>
+                        : ''
+                    }
 
                 </Flex>
             </Flex>

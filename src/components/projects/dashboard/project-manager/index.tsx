@@ -1,5 +1,5 @@
 import { Button, Flex, Image, Link, SimpleGrid, Text, useColorModeValue } from "@chakra-ui/react";
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 
 interface ProjectDashboardInvestorProps {
     projectsData: Investment[]
@@ -13,6 +13,7 @@ export function ProjectDashboardProjectManager({ projectsData, page, setPage, to
 
     const bgButtonColor = useColorModeValue('darkSide', 'dark.lightSide')
     const textColor = useColorModeValue('graySide', 'dark.graySide')
+
 
     const nextPage = async () => {
         setPage(page + 1)
@@ -30,6 +31,12 @@ export function ProjectDashboardProjectManager({ projectsData, page, setPage, to
 
                     {projectsData.map((project) => {
 
+                        const capas = project.photos.find((photoGroup) => photoGroup.category === "CAPA")
+
+                        const projectCapa = capas?.images[0]
+                        let capa = '/assets/img-not-found.png'
+                        if (projectCapa) { capa = projectCapa.url }
+
                         console.log(Math.ceil(totalPages / elementsPerPage))
 
 
@@ -41,7 +48,7 @@ export function ProjectDashboardProjectManager({ projectsData, page, setPage, to
                                 {/* IMAGEM E STATUS */}
                                 <Flex>
                                     <Flex w='100%' flexDir={'column'} gap={1}>
-                                        <Image src={`${project.images[0].url}`} h={160} w={['100%', '100%', '100%', 440, 440]} objectFit={'cover'} objectPosition={'center'} />
+                                        <Image src={capa} h={160} w={['100%', '100%', '100%', 440, 440]} objectFit={'cover'} objectPosition={'center'} />
 
                                         <Flex
                                             w={'min'}
@@ -71,13 +78,13 @@ export function ProjectDashboardProjectManager({ projectsData, page, setPage, to
                                 {/* ACTION BUTTONS */}
                                 <Flex justifyContent={['space-between', 'space-between', 'space-between', 'start', 'start']} gap={8}>
                                     <Link href={`/project-manager/projects/${project.id}`}>
-                                        <Button _hover={{ bgColor: 'graySide' }} size={['sm','sm','sm','md','md']} color={'lightSide'} bgColor={bgButtonColor} fontSize={14}>
+                                        <Button _hover={{ bgColor: 'graySide' }} size={['sm', 'sm', 'sm', 'md', 'md']} color={'lightSide'} bgColor={bgButtonColor} fontSize={14}>
                                             <Flex alignItems={'center'} justifyContent={'center'}>
                                                 <Text>Ver projeto</Text>
                                             </Flex>
                                         </Button>
                                     </Link>
-                                    <Button _hover={{ bgColor: 'graySide' }} size={['sm','sm','sm','md','md']} color={'lightSide'} bgColor={bgButtonColor} fontSize={14}>
+                                    <Button _hover={{ bgColor: 'graySide' }} size={['sm', 'sm', 'sm', 'md', 'md']} color={'lightSide'} bgColor={bgButtonColor} fontSize={14}>
                                         <Flex alignItems={'center'} justifyContent={'center'}>
                                             <Text>Entrar em contato</Text>
                                         </Flex>
@@ -93,7 +100,7 @@ export function ProjectDashboardProjectManager({ projectsData, page, setPage, to
             </Flex>
 
             {/* FOOTER */}
-            <Flex w='100%'  gap={4} >
+            <Flex w='100%' gap={4} >
                 <Flex gap={4} w='100%' alignItems={'center'} justifyContent={'space-between'}>
 
                     <Button

@@ -2,7 +2,7 @@ import { updateProjectFicha } from '@/app/services/updateProjectFicha';
 import { floorPlanTypesAdapter, projectTypeAdapter } from '@/app/services/utils';
 import { updateInvestmentSchema } from '@/schemas/investmentSchema';
 import { Badge, Button, Divider, Flex, Spinner, Text } from '@chakra-ui/react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { ValidationError } from 'yup';
 
@@ -31,6 +31,7 @@ export function FichaTecnica({ userData, projectData }: ProjectDataProps) {
     const [editMode, setEditMode] = useState(false); // Estado para controlar o modo de edição
 
     const [isLoading, setIsLoading] = useState(false)
+    const [plantas, setPlantas] = useState<Photos["url"][]>(['/assets/img-not-found.png'])
 
     const buildingStatusDict = {
         LANCAMENTO: { name: "Lançamento", color: "green" },
@@ -39,8 +40,24 @@ export function FichaTecnica({ userData, projectData }: ProjectDataProps) {
         FINALIZADO: { name: "Finalizado", color: "gray" },
     };
 
-    const { images } = projectData
-    const plantas = images.filter((img) => { return img.label === 'PLANTAS' })
+
+    useEffect(() => {
+        const getPlantas = async () => {
+            const { photos } = projectData
+            const plantas = photos.find((img) => img.category === 'PLANTAS')
+
+            if (plantas) {
+                const plantasUrl = plantas.images.map((img) => { return img.url })
+                setPlantas(plantasUrl)
+            } else {
+                setPlantas(['/assets/img-not-found.png'])
+            }
+
+        }
+        if (projectData) {
+            getPlantas()
+        }
+    }, [])
 
 
     const handleEditClick = () => {
@@ -58,7 +75,7 @@ export function FichaTecnica({ userData, projectData }: ProjectDataProps) {
     const onSubmit = async (data: any) => {
 
         try {
-            handleIsLoading(); 
+            handleIsLoading();
             data = await projectTypeAdapter(data)
             data = await floorPlanTypesAdapter(data)
             await updateInvestmentSchema.validate(data);
@@ -110,26 +127,29 @@ export function FichaTecnica({ userData, projectData }: ProjectDataProps) {
                             <Construtora projectData={projectData} />
                         </Flex>
                     </Flex>
-               
 
-            {editMode ?
-                <Button color='lightSide' bgColor="redSide" onClick={handleEditCancel} mt={4} maxW={40}>
-                    Cancelar
-                </Button>
-                :
-                <Button color='lightSide' bgColor="redSide" onClick={handleEditClick} mt={4} maxW={40}>
-                    Editar
-                </Button>
-            }
+                    {userData.role === 'PROJECT_MANAGER' || userData.role === 'ADMINISTRATOR' ? <>
+                        {editMode ?
+                            <Button color='lightSide' bgColor="redSide" onClick={handleEditCancel} mt={4} maxW={40}>
+                                Cancelar
+                            </Button>
+                            :
+                            <Button color='lightSide' bgColor="redSide" onClick={handleEditClick} mt={4} maxW={40}>
+                                Editar
+                            </Button>
+                        }
 
-            {
-                editMode ?
-                    <form onSubmit={handleSubmit(onSubmit)}>
-                        < Form projectData={projectData} register={register} userData={userData} />
-                    </form >
-                    : ''
-            }
-             </>
+                        {
+                            editMode ?
+                                <form onSubmit={handleSubmit(onSubmit)}>
+                                    < Form projectData={projectData} register={register} userData={userData} />
+                                </form >
+                                : ''
+                        }
+                    </>
+                        : ''
+                    }
+                </>
             }
         </Flex >
     )

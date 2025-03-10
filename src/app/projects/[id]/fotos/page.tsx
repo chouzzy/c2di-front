@@ -11,6 +11,7 @@ import { Container, Flex } from '@chakra-ui/react'
 import { SideBar } from '@/components/SideBar'
 import { useParams } from 'next/navigation'
 import { useEffect, useState } from 'react'
+import { ProjectMediaFotos } from '@/components/projects/dashboard/project-manager/fotos'
 
 export default function ProjectPhotos() {
 
@@ -96,7 +97,7 @@ export default function ProjectPhotos() {
                             < Flex flexDir={'column'}>
 
                                 <Flex gap={12}>
-                                    <ProjectFotosInvestor projectData={projectData} />
+                                    <ProjectMediaFotos userData={userData} projectData={projectData} setProjectData={setProjectData}/>
                                 </Flex>
 
                             </Flex>

@@ -161,10 +161,10 @@ export function SecondPage({ register, userData }: PersonalDataAndGoalsProps) {
                         key={"buildingStatus"}
                         isRequired={true}
                         options={[
-                            'Lançamento', // Para projetos ainda não iniciados
-                            'Em construção',
-                            'Pronto para morar',
-                            'Parado',
+                            'LANCAMENTO',
+                            'CONSTRUCAO',
+                            'FINALIZACAO',
+                            'FINALIZADO'
                         ]}
                         placeholder={'Selecione'}
                         label_top={'Status da construção'}
@@ -174,6 +174,17 @@ export function SecondPage({ register, userData }: PersonalDataAndGoalsProps) {
 
 
                 {/* Nome da construtora */}
+                <Flex w={['100%','100%','100%',72, 72]} gap={8}>
+                    <AuthInput
+                        key={"companyName"}
+                        isRequired={true}
+                        type='string'
+                        placeholder={'Ex: LH Contruções'}
+                        label_top='Nome da construtora'
+                        register={register("constructionCompany")}
+                    />
+                </Flex>
+                {/* Nome da empresa */}
                 <Flex w={['100%','100%','100%',72, 72]} gap={8}>
                     <AuthInput
                         key={"companyName"}

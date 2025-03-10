@@ -3,7 +3,7 @@ import { Box, IconButton, Flex, Image, Text, Modal, ModalBody, ModalCloseButton,
 import { ArrowArcLeft, ArrowArcRight, ArrowLeft, ArrowRight } from 'phosphor-react';
 
 interface CarouselProps {
-    images: { url: string; id: string; }[]; // Defina o tipo correto das suas imagens
+    images: string[]; // Defina o tipo correto das suas imagens
     editMode?: boolean; // Se você precisa do modo de edição
 }
 
@@ -42,8 +42,8 @@ export function Carousel({ images, editMode = false }: CarouselProps) {
 
                 {/* Imagem atual */}
                 <Image
-                    onClick={() => { openImage(images[currentImageIndex].url) }}
-                    src={images[currentImageIndex].url}
+                    onClick={() => { openImage(images[currentImageIndex]) }}
+                    src={images[currentImageIndex]}
                     alt={`Imagem ${currentImageIndex + 1}`}
                     width="100%" // Ocupa toda a largura do container
                     objectFit="cover" // Ajusta a imagem para cobrir o espaço, mantendo a proporção

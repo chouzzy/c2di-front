@@ -6,7 +6,6 @@ export async function UploadDocuments(document:FileList, folderTitle:Investment[
     const formData = new FormData();
 
     for (let i = 0; i < document.length; i++) {
-        console.log(document[i])
         formData.append('file', document[i]);
     }
 
@@ -14,7 +13,6 @@ export async function UploadDocuments(document:FileList, folderTitle:Investment[
     formData.append('projectId', folderTitle);
 
     // Faz a requisição POST usando Axios para enviar os arquivos
-    console.log('aqui')
     const responseFiles = await axios.post('/api/upload', formData, {
         headers: {
             'Content-Type': 'multipart/form-data',

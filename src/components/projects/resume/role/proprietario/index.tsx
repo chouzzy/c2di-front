@@ -1,6 +1,6 @@
 import { Flex, IconButton, Menu, MenuButton, MenuItem, MenuList, useBreakpointValue, useColorModeValue } from '@chakra-ui/react';
 import { FichaTecnica } from '../../fichaTecnica';
-import { useState } from 'react';
+import { Dispatch, SetStateAction, useState } from 'react';
 import Partners from '../../partners';
 import { UserProfile } from '@auth0/nextjs-auth0/client';
 import { SpinnerFullScreen } from '@/components/Loading/SpinnerFullScreen';
@@ -14,9 +14,11 @@ interface ProjectDataProps {
     userData: User
     projectData: Investment
     user: UserProfile | undefined
+    setProjectData:Dispatch<SetStateAction<Investment | null>>
+
 }
 
-function ProjectResumeProprietario({ userData, user, projectData }: ProjectDataProps) {
+function ProjectResumeProprietario({ userData, user, projectData, setProjectData }: ProjectDataProps) {
 
     const bgMenuColor = useColorModeValue('beigeSide', 'dark.beigeSide')
     const textMenuColor = useColorModeValue('beigeSide', 'dark.beigeSide')
@@ -89,7 +91,7 @@ function ProjectResumeProprietario({ userData, user, projectData }: ProjectDataP
 
             {page == 0 ? (<InfosGerais userData={userData} projectData={projectData} />) : ('')}
             {page == 3 ? (<DocumentsList userData={userData} documentList={documentList} setDocumentList={setDocumentList} user={user} projectData={projectData} />) : ('')}
-            {page == 4 ? (<ProjectGallery userData={userData} projectData={projectData} />) : ('')}
+            {page == 4 ? (<ProjectGallery userData={userData} projectData={projectData} setProjectData={setProjectData} />) : ('')}
             {page == 5 ? (<BuildingStatus userData={userData} projectData={projectData} />) : ('')}
             {page == 7 ? (<Unidades userData={userData} projectData={projectData} />) : ('')}
 

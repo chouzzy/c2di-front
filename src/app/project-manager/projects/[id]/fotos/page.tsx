@@ -9,7 +9,7 @@ import { useParams } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { HeaderInvestorGalleryFotosProject } from '@/components/projects/headers/HeaderInvestorGalleryFotosProject'
 import { HeaderAdminGalleryFotosProject } from '@/components/projects/headers/HeaderAdminGalleryFotosProject'
-import { ProjectFotosProjectManager } from '@/components/projects/dashboard/project-manager/fotos'
+import { ProjectMediaFotos } from '@/components/projects/dashboard/project-manager/fotos'
 import { getProjectByID } from '@/app/services/getProject'
 
 export default function ProjectPhotos() {
@@ -94,7 +94,7 @@ export default function ProjectPhotos() {
                             < Flex flexDir={'column'}>
 
                                 <Flex gap={12}>
-                                    <ProjectFotosProjectManager projectData={projectData} setProjectData={setProjectData}/>
+                                    <ProjectMediaFotos userData={userData} projectData={projectData} setProjectData={setProjectData}/>
                                 </Flex>
 
                             </Flex>

@@ -68,7 +68,7 @@ export function HeaderAdminProjectList({ userData, user }: HeaderAdminProjectPro
             <Flex gap={8} alignItems={'center'}>
                 <Button onClick={() => { handleCreateInvestment() }} size={['sm','sm','sm','md']} _hover={{ bgColor: 'graySide' }} color={'lightSide'} bgColor={bgButtonColor} mt={4}>
                     <Flex alignItems={'center'} justifyContent={'center'}>
-                        <Text>Criar imóvel</Text>
+                        <Text>Novo projeto +</Text>
                     </Flex>
                 </Button>
             </Flex>

@@ -4,19 +4,17 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { UserProfile } from "@auth0/nextjs-auth0/client";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
-import { updateInvestorProfile } from "@/app/services/updateInvestorProfile";
-import { FirstPage } from "./CreateProjectPages/FirstPage";
-import { SecondPage } from "./CreateProjectPages/SecondPage";
 import { ThirdPage } from "./CreateProjectPages/ThirdPage";
-import { createInvestorUtils, documentsArrayAdapter, floorPlanTypesAdapter, imagesArrayAdapter, projectTypeAdapter } from "@/app/services/utils";
+import { createInvestorUtils } from "@/app/services/utils";
 import { createInvestmentSchema } from "@/schemas/investmentSchema";
 import { createPrismaInvestment } from "@/app/services/createInvestment";
-import axios, { AxiosError } from "axios";
-import { SpinnerFullScreen } from "../Loading/SpinnerFullScreen";
-import { changePrismaProjectFotos } from "@/app/services/changeFotos";
+import { AxiosError } from "axios";
 import { changePrismaProjectDoc } from "@/app/services/changeDoc";
 import { UploadDocuments } from "@/app/services/uploadDocuments";
 import { UploadImages } from "@/app/services/uploadImages";
+import { changePrismaProjectPhotos } from "@/app/services/changePhotos";
+import { FirstPage } from "./CreateProjectPages/FirstPage";
+import { SecondPage } from "./CreateProjectPages/SecondPage";
 
 interface CreateInvestorAccountCardProps {
     user: UserProfile
@@ -40,7 +38,7 @@ export function CreateProjectForm({ user, router, userData }: CreateInvestorAcco
     };
     const pages = [0, 1, 2]
 
-    const [page, setPage] = useState(2)
+    const [page, setPage] = useState(0)
 
     // SUBMIT FORM
     const onSubmit = async (data: any) => {
@@ -52,7 +50,7 @@ export function CreateProjectForm({ user, router, userData }: CreateInvestorAcco
             }
 
             // INICIA CARREGAMENTO
-            setIsUploading(true)
+            // setIsUploading(true)
             let totalFiles = 0;
 
             // LÊ CADA IMAGEM DO ARRAY DATA.IMAGE
@@ -63,29 +61,30 @@ export function CreateProjectForm({ user, router, userData }: CreateInvestorAcco
             }
             setTotalUploading(totalFiles); // Define o total de arquivos
 
+            
             // TRANSFORMA O ARRAY DE IMAGENS NO FORMATO DO BANCO DE DADOS
             data = await createInvestorUtils(data, userData.id)
-
+            
             const { image, document } = data
-
+            
             // Deleta array antigo de imagens, o novo formatado se chama data.images
             delete data.image
             delete data.document
-
+            
             await createInvestmentSchema.validate(data);
 
-            // Cria o investimento antes de cadastrar imagens no banco de imagens
+            // // Cria o investimento antes de cadastrar imagens no banco de imagens
             const investment = await createPrismaInvestment(data)
 
             const docs = await UploadDocuments(document, investment.title);
-            const images = await UploadImages({image, folderTitle: investment.title, setProgressUploading});
+            const photos = await UploadImages({image, folderTitle: investment.title, setProgressUploading});
             
             
 
-            investment.images = images
+            investment.photos = photos
             investment.documents = docs
 
-            await changePrismaProjectFotos(investment.id, investment)
+            await changePrismaProjectPhotos(investment.id, investment)
             await changePrismaProjectDoc(investment.id, investment)
 
             setIsUploading(false)

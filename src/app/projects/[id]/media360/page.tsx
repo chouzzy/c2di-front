@@ -10,7 +10,7 @@ import { useEffect, useState } from 'react'
 import { HeaderInvestorGalleryFotosProject } from '@/components/projects/headers/HeaderInvestorGalleryFotosProject'
 import { HeaderAdminGalleryFotosProject } from '@/components/projects/headers/HeaderAdminGalleryFotosProject'
 import { getProjectByID } from '@/app/services/getProject'
-import { ProjectMedia360Investor } from '@/components/projects/dashboard/investor/media360'
+import { ProjectMediaMedia360 } from '@/components/projects/dashboard/project-manager/media360'
 
 export default function ProjectMedia360() {
 
@@ -96,7 +96,7 @@ export default function ProjectMedia360() {
                             < Flex flexDir={'column'}>
 
                                 <Flex gap={12}>
-                                    <ProjectMedia360Investor projectData={projectData} />
+                                    <ProjectMediaMedia360 userData={userData} projectData={projectData} setProjectData={setProjectData}/>
                                 </Flex>
 
                             </Flex>

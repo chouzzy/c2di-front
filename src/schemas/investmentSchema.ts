@@ -1,5 +1,12 @@
 import * as yup from "yup";
 
+const photoSchema = yup.object().shape({
+  id: yup.string().required().uuid(),
+  url: yup.string().required(),
+  title: yup.string().optional(), // title é opcional
+  description: yup.string().optional(), // description é opcional
+});
+
 const createInvestmentSchema = yup.object({
 
   title: yup.string().required("O título do investimento é obrigatório."),
@@ -42,17 +49,16 @@ const createInvestmentSchema = yup.object({
         url: yup.string()
       }),
     ),
-  images: yup
-    .array()
+    photos: yup.array()
     .of(
       yup.object().shape({
-        label: yup.string().oneOf(["DESTAQUES", "GERAL", "PLANTAS", "EXTERNO", "INTERNO", "PANORAMICAS"]).required('Label obrigatória'),
-        url: yup.string().required("A URL da imagem é obrigatória."),
-        description: yup.string().optional(),
-      }),
-    )
-    .required("As imagens são obrigatórias."),
+        category: yup.string().required(),
+        images: yup.array().of(photoSchema),
+      })
+    ),
+
   companyName: yup.string().required("O nome da empresa é obrigatório."),
+  constructionCompany: yup.string().required("O nome da construtora é obrigatório."),
   finishDate: yup.string().nullable(), // A data de término pode ser nula
   buildingStatus: yup.string().required("O status da construção é obrigatório."),
   investmentDate: yup.string(),

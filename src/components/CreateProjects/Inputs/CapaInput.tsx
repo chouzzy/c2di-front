@@ -1,10 +1,11 @@
 import { Flex, FormControl, FormLabel, Input, Text } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { UseFormRegisterReturn } from "react-hook-form";
 import { ErrorInputComponent } from "@/components/ErrorInputComponent";
 import { ArrowArcLeft } from "phosphor-react";
 import { changePrismaProjectCapa } from "@/app/services/changeCapa";
 import axios from "axios";
+import { uploadFotos, uploadFotoUnica } from "@/app/services/uploadPhotosDB";
 
 
 
@@ -12,110 +13,85 @@ interface UsersInputProps {
     allowedTypes: string[],
     accept: string,
     projectData: Investment
+    setLoadingFiles: Dispatch<SetStateAction<boolean>>
+    label: PhotosGroup["category"]
+    setProjectData: Dispatch<SetStateAction<Investment | null>>
 }
 
 
 
-export function CapaInput({ allowedTypes, accept, projectData }: UsersInputProps
+export function CapaInput({ allowedTypes, accept, projectData, setLoadingFiles, label, setProjectData }: UsersInputProps
 ) {
-    const [selectedFile, setSelectedFile] = useState<File>();
+    const [selectedFiles, setSelectedFiles] = useState<FileList | undefined>();
     const [updatingFile, setUpdatingFile] = useState(false);
     const [error, setError] = useState('');
 
-
     useEffect(() => {
-
-        const updateCapa = async (updateData: Investment, selectedFile: File) => {
-
-            try {
-
-                const formData = new FormData();
-
-                formData.append('file', selectedFile);
-
-                formData.append('projectId', projectData.title);
-
-                // Faz a requisição POST usando Axios
-                const responseFiles = await axios.post('/api/upload', formData, {
-                    headers: {
-                        'Content-Type': 'multipart/form-data', // Define o Content-Type para upload de arquivos
-                    },
-                });
-
-                const imageToDelete = projectData.images[0]
-
-                if (!imageToDelete) {
-                    console.warn(`Imagem de capa não encontrada no array destaques`);
-                    return;
-                }
-
-                const responseImgDeleted = await axios.post('/api/delete-image', { 
-                    imageUrl: imageToDelete.url 
-                  });
-                const imageUrls = responseFiles.data.imageUrls;
-
-                projectData.images[0].label = 'DESTAQUES'
-                projectData.images[0].url = imageUrls[0]
-                projectData.images[0].description = selectedFile.name
-
-                const response = await changePrismaProjectCapa(projectData.id, updateData)
-
-                window.location.reload()
-            } catch (error) {
-                console.error('Erro ao fazer upload da capa')
-                console.error(error)
+        const handleUpload = async () => {
+            if (!projectData || !selectedFiles) {
+                setLoadingFiles(false);
+                return;
             }
 
+            try {
+                setLoadingFiles(true)
+                const projectUpdated = await uploadFotoUnica(projectData, projectData.id, label, selectedFiles)
+                setProjectData(projectUpdated)
+
+            } catch (error) {
+                setError('Erro ao fazer upload das fotos'); // Define uma mensagem de erro para o usuário
+            } finally {
+                setLoadingFiles(false);
+                setUpdatingFile(false)
+            }
         }
-
-        if (selectedFile && updatingFile) {
-
-
-            updateCapa(projectData, selectedFile)
-            setUpdatingFile(false)
+        if (selectedFiles && updatingFile) {
+            handleUpload();
         }
+    }, [selectedFiles, setLoadingFiles]); // Dependências do useEffect
 
-    }, [updatingFile])
 
     const handleFileChange = (event: any) => {
 
+        setSelectedFiles(undefined)
         setError("")
 
         const files = event.target.files;
-
 
         if (!files) {
             return
         }
 
-        if (files[0]) {
+        for (let index = 0; index < files.length; index++) {
 
-            const maxSize = 50 * 1024 * 1024; // 5 MB
-            const selectedFilesArray = Array.from(files);
+            if (files[index]) {
 
-            if (!allowedTypes.includes(files[0].type)) {
-                setError('Formato de um ou mais arquivos inválidos');
-                event.target.value = null; // Limpa o valor do input
-                return;
-            }
+                const maxSize = 50 * 1024 * 1024; // 5 MB
+                const selectedFilesArray = Array.from(files);
 
-            if (files[0].size > maxSize) {
-                setError('O arquivo excede o tamanho máximo de 5MB.');
-                event.target.value = null; // Limpa o valor do input
-                return;
-            }
+                if (!allowedTypes.includes(files[index].type)) {
+                    setError('Formato de um ou mais arquivos inválidos');
+                    event.target.value = null; // Limpa o valor do input
+                    return;
+                }
 
-            if (selectedFilesArray.length > 10) {
-                setError('Você pode selecionar no máximo 10 arquivos.');
-                event.target.value = null;
-                // Enviar o arquivo para o servidor
-            }
+                if (files[index].size > maxSize) {
+                    setError('O arquivo excede o tamanho máximo de 5MB.');
+                    event.target.value = null; // Limpa o valor do input
+                    return;
+                }
 
-            setSelectedFile(files[0]);
-            setUpdatingFile(true)
-
+                if (selectedFilesArray.length > 10) {
+                    setError('Você pode selecionar no máximo 10 arquivos.');
+                    event.target.value = null;
+                    return;
+                }
+            };
         }
+        setSelectedFiles(files);
+        setUpdatingFile(true);
     }
+
 
     return (
 
@@ -126,12 +102,12 @@ export function CapaInput({ allowedTypes, accept, projectData }: UsersInputProps
             </Flex>
 
             <Input
-                className="classer"
+                className="fotos"
                 type={'file'}
                 onChange={handleFileChange}
                 bgColor={'white'}
-                w={36}
-                h={8}
+                w={48}
+                h={12}
                 multiple={false}
                 borderColor={'#00000000'}
                 accept={accept}

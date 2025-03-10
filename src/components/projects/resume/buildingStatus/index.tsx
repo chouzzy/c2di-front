@@ -201,7 +201,6 @@ export function BuildingStatus({ userData, projectData }: ProjectDataProps) {
                 <ValorMetroQuadrado graphWidth={graphWidth} graphHeight={graphHeight} valorMetroQuadrado={valorMetroQuadrado} />
 
             </Flex>
-
             {/* ACOMPANHAMENTOS */}
             <Flex flexDir={'column'} gap={4} w='100%'>
 

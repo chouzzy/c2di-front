@@ -322,8 +322,25 @@ interface valorMetroQuadradoProps {
 }
 export function ValorMetroQuadrado({ graphWidth, graphHeight, valorMetroQuadrado }: valorMetroQuadradoProps) {
 
-    if (!valorMetroQuadrado) {
-        return (<></>)
+    if (!valorMetroQuadrado || valorMetroQuadrado.length == 0) {
+        return (
+            <Flex flexDir={'column'}>
+                {/* HEADER CUSTO FINANCEIRO*/}
+                <Flex flexDir={'row'} alignItems={'center'} gap={16}>
+
+                    <Flex flexDir={'column'}>
+                        <Text fontWeight={'semibold'} fontSize={[16, 16, 16, 20, 20]}> Metro quadrado:</Text>
+
+                        <Text fontSize={[14, 14, 14, 18, 18]}>
+                            Mantenha-se informado sobre a evolução do valor do metro quadrado de seu empreendimento.
+                        </Text>
+                    </Flex>
+
+                </Flex>
+            </Flex>
+        )
+
+
     } else {
 
         const axisTextColor = useColorModeValue('darkSide', 'white'); // ou use suas cores customizadas

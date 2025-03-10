@@ -2,7 +2,7 @@ import { resetPassword } from "@/app/services/changePassword";
 import { changeProjectStatus } from "@/app/services/changeProjectStatus";
 import { deletePrismaAndAuth0User } from "@/app/services/deletePrismaAndAuth0User";
 import { UserProfile } from "@auth0/nextjs-auth0/client";
-import { Button, Flex, Spinner, Text, useDisclosure, Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, ModalFooter, useColorModeValue } from "@chakra-ui/react";
+import { Button, Flex, Spinner, Text, useDisclosure, Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, ModalFooter, useColorModeValue, Image } from "@chakra-ui/react";
 import { useRouter } from "next/navigation";
 import { Envelope, Key } from "phosphor-react";
 import { useEffect, useState } from "react";
@@ -19,11 +19,17 @@ export function HeaderAdminProject({ projectData, userData, user }: HeaderProjec
 
     const router = useRouter()
     const { isOpen, onOpen, onClose } = useDisclosure() // Adiciona o hook useDisclosure
+
     const [changingPassword, setChangingPassword] = useState(false)
     const [archivingProject, setArchivingProject] = useState(false)
     const [archiveProjectConfirm, setArchiveProjectConfirm] = useState(false)
     const [archivedProject, setArchivedProject] = useState(false)
     const [modalMessage, setModalMessage] = useState(''); // Estado para a mensagem do modal
+
+    const { isOpen: isOpenImage, onOpen: onOpenImage, onClose: onCloseImage } = useDisclosure() // Adiciona o hook useDisclosure
+    const [capa, setCapa] = useState<Photos["url"]>('/assets/img-not-found.png')
+    const [imageOnView, setImageOnView] = useState<Photos["url"]>()
+
 
     const [activatingProject, setActivatingProject] = useState(false)
     const [confirmProjectActivation, setConfirmProjectActivation] = useState(false)
@@ -52,6 +58,32 @@ export function HeaderAdminProject({ projectData, userData, user }: HeaderProjec
         onClose()
     }
 
+    const openImage = (url: Photos["url"]) => {
+        setImageOnView(url)
+        onOpenImage()
+    }
+
+    const closeImage = () => {
+        onCloseImage()
+    }
+
+    useEffect(() => {
+
+        const getCapa = async () => {
+
+            const capa = projectData.photos.find((photoGroup) => photoGroup.category === "CAPA")
+            if (capa) {
+                setCapa(capa.images[0].url)
+            } else {
+                setCapa('/assets/img-not-found.png')
+            }
+        }
+
+        if (projectData) {
+            getCapa()
+        }
+    }, [projectData])
+
 
     useEffect(() => {
 
@@ -59,11 +91,8 @@ export function HeaderAdminProject({ projectData, userData, user }: HeaderProjec
 
             try {
 
-                console.log('projeto active:' + status)
                 setArchivedProject(true)
                 const response = await changeProjectStatus(projectData.id, status)
-                console.log('response')
-                console.log(response)
                 onClose()
                 window.location.href = `${window.location.pathname}`
 
@@ -92,16 +121,32 @@ export function HeaderAdminProject({ projectData, userData, user }: HeaderProjec
         <>
             <Flex flexDir={['column', 'column', 'column', 'row', 'row']} alignItems={['center']} justifyContent={'space-between'} w='100%'>
 
-                <Flex flexDir={'column'} w='100%'>
+                <Flex alignItems={['center']} justifyContent={'space-between'} gap={8}>
+
                     <Flex>
-                        <Text fontSize={[24, 24, 24, 28, 28]} fontWeight={'semibold'}>
-                            {projectData.title}
-                        </Text>
+                        <Image
+                            src={capa}
+                            cursor={'pointer'}
+                            h={32}
+                            w='100%'
+                            objectFit={'cover'}
+                            objectPosition={'center'}
+                            borderRadius={8}
+                            onClick={() => { capa ? openImage(capa) : alert('Capa não cadastrada') }}
+                        />
                     </Flex>
-                    <Flex>
-                        <Text fontSize={16}>
-                            Aqui você pode visualizar e editar as informações cadastradas no painel
-                        </Text>
+
+                    <Flex flexDir={'column'} w='100%'>
+                        <Flex>
+                            <Text fontSize={[24, 24, 24, 28, 28]} fontWeight={'semibold'}>
+                                {projectData.title}
+                            </Text>
+                        </Flex>
+                        <Flex>
+                            <Text fontSize={16}>
+                                Aqui você pode visualizar e editar as informações cadastradas no painel
+                            </Text>
+                        </Flex>
                     </Flex>
                 </Flex>
 
@@ -185,6 +230,21 @@ export function HeaderAdminProject({ projectData, userData, user }: HeaderProjec
                     </ModalFooter> */}
                 </ModalContent>
             </Modal>
+
+            <Modal isOpen={isOpenImage} onClose={closeImage} size={'6xl'} isCentered={true}>
+                <ModalOverlay />
+                <ModalContent>
+                    <ModalCloseButton color={'white'} bgColor={'#EF3A5D'} />
+                    <ModalBody p={0}>
+                        {imageOnView ?
+                            <Flex flexDir={'column'} alignItems={'center'} justifyContent={'center'} gap={4} w='100%'>
+                                <Image w='100%' src={`${imageOnView}`} objectFit={'cover'} objectPosition={'center'} />
+                            </Flex>
+                            :
+                            <Spinner boxSize={32} />}
+                    </ModalBody>
+                </ModalContent>
+            </Modal >
         </>
 
 

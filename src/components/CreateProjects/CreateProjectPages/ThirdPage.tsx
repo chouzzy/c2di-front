@@ -31,7 +31,7 @@ export function ThirdPage({ register, userData }: PersonalDataAndGoalsProps) {
                 <Flex w='100%'>
                     <ProjectFileInput
                         key={"documents"}
-                        isRequired={true}
+                        isRequired={false}
                         allowedTypes={['application/pdf']}
                         accept="application/pdf"
                         label_top='Documentos (PDF)'
@@ -45,23 +45,24 @@ export function ThirdPage({ register, userData }: PersonalDataAndGoalsProps) {
                     <Flex w='100%' gap={8}>
                         <ProjectFileInput
                             key={"DESTAQUES"}
-                            isRequired={true}
+                            isRequired={false}
                             allowedTypes={['image/png', 'image/jpeg', 'image/jpg']}
                             accept="image/*"
-                            label_top='Imagens destaques do projeto'
+                            label_top='Imagem da capa do projeto'
                             icon={<FaCameraRetro  color={'black'} size={20}/> }
-                            register={register("image.DESTAQUES")}
+                            multiple={false}
+                            register={register("image.CAPA")}
                         />
                     </Flex>
                     <Flex w='100%' gap={8}>
                         <ProjectFileInput
                             key={"GERAL"}
-                            isRequired={true}
+                            isRequired={false}
                             allowedTypes={['image/png', 'image/jpeg', 'image/jpg']}
                             accept="image/*"
-                            label_top='Imagens gerais do projeto'
+                            label_top='Imagens da fachada do projeto'
                             icon={<GrGallery  color={'teal'} size={20}/> }
-                            register={register("image.GERAL")}
+                            register={register("image.FACHADA")}
                         />
                     </Flex>
                 </Flex>
@@ -70,7 +71,7 @@ export function ThirdPage({ register, userData }: PersonalDataAndGoalsProps) {
                     <Flex w='100%' gap={8}>
                         <ProjectFileInput
                             key={"PLANTAS"}
-                            isRequired={true}
+                            isRequired={false}
                             allowedTypes={['image/png', 'image/jpeg', 'image/jpg']}
                             accept="image/*"
                             label_top='Imagens das plantas do projeto'
@@ -81,7 +82,7 @@ export function ThirdPage({ register, userData }: PersonalDataAndGoalsProps) {
                     <Flex w='100%' gap={8}>
                         <ProjectFileInput
                             key={"EXTERNO"}
-                            isRequired={true}
+                            isRequired={false}
                             allowedTypes={['image/png', 'image/jpeg', 'image/jpg']}
                             accept="image/*"
                             label_top='Imagens da área externa do projeto'
@@ -95,7 +96,7 @@ export function ThirdPage({ register, userData }: PersonalDataAndGoalsProps) {
                     <Flex w='100%' gap={8}>
                         <ProjectFileInput
                             key={"INTERNO"}
-                            isRequired={true}
+                            isRequired={false}
                             allowedTypes={['image/png', 'image/jpeg', 'image/jpg']}
                             accept="image/*"
                             label_top='Imagens da área interna do projeto'
@@ -106,12 +107,12 @@ export function ThirdPage({ register, userData }: PersonalDataAndGoalsProps) {
                     <Flex w='100%' gap={8} flexDir={['column', 'row', 'row', 'row', 'row']} >
                         <ProjectFileInput
                             key={"PANORAMICAS"}
-                            isRequired={true}
+                            isRequired={false}
                             allowedTypes={['image/png', 'image/jpeg', 'image/jpg']}
                             accept="image/*"
                             label_top='Imagens 360º do projeto'
                             icon={<TbView360Number color="teal" size={24} />}
-                            register={register("image.PANORAMICAS")}
+                            register={register("image.MEDIA360")}
                         />
                     </Flex>
                 </Flex>

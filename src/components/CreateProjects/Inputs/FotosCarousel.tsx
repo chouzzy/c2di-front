@@ -42,12 +42,13 @@ export function FotosCarouselInput({ allowedTypes, accept, projectData, setLoadi
                 setError('Erro ao fazer upload das fotos'); // Define uma mensagem de erro para o usuário
             } finally {
                 setLoadingFiles(false);
+                setUpdatingFile(false)
             }
         }
-        if (selectedFiles) {
+        if (selectedFiles && updatingFile) {
             handleUpload();
         }
-    }, [projectData, selectedFiles, setLoadingFiles]); // Dependências do useEffect
+    }, [selectedFiles, setLoadingFiles]); // Dependências do useEffect
 
 
     const handleFileChange = (event: any) => {

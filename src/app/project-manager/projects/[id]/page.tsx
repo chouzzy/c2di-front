@@ -6,10 +6,9 @@ import { SpinnerFullScreen } from '@/components/Loading/SpinnerFullScreen'
 import ProjectResumeProjectManager from '@/components/projects/resume/role/project-manager'
 import { SideBar } from '@/components/SideBar'
 import { HeaderAdminProject } from '@/components/users/HeaderAdminProject'
-import { HeaderInvestorProject } from '@/components/users/HeaderInvestorProject'
 import { UserProfile, useUser } from '@auth0/nextjs-auth0/client'
-import { Container, Flex, Spinner } from '@chakra-ui/react'
-import { useParams, useRouter } from 'next/navigation'
+import { Flex } from '@chakra-ui/react'
+import { useParams } from 'next/navigation'
 import { useEffect, useState } from 'react'
 
 export default function ProjectManagerProject() {
@@ -99,7 +98,7 @@ export default function ProjectManagerProject() {
             <Flex flexDir={'column'}>
 
               <Flex gap={12}>
-                <ProjectResumeProjectManager userData={userData} user={user} projectData={projectData} />
+                <ProjectResumeProjectManager userData={userData} user={user} projectData={projectData} setProjectData={setProjectData}/>
               </Flex>
 
             </Flex>

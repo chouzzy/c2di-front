@@ -10,7 +10,7 @@ import { useEffect, useState } from 'react'
 import { HeaderInvestorGalleryFotosProject } from '@/components/projects/headers/HeaderInvestorGalleryFotosProject'
 import { HeaderAdminGalleryFotosProject } from '@/components/projects/headers/HeaderAdminGalleryFotosProject'
 import { getProjectByID } from '@/app/services/getProject'
-import { ProjectPlantasProjectManager } from '@/components/projects/dashboard/project-manager/plantas'
+import { ProjectMediaPlantas } from '@/components/projects/dashboard/project-manager/plantas'
 
 export default function ProjectPlantas() {
 
@@ -97,7 +97,7 @@ export default function ProjectPlantas() {
                             <Flex flexDir={'column'}>
 
                                 <Flex gap={12}>
-                                    <ProjectPlantasProjectManager projectData={projectData} />
+                                    <ProjectMediaPlantas userData={userData} projectData={projectData} setProjectData={setProjectData} />
                                 </Flex>
 
                             </Flex>

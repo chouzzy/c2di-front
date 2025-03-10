@@ -1,3 +1,4 @@
+import { v4 as uuidv4 } from 'uuid';
 
 
 async function createInvestorUtils(data: any, projectManagerID: Investment["projectManagerID"]) {
@@ -22,28 +23,35 @@ async function createInvestorUtils(data: any, projectManagerID: Investment["proj
 async function imagesArrayAdapter(data: any) {
 
     try {
-        const images: Investment["images"] = []
-        data = { ...data, images }
+
+        const photos: Investment["photos"] = []
+        data = { ...data, photos }
 
         for (const label in data.image) {
+
             if (data.image.hasOwnProperty(label)) {
 
                 const files = data.image[label];
 
+                let newPhotos: Photos[] = []
                 for (let index = 0; index < files.length; index++) {
                     const foto = files[index];
-
-                    images.push({
-                        id: 'newimage',
-                        label: label,
+                    
+                    newPhotos.push({
+                        id: uuidv4(),
                         url: foto.name,
-                        description: foto.name
+                        title: foto.name.replace(/\.[^/.]+$/, ""),
+                        description: 'foto.name'
                     })
-
+                    
                 }
+
+                photos.push({
+                    category: label as PhotosLabel,
+                    images: newPhotos
+                })
             }
         }
-
         return data
 
     } catch (error) {
@@ -183,7 +191,7 @@ const formataDataMonthShort = (dataString: string) => {
 };
 
 
-const hasUnreadNotifications = (notifications:UserNotifications[] | Notification[]) => {
+const hasUnreadNotifications = (notifications: UserNotifications[] | Notification[]) => {
     // Itera sobre o array de notificações
     for (let i = 0; i < notifications.length; i++) {
         // Verifica se a propriedade isRead é false

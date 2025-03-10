@@ -103,9 +103,9 @@ export default function ProjectInvestorProject() {
             <Flex flexDir={'column'}>
 
               <Flex gap={12}>
-                {userData.role == "PROPRIETARIO" ? <ProjectResumeProprietario userData={userData} user={user} projectData={projectData} /> : ""}
-                {userData.role == "INVESTOR" ? <ProjectResumeInvestor userData={userData} user={user} projectData={projectData} /> : ""}
-                {userData.role == "ADMINISTRATOR" ? <ProjectResumeAdmin userData={userData} user={user} projectData={projectData} /> : ""}
+                {userData.role == "PROPRIETARIO" ? <ProjectResumeProprietario userData={userData} user={user} projectData={projectData} setProjectData={setProjectData} /> : ""}
+                {userData.role == "INVESTOR" ? <ProjectResumeInvestor userData={userData} user={user} projectData={projectData} setProjectData={setProjectData} /> : ""}
+                {userData.role == "ADMINISTRATOR" ? <ProjectResumeAdmin userData={userData} user={user} projectData={projectData} setProjectData={setProjectData} /> : ""}
 
               </Flex>
 

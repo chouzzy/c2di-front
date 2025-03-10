@@ -9,7 +9,7 @@ import {
     useColorModeValue,
 } from '@chakra-ui/react';
 import { FichaTecnica } from '../../fichaTecnica';
-import { useEffect, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import Partners from '../../partners';
 import { UserProfile } from '@auth0/nextjs-auth0/client';
 import DocumentsList from '../../documentsList';
@@ -24,9 +24,10 @@ interface ProjectDataProps {
     userData: User
     projectData: Investment
     user: UserProfile | undefined
+    setProjectData:Dispatch<SetStateAction<Investment | null>>
 }
 
-function ProjectResumeAdmin({ userData, user, projectData }: ProjectDataProps) {
+function ProjectResumeAdmin({ userData, user, projectData, setProjectData }: ProjectDataProps) {
 
     const menuColor = useColorModeValue('darkSide', 'dark.lightSide')
 
@@ -115,7 +116,7 @@ function ProjectResumeAdmin({ userData, user, projectData }: ProjectDataProps) {
             {page == 1 ? (<FichaTecnica userData={userData} projectData={projectData} />) : ('')}
             {page == 2 ? (<Partners userData={userData} partnerList={partnerList} setPartnerList={setPartnerList} user={user} projectData={projectData} />) : ('')}
             {page == 3 ? (<DocumentsList userData={userData} documentList={documentList} setDocumentList={setDocumentList} user={user} projectData={projectData} />) : ('')}
-            {page == 4 ? (<ProjectGallery userData={userData} projectData={projectData} />) : ('')}
+            {page == 4 ? (<ProjectGallery userData={userData} projectData={projectData} setProjectData={setProjectData}/>) : ('')}
             {page == 5 ? (<BuildingStatus userData={userData} projectData={projectData} />) : ('')}
             {page == 6 ? (<InvestorList userData={userData} documentList={documentList} setDocumentList={setDocumentList} user={user} projectData={projectData} />) : ('')}
             {page == 7 ? (<ProprietarioList userData={userData} documentList={documentList} setDocumentList={setDocumentList} user={user} projectData={projectData} />) : ('')}

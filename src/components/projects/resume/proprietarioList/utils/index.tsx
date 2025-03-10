@@ -57,7 +57,6 @@ const getUserProprietarios = async (setUserProprietariosList: Dispatch<SetStateA
 
     try {
         const userProprietariosList = await filterUserProprietariosByInvestmentID({ page: `${0}`, pageRange: `${10}`, investmentID: projectData.id })
-        console.log(userProprietariosList)
         setUserProprietariosList(userProprietariosList)
     } catch (error) {
         console.error(error)
@@ -96,8 +95,6 @@ interface onSubmitInvestorProps {
 const onSubmitProprietario = async ({ data, investor, projectData, setYupError, investorDate, userProprietariosList, setAddMode, onOpen }: onSubmitInvestorProps) => {
 
     try {
-
-        console.log(data)
 
         if (!investor) { return alert('Selecione um investidor') }
 

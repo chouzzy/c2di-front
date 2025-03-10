@@ -1,4 +1,5 @@
 import { Button, Flex, Image, Text } from "@chakra-ui/react";
+import { useState, useEffect } from "react";
 
 interface ProjectDataProps {
     projectData: Investment
@@ -9,7 +10,26 @@ export function PlantasGaleria({ projectData }: ProjectDataProps) {
         window.location.href = `${window.location.pathname}/plantas`
     }
 
-    const previousImages = projectData.images.filter(img => img.label === 'PLANTAS')
+    const [prevImages, setPrevImages] = useState<Photos[]>([{
+        id: '',
+        url: '/assets/img-not-found.png',
+        description: "",
+        title: ""
+    }])
+
+    useEffect(() => {
+        const changeCapa = () => {
+            const prevImages = projectData.photos.find((photoGroup) => photoGroup.category == "PLANTAS")
+
+            if (prevImages) {
+                setPrevImages(prevImages.images)
+            }
+        }
+
+        if (projectData) {
+            changeCapa()
+        }
+    }, [projectData])
 
     return (
 
@@ -26,12 +46,12 @@ export function PlantasGaleria({ projectData }: ProjectDataProps) {
             <Flex w='100%'>
                 <Flex gap={2} w='100%'>
                     {
-                        previousImages.map((image, i) => {
+                        prevImages.map((image, i) => {
 
                             if (i > 1) { return }
 
                             return (
-                                <Image key={i+image.url} src={`${image.url}`} h={32} w={[28, 28, '100%', '100%', 40]} objectFit={'cover'} objectPosition={'center'} />
+                                <Image key={i + image.url} src={`${image.url}`} h={32} w={[28, 28, '100%', '100%', 40]} objectFit={'cover'} objectPosition={'center'} />
                             )
                         })}
                     <Flex onClick={() => { redirectToFotos() }} w='100%' bgColor={'grayBox'} justifyContent={'center'} alignItems={'center'} cursor={'pointer'} _hover={{ bgColor: 'darkSide', color: 'lightSide', transition: '600ms' }}>

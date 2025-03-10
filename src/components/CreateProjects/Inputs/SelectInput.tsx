@@ -1,3 +1,4 @@
+import { capitalizeFirstLetter } from "@/components/users/utils";
 import { FormControl, FormLabel, Select } from "@chakra-ui/react";
 import { ArrowDown } from "phosphor-react";
 import { Dispatch, SetStateAction } from "react";
@@ -60,7 +61,7 @@ export function ProjectSelectInput({
                 {options.map((option, i) => {
                     return (
 
-                        <option key={i + option} value={option}>{option}</option>
+                        <option key={i + option} value={option}>{capitalizeFirstLetter(option)}</option>
                     )
                 })}
 

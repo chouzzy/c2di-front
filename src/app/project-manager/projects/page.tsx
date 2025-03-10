@@ -101,8 +101,8 @@ export default function ProjectManagersProjects() {
                                 borderBottom={'1px solid #E5E7EB'}
                                 pb={[4, 4, 4, 8, 8]}
                             >
-                                {userData.role == "INVESTOR" ? <HeaderInvestorProjectList /> : ''}
-                                {userData.role != "INVESTOR" ? <HeaderAdminProjectList user={user} userData={userData} /> : ''}
+                                {userData.role == "INVESTOR" || userData.role == "PROPRIETARIO"? <HeaderInvestorProjectList /> : ''}
+                                {userData.role != "INVESTOR" && userData.role != "PROPRIETARIO" ? <HeaderAdminProjectList user={user} userData={userData} /> : ''}
                             </Flex>
 
                             {/* BODY FORMS */}

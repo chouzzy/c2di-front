@@ -37,8 +37,8 @@ export function InfosGerais({ userData, projectData }: ProjectDataProps) {
         base: 320,
         sm: 320,
         md: 700,
-        lg: 900,
-        xl: 600
+        lg: 920,
+        xl: 1080
     })
 
     const { register, handleSubmit } = useForm()
@@ -47,6 +47,7 @@ export function InfosGerais({ userData, projectData }: ProjectDataProps) {
     const [triggerReloadNotifications, setTriggerReloadNotifications] = useState(false)
     const [notifications, setNotifications] = useState<Notification[]>([])
     const [yupError, setYupError] = useState<string>("")
+    const [capa, setCapa] = useState<Photos["url"]>("")
 
     const [page, setPage] = useState(1)
     const [pageRange, setPageRange] = useState(4)
@@ -86,6 +87,24 @@ export function InfosGerais({ userData, projectData }: ProjectDataProps) {
     }
 
 
+    useEffect(() => {
+
+        const getPlantaPhotos = async () => {
+          const plantas = projectData.photos.find((photoGroup) => photoGroup.category === "CAPA")
+        
+          if (plantas) {
+            const {images} = plantas
+            setCapa(images[0].url)
+          } else {
+            setCapa('/assets/img-not-found.png')
+          }
+        } 
+        if (projectData) {
+            getPlantaPhotos()
+        }
+    },[projectData])
+
+    
     useEffect(() => {
 
 
@@ -152,12 +171,12 @@ export function InfosGerais({ userData, projectData }: ProjectDataProps) {
         } catch (error: any) {
             if (error instanceof AxiosError) {
                 if (error.response) {
-                    console.log(error)
+                    console.error(error)
                 } else {
-                    console.log(error)
+                    console.error(error)
                 }
             } else {
-                console.log(error)
+                console.error(error)
             }
         }
     };
@@ -165,12 +184,8 @@ export function InfosGerais({ userData, projectData }: ProjectDataProps) {
 
     return (
         <Flex w='100%' py={8} flexDir={['column', 'column', 'column', 'column', 'row']} gap={12}>
-            {/* IMAGEM GIGANTE */}
-            <Flex>
-                <Image src={`${projectData.images[0].url}`} h={[300, 300, 300, 300, '100%']} minW={['100%', '100%', '100%', '100%', 440]} objectFit={'cover'} objectPosition={'center'} borderRadius={2} boxShadow={'md'} />
-            </Flex>
 
-            <Flex gap={8} flexDir={'column'} justifyContent={'space-between'}>
+            <Flex gap={8} flexDir={'column-reverse'} justifyContent={'space-between'} w='100%'>
 
                 {/* GRAFICOS */}
                 <Flex w='100%' flexDir={'column'} gap={2} alignItems={'center'}>
@@ -184,7 +199,7 @@ export function InfosGerais({ userData, projectData }: ProjectDataProps) {
                                 </Text>
                                 <AreaChart
                                     width={graphWidth}
-                                    height={200}
+                                    height={320}
                                     data={financialTotalProgress}
                                     margin={{
                                         top: 16,
@@ -217,7 +232,7 @@ export function InfosGerais({ userData, projectData }: ProjectDataProps) {
                                 </Text>
                                 <AreaChart
                                     width={graphWidth}
-                                    height={200}
+                                    height={320}
                                     data={buildingTotalProgress}
                                     margin={{
                                         top: 16,

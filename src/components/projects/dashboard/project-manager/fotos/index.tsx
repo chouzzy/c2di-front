@@ -5,18 +5,16 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
-import { FotosDestaques } from "./carousel/FotosDestaques";
-import { FotosInterno } from "./carousel/FotosInterno";
-import { FotosExterno } from "./carousel/FotosExterno";
 import { FotosCarousel } from "./carousel/FotosCarousel";
 
 
 interface ProjectFotosProjectManager {
     projectData: Investment
     setProjectData:Dispatch<SetStateAction<Investment | null>>
+    userData: User
 }
 
-export function ProjectFotosProjectManager({ projectData, setProjectData }: ProjectFotosProjectManager) {
+export function ProjectMediaFotos({ projectData, setProjectData, userData }: ProjectFotosProjectManager) {
 
 
     const { isOpen, onOpen, onClose } = useDisclosure() // Adiciona o hook useDisclosure
@@ -50,6 +48,7 @@ export function ProjectFotosProjectManager({ projectData, setProjectData }: Proj
                 <>
                     <FotosCarousel
                         label={"FACHADA"}
+                        userData={userData}
                         projectData={projectData}
                         setProjectData={setProjectData}
                         openImage={openImage}
@@ -57,6 +56,7 @@ export function ProjectFotosProjectManager({ projectData, setProjectData }: Proj
                     />
                     <FotosCarousel
                         label={"INTERNO"}
+                        userData={userData}
                         projectData={projectData}
                         setProjectData={setProjectData}
                         openImage={openImage}
@@ -64,6 +64,7 @@ export function ProjectFotosProjectManager({ projectData, setProjectData }: Proj
                     />
                     <FotosCarousel
                         label={"EXTERNO"}
+                        userData={userData}
                         projectData={projectData}
                         setProjectData={setProjectData}
                         openImage={openImage}
