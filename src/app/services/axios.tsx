@@ -15,7 +15,7 @@ api.interceptors.request.use(
   (config) => {
     // 1. Obter o token do cookie
     
-    const accessToken = getCookie('accessToken');
+    const accessToken = getCookie('accessToken')
    //  2. Adicionar o token ao header Authorization
     if (accessToken) {
       config.headers.Authorization = `Bearer ${accessToken}`;

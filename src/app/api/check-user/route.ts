@@ -8,9 +8,10 @@ import { getSession } from '@auth0/nextjs-auth0/edge';
 
 export async function GET(req: NextRequest) { // ou POST, dependendo do que você precisa
   try {
+    console.log('oiiiiiii')
     const session = await getSession(req, NextResponse.next());
     if (!session || !session.user) {
-      return NextResponse.json({ error: 'Não autorizado' }, { status: 401 });
+      return NextResponse.json({ error: 'Não autorizado' }, { status: 402 });
     }
 
     const user = session.user;

@@ -287,24 +287,30 @@
 
 // middleware.js
 import { withMiddlewareAuthRequired, getSession, updateSession } from '@auth0/nextjs-auth0/edge';
+import { getCookie } from 'cookies-next';
 import { NextRequest, NextResponse } from 'next/server';
 
-async function getUserData(req: NextRequest, token: string | undefined, email:string) {
+
+async function getUserData(req: NextRequest, token: string | undefined, email: string) {
     //A URL base precisa ser a do seu app, a que aparece quando você roda `npm run dev`
     //Para funcionar em produção, você precisará usar uma variável de ambiente.
+    // const baseUrl = 'check-user/'
+    // const baseUrl = req.nextUrl.origin;
     const baseUrl = 'https://c2diserver.awer.co/'
     // const baseUrl = 'http://localhost:8081/'
+    console.log("Chamando getUserData. baseUrl:", baseUrl);
 
     try {
-        const apiResponse = await fetch(`${baseUrl}users/findUnique/?email=${email}`, {
+        const token = getCookie('accessToken')
+        // const apiResponse = await fetch(`http://localhost:8081/users/findUnique/?email=${email}`, {
+        const apiResponse = await fetch(`${baseUrl}/users/findUnique/?email=${email}`, {
             method: 'GET', // Ou POST, dependendo da sua API
             headers: {
                 'Authorization': `Bearer ${token}`, // Passa o token para a API Route
             },
         });
 
-        console.log('apiResponse')
-        console.log(apiResponse.body)
+        console.log(apiResponse.status)
 
         if (!apiResponse.ok) {
             console.error('Erro ao buscar dados do usuário na API:', apiResponse.status);
