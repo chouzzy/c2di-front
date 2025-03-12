@@ -134,7 +134,7 @@ export function FichaTecnica({ userData, projectData, setProjectData }: ProjectD
             data = await projectTypeAdapter(data)
             data = await floorPlanTypesAdapter(data)
             const tipologiesUploaded = await UploadTipologiesImages({ tipologies: newTipologies, folderTitle: projectData.title, setProgressUploading });
-            
+
             data.alvaras = updatedAlvaras
 
             const existingTipologies = projectData.tipologies || [];
@@ -177,7 +177,7 @@ export function FichaTecnica({ userData, projectData, setProjectData }: ProjectD
                 :
 
                 <>
-                    <Flex flexDir={'column'} gap={4}>
+                    <Flex flexDir={['column']} gap={4}>
                         <Flex>
                             <Badge variant='solid' fontSize={'md'} colorScheme={buildingStatusDict[projectData.buildingStatus].color}> {buildingStatusDict[projectData.buildingStatus].name} </Badge>
                         </Flex>
@@ -185,7 +185,7 @@ export function FichaTecnica({ userData, projectData, setProjectData }: ProjectD
                         <Text fontWeight={'medium'} fontSize={'lg'}>{projectData.description}</Text>
                     </Flex>
 
-                    <Flex gap={4}>
+                    <Flex gap={4} flexDir={['column', 'column', 'column', 'row', 'row']}>
                         <Caracteristicas projectData={projectData} />
                         <Divider orientation='vertical' h={'100%'} w='1px' mx='auto' bgColor={'grayDivisor'} />
                         <Mapa projectData={projectData} />
@@ -193,7 +193,7 @@ export function FichaTecnica({ userData, projectData, setProjectData }: ProjectD
 
                     <Divider orientation='horizontal' h={'1px'} w='100%' mx='auto' bgColor={'grayDivisor'} />
 
-                    <Flex gap={4}>
+                    <Flex gap={4} flexDir={['column', 'column', 'column', 'row', 'row']}>
                         <Tipologias projectData={projectData} />
                         <Divider orientation='vertical' h={'100%'} w='1px' mx='auto' bgColor={'grayDivisor'} />
                         <Alvaras projectData={projectData} />
@@ -201,7 +201,7 @@ export function FichaTecnica({ userData, projectData, setProjectData }: ProjectD
 
                     <Divider orientation='horizontal' h={'1px'} w='100%' mx='auto' bgColor={'grayDivisor'} />
 
-                    <Flex gap={4}>
+                    <Flex gap={4} flexDir={['column', 'column', 'column', 'row', 'row']}>
                         <Custos projectData={projectData} />
                         <Divider orientation='vertical' h={'100%'} w='1px' mx='auto' bgColor={'grayDivisor'} />
                         <Flex flexDir={'column'} w='100%' gap={4} h='100%' justifyContent={'space-between'}>

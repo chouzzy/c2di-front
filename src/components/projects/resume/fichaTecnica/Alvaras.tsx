@@ -53,7 +53,7 @@ export function Alvaras({ projectData }: CaracteristicasProps) {
 
             <Flex flexDir={'column'} gap={8}>
 
-                <Flex h='100%' minH={400}>
+                <Flex h='100%' minH={[300,300,300,400,400]}>
                     <Stepper index={stepActive} orientation='vertical' height='100%'>
                         <Step key={0}>
                             <StepIndicator>
