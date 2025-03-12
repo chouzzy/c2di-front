@@ -153,10 +153,27 @@ interface Investment {
   tipologies: Tipologies[]
 
   photos: PhotosGroup[]
+  alvaras?: Alvaras
   active?: boolean
   createdAt: Date;
   updatedAt: Date;
 }
+
+interface Alvaras {
+  demolicao?: AlvaraInfo
+  aprovacao?: AlvaraInfo
+  construcao?: AlvaraInfo
+  estande?: AlvaraInfo
+}
+
+// Crie um tipo para as informações do alvará (reutilizável)
+interface AlvaraInfo {
+  title: string
+  link?: string
+  numero?: string
+  observacoes?: string
+}
+
 
 interface Tipologies {
   id: string

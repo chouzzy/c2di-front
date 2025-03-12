@@ -18,10 +18,6 @@ export function Carousel({ images, editMode = false }: CarouselProps) {
         setCurrentImageIndex((prevIndex) => (prevIndex - 1 + images.length) % images.length);
     };
 
-    if (!images || images.length === 0) {
-        return (<></>)
-    }
-
     const { isOpen, onOpen, onClose } = useDisclosure() // Adiciona o hook useDisclosure
 
     const [imageOnView, setImageOnView] = useState<Investment["images"][0]["url"]>()
@@ -41,9 +37,11 @@ export function Carousel({ images, editMode = false }: CarouselProps) {
             <Flex position="relative" width="100%" overflow="hidden" h={400}>
 
                 {/* Imagem atual */}
+
                 <Image
-                    onClick={() => { openImage(images[currentImageIndex]) }}
-                    src={images[currentImageIndex]}
+                    border={'1px'}
+                    onClick={() => { openImage(images.length > 0 ? images[currentImageIndex] : "/assets/img-not-found.png") }}
+                    src={images.length > 0 ? images[currentImageIndex] : '/assets/img-not-found.png'}
                     alt={`Imagem ${currentImageIndex + 1}`}
                     width="100%" // Ocupa toda a largura do container
                     objectFit="cover" // Ajusta a imagem para cobrir o espaço, mantendo a proporção
@@ -100,7 +98,7 @@ export function Carousel({ images, editMode = false }: CarouselProps) {
                 )}
             </Flex>
 
-           
+
 
 
             <Modal isOpen={isOpen} onClose={closeImage} size={'6xl'} isCentered={true}>

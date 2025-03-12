@@ -86,7 +86,43 @@ const createInvestmentSchema = yup.object({
       parkingSpaces: yup.number().optional().integer("O número de vagas deve ser um número inteiro.").min(0, "O número de vagas não pode ser negativo."),// Number, opcional, inteiro, não negativo
       area: yup.number().optional(),    // String, opcional.  Se precisar validar como número, mude para number() e adicione as validações.
       tags: yup.array().of(yup.string().trim()).optional(), // Array de strings, opcional. Cada tag deve ter pelo menos 1 caractere (após trim)
-    })).required()
+    })).required(),
+
+
+  alvaras: yup.object().shape({
+    demolicao: yup.object().shape({
+      title: yup.string().required('O título do alvará é obrigatório').trim().min(2, 'O título deve ter pelo menos 2 caracteres.'),
+      link: yup.string().optional(),
+      numero: yup.string().optional(),
+      observacoes: yup.string().optional(),
+      dataEmissao: yup.string().optional(),
+      dataValidade: yup.string().optional()
+    }).optional().nullable(),
+    aprovacao: yup.object().shape({
+      title: yup.string().required('O título do alvará é obrigatório').trim().min(2, 'O título deve ter pelo menos 2 caracteres.'),
+      link: yup.string().optional(),
+      numero: yup.string().optional(),
+      observacoes: yup.string().optional(),
+      dataEmissao: yup.string().optional(),
+      dataValidade: yup.string().optional()
+    }).optional().nullable(),
+    construcao: yup.object().shape({
+      title: yup.string().required('O título do alvará é obrigatório').trim().min(2, 'O título deve ter pelo menos 2 caracteres.'),
+      link: yup.string().optional(),
+      numero: yup.string().optional(),
+      observacoes: yup.string().optional(),
+      dataEmissao: yup.string().optional(),
+      dataValidade: yup.string().optional()
+    }).optional().nullable(),
+    estande: yup.object().shape({
+      title: yup.string().required('O título do alvará é obrigatório').trim().min(2, 'O título deve ter pelo menos 2 caracteres.'),
+      link: yup.string().optional(),
+      numero: yup.string().optional(),
+      observacoes: yup.string().optional(),
+      dataEmissao: yup.string().optional(),
+      dataValidade: yup.string().optional()
+    }).optional().nullable(),
+  })
 
 }).noUnknown(true, "Campos desconhecidos no corpo da requisição.").strict();
 
@@ -175,7 +211,42 @@ const updateInvestmentSchema = yup.object({
       parkingSpaces: yup.number().optional().integer("O número de vagas deve ser um número inteiro.").min(0, "O número de vagas não pode ser negativo."),// Number, opcional, inteiro, não negativo
       area: yup.number().optional(),    // String, opcional.  Se precisar validar como número, mude para number() e adicione as validações.
       tags: yup.array().of(yup.string().trim().min(1, "Tag inválida")).optional(), // Array de strings, opcional. Cada tag deve ter pelo menos 1 caractere (após trim)
-    }))
+    })),
+
+  alvaras: yup.object().shape({
+    demolicao: yup.object().shape({
+      title: yup.string().required('O título do alvará é obrigatório').trim().min(2, 'O título deve ter pelo menos 2 caracteres.'),
+      link: yup.string().optional().nullable(),
+      numero: yup.string().optional().nullable(),
+      observacoes: yup.string().optional().nullable(),
+      dataEmissao: yup.string().optional().nullable(),
+      dataValidade: yup.string().optional().nullable()
+    }).optional().nullable(),
+    aprovacao: yup.object().shape({
+      title: yup.string().required('O título do alvará é obrigatório').trim().min(2, 'O título deve ter pelo menos 2 caracteres.'),
+      link: yup.string().optional().nullable(),
+      numero: yup.string().optional().nullable(),
+      observacoes: yup.string().optional().nullable(),
+      dataEmissao: yup.string().optional().nullable(),
+      dataValidade: yup.string().optional().nullable()
+    }).optional().nullable(),
+    construcao: yup.object().shape({
+      title: yup.string().required('O título do alvará é obrigatório').trim().min(2, 'O título deve ter pelo menos 2 caracteres.'),
+      link: yup.string().optional().nullable(),
+      numero: yup.string().optional().nullable(),
+      observacoes: yup.string().optional().nullable(),
+      dataEmissao: yup.string().optional().nullable(),
+      dataValidade: yup.string().optional().nullable()
+    }).optional().nullable(),
+    estande: yup.object().shape({
+      title: yup.string().required('O título do alvará é obrigatório').trim().min(2, 'O título deve ter pelo menos 2 caracteres.'),
+      link: yup.string().optional().nullable(),
+      numero: yup.string().optional().nullable(),
+      observacoes: yup.string().optional().nullable(),
+      dataEmissao: yup.string().optional().nullable(),
+      dataValidade: yup.string().optional().nullable()
+    }).optional().nullable(),
+  })
 
 }).noUnknown(true, "Campos desconhecidos no corpo da requisição.").strict();
 

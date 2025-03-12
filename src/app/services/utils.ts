@@ -19,7 +19,6 @@ async function createInvestorUtils(data: any, projectManagerID: Investment["proj
 
 }
 
-
 async function imagesArrayAdapter(data: any) {
 
     try {
@@ -36,14 +35,14 @@ async function imagesArrayAdapter(data: any) {
                 let newPhotos: Photos[] = []
                 for (let index = 0; index < files.length; index++) {
                     const foto = files[index];
-                    
+
                     newPhotos.push({
                         id: uuidv4(),
                         url: foto.name,
                         title: foto.name.replace(/\.[^/.]+$/, ""),
                         description: 'foto.name'
                     })
-                    
+
                 }
 
                 photos.push({

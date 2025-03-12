@@ -20,6 +20,8 @@ import { Construtora } from './Construtora';
 import { Tipologias } from './Tipologias';
 import { TipologiesState } from '@/components/CreateProjects/CreateProjectForm.';
 import { UploadTipologiesImages } from '@/app/services/uploadImages';
+import { UploadAlvara } from '@/app/services/uploadAlvara';
+import { Alvaras } from './Alvaras';
 
 
 interface ProjectDataProps {
@@ -64,7 +66,7 @@ export function FichaTecnica({ userData, projectData, setProjectData }: ProjectD
         if (projectData) {
             getPlantas()
         }
-    }, [])
+    }, [projectData])
 
 
     const handleEditClick = () => {
@@ -82,10 +84,58 @@ export function FichaTecnica({ userData, projectData, setProjectData }: ProjectD
     const onSubmit = async (data: any) => {
 
         try {
+
+
+
+            const { alvaras: alvarasData } = data
+            // Alvarás com fileList no lugar do link
+            const alvaras = await UploadAlvara(alvarasData, projectData.title);
+            console.log('alvaras')
+            console.log(alvaras)
+            // Alvarás com link já em string, com a url dentro.
+
+            // Preciso pegar os alvarás novos/atualizados e adicionar nos que já tenho. Caso haja um alvará cadastrado em projectData.alvaras e um novo alvará for lançado, preciso que substitua com o novo alvará
+            const { alvaras: projectAlvaras } = projectData
+            console.log('projectAlvaras')
+            console.log(projectAlvaras)
+
+            // const alvaras = await UploadAlvara(alvarasData, projectData.title);
+
+            // Começa com uma cópia dos alvarás existentes (ou um objeto vazio se não houver)
+            const updatedAlvaras: Alvaras = { ...projectData.alvaras || {} };
+
+            // Itera sobre as *chaves* de 'alvaras'
+            for (const alvaraKey in alvaras) {
+                if (Object.prototype.hasOwnProperty.call(alvaras, alvaraKey)) {
+                    if (alvaraKey === 'demolicao' || alvaraKey === 'aprovacao' || alvaraKey === 'construcao' || alvaraKey === 'estande') {
+                        const newAlvaraInfo = alvaras[alvaraKey as keyof Alvaras];
+
+                        if (newAlvaraInfo) { //Verifica se existe
+                            // VERIFICA SE O NOVO ALVARÁ TEM UM LINK VÁLIDO
+                            if (newAlvaraInfo.link && newAlvaraInfo.link.length > 0) {
+                                // Se tiver um link válido, sobrescreve
+                                updatedAlvaras[alvaraKey as keyof Alvaras] = newAlvaraInfo;
+                            } else {
+                                // Se não tiver um link válido, mantém o valor existente (se houver)
+                                // (Não faz nada, pois updatedAlvaras já é uma cópia do original)
+                                console.warn(`Alvará ${alvaraKey} não atualizado: link vazio ou inexistente.`);
+                            }
+                        }
+                    } else {
+                        console.warn("Chave de alvará desconhecida:", alvaraKey);
+                    }
+                }
+            }
+
+            console.log('updatedAlvaras')
+            console.log(updatedAlvaras)
+
             handleIsLoading();
             data = await projectTypeAdapter(data)
             data = await floorPlanTypesAdapter(data)
             const tipologiesUploaded = await UploadTipologiesImages({ tipologies: newTipologies, folderTitle: projectData.title, setProgressUploading });
+            
+            data.alvaras = updatedAlvaras
 
             const existingTipologies = projectData.tipologies || [];
 
@@ -104,7 +154,6 @@ export function FichaTecnica({ userData, projectData, setProjectData }: ProjectD
             data.tipologies = allTipologies; // Usa o array combinado
 
             await updateInvestmentSchema.validate(data);
-
 
             const response = await updateProjectFicha(projectData.id, data)
 
@@ -147,10 +196,11 @@ export function FichaTecnica({ userData, projectData, setProjectData }: ProjectD
                     <Flex gap={4}>
                         <Tipologias projectData={projectData} />
                         <Divider orientation='vertical' h={'100%'} w='1px' mx='auto' bgColor={'grayDivisor'} />
-                        <Flex flexDir={'column'} w='100%' gap={4} h='100%' justifyContent={'space-between'}>
-                            Alvarás
-                        </Flex>
+                        <Alvaras projectData={projectData} />
                     </Flex>
+
+                    <Divider orientation='horizontal' h={'1px'} w='100%' mx='auto' bgColor={'grayDivisor'} />
+
                     <Flex gap={4}>
                         <Custos projectData={projectData} />
                         <Divider orientation='vertical' h={'100%'} w='1px' mx='auto' bgColor={'grayDivisor'} />

@@ -47,15 +47,21 @@ export function FotosGaleria({ projectData }: ProjectDataProps) {
             {/* IMAGE */}
             <Flex w='100%'>
                 <Flex gap={2} w='100%'>
-                    {
+                    {prevImages.length > 0 ?
+
                         prevImages.map((image, i) => {
 
                             if (i > 1) { return }
 
                             return (
-                                <Image key={i + image.url} src={`${image.url}`} h={32} w={[28, 28, '100%', '100%', 40]} objectFit={'cover'} objectPosition={'center'} />
+                                <Image key={i + image.url} src={prevImages.length > 0 ? `${image.url}` : '/assets/img-not-found.png'} h={32} w={[28, 28, '100%', '100%', 40]} objectFit={'cover'} objectPosition={'center'} />
                             )
-                        })}
+                        })
+                        :
+                        <>
+                            <Image src={'/assets/img-not-found.png'} h={32} w={[28, 28, '100%', '100%', 40]} objectFit={'cover'} objectPosition={'center'} />
+                        </>
+                    }
                     <Flex onClick={() => { redirectToFotos() }} w='100%' bgColor={'grayBox'} justifyContent={'center'} alignItems={'center'} cursor={'pointer'} _hover={{ bgColor: 'darkSide', color: 'lightSide', transition: '600ms' }}>
                         <Text> Ver mais </Text>
                     </Flex>

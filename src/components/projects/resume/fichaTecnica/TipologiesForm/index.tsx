@@ -122,7 +122,6 @@ export function TipologiasForm({ tipologies, newTipologies, setNewTipologies, pr
 
 
             <Flex w='100%' flexDir={['column']}>
-                <form>
                 <Flex flexDir={'column'} gap={4}>
 
                     <TipologiesInput
@@ -243,7 +242,6 @@ export function TipologiasForm({ tipologies, newTipologies, setNewTipologies, pr
 
                     </Flex>
                 </Flex>
-                </form>
 
             </Flex>
             {/* Documentos */}

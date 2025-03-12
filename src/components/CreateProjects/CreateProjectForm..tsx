@@ -17,6 +17,9 @@ import { FirstPage } from "./CreateProjectPages/FirstPage";
 import { SecondPage } from "./CreateProjectPages/SecondPage";
 import { FourthPage } from "./CreateProjectPages/FourthPage";
 import { changePrismaTipologies } from "@/app/services/changeTipologies";
+import { FifthPage } from "./CreateProjectPages/FifthPage";
+import { UploadAlvara } from "@/app/services/uploadAlvara";
+import { changePrismaProjectAlvaras } from "@/app/services/changeAlvaras";
 
 interface CreateInvestorAccountCardProps {
     user: UserProfile
@@ -35,8 +38,8 @@ export interface TipologiesState {
     parkingSpaces: Tipologies["parkingSpaces"]
     area: Tipologies["area"]
     tags: Tipologies["tags"]
-  }
-  
+}
+
 export function CreateProjectForm({ user, router, userData }: CreateInvestorAccountCardProps) {
 
     const bgButtonColor = useColorModeValue('darkSide', 'dark.lightSide')
@@ -51,7 +54,7 @@ export function CreateProjectForm({ user, router, userData }: CreateInvestorAcco
     const handleSaveClick = () => {
         router.push('/projects');
     };
-    const pages = [0, 1, 2, 3]
+    const pages = [0, 1, 2, 3, 4]
 
     const [page, setPage] = useState(0)
 
@@ -59,7 +62,6 @@ export function CreateProjectForm({ user, router, userData }: CreateInvestorAcco
     const onSubmit = async (data: any) => {
 
         try {
-            
 
             if (page < (pages.length - 1)) {
                 nextPage()
@@ -83,40 +85,44 @@ export function CreateProjectForm({ user, router, userData }: CreateInvestorAcco
             }
             setTotalUploading(totalFiles); // Define o total de arquivos
 
-            
+
             // TRANSFORMA O ARRAY DE IMAGENS NO FORMATO DO BANCO DE DADOS
             data = await createInvestorUtils(data, userData.id)
-            
-            
-            const { image, document } = data
-            
+
+
+            const { image, document, alvaras:alvarasInput } = data
+
             // Deleta array antigo de imagens, o novo formatado se chama data.images
             delete data.image
             delete data.document
-            
+            delete data.alvaras
+
             data.tipologies = tipologies
             await createInvestmentSchema.validate(data);
             delete data.tipologies
 
             // // Cria o investimento antes de cadastrar imagens no banco de imagens
             const investment = await createPrismaInvestment(data)
-
+            
+            const alvaras = await UploadAlvara(alvarasInput, investment.title);
             const docs = await UploadDocuments(document, investment.title);
-            const photos = await UploadImages({image, folderTitle: investment.title, setProgressUploading});
+            const photos = await UploadImages({ image, folderTitle: investment.title, setProgressUploading });
 
-            const tipologiesUploaded = await UploadTipologiesImages({tipologies, folderTitle: investment.title, setProgressUploading});            
+            const tipologiesUploaded = await UploadTipologiesImages({ tipologies, folderTitle: investment.title, setProgressUploading });
 
+            investment.alvaras = alvaras
             investment.tipologies = tipologiesUploaded
             investment.photos = photos
             investment.documents = docs
 
+            await changePrismaProjectAlvaras(investment.id, investment)
             await changePrismaProjectPhotos(investment.id, investment)
             await changePrismaTipologies(investment.id, investment)
             await changePrismaProjectDoc(investment.id, investment)
 
-            // setIsUploading(false)
+            setIsUploading(false)
 
-            // handleSaveClick()
+            handleSaveClick()
 
         } catch (error: any) {
             if (error instanceof AxiosError) {
@@ -183,10 +189,15 @@ export function CreateProjectForm({ user, router, userData }: CreateInvestorAcco
                                         :
                                         ''
                                     }
-
-                                    {/* Tipologias */}
+                                    
                                     {page === 3 ?
                                         <FourthPage tipologies={tipologies} setTipologies={setTipologies}/>
+                                        :
+                                        ''
+                                    }
+                                    {/* Alvaras */}
+                                    {page === 4 ?
+                                        <FifthPage register={register} />
                                         :
                                         ''
                                     }

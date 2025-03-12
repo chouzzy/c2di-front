@@ -3,10 +3,11 @@ import { TipologiesState } from "@/components/CreateProjects/CreateProjectForm."
 import { ProjectInput } from "@/components/CreateProjects/Inputs/ProjectInput";
 import { ProjectSelectInput } from "@/components/CreateProjects/Inputs/SelectInput";
 import { TextAreaInput } from "@/components/CreateProjects/Inputs/TextAreaInput";
-import { Flex, Button, useColorModeValue } from "@chakra-ui/react";
+import { Flex, Button, useColorModeValue, Text } from "@chakra-ui/react";
 import { Dispatch, SetStateAction, useState } from "react";
 import { FieldValues, UseFormRegister } from "react-hook-form";
 import { TipologiasForm } from "./TipologiesForm";
+import { AlvarasForm } from "./AlvarasForm";
 
 interface FormProps {
     register: UseFormRegister<FieldValues>
@@ -26,8 +27,21 @@ export function Form({ register, projectData, userData, tipologies, newTipologie
     return (
         <Flex gap={8} flexDir={'column'} w='100%'>
 
-            {/* Dates */}
+            <Flex gap={12} w='100%' flexDir={['column', 'column', 'row', 'row', 'row']}>
+                <TipologiasForm setProjectData={setProjectData} projectData={projectData} newTipologies={newTipologies} tipologies={tipologies} setNewTipologies={setNewTipologies} />
+            </Flex>
+            <Flex gap={12} w='100%' flexDir={['column', 'column', 'row', 'row', 'row']}>
+                <AlvarasForm register={register} projectData={projectData} />
+            </Flex>
+
+
+            <Flex w='100%' justifyContent={'center'} mb={8}>
+                <Text fontSize={18} fontWeight={'medium'} borderBottom='1px' borderColor={'darkSide'} textTransform={'uppercase'} >
+                    Dados do projeto
+                </Text>
+            </Flex>
             <Flex gap={12} w='100%' flexDir={['column', 'column', 'row', 'row', 'row']} >
+
                 <Flex w='100%' textAlign={['center', 'center', 'center', 'center', 'start']}>
 
                     {/* Title */}
@@ -284,9 +298,6 @@ export function Form({ register, projectData, userData, tipologies, newTipologie
                 </Flex>
             </Flex>
 
-            <Flex gap={12} w='100%' flexDir={['column', 'column', 'row', 'row', 'row']}>
-                <TipologiasForm setProjectData={setProjectData} projectData={projectData} newTipologies={newTipologies} tipologies={tipologies} setNewTipologies={setNewTipologies} />
-            </Flex>
 
             {userData.role == 'ADMINISTRATOR' || userData.role == 'PROJECT_MANAGER' ?
                 <>
