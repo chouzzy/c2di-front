@@ -292,8 +292,8 @@ import { NextRequest, NextResponse } from 'next/server';
 async function getUserData(req: NextRequest, token: string | undefined, email:string) {
     //A URL base precisa ser a do seu app, a que aparece quando você roda `npm run dev`
     //Para funcionar em produção, você precisará usar uma variável de ambiente.
-    // const baseUrl = 'https://c2diserver.awer.co/'
-    const baseUrl = 'http://localhost:8081/'
+    const baseUrl = 'https://c2diserver.awer.co/'
+    // const baseUrl = 'http://localhost:8081/'
 
     try {
         const apiResponse = await fetch(`${baseUrl}users/findUnique/?email=${email}`, {
