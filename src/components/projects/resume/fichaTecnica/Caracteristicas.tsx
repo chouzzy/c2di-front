@@ -36,7 +36,6 @@ export function Caracteristicas({ projectData }: CaracteristicasProps) {
                     <Text>{projectTypesDict[projectData.projectType]}</Text>
                 </Flex>
 
-
                 <Flex color={colorCaracteristicas} fontWeight={'semibold'} gap={2}>
                     <PiMoneyWavyDuotone size={24} />
                     <Text>{valorMetroQuadrado && valorMetroQuadrado.length > 0 ? `R$${valorMetroQuadrado[valorMetroQuadrado.length - 1].valor.toLocaleString('pt-BR', { maximumFractionDigits: 0 })} /m²` : "m²"}</Text>

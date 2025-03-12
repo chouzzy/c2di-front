@@ -150,11 +150,25 @@ interface Investment {
   apartamentTypes: ApartamentTypes[]
   apartaments: Apartaments[]
   valorMetroQuadrado?: ValorMetroQuadrado[]
+  tipologies: Tipologies[]
 
   photos: PhotosGroup[]
   active?: boolean
   createdAt: Date;
   updatedAt: Date;
+}
+
+interface Tipologies {
+  id: string
+  name: string
+  image: string
+  description?: string
+  rooms?: number
+  suits?: number
+  bathrooms?: number
+  parkingSpaces?: number
+  area?: number
+  tags: string[]
 }
 
 interface PhotosGroup {

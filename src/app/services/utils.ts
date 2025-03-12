@@ -68,9 +68,6 @@ async function documentsArrayAdapter(data: any) {
 
         for (let index = 0; index < data.document.length; index++) {
 
-            console.log('data.document[index]')
-            console.log(data.document[index])
-
             data.documents.push({
                 id: 'newDoc',
                 title: data.document[index].name,

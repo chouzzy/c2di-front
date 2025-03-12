@@ -68,6 +68,14 @@ export function InvestmentsSuggestions({ projectsData }: InvestmentsSuggestionsP
                     if (isMobile && index > 0) {
                         return
                     }
+
+                    
+                    const capas = project.photos.find((photoGroup) => photoGroup.category === "CAPA")
+
+                    const projectCapa = capas?.images[0]
+                    let capa = '/assets/img-not-found.png'
+                    if (projectCapa) { capa = projectCapa.url }
+
                     return (
 
                         // CARD DO PROJETO
@@ -78,7 +86,7 @@ export function InvestmentsSuggestions({ projectsData }: InvestmentsSuggestionsP
                                 {/* IMAGEM E STATUS */}
                                 <Flex>
                                     <Flex w='100%' flexDir={'column'} gap={1}>
-                                        <Image src={`${project.images[0].url}`} h={120} w={320} objectFit={'cover'} objectPosition={'center'} />
+                                        <Image src={`${capa}`} h={120} w={320} objectFit={'cover'} objectPosition={'center'} />
 
                                         <Flex
                                             w={'min'}

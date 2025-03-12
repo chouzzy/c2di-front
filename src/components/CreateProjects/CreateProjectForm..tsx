@@ -11,10 +11,12 @@ import { createPrismaInvestment } from "@/app/services/createInvestment";
 import { AxiosError } from "axios";
 import { changePrismaProjectDoc } from "@/app/services/changeDoc";
 import { UploadDocuments } from "@/app/services/uploadDocuments";
-import { UploadImages } from "@/app/services/uploadImages";
+import { UploadImages, UploadTipologiesImages } from "@/app/services/uploadImages";
 import { changePrismaProjectPhotos } from "@/app/services/changePhotos";
 import { FirstPage } from "./CreateProjectPages/FirstPage";
 import { SecondPage } from "./CreateProjectPages/SecondPage";
+import { FourthPage } from "./CreateProjectPages/FourthPage";
+import { changePrismaTipologies } from "@/app/services/changeTipologies";
 
 interface CreateInvestorAccountCardProps {
     user: UserProfile
@@ -22,7 +24,19 @@ interface CreateInvestorAccountCardProps {
     userData: User
 }
 
-
+export interface TipologiesState {
+    id: Tipologies["id"]
+    name: Tipologies["name"]
+    image: File
+    description: Tipologies["description"]
+    rooms: Tipologies["rooms"]
+    suits: Tipologies["suits"]
+    bathrooms: Tipologies["bathrooms"]
+    parkingSpaces: Tipologies["parkingSpaces"]
+    area: Tipologies["area"]
+    tags: Tipologies["tags"]
+  }
+  
 export function CreateProjectForm({ user, router, userData }: CreateInvestorAccountCardProps) {
 
     const bgButtonColor = useColorModeValue('darkSide', 'dark.lightSide')
@@ -32,11 +46,12 @@ export function CreateProjectForm({ user, router, userData }: CreateInvestorAcco
     const [isUploading, setIsUploading] = useState(false)
     const [totalUploading, setTotalUploading] = useState(0)
     const [progressUploading, setProgressUploading] = useState(0)
+    const [tipologies, setTipologies] = useState<TipologiesState[]>([])
 
     const handleSaveClick = () => {
         router.push('/projects');
     };
-    const pages = [0, 1, 2]
+    const pages = [0, 1, 2, 3]
 
     const [page, setPage] = useState(0)
 
@@ -44,8 +59,15 @@ export function CreateProjectForm({ user, router, userData }: CreateInvestorAcco
     const onSubmit = async (data: any) => {
 
         try {
+            
+
             if (page < (pages.length - 1)) {
                 nextPage()
+                return
+            }
+
+            if (tipologies.length == 0 || !tipologies) {
+                setYupError("É necessário adicionar ao menos uma tipologia.")
                 return
             }
 
@@ -65,31 +87,36 @@ export function CreateProjectForm({ user, router, userData }: CreateInvestorAcco
             // TRANSFORMA O ARRAY DE IMAGENS NO FORMATO DO BANCO DE DADOS
             data = await createInvestorUtils(data, userData.id)
             
+            
             const { image, document } = data
             
             // Deleta array antigo de imagens, o novo formatado se chama data.images
             delete data.image
             delete data.document
             
+            data.tipologies = tipologies
             await createInvestmentSchema.validate(data);
+            delete data.tipologies
 
             // // Cria o investimento antes de cadastrar imagens no banco de imagens
             const investment = await createPrismaInvestment(data)
 
             const docs = await UploadDocuments(document, investment.title);
             const photos = await UploadImages({image, folderTitle: investment.title, setProgressUploading});
-            
-            
 
+            const tipologiesUploaded = await UploadTipologiesImages({tipologies, folderTitle: investment.title, setProgressUploading});            
+
+            investment.tipologies = tipologiesUploaded
             investment.photos = photos
             investment.documents = docs
 
             await changePrismaProjectPhotos(investment.id, investment)
+            await changePrismaTipologies(investment.id, investment)
             await changePrismaProjectDoc(investment.id, investment)
 
-            setIsUploading(false)
+            // setIsUploading(false)
 
-            handleSaveClick()
+            // handleSaveClick()
 
         } catch (error: any) {
             if (error instanceof AxiosError) {
@@ -151,9 +178,15 @@ export function CreateProjectForm({ user, router, userData }: CreateInvestorAcco
                                         ''
                                     }
 
-                                    {/* FOTOS E DOCUMENTOS */}
                                     {page === 2 ?
                                         <ThirdPage register={register} userData={userData} />
+                                        :
+                                        ''
+                                    }
+
+                                    {/* Tipologias */}
+                                    {page === 3 ?
+                                        <FourthPage tipologies={tipologies} setTipologies={setTipologies}/>
                                         :
                                         ''
                                     }

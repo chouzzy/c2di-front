@@ -2,7 +2,7 @@ import { updateProjectFicha } from '@/app/services/updateProjectFicha';
 import { floorPlanTypesAdapter, projectTypeAdapter } from '@/app/services/utils';
 import { updateInvestmentSchema } from '@/schemas/investmentSchema';
 import { Badge, Button, Divider, Flex, Spinner, Text } from '@chakra-ui/react';
-import { useEffect, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { ValidationError } from 'yup';
 
@@ -17,14 +17,18 @@ import 'swiper/css/scrollbar';
 import Carousel from './Carousel';
 import { Custos } from './Custos';
 import { Construtora } from './Construtora';
+import { Tipologias } from './Tipologias';
+import { TipologiesState } from '@/components/CreateProjects/CreateProjectForm.';
+import { UploadTipologiesImages } from '@/app/services/uploadImages';
 
 
 interface ProjectDataProps {
     projectData: Investment
     userData: User
+    setProjectData: Dispatch<SetStateAction<Investment | null>>
 }
 
-export function FichaTecnica({ userData, projectData }: ProjectDataProps) {
+export function FichaTecnica({ userData, projectData, setProjectData }: ProjectDataProps) {
 
     const { register, handleSubmit, formState: { errors } } = useForm({});
     const [yupError, setYupError] = useState<string>("")
@@ -32,6 +36,9 @@ export function FichaTecnica({ userData, projectData }: ProjectDataProps) {
 
     const [isLoading, setIsLoading] = useState(false)
     const [plantas, setPlantas] = useState<Photos["url"][]>(['/assets/img-not-found.png'])
+
+    const [progressUploading, setProgressUploading] = useState(0)
+    const [newTipologies, setNewTipologies] = useState<TipologiesState[]>([])
 
     const buildingStatusDict = {
         LANCAMENTO: { name: "Lançamento", color: "green" },
@@ -44,7 +51,7 @@ export function FichaTecnica({ userData, projectData }: ProjectDataProps) {
     useEffect(() => {
         const getPlantas = async () => {
             const { photos } = projectData
-            const plantas = photos.find((img) => img.category === 'PLANTAS')
+            const plantas = photos.find((img) => img.category === 'FACHADA')
 
             if (plantas) {
                 const plantasUrl = plantas.images.map((img) => { return img.url })
@@ -78,6 +85,24 @@ export function FichaTecnica({ userData, projectData }: ProjectDataProps) {
             handleIsLoading();
             data = await projectTypeAdapter(data)
             data = await floorPlanTypesAdapter(data)
+            const tipologiesUploaded = await UploadTipologiesImages({ tipologies: newTipologies, folderTitle: projectData.title, setProgressUploading });
+
+            const existingTipologies = projectData.tipologies || [];
+
+            const tipologiesMap = new Map<string, Tipologies>();
+
+            existingTipologies.forEach((tipology) => {
+                tipologiesMap.set(tipology.id, tipology);
+            });
+            tipologiesUploaded.forEach((tipology) => {
+                tipologiesMap.set(tipology.id, tipology);
+            });
+
+            const allTipologies = Array.from(tipologiesMap.values());
+
+            // 3. Adicionar as tipologias aos dados a serem enviados
+            data.tipologies = allTipologies; // Usa o array combinado
+
             await updateInvestmentSchema.validate(data);
 
 
@@ -120,6 +145,13 @@ export function FichaTecnica({ userData, projectData }: ProjectDataProps) {
                     <Divider orientation='horizontal' h={'1px'} w='100%' mx='auto' bgColor={'grayDivisor'} />
 
                     <Flex gap={4}>
+                        <Tipologias projectData={projectData} />
+                        <Divider orientation='vertical' h={'100%'} w='1px' mx='auto' bgColor={'grayDivisor'} />
+                        <Flex flexDir={'column'} w='100%' gap={4} h='100%' justifyContent={'space-between'}>
+                            Alvarás
+                        </Flex>
+                    </Flex>
+                    <Flex gap={4}>
                         <Custos projectData={projectData} />
                         <Divider orientation='vertical' h={'100%'} w='1px' mx='auto' bgColor={'grayDivisor'} />
                         <Flex flexDir={'column'} w='100%' gap={4} h='100%' justifyContent={'space-between'}>
@@ -142,7 +174,7 @@ export function FichaTecnica({ userData, projectData }: ProjectDataProps) {
                         {
                             editMode ?
                                 <form onSubmit={handleSubmit(onSubmit)}>
-                                    < Form projectData={projectData} register={register} userData={userData} />
+                                    < Form projectData={projectData} setProjectData={setProjectData} register={register} userData={userData} tipologies={projectData.tipologies} newTipologies={newTipologies} setNewTipologies={setNewTipologies} />
                                 </form >
                                 : ''
                         }

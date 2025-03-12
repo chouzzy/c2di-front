@@ -37,7 +37,7 @@ export function Carousel({ images, editMode = false }: CarouselProps) {
 
     return (
         <Flex w='100%' flexDir={'column'} gap={4}>
-            <Flex> <Text fontWeight={'semibold'} fontSize={'2xl'}> Plantas </Text> </Flex>
+            <Flex> <Text fontWeight={'semibold'} fontSize={'2xl'}> Imagens </Text> </Flex>
             <Flex position="relative" width="100%" overflow="hidden" h={400}>
 
                 {/* Imagem atual */}

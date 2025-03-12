@@ -52,6 +52,13 @@ export function MyInvestmentsList({ userInvestmentsData, projectsData, page, set
 
                     {projectsData.map((project) => {
 
+
+                        const capas = project.photos.find((photoGroup) => photoGroup.category === "CAPA")
+
+                        const projectCapa = capas?.images[0]
+                        let capa = '/assets/img-not-found.png'
+                        if (projectCapa) { capa = projectCapa.url }
+
                         return (
 
                             // CARD DO PROJETO
@@ -60,7 +67,7 @@ export function MyInvestmentsList({ userInvestmentsData, projectsData, page, set
                                 {/* IMAGEM E STATUS */}
                                 <Flex>
                                     <Flex w='100%' flexDir={'column'} gap={1}>
-                                        <Image src={`${project.images[0].url}`} h={160} w={'100%'} objectFit={'cover'} objectPosition={'center'} />
+                                        <Image src={`${capa}`} h={160} w={'100%'} objectFit={'cover'} objectPosition={'center'} />
 
                                         <Flex
                                             w={'min'}
@@ -77,7 +84,7 @@ export function MyInvestmentsList({ userInvestmentsData, projectsData, page, set
                                 </Flex>
 
                                 {/* DADOS DO PROJETO */}
-                                <Flex flexDir={['column', 'column', 'column', 'column', 'row']} gap={[4,4,4,4,2]} justifyContent={'space-between'}>
+                                <Flex flexDir={['column', 'column', 'column', 'column', 'row']} gap={[4, 4, 4, 4, 2]} justifyContent={'space-between'}>
 
                                     <Flex flexDir={'column'}>
 

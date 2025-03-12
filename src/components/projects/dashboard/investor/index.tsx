@@ -39,6 +39,12 @@ export function ProjectDashboardInvestor({ projectsData, page, setPage, totalPag
 
                     {projectsData.map((project) => {
 
+                        const capas = project.photos.find((photoGroup) => photoGroup.category === "CAPA")
+
+                        const projectCapa = capas?.images[0]
+                        let capa = '/assets/img-not-found.png'
+                        if (projectCapa) { capa = projectCapa.url }
+
                         return (
 
                             // CARD DO PROJETO
@@ -47,23 +53,23 @@ export function ProjectDashboardInvestor({ projectsData, page, setPage, totalPag
                                 {/* IMAGEM E STATUS */}
                                 <Flex>
                                     <Flex w='100%' flexDir={'column'} gap={1}>
-                                        <Image src={`${project.images[0].url}`} h={160} w={['100%', '100%', '100%', 440, 440]} objectFit={'cover'} objectPosition={'center'} />
+                                        <Image src={`${capa}`} h={160} w={['100%', '100%', '100%', 440, 440]} objectFit={'cover'} objectPosition={'center'} />
 
                                         <Flex gap={2}>
-                                        <Flex
-                                            w={'min'}
-                                            px={2}
-                                            bgColor={project.active ? 'green.400' : 'orange.200'}
-                                            fontSize={'sm'}
-                                            fontWeight={'semibold'}
-                                            color={project.active ? 'white' : 'orange.800'}
-                                            borderRadius={4}
-                                        >
-                                            {project.active ? <Text>Ativo</Text> : <Text>Arquivado</Text>}
-                                        </Flex>
-                                        <Flex>
-                                            <Badge variant='solid' fontSize={'sm'} colorScheme={buildingStatusDict[project.buildingStatus].color}> {buildingStatusDict[project.buildingStatus].name} </Badge>
-                                        </Flex>
+                                            <Flex
+                                                w={'min'}
+                                                px={2}
+                                                bgColor={project.active ? 'green.400' : 'orange.200'}
+                                                fontSize={'sm'}
+                                                fontWeight={'semibold'}
+                                                color={project.active ? 'white' : 'orange.800'}
+                                                borderRadius={4}
+                                            >
+                                                {project.active ? <Text>Ativo</Text> : <Text>Arquivado</Text>}
+                                            </Flex>
+                                            <Flex>
+                                                <Badge variant='solid' fontSize={'sm'} colorScheme={buildingStatusDict[project.buildingStatus].color}> {buildingStatusDict[project.buildingStatus].name} </Badge>
+                                            </Flex>
                                         </Flex>
                                     </Flex>
                                 </Flex>

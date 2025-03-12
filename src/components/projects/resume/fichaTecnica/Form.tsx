@@ -1,18 +1,25 @@
 import { AuthInput } from "@/components/Authentication/Inputs/AuthInput";
+import { TipologiesState } from "@/components/CreateProjects/CreateProjectForm.";
 import { ProjectInput } from "@/components/CreateProjects/Inputs/ProjectInput";
 import { ProjectSelectInput } from "@/components/CreateProjects/Inputs/SelectInput";
 import { TextAreaInput } from "@/components/CreateProjects/Inputs/TextAreaInput";
 import { Flex, Button, useColorModeValue } from "@chakra-ui/react";
-import { register } from "module";
+import { Dispatch, SetStateAction, useState } from "react";
 import { FieldValues, UseFormRegister } from "react-hook-form";
+import { TipologiasForm } from "./TipologiesForm";
 
 interface FormProps {
     register: UseFormRegister<FieldValues>
     projectData: Investment
     userData: User
+    tipologies: Tipologies[]
+    newTipologies: TipologiesState[]
+    setNewTipologies: Dispatch<SetStateAction<TipologiesState[]>>
+    setProjectData: Dispatch<SetStateAction<Investment | null>>
+
 }
 
-export function Form({ register, projectData, userData }: FormProps) {
+export function Form({ register, projectData, userData, tipologies, newTipologies, setNewTipologies, setProjectData }: FormProps) {
 
     const bgButtonColor = useColorModeValue('darkSide', 'redSide')
 
@@ -267,7 +274,7 @@ export function Form({ register, projectData, userData }: FormProps) {
                     {/* 'Custo da mão de obra'*/}
                     < ProjectInput
                         key={"constructionCompany"}
-                        defaultValue={projectData.constructionCompany?? ""}
+                        defaultValue={projectData.constructionCompany ?? ""}
                         isRequired={true}
                         type='string'
                         placeholder={'Cole a URL da imagem aqui'}
@@ -277,8 +284,11 @@ export function Form({ register, projectData, userData }: FormProps) {
                 </Flex>
             </Flex>
 
-            {userData.role != 'ADMINISTRATOR' ?
-                '' :
+            <Flex gap={12} w='100%' flexDir={['column', 'column', 'row', 'row', 'row']}>
+                <TipologiasForm setProjectData={setProjectData} projectData={projectData} newTipologies={newTipologies} tipologies={tipologies} setNewTipologies={setNewTipologies} />
+            </Flex>
+
+            {userData.role == 'ADMINISTRATOR' || userData.role == 'PROJECT_MANAGER' ?
                 <>
 
                     <Button type='submit' color={'lightSide'} fontWeight={'light'} bgColor={bgButtonColor} mt={4} maxW={40}>
@@ -286,6 +296,7 @@ export function Form({ register, projectData, userData }: FormProps) {
                     </Button>
 
                 </>
+                : ''
             }
         </Flex>
     )

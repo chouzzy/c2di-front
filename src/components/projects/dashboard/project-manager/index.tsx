@@ -36,10 +36,7 @@ export function ProjectDashboardProjectManager({ projectsData, page, setPage, to
                         const projectCapa = capas?.images[0]
                         let capa = '/assets/img-not-found.png'
                         if (projectCapa) { capa = projectCapa.url }
-
-                        console.log(Math.ceil(totalPages / elementsPerPage))
-
-
+                        
                         return (
 
                             // CARD DO PROJETO

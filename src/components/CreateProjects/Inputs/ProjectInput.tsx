@@ -45,7 +45,8 @@ export function ProjectInput({ label_top, type, placeholder, value, isRequired, 
                 borderRadius={6}
                 type={type}
                 placeholder={placeholder}
-                defaultValue={defaultValue ?? undefined} />
+                defaultValue={defaultValue ?? undefined} 
+                />
 
             {label_bottom ?
                 <FormLabel fontSize={12}>

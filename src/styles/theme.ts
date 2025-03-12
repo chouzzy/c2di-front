@@ -68,6 +68,7 @@ export const theme = extendTheme({
     siam: '#67705F',
     siamTranslucent: '#67705Fdd',
     eerie: '#202222',
+    placeHolder:"#0F172A66",
 
     // Cores para dark mode (ADICIONE ISSO)
     dark: {

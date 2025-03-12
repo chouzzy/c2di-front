@@ -124,7 +124,7 @@ function ProjectResumeProjectManager({ userData, user, projectData, setProjectDa
             }
 
             {page == 0 ? (<InfosGerais userData={userData} projectData={projectData} />) : ('')}
-            {page == 1 ? (<FichaTecnica userData={userData} projectData={projectData} />) : ('')}
+            {page == 1 ? (<FichaTecnica userData={userData} projectData={projectData}  setProjectData={setProjectData}/>) : ('')}
             {page == 2 ? (<Partners userData={userData} partnerList={partnerList} setPartnerList={setPartnerList} user={user} projectData={projectData} />) : ('')}
             {page == 3 ? (<DocumentsList userData={userData} documentList={documentList} setDocumentList={setDocumentList} user={user} projectData={projectData} />) : ('')}
             {page == 4 ? (<ProjectGallery setProjectData={setProjectData} userData={userData} projectData={projectData} />) : ('')}
