@@ -301,9 +301,8 @@ async function getUserData(req: NextRequest, token: string | undefined, email: s
     console.log("Chamando getUserData. baseUrl:", baseUrl);
 
     try {
-        const token = getCookie('accessToken')
         // const apiResponse = await fetch(`http://localhost:8081/users/findUnique/?email=${email}`, {
-        const apiResponse = await fetch(`${baseUrl}/users/findUnique/?email=${email}`, {
+        const apiResponse = await fetch(`${baseUrl}users/findUnique/?email=${email}`, {
             method: 'GET', // Ou POST, dependendo da sua API
             headers: {
                 'Authorization': `Bearer ${token}`, // Passa o token para a API Route
