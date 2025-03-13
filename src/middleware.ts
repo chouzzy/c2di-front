@@ -289,7 +289,6 @@
 import { withMiddlewareAuthRequired, getSession, updateSession } from '@auth0/nextjs-auth0/edge';
 import { getCookie } from 'cookies-next';
 import { NextRequest, NextResponse } from 'next/server';
-import { checkUserByEmail } from './app/services/checkUserByEmail';
 
 
 async function getUserData(req: NextRequest, token: string | undefined, email: string) {
@@ -301,10 +300,8 @@ async function getUserData(req: NextRequest, token: string | undefined, email: s
     console.log("Chamando getUserData. baseUrl:", baseUrl);
     // const baseUrl = 'http://localhost:8081/'
 
-    console.log("getUserData - Token:", token); // Adicione este log
-
     try {
-        const apiResponse = await fetch(`https://c2diserver.awer.co/findUnique/?email=${email}`, {
+        const apiResponse = await fetch(`${baseUrl}/api/check-user`, {
             // const apiResponse = await fetch(`${baseUrl}/api/check-user`, {
             method: 'GET', // Ou POST, dependendo da sua API
             headers: {
@@ -339,6 +336,8 @@ export default withMiddlewareAuthRequired(async function middleware(req: NextReq
         if (!session.user.userdb) {
             // Chama a função auxiliar, passando o token
             const user = await getUserData(req, accessToken, session.user.email);
+            console.log('user')
+            console.log(user)
 
 
             if (user) {
@@ -475,4 +474,7 @@ export default withMiddlewareAuthRequired(async function middleware(req: NextReq
     //   res.cookies.set('hl', user.language);
     return res;
 });
+
+
+
 
