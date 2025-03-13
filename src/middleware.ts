@@ -289,30 +289,34 @@
 import { withMiddlewareAuthRequired, getSession, updateSession } from '@auth0/nextjs-auth0/edge';
 import { getCookie } from 'cookies-next';
 import { NextRequest, NextResponse } from 'next/server';
+import { checkUserByEmail } from './app/services/checkUserByEmail';
 
 
 async function getUserData(req: NextRequest, token: string | undefined, email: string) {
     //A URL base precisa ser a do seu app, a que aparece quando você roda `npm run dev`
     //Para funcionar em produção, você precisará usar uma variável de ambiente.
+    // const baseUrl = 'https://c2diserver.awer.co/'
     // const baseUrl = 'check-user/'
-    // const baseUrl = req.nextUrl.origin;
-    const baseUrl = 'https://c2diserver.awer.co/'
-    // const baseUrl = 'http://localhost:8081/'
+    const baseUrl = req.nextUrl.origin;
     console.log("Chamando getUserData. baseUrl:", baseUrl);
+    // const baseUrl = 'http://localhost:8081/'
+
+    console.log("getUserData - Token:", token); // Adicione este log
 
     try {
-        // const apiResponse = await fetch(`http://localhost:8081/users/findUnique/?email=${email}`, {
-        const apiResponse = await fetch(`${baseUrl}users/findUnique/?email=${email}`, {
+        const apiResponse = await fetch(`http://localhost:8081/users/findUnique/?email=${email}`, {
+            // const apiResponse = await fetch(`${baseUrl}/api/check-user`, {
             method: 'GET', // Ou POST, dependendo da sua API
             headers: {
                 'Authorization': `Bearer ${token}`, // Passa o token para a API Route
             },
         });
-
-        console.log(apiResponse.status)
+        console.log("getUserData - Status da resposta da API:", apiResponse.status); // VERIFIQUE O STATUS
 
         if (!apiResponse.ok) {
             console.error('Erro ao buscar dados do usuário na API:', apiResponse.status);
+            const errorBody = await apiResponse.text();
+            console.error("Corpo do erro:", errorBody); // <--  MUITO IMPORTANTE
             return null;
         }
 
@@ -331,10 +335,16 @@ export default withMiddlewareAuthRequired(async function middleware(req: NextReq
 
     if (session) {
         const accessToken = session.accessToken; // Pega o accessToken
+        const user = await checkUserByEmail(session.user)
+        console.log('user getUserData checkuser antes do session')
+        console.log(user)
 
         if (!session.user.userdb) {
             // Chama a função auxiliar, passando o token
-            const user = await getUserData(req, accessToken, session.user.email);
+            // const user = await getUserData(req, accessToken, session.user.email);
+            const user = await checkUserByEmail(session.user)
+            console.log('user getUserData checkuser')
+            console.log(user)
 
 
             if (user) {
