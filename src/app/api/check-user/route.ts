@@ -9,7 +9,7 @@ import { getSession } from '@auth0/nextjs-auth0'; // SEM /edge
 export async function GET(req: NextRequest) {
   try {
     // Obtenha a sessão *sem* o NextResponse.next()
-    const session = await getSession(req, NextResponse.next());//Não passe NextResponse.next() em uma API Route, ou você estará usando a sessão do middleware
+    const session = await getSession();
 
     console.log("DENTRO DA API ROUTE - SESSION:", session); // Verifique a sessão
 
