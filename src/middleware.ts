@@ -484,4 +484,6 @@ export default withMiddlewareAuthRequired(async function middleware(req: NextReq
 
 
 
-
+export const config = {
+    runtime: 'nodejs', //  <--  Adicione ESTA linha!
+    }
