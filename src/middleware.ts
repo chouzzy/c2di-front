@@ -301,13 +301,15 @@ async function getUserData(req: NextRequest, token: string | undefined, email: s
     // const baseUrl = 'http://localhost:8081/'
 
     try {
-        const apiResponse = await fetch(`${baseUrl}/api/check-user`, {
-            // const apiResponse = await fetch(`${baseUrl}/api/check-user`, {
-            method: 'GET', // Ou POST, dependendo da sua API
-            headers: {
-                'Authorization': `Bearer ${token}`, // Passa o token para a API Route
-            },
-        });
+        const apiResponse = await fetch(`${baseUrl}/api/check-user?email=${encodeURIComponent(email)}`, {
+            method: 'GET', // Geralmente GET para buscar dados
+            // NÃO ENVIA O TOKEN (já que o backend não vai usar)
+          });
+      
+
+        // const apiResponse = await fetch(`${baseUrl}/api/check-user`, {
+        //     method: 'GET', 
+        // });
         console.log("getUserData - Status da resposta da API:", apiResponse.status); // VERIFIQUE O STATUS
 
         if (!apiResponse.ok) {

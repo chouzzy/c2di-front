@@ -1,31 +1,24 @@
 // app/api/check-user/route.ts
 import { NextRequest, NextResponse } from 'next/server';
-import { checkUserByEmail } from '@/app/services/checkUserByEmail'; // Ajuste o caminho, se necessário
+import { checkUserByEmail, checkUserByEmailOnlyEmail } from '@/app/services/checkUserByEmail'; // Ajuste o caminho, se necessário
 import { getSession } from '@auth0/nextjs-auth0'; // SEM /edge
+import { getCookie } from 'cookies-next';
 
 // NÃO use o Edge Runtime aqui (deixe o Next.js usar o Node.js por padrão)
 // export const config = { runtime: 'edge' }; // REMOVA ESTA LINHA
 
-export async function GET(req: NextRequest) {
+export async function GET(req: NextRequest) { //  Função GET
   try {
-    // Obtenha a sessão *sem* o NextResponse.next()
-    const session = await getSession();
 
-    console.log("DENTRO DA API ROUTE - SESSION:", session); // Verifique a sessão
+    // Extrai o email *da query string* da URL:
+    const searchParams = req.nextUrl.searchParams;
+    const email = searchParams.get('email');
 
-    //Agora, verifique a sessão
-    if (!session || !session.user) {
-        return NextResponse.json({ error: 'Não autorizado' }, { status: 401 });
-      }
-    const user = session.user;
+    if (!email) {
+      return NextResponse.json({ error: 'Email não fornecido' }, { status: 400 }); // Bad Request
+    }
 
-    //Obtenha o token a partir do headers
-    const authHeader = req.headers.get('authorization');
-    const accessToken = authHeader ? authHeader.split(' ')[1] : undefined
-
-    console.log("API Route - accessToken:", accessToken);
-
-    const userResponse = await checkUserByEmail(user); // Passa o accessToken
+    const userResponse = await checkUserByEmailOnlyEmail(email); // Passa o accessToken
     return NextResponse.json({ user: userResponse });
 
   } catch (error) {
