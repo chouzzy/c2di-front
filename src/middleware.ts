@@ -304,7 +304,7 @@ async function getUserData(req: NextRequest, token: string | undefined, email: s
     console.log("getUserData - Token:", token); // Adicione este log
 
     try {
-        const apiResponse = await fetch(`http://localhost:8081/users/findUnique/?email=${email}`, {
+        const apiResponse = await fetch(`https://c2diserver.awer.co/findUnique/?email=${email}`, {
             // const apiResponse = await fetch(`${baseUrl}/api/check-user`, {
             method: 'GET', // Ou POST, dependendo da sua API
             headers: {
@@ -335,16 +335,10 @@ export default withMiddlewareAuthRequired(async function middleware(req: NextReq
 
     if (session) {
         const accessToken = session.accessToken; // Pega o accessToken
-        const user = await checkUserByEmail(session.user)
-        console.log('user getUserData checkuser antes do session')
-        console.log(user)
 
         if (!session.user.userdb) {
             // Chama a função auxiliar, passando o token
-            // const user = await getUserData(req, accessToken, session.user.email);
-            const user = await checkUserByEmail(session.user)
-            console.log('user getUserData checkuser')
-            console.log(user)
+            const user = await getUserData(req, accessToken, session.user.email);
 
 
             if (user) {
