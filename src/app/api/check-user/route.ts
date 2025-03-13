@@ -16,19 +16,24 @@ export async function GET(req: NextRequest) { //  Função GET
     const searchParams = req.nextUrl.searchParams;
     const email = searchParams.get('email');
 
-    const url = `https://c2diserver.awer.co/users/findUnique/?email=${email}`;
+    const url = `${API_BASE_URL}/users/findUnique/?email=${email}`;
 
-
-
+    
+    
     if (!email) {
       return NextResponse.json({ error: 'Email não fornecido' }, { status: 400 }); // Bad Request
     }
-    // const response = await fetch(url);  // Sem headers, já que não precisa de token
-
-    return NextResponse.json({ user: email });
+    const response = await fetch(url);  // Sem headers, já que não precisa de token
+    
+    console.log('response')
+    console.log(response)
+    const userResponse = await checkUserByEmailOnlyEmail(email); // Passa o accessToken
+    console.log('userResponse')
+    console.log(userResponse)
+    return NextResponse.json({ user: userResponse });
 
   } catch (error) {
     console.error('Erro na API Route /api/check-user:', error);
-    return NextResponse.json({ error: 'Erro ao verificar usuário', erro: error }, { status: 500 });
+    return NextResponse.json({ error: 'Erro ao verificar usuário' }, { status: 500 });
   }
 }
