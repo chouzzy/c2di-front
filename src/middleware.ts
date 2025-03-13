@@ -335,18 +335,16 @@ export default withMiddlewareAuthRequired(async function middleware(req: NextReq
     if (session) {
         const accessToken = session.accessToken; // Pega o accessToken
 
-        if (!session.user.userdb) {
-            // Chama a função auxiliar, passando o token
-            const user = await getUserData(req, accessToken, session.user.email);
-            console.log('user')
-            console.log(user)
+        // if (!session.user.userdb) {
+        //     // Chama a função auxiliar, passando o token
+            
 
 
-            if (user) {
-                // Atualiza a sessão com o objeto user
-                await updateSession(req, res, { ...session, user: { ...session.user, userdb: user } });
-            }
-        }
+        //     if (user) {
+        //         // Atualiza a sessão com o objeto user
+        //         await updateSession(req, res, { ...session, user: { ...session.user, userdb: user } });
+        //     }
+        // }
 
         if (session.user.userdb) {
             const { id, role } = session.user.userdb;

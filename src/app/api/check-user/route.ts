@@ -23,11 +23,9 @@ export async function GET(req: NextRequest) { //  Função GET
     if (!email) {
       return NextResponse.json({ error: 'Email não fornecido' }, { status: 400 }); // Bad Request
     }
-    const response = await fetch(url);  // Sem headers, já que não precisa de token
+    // const response = await fetch(url);  // Sem headers, já que não precisa de token
 
-    console.log('response')
-    console.log(response)
-    return NextResponse.json({ user: response });
+    return NextResponse.json({ user: email });
 
   } catch (error) {
     console.error('Erro na API Route /api/check-user:', error);
