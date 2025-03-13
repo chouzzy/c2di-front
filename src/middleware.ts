@@ -291,42 +291,42 @@ import { getCookie } from 'cookies-next';
 import { NextRequest, NextResponse } from 'next/server';
 
 
-async function getUserData(req: NextRequest, token: string | undefined, email: string) {
-    //A URL base precisa ser a do seu app, a que aparece quando você roda `npm run dev`
-    //Para funcionar em produção, você precisará usar uma variável de ambiente.
-    // const baseUrl = 'https://c2diserver.awer.co/'
-    // const baseUrl = 'check-user/'
-    const baseUrl = req.nextUrl.origin;
-    console.log("Chamando getUserData. baseUrl:", baseUrl);
-    // const baseUrl = 'http://localhost:8081/'
+// async function getUserData(req: NextRequest, token: string | undefined, email: string) {
+//     //A URL base precisa ser a do seu app, a que aparece quando você roda `npm run dev`
+//     //Para funcionar em produção, você precisará usar uma variável de ambiente.
+//     // const baseUrl = 'https://c2diserver.awer.co/'
+//     // const baseUrl = 'check-user/'
+//     const baseUrl = req.nextUrl.origin;
+//     console.log("Chamando getUserData. baseUrl:", baseUrl);
+//     // const baseUrl = 'http://localhost:8081/'
 
-    try {
-        const apiResponse = await fetch(`${baseUrl}/api/check-user?email=${email}`, {
-            method: 'GET', // Geralmente GET para buscar dados
-            // NÃO ENVIA O TOKEN (já que o backend não vai usar)
-          });
+//     try {
+//         const apiResponse = await fetch(`${baseUrl}/api/check-user?email=${email}`, {
+//             method: 'GET', // Geralmente GET para buscar dados
+//             // NÃO ENVIA O TOKEN (já que o backend não vai usar)
+//           });
       
 
-        // const apiResponse = await fetch(`${baseUrl}/api/check-user`, {
-        //     method: 'GET', 
-        // });
-        console.log("getUserData - Status da resposta da API:", apiResponse.status); // VERIFIQUE O STATUS
+//         // const apiResponse = await fetch(`${baseUrl}/api/check-user`, {
+//         //     method: 'GET', 
+//         // });
+//         console.log("getUserData - Status da resposta da API:", apiResponse.status); // VERIFIQUE O STATUS
 
-        if (!apiResponse.ok) {
-            console.error('Erro ao buscar dados do usuário na API:', apiResponse.status);
-            const errorBody = await apiResponse.text();
-            console.error("Corpo do erro:", errorBody); // <--  MUITO IMPORTANTE
-            return null;
-        }
+//         if (!apiResponse.ok) {
+//             console.error('Erro ao buscar dados do usuário na API:', apiResponse.status);
+//             const errorBody = await apiResponse.text();
+//             console.error("Corpo do erro:", errorBody); // <--  MUITO IMPORTANTE
+//             return null;
+//         }
 
-        const data = await apiResponse.json();
-        return data.user;
+//         const data = await apiResponse.json();
+//         return data.user;
 
-    } catch (error) {
-        console.error('Erro ao buscar dados do usuário:', error);
-        return null;
-    }
-}
+//     } catch (error) {
+//         console.error('Erro ao buscar dados do usuário:', error);
+//         return null;
+//     }
+// }
 
 export default withMiddlewareAuthRequired(async function middleware(req: NextRequest) {
     const res = NextResponse.next();
