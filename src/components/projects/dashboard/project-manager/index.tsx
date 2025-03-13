@@ -62,7 +62,7 @@ export function ProjectDashboardProjectManager({ projectsData, page, setPage, to
                                 </Flex>
 
                                 {/* DADOS DO PROJETO */}
-                                <Flex flexDir={'column'} gap={[0, 0, 0, 2, 2]} h={[12, 12, 12, 16, 16]}>
+                                <Flex flexDir={'column'} gap={[0, 0, 0, 2, 2]} >
 
                                     <Text fontSize={20} fontWeight={'semibold'}>
                                         {project.title}

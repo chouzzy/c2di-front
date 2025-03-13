@@ -8,6 +8,8 @@ import { getCookie } from 'cookies-next';
 // export const config = { runtime: 'edge' }; // REMOVA ESTA LINHA
 
 const API_BASE_URL = 'https://c2diserver.awer.co'; // URL do SEU BACKEND
+// const API_BASE_URL = 'http://localhost:8081/'; // URL do SEU BACKEND
+
 
 export async function GET(req: NextRequest) { //  Função GET
   try {
