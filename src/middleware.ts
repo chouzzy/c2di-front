@@ -301,7 +301,7 @@ async function getUserData(req: NextRequest, token: string | undefined, email: s
     // const baseUrl = 'http://localhost:8081/'
 
     try {
-        const apiResponse = await fetch(`${baseUrl}/api/check-user?email=${encodeURIComponent(email)}`, {
+        const apiResponse = await fetch(`${baseUrl}/api/check-user?email=${email}`, {
             method: 'GET', // Geralmente GET para buscar dados
             // NÃO ENVIA O TOKEN (já que o backend não vai usar)
           });
